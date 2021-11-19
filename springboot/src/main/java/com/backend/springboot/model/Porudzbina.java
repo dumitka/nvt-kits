@@ -1,65 +1,40 @@
 package com.backend.springboot.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "porudzbina")
 public class Porudzbina {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@OneToMany(mappedBy = "porudzbina")
 	private Set<PorucenoJelo> porucenaJela;
+
+	@OneToMany(mappedBy = "porudzbina")
 	private Set<PorucenoPice> porucenaPica;
+
+	@ManyToOne
+	@JoinColumn(name = "konobar_id", nullable = false)
 	private Konobar konobar;
+
+	@OneToMany(mappedBy = "porudzbina")
 	private Set<Obavestenje> obavestenja;
+
+	@ManyToOne
+	@JoinColumn(name = "sto_id")
 	private Sto sto;
-	
-	public Porudzbina() {
-		
-	}
 
-	public Porudzbina(Set<PorucenoJelo> porucenaJela, Set<PorucenoPice> porucenaPica, Konobar konobar,
-			Set<Obavestenje> obavestenja, Sto sto) {
-		super();
-		this.porucenaJela = porucenaJela;
-		this.porucenaPica = porucenaPica;
-		this.konobar = konobar;
-		this.obavestenja = obavestenja;
-		this.sto = sto;
-	}
-
-	public Set<PorucenoJelo> getPorucenaJela() {
-		return porucenaJela;
-	}
-
-	public void setPorucenaJela(Set<PorucenoJelo> porucenaJela) {
-		this.porucenaJela = porucenaJela;
-	}
-
-	public Set<PorucenoPice> getPorucenaPica() {
-		return porucenaPica;
-	}
-
-	public void setPorucenaPica(Set<PorucenoPice> porucenaPica) {
-		this.porucenaPica = porucenaPica;
-	}
-
-	public Konobar getKonobar() {
-		return konobar;
-	}
-
-	public void setKonobar(Konobar konobar) {
-		this.konobar = konobar;
-	}
-
-	public Set<Obavestenje> getObavestenja() {
-		return obavestenja;
-	}
-
-	public void setObavestenja(Set<Obavestenje> obavestenja) {
-		this.obavestenja = obavestenja;
-	}
-
-	public Sto getSto() {
-		return sto;
-	}
-
-	public void setSto(Sto sto) {
-		this.sto = sto;
-	}
 }

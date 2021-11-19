@@ -1,44 +1,36 @@
 package com.backend.springboot.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "plata")
 public class Plata {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column(name = "iznos", nullable = false)
 	private float iznos;
+
+	@Column(name = "pocetak_vazenja", nullable = false)
 	private LocalDateTime pocetakVazenja;
+
+	@ManyToOne
+	@JoinColumn(name = "korisnik_sistema_id")
 	private KorisnikSistema korisnik;
-	
-	public Plata() {
-		
-	}
-	
-	public Plata(float iznos, LocalDateTime pocetakVazenja, KorisnikSistema korisnik) {
-		super();
-		this.iznos = iznos;
-		this.pocetakVazenja = pocetakVazenja;
-		this.korisnik = korisnik;
-	}
 
-	public float getIznos() {
-		return iznos;
-	}
-
-	public void setIznos(float iznos) {
-		this.iznos = iznos;
-	}
-
-	public LocalDateTime getPocetakVazenja() {
-		return pocetakVazenja;
-	}
-
-	public void setPocetakVazenja(LocalDateTime pocetakVazenja) {
-		this.pocetakVazenja = pocetakVazenja;
-	}
-
-	public KorisnikSistema getKorisnik() {
-		return korisnik;
-	}
-
-	public void setKorisnik(KorisnikSistema korisnik) {
-		this.korisnik = korisnik;
-	}
+	@ManyToOne
+	@JoinColumn(name = "restoran_id", nullable = false)
+	private Restoran restoran;
 }

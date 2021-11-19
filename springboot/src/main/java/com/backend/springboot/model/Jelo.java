@@ -1,93 +1,47 @@
 package com.backend.springboot.model;
 
+import com.backend.springboot.enums.TezinaSpremanja;
+import com.backend.springboot.enums.TipJela;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "jelo")
 public class Jelo {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column(name = "naziv", nullable = false)
 	private String naziv;
+
+	@Column(name = "tip_jela", nullable = false)
 	private TipJela tipJela;
+
+	@Column(name = "opis")
 	private String opis;
+
+	@Column(name = "tezina_spremanja")
 	private TezinaSpremanja tezinaSpremanja;
+
+	@Column(name = "vreme_spremanja")
 	private int vremeSpremanja;
+
+	@Column(name = "kolicina_broj", nullable = false)
 	private int kolicinaBroj;
+
+	@Column(name = "kolicina_jedinica", nullable = false)
 	private String kolicinaJedinica;
+
+	@Column(name = "slika")
 	private String slika;
-	
-	public Jelo() {
-		
-	}
-	
-	public Jelo(String naziv, TipJela tipJela, String opis, TezinaSpremanja tezinaSpremanja, int vremeSpremanja,
-			int kolicinaBroj, String kolicinaJedinica, String slika) {
-		super();
-		this.naziv = naziv;
-		this.tipJela = tipJela;
-		this.opis = opis;
-		this.tezinaSpremanja = tezinaSpremanja;
-		this.vremeSpremanja = vremeSpremanja;
-		this.kolicinaBroj = kolicinaBroj;
-		this.kolicinaJedinica = kolicinaJedinica;
-		this.slika = slika;
-	}
-
-	public String getNaziv() {
-		return naziv;
-	}
-
-	public void setNaziv(String naziv) {
-		this.naziv = naziv;
-	}
-
-	public TipJela getTipJela() {
-		return tipJela;
-	}
-
-	public void setTipJela(TipJela tipJela) {
-		this.tipJela = tipJela;
-	}
-
-	public String getOpis() {
-		return opis;
-	}
-
-	public void setOpis(String opis) {
-		this.opis = opis;
-	}
-
-	public TezinaSpremanja getTezinaSpremanja() {
-		return tezinaSpremanja;
-	}
-
-	public void setTezinaSpremanja(TezinaSpremanja tezinaSpremanja) {
-		this.tezinaSpremanja = tezinaSpremanja;
-	}
-
-	public int getVremeSpremanja() {
-		return vremeSpremanja;
-	}
-
-	public void setVremeSpremanja(int vremeSpremanja) {
-		this.vremeSpremanja = vremeSpremanja;
-	}
-
-	public int getKolicinaBroj() {
-		return kolicinaBroj;
-	}
-
-	public void setKolicinaBroj(int kolicinaBroj) {
-		this.kolicinaBroj = kolicinaBroj;
-	}
-
-	public String getKolicinaJedinica() {
-		return kolicinaJedinica;
-	}
-
-	public void setKolicinaJedinica(String kolicinaJedinica) {
-		this.kolicinaJedinica = kolicinaJedinica;
-	}
-
-	public String getSlika() {
-		return slika;
-	}
-
-	public void setSlika(String slika) {
-		this.slika = slika;
-	}
 }

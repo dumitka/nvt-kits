@@ -1,4 +1,4 @@
-package com.backend.springboot.model;
+package com.backend.springboot.enums;
 
 public enum TezinaSpremanja {
 	LAKO,

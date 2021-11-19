@@ -1,52 +1,36 @@
 package com.backend.springboot.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "poruceno_pice")
 public class PorucenoPice {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column(name = "kolicina")
 	private int kolicina;
+
+	@ManyToOne
+	@JoinColumn(name = "pice_id", nullable = false)
 	private Pice pice;
+
+	@ManyToOne
+	@JoinColumn(name = "porudzbina_id", nullable = false)
 	private Porudzbina porudzbina;
+
+	@ManyToOne
+	@JoinColumn(name = "sanker_id", nullable = false)
 	private Sanker sanker;
-	
-	public PorucenoPice() {
-		
-	}
-
-	public PorucenoPice(int kolicina, Pice pice, Porudzbina porudzbina, Sanker sanker) {
-		super();
-		this.kolicina = kolicina;
-		this.pice = pice;
-		this.porudzbina = porudzbina;
-		this.sanker = sanker;
-	}
-
-	public int getKolicina() {
-		return kolicina;
-	}
-
-	public void setKolicina(int kolicina) {
-		this.kolicina = kolicina;
-	}
-
-	public Pice getPice() {
-		return pice;
-	}
-
-	public void setPice(Pice pice) {
-		this.pice = pice;
-	}
-
-	public Porudzbina getPorudzbina() {
-		return porudzbina;
-	}
-
-	public void setPorudzbina(Porudzbina porudzbina) {
-		this.porudzbina = porudzbina;
-	}
-
-	public Sanker getSanker() {
-		return sanker;
-	}
-
-	public void setSanker(Sanker sanker) {
-		this.sanker = sanker;
-	}
 }

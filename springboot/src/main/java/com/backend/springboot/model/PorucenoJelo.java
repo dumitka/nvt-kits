@@ -1,52 +1,38 @@
 package com.backend.springboot.model;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "poruceno_jelo")
 public class PorucenoJelo {
-	private int kolicna;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column(name = "kolicina")
+	private int kolicina;
+
+	@ManyToOne
+	@JoinColumn(name = "jelo_id", nullable = false)
 	private Jelo jelo;
+
+	@ManyToOne
+	@JoinColumn(name = "porudzbina_id", nullable = false)
 	private Porudzbina porudzbina;
+
+	@ManyToOne
+	@JoinColumn(name = "kuvar_id", nullable = false) //mozda ovi idjevi korisnika da se revidiraju
 	private Kuvar kuvar;
-	
-	public PorucenoJelo() {
-		
-	}
-	
-	public PorucenoJelo(int kolicna, Jelo jelo, Porudzbina porudzbina, Kuvar kuvar) {
-		super();
-		this.kolicna = kolicna;
-		this.jelo = jelo;
-		this.porudzbina = porudzbina;
-		this.kuvar = kuvar;
-	}
-	
-	public int getKolicna() {
-		return kolicna;
-	}
-	
-	public void setKolicna(int kolicna) {
-		this.kolicna = kolicna;
-	}
-	
-	public Jelo getJelo() {
-		return jelo;
-	}
-	
-	public void setJelo(Jelo jelo) {
-		this.jelo = jelo;
-	}
-	
-	public Porudzbina getPorudzbina() {
-		return porudzbina;
-	}
-	
-	public void setPorudzbina(Porudzbina porudzbina) {
-		this.porudzbina = porudzbina;
-	}
-	
-	public Kuvar getKuvar() {
-		return kuvar;
-	}
-	
-	public void setKuvar(Kuvar kuvar) {
-		this.kuvar = kuvar;
-	}
+
 }

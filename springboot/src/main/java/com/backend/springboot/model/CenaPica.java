@@ -1,32 +1,31 @@
 package com.backend.springboot.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.Set;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "cena_pica")
 public class CenaPica {
-	private Pice pice;
-	private float iznos;
-	
-	public CenaPica() {
-		
-	}
-	
-	public CenaPica(Pice pice, float iznos) {
-		super();
-		this.pice = pice;
-		this.iznos = iznos;
-	}
 
-	public Pice getPice() {
-		return pice;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	public void setPice(Pice pice) {
-		this.pice = pice;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Pice pice;
 
-	public float getIznos() {
-		return iznos;
-	}
+    @Column(name = "iznos", nullable = false)
+    private float iznos;
 
-	public void setIznos(float iznos) {
-		this.iznos = iznos;
-	}
+    @ManyToMany(mappedBy = "cenePica")
+    private Set<KartaPica> kartePica;
 }

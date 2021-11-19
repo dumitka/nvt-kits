@@ -1,42 +1,31 @@
 package com.backend.springboot.model;
 
+import com.backend.springboot.enums.StatusObavestenja;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "obavestenje")
 public class Obavestenje {
-	private StatusObavestenja status;
-	private String poruka;
-	private Porudzbina porudzbina;
-	
-	public Obavestenje() {
-		
-	}
 
-	public Obavestenje(StatusObavestenja status, String poruka, Porudzbina porudzbina) {
-		super();
-		this.status = status;
-		this.poruka = poruka;
-		this.porudzbina = porudzbina;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	public StatusObavestenja getStatus() {
-		return status;
-	}
+    @Column(name = "status", nullable = false)
+    private StatusObavestenja status;
 
-	public void setStatus(StatusObavestenja status) {
-		this.status = status;
-	}
+    @Column(name = "poruka", nullable = false)
+    private String poruka;
 
-	public String getPoruka() {
-		return poruka;
-	}
-
-	public void setPoruka(String poruka) {
-		this.poruka = poruka;
-	}
-
-	public Porudzbina getPorudzbina() {
-		return porudzbina;
-	}
-
-	public void setPorudzbina(Porudzbina porudzbina) {
-		this.porudzbina = porudzbina;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Porudzbina porudzbina;
 }

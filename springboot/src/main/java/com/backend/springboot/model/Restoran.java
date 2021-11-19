@@ -1,65 +1,37 @@
 package com.backend.springboot.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.util.Set;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "restoran")
 public class Restoran {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@OneToMany(mappedBy = "restoran")
 	private Set<Jelovnik> jelovnici;
+
+	@OneToMany(mappedBy = "restoran")
 	private Set<Sto> stolovi;
+
+	@OneToMany(mappedBy = "restoran")
 	private Set<KartaPica> kartePica;
+
+	@OneToMany(mappedBy = "restoran")
 	private Set<Plata> plate;
+
+	@OneToMany(mappedBy = "restoran")
 	private Set<Izvestaj> izvestaji;
-	
-	public Restoran() {
-		
-	}
-	
-	public Restoran(Set<Jelovnik> jelovnici, Set<Sto> stolovi, Set<KartaPica> kartePica, Set<Plata> plate,
-			Set<Izvestaj> izvestaji) {
-		super();
-		this.jelovnici = jelovnici;
-		this.stolovi = stolovi;
-		this.kartePica = kartePica;
-		this.plate = plate;
-		this.izvestaji = izvestaji;
-	}
-
-	public Set<Jelovnik> getJelovnici() {
-		return jelovnici;
-	}
-
-	public void setJelovnici(Set<Jelovnik> jelovnici) {
-		this.jelovnici = jelovnici;
-	}
-
-	public Set<Sto> getStolovi() {
-		return stolovi;
-	}
-
-	public void setStolovi(Set<Sto> stolovi) {
-		this.stolovi = stolovi;
-	}
-
-	public Set<KartaPica> getKartePica() {
-		return kartePica;
-	}
-
-	public void setKartePica(Set<KartaPica> kartePica) {
-		this.kartePica = kartePica;
-	}
-
-	public Set<Plata> getPlate() {
-		return plate;
-	}
-
-	public void setPlate(Set<Plata> plate) {
-		this.plate = plate;
-	}
-
-	public Set<Izvestaj> getIzvestaji() {
-		return izvestaji;
-	}
-
-	public void setIzvestaji(Set<Izvestaj> izvestaji) {
-		this.izvestaji = izvestaji;
-	}
 }

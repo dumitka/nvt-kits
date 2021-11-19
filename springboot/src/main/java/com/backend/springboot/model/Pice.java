@@ -1,72 +1,40 @@
 package com.backend.springboot.model;
 
+import com.backend.springboot.enums.TipPica;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "pice")
 public class Pice {
-	private String naziv;
-	private String opis;
-	private int kolicinaBroj;
-	private String kolicinaJedinica;
-	private TipPica tipPica;
-	private String slika;
-	
-	public Pice() {
-		
-	}
-	
-	public Pice(String naziv, String opis, int kolicinaBroj, String kolicinaJedinica, TipPica tipPica, String slika) {
-		super();
-		this.naziv = naziv;
-		this.opis = opis;
-		this.kolicinaBroj = kolicinaBroj;
-		this.kolicinaJedinica = kolicinaJedinica;
-		this.tipPica = tipPica;
-		this.slika = slika;
-	}
 
-	public String getNaziv() {
-		return naziv;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	public void setNaziv(String naziv) {
-		this.naziv = naziv;
-	}
+    @Column(name = "naziv", nullable = false)
+    private String naziv;
 
-	public String getOpis() {
-		return opis;
-	}
+    @Column(name = "opis")
+    private String opis;
 
-	public void setOpis(String opis) {
-		this.opis = opis;
-	}
+    @Column(name = "kolicina_broj", nullable = false)
+    private int kolicinaBroj;
 
-	public int getKolicinaBroj() {
-		return kolicinaBroj;
-	}
+    @Column(name = "kolicina_jedinica", nullable = false)
+    private String kolicinaJedinica;
 
-	public void setKolicinaBroj(int kolicinaBroj) {
-		this.kolicinaBroj = kolicinaBroj;
-	}
+    @Column(name = "tip_pica")
+    private TipPica tipPica;
 
-	public String getKolicinaJedinica() {
-		return kolicinaJedinica;
-	}
-
-	public void setKolicinaJedinica(String kolicinaJedinica) {
-		this.kolicinaJedinica = kolicinaJedinica;
-	}
-
-	public TipPica getTipPica() {
-		return tipPica;
-	}
-
-	public void setTipPica(TipPica tipPica) {
-		this.tipPica = tipPica;
-	}
-
-	public String getSlika() {
-		return slika;
-	}
-
-	public void setSlika(String slika) {
-		this.slika = slika;
-	}
+    @Column(name = "slika")
+    private String slika;
 }

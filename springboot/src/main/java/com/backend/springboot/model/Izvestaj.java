@@ -1,95 +1,51 @@
 package com.backend.springboot.model;
 
+import com.backend.springboot.enums.TipIzvestaja;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "izvestaj")
 public class Izvestaj {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column(name = "tip_izvestaja", nullable = false)
 	private TipIzvestaja tipIzvestaja;
+
+	@Column(name = "datum", nullable = false)
 	private LocalDateTime datum;
+
+	@Column(name = "trosak_na_plate")
 	private float trosakNaPlate;
+
+	@Column(name = "trosak_na_nabavke")
 	private float trosakNabavke;
+
+	@Column(name = "trosak_na_rezije")
 	private float trosakNaRezije;
+
+	@Column(name = "prihod_od_prodaje_jela")
 	private float prihodOdProdajeJela;
+
+	@Column(name = "prihod_od_prodaje_pica")
 	private float prihodOdProdajePica;
+
+	@Column(name = "baksis")
 	private float baksis;
-	
-	public Izvestaj() {
-		
-	}
-	
-	public Izvestaj(TipIzvestaja tipIzvestaja, LocalDateTime datum, float trosakNaPlate, float trosakNabavke,
-			float trosakNaRezije, float prihodOdProdajeJela, float prihodOdProdajePica, float baksis) {
-		super();
-		this.tipIzvestaja = tipIzvestaja;
-		this.datum = datum;
-		this.trosakNaPlate = trosakNaPlate;
-		this.trosakNabavke = trosakNabavke;
-		this.trosakNaRezije = trosakNaRezije;
-		this.prihodOdProdajeJela = prihodOdProdajeJela;
-		this.prihodOdProdajePica = prihodOdProdajePica;
-		this.baksis = baksis;
-	}
 
-	public TipIzvestaja getTipIzvestaja() {
-		return tipIzvestaja;
-	}
-
-	public void setTipIzvestaja(TipIzvestaja tipIzvestaja) {
-		this.tipIzvestaja = tipIzvestaja;
-	}
-
-	public LocalDateTime getDatum() {
-		return datum;
-	}
-
-	public void setDatum(LocalDateTime datum) {
-		this.datum = datum;
-	}
-
-	public float getTrosakNaPlate() {
-		return trosakNaPlate;
-	}
-
-	public void setTrosakNaPlate(float trosakNaPlate) {
-		this.trosakNaPlate = trosakNaPlate;
-	}
-
-	public float getTrosakNabavke() {
-		return trosakNabavke;
-	}
-
-	public void setTrosakNabavke(float trosakNabavke) {
-		this.trosakNabavke = trosakNabavke;
-	}
-
-	public float getTrosakNaRezije() {
-		return trosakNaRezije;
-	}
-
-	public void setTrosakNaRezije(float trosakNaRezije) {
-		this.trosakNaRezije = trosakNaRezije;
-	}
-
-	public float getPrihodOdProdajeJela() {
-		return prihodOdProdajeJela;
-	}
-
-	public void setPrihodOdProdajeJela(float prihodOdProdajeJela) {
-		this.prihodOdProdajeJela = prihodOdProdajeJela;
-	}
-
-	public float getPrihodOdProdajePica() {
-		return prihodOdProdajePica;
-	}
-
-	public void setPrihodOdProdajePica(float prihodOdProdajePica) {
-		this.prihodOdProdajePica = prihodOdProdajePica;
-	}
-
-	public float getBaksis() {
-		return baksis;
-	}
-
-	public void setBaksis(float baksis) {
-		this.baksis = baksis;
-	}
+	@ManyToOne
+	@JoinColumn(name = "restoran_id", nullable = false)
+	private Restoran restoran;
 }

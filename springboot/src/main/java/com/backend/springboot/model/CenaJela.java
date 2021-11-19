@@ -1,32 +1,32 @@
 package com.backend.springboot.model;
 
-public class CenaJela {
-	private Jelo jelo;
-	private float iznos;
-	
-	public CenaJela() {
-		
-	}
-	
-	public CenaJela(Jelo jelo, float iznos) {
-		super();
-		this.jelo = jelo;
-		this.iznos = iznos;
-	}
 
-	public Jelo getJelo() {
-		return jelo;
-	}
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-	public void setJelo(Jelo jelo) {
-		this.jelo = jelo;
-	}
+import javax.persistence.*;
+import java.util.Set;
 
-	public float getIznos() {
-		return iznos;
-	}
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "cena_jela")
+public class CenaJela { //stavka jelovnika?
 
-	public void setIznos(float iznos) {
-		this.iznos = iznos;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Jelo jelo;
+
+    @Column(name = "iznos", nullable = false)
+    private float iznos;
+
+    @ManyToMany(mappedBy = "ceneJela")
+    private Set<Jelovnik> jelovnici;
 }

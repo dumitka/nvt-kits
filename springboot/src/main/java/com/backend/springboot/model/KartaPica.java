@@ -1,32 +1,34 @@
 package com.backend.springboot.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "karta_pica")
 public class KartaPica {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+
+	@Column(name = "pocetak_vazenja", nullable = false)
 	private LocalDateTime pocetakVazenja;
+
+	@ManyToMany
+	@JoinTable(name = "cene_pica", joinColumns = @JoinColumn(name = "karta_pica_id"), inverseJoinColumns = @JoinColumn(name = "cena_pica_id"))
 	private Set<CenaPica> cenePica;
-	
-	public KartaPica() {
-		
-	}
-	
-	public KartaPica(LocalDateTime pocetakVazenja, Set<CenaPica> cenePica) {
-		super();
-		this.pocetakVazenja = pocetakVazenja;
-		this.cenePica = cenePica;
-	}
-	
-	public LocalDateTime getPocetakVazenja() {
-		return pocetakVazenja;
-	}
-	public void setPocetakVazenja(LocalDateTime pocetakVazenja) {
-		this.pocetakVazenja = pocetakVazenja;
-	}
-	public Set<CenaPica> getCenePica() {
-		return cenePica;
-	}
-	public void setCenePica(Set<CenaPica> cenePica) {
-		this.cenePica = cenePica;
-	}
+
+	@ManyToOne
+	@JoinColumn(name = "restoran_id", nullable = false)
+	private Restoran restoran;
 }
