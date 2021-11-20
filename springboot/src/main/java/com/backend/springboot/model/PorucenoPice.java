@@ -1,12 +1,10 @@
 package com.backend.springboot.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
@@ -31,6 +29,6 @@ public class PorucenoPice {
 	private Porudzbina porudzbina;
 
 	@ManyToOne
-	@JoinColumn(name = "sanker_id", nullable = false)
-	private Sanker sanker;
+	@JoinColumn(name = "korisnik_id", nullable = false)
+	private Korisnik sanker;
 }

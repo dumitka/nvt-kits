@@ -1,13 +1,11 @@
 package com.backend.springboot.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,7 +26,7 @@ public class Plata {
 
 	@ManyToOne
 	@JoinColumn(name = "korisnik_sistema_id")
-	private KorisnikSistema korisnik;
+	private Korisnik korisnik;
 
 	@ManyToOne
 	@JoinColumn(name = "restoran_id", nullable = false)

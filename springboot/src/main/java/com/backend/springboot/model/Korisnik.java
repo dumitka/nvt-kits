@@ -1,28 +1,27 @@
 package com.backend.springboot.model;
 
-import com.backend.springboot.enums.TipKorisnika;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
+@Builder
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
-@Builder
-@Table(name = "korisnik_sistema")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class KorisnikSistema {
+@Table(name = "korisnik")
+public class Korisnik { //implements UserDetails
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(name = "korisnickoIme", nullable = false)
+	@Column(name = "korisnicko_ime", nullable = false)
 	private String korisnickoIme;
 
 	@Column(name = "lozinka", nullable = false)
@@ -34,27 +33,18 @@ public class KorisnikSistema {
 	@Column(name = "prezime", nullable = false)
 	private String prezime;
 
-	@Column(name = "tipKorisnika", nullable = false)
-	private TipKorisnika tipKorisnika;
-
 	@Column(name = "otpusten", nullable = false)
 	private boolean otpusten;
 
 	@OneToMany(mappedBy = "korisnik")
 	private Set<Plata> plate;
 
-	public KorisnikSistema() {
+	@Column(name = "enabled")
+	private boolean enabled;
 
-	}
-
-	public KorisnikSistema(String korisnickoIme, String lozinka, String ime, String prezime, TipKorisnika tipKorisnika,
-						   boolean otpusten) {
-		super();
-		this.korisnickoIme = korisnickoIme;
-		this.lozinka = lozinka;
-		this.ime = ime;
-		this.prezime = prezime;
-		this.tipKorisnika = tipKorisnika;
-		this.otpusten = otpusten;
-	}
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "korisnik_role",
+			joinColumns = @JoinColumn(name = "korisnik_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private List<Role> roles;
 }

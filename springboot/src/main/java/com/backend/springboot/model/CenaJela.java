@@ -1,21 +1,19 @@
 package com.backend.springboot.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "cena_jela")
-public class CenaJela { //stavka jelovnika?
+public class CenaJela {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

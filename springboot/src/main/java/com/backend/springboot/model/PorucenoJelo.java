@@ -1,13 +1,11 @@
 package com.backend.springboot.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
@@ -32,7 +30,7 @@ public class PorucenoJelo {
 	private Porudzbina porudzbina;
 
 	@ManyToOne
-	@JoinColumn(name = "kuvar_id", nullable = false) //mozda ovi idjevi korisnika da se revidiraju
-	private Kuvar kuvar;
+	@JoinColumn(name = "korisnik_id", nullable = false)
+	private Korisnik kuvar;
 
 }

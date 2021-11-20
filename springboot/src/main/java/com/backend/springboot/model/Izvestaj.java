@@ -1,14 +1,12 @@
 package com.backend.springboot.model;
 
 import com.backend.springboot.enums.TipIzvestaja;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor

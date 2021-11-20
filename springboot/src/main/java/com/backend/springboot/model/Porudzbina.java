@@ -1,13 +1,11 @@
 package com.backend.springboot.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,8 +25,8 @@ public class Porudzbina {
 	private Set<PorucenoPice> porucenaPica;
 
 	@ManyToOne
-	@JoinColumn(name = "konobar_id", nullable = false)
-	private Konobar konobar;
+	@JoinColumn(name = "korisnik_id", nullable = false)
+	private Korisnik konobar;
 
 	@OneToMany(mappedBy = "porudzbina")
 	private Set<Obavestenje> obavestenja;
