@@ -2,22 +2,25 @@ package com.backend.springboot.model;
 
 import javax.persistence.*;
 
+import org.springframework.security.core.GrantedAuthority;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "role")
-public class Role { //implements GrantedAuthority
+public class Role implements GrantedAuthority { 
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
     @Column(name = "name")
     String name;
-
-//    @JsonIgnore
-//    @Override
-//    public String getAuthority() {
-//        return name;
-//    }
 
     public Integer getId() {
         return id;
@@ -34,4 +37,10 @@ public class Role { //implements GrantedAuthority
     public void setName(String name) {
         this.name = name;
     }
+
+    @JsonIgnore
+	@Override
+	public String getAuthority() {
+		return this.name;
+	}
 }
