@@ -1,13 +1,13 @@
 insert into role (name) values ('ROLE_ADMIN');
-insert into role (name) values ('ROLE_DIREKTOR');
-insert into role (name) values ('ROLE_KONOBAR');
-insert into role (name) values ('ROLE_KUVAR');
-insert into role (name) values ('ROLE_MENADZER');
-insert into role (name) values ('ROLE_SANKER');
-insert into role (name) values ('ROLE_SEF_KUHINJE');
-insert into role (name) values ('ROLE_SEF_SALE');
+insert into role (name) values ('ROLE_DIRECTOR');
+insert into role (name) values ('ROLE_WAITER');
+insert into role (name) values ('ROLE_COOK');
+insert into role (name) values ('ROLE_MANAGER');
+insert into role (name) values ('ROLE_BARTENDER');
+insert into role (name) values ('ROLE_CHEF');
+insert into role (name) values ('ROLE_HALL_MANAGER');
 
-insert into korisnik(korisnicko_ime, lozinka, ime, prezime, otpusten, enabled) values ('pera', 'pera', 'Petar', 'Peric', false, true); --HESIRATI LOZINKU
-insert into korisnik_role (korisnik_id, role_id) values (1, 1);--PERA ADMIN
+insert into users(username, password, name, last_name, fired, enabled) values ('pera', 'pera', 'Petar', 'Peric', false, true); --HESIRATI LOZINKU
+insert into user_role (user_id, role_id) values (1, 1);--PERA ADMIN
 
 
