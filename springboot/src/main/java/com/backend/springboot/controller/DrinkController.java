@@ -1,6 +1,8 @@
 package com.backend.springboot.controller;
 
 import com.backend.springboot.dto.DrinkDTO;
+import com.backend.springboot.dtoTransformation.DrinkToDrinkDTO;
+import com.backend.springboot.enums.DrinkType;
 import com.backend.springboot.model.Drink;
 import com.backend.springboot.service.DrinkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,7 @@ public class DrinkController {
 
     @PostMapping("/addDrink")
     @PreAuthorize("hasRole('SERVER')")
-    public ResponseEntity<DrinkDTO> addingNewDrink(DrinkDTO dto) {
+    public ResponseEntity<DrinkDTO> addingNewDrink(@RequestBody DrinkDTO dto) {
         if (this.drinkService.freeNameAndAmount(dto.getName(), dto.getAmountUnit(), dto.getAmountNumber()))
             return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
         Drink novoPice = Drink.builder()
@@ -38,7 +40,7 @@ public class DrinkController {
 
     @PostMapping("/editDrink")
     @PreAuthorize("hasRole('SERVER')")
-    public ResponseEntity<DrinkDTO> editingDrink(DrinkDTO dto) {
+    public ResponseEntity<DrinkDTO> editingDrink(@RequestBody DrinkDTO dto) {
         Drink pice = this.drinkService.findOne(dto.getId());        // pice =! null
         if (!this.drinkService.editableDrink(dto.getId(), dto.getName(), dto.getAmountUnit(), dto.getAmountNumber()))
             return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
@@ -53,4 +55,32 @@ public class DrinkController {
         return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
     }
 
+    @DeleteMapping("/deleteDrink")
+    @PreAuthorize("hasRole('SERVER')")
+    public ResponseEntity<DrinkDTO> deletingDrink(@RequestBody DrinkDTO dto) {
+        Drink pice = this.drinkService.findOne(dto.getId());        // pice =! null
+        pice.setAvailable(false);
+        this.drinkService.save(pice);
+
+        // doraditi, mora se izbrisati iz karte pica
+        return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/searchDrinks")
+    @PreAuthorize("hasRole('SERVER')")
+    public ResponseEntity<List<DrinkDTO>> searchingDrinks(@RequestBody String input) {
+        List<Drink> pronadjenaPica = this.drinkService.findByName(input);
+        List<DrinkDTO> konvertovanaLista = (new DrinkToDrinkDTO()).convertList(pronadjenaPica);
+        return new ResponseEntity<>(konvertovanaLista, HttpStatus.ACCEPTED);
+    }
+
+    // uzima u obzir i search
+    @GetMapping("/filterDrinks")
+    @PreAuthorize("hasRole('SERVER')")
+    public ResponseEntity<List<DrinkDTO>> filteringDrinks(@RequestBody String input, @RequestBody DrinkType drinkType) {
+        List<Drink> pronadjenaPica = this.drinkService.findByName(input);
+        pronadjenaPica = pronadjenaPica.stream().filter(p -> p.getType().equals(drinkType)).toList();
+        List<DrinkDTO> konvertovanaLista = (new DrinkToDrinkDTO()).convertList(pronadjenaPica);
+        return new ResponseEntity<>(konvertovanaLista, HttpStatus.ACCEPTED);
+    }
 }

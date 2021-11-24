@@ -56,4 +56,8 @@ public class DrinkService {
 
     public Drink save(Drink drink) { return this.drinkRepository.save(drink); }
 
+    public List<Drink> findByName(String search) {
+        return this.drinkRepository.findAll().stream().filter(p -> p.getName().toUpperCase().contains(search)
+                && p.isAvailable()).toList();
+    }
 }

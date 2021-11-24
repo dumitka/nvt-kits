@@ -15,7 +15,7 @@ public class DrinkDTO {
     private String name;
     private DrinkType type;
     private String description;
-    private Integer amountNumber;
+    private double amountNumber;
     private String amountUnit;
     private boolean available;
     private String image;
