@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/drinks/")
@@ -35,4 +35,22 @@ public class DrinkController {
         dto.setId(novoPice.getId());
         return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
     }
+
+    @PostMapping("/editDrink")
+    @PreAuthorize("hasRole('SERVER')")
+    public ResponseEntity<DrinkDTO> editingDrink(DrinkDTO dto) {
+        Drink pice = this.drinkService.findOne(dto.getId());        // pice =! null
+        if (!this.drinkService.editableDrink(dto.getId(), dto.getName(), dto.getAmountUnit(), dto.getAmountNumber()))
+            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+        pice.setAmountNumber(dto.getAmountNumber());
+        pice.setAmountUnit(dto.getAmountUnit());
+        pice.setAvailable(dto.isAvailable());
+        pice.setDescription(dto.getDescription());
+        pice.setImage(dto.getImage());
+        pice.setName(dto.getName());
+        pice.setType(dto.getType());
+        this.drinkService.save(pice);
+        return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+    }
+
 }
