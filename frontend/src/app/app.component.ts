@@ -39,13 +39,14 @@ export class AppComponent {
       _this.setConnected(true);
       console.log('Connected: ' + frame);
 
-      _this.stompClient.subscribe('/topic/hi', function (hello : string) {
-        _this.showGreeting(JSON.parse(hello));
+      _this.stompClient.subscribe('/topic/hi', function (notification) {
+        console.log(notification)
+        _this.showGreeting(JSON.parse(notification.body).message);
       });
     });
   }
 
-
+//JSON.parse(hello.body).greeting
   disconnect() {
     if(this.stompClient != null) {
       this.stompClient.disconnect();
