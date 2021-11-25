@@ -5,11 +5,13 @@ import com.backend.springboot.dto.DrinkPriceDTO;
 import com.backend.springboot.model.DrinkCard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@Component
 public class DrinkCardToDrinkCardDTO  implements Converter<DrinkCard, DrinkCardDTO> {
 
     private DrinkPriceToDrinkPriceDTO drinkPriceToDrinkPriceDTO;
