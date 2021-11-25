@@ -4,10 +4,12 @@ import com.backend.springboot.dto.DrinkPriceDTO;
 import com.backend.springboot.model.DrinkPrice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class DrinkPriceToDrinkPriceDTO implements Converter<DrinkPrice, DrinkPriceDTO> {
 
     private DrinkToDrinkDTO drinkToDrinkDTO;

@@ -3,10 +3,12 @@ package com.backend.springboot.dtoTransformation;
 import com.backend.springboot.dto.DrinkDTO;
 import com.backend.springboot.model.Drink;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class DrinkToDrinkDTO implements Converter<Drink, DrinkDTO> {
 
     @Override
