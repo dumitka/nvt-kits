@@ -4,6 +4,7 @@ import com.backend.springboot.dto.DrinkDTO;
 import com.backend.springboot.dtoTransformation.DrinkToDrinkDTO;
 import com.backend.springboot.enums.DrinkType;
 import com.backend.springboot.model.Drink;
+import com.backend.springboot.service.DrinkCardService;
 import com.backend.springboot.service.DrinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,14 +15,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/drinks/")
+@RequestMapping("api/drinks")
 public class DrinkController {
 
     private final DrinkService drinkService;
+    private final DrinkCardService drinkCardService;
+    private final DrinkToDrinkDTO drinkToDrinkDTO;
 
     @Autowired
-    public DrinkController(DrinkService drinkService) {
+    public DrinkController(DrinkService drinkService, DrinkCardService drinkCardService, DrinkToDrinkDTO drinkToDrinkDTO) {
         this.drinkService = drinkService;
+        this.drinkCardService = drinkCardService;
+        this.drinkToDrinkDTO = drinkToDrinkDTO;
     }
 
     @PostMapping("/addDrink")
@@ -61,8 +66,7 @@ public class DrinkController {
         Drink pice = this.drinkService.findOne(dto.getId());        // pice =! null
         pice.setAvailable(false);
         this.drinkService.save(pice);
-
-        // doraditi, mora se izbrisati iz karte pica
+        this.drinkCardService.removeDrink(pice);
         return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
     }
 
@@ -70,7 +74,7 @@ public class DrinkController {
     @PreAuthorize("hasRole('SERVER')")
     public ResponseEntity<List<DrinkDTO>> searchingDrinks(@RequestBody String input) {
         List<Drink> pronadjenaPica = this.drinkService.findByName(input);
-        List<DrinkDTO> konvertovanaLista = (new DrinkToDrinkDTO()).convertList(pronadjenaPica);
+        List<DrinkDTO> konvertovanaLista = this.drinkToDrinkDTO.convertList(pronadjenaPica);
         return new ResponseEntity<>(konvertovanaLista, HttpStatus.ACCEPTED);
     }
 
@@ -80,7 +84,15 @@ public class DrinkController {
     public ResponseEntity<List<DrinkDTO>> filteringDrinks(@RequestBody String input, @RequestBody DrinkType drinkType) {
         List<Drink> pronadjenaPica = this.drinkService.findByName(input);
         pronadjenaPica = pronadjenaPica.stream().filter(p -> p.getType().equals(drinkType)).toList();
-        List<DrinkDTO> konvertovanaLista = (new DrinkToDrinkDTO()).convertList(pronadjenaPica);
+        List<DrinkDTO> konvertovanaLista = this.drinkToDrinkDTO.convertList(pronadjenaPica);
+        return new ResponseEntity<>(konvertovanaLista, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/")
+    @PreAuthorize("hasRole('SERVER')")
+    public ResponseEntity<List<DrinkDTO>> gettingDrinks() {
+        List<Drink> pronadjenaPica = this.drinkService.findAllAvailable();
+        List<DrinkDTO> konvertovanaLista = this.drinkToDrinkDTO.convertList(pronadjenaPica);
         return new ResponseEntity<>(konvertovanaLista, HttpStatus.ACCEPTED);
     }
 }

@@ -7,7 +7,7 @@ import org.springframework.core.convert.converter.Converter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DrinkToDrinkDTO  implements Converter<Drink, DrinkDTO> {
+public class DrinkToDrinkDTO implements Converter<Drink, DrinkDTO> {
 
     @Override
     public DrinkDTO convert(Drink drink) {
