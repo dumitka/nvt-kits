@@ -37,10 +37,13 @@ public class Drink {
 	private String description;
 
 	@Column(name = "amount_number", nullable = false)
-	private Integer amountNumber;
+	private double amountNumber;
 
 	@Column(name = "amount_unit", nullable = false)
 	private String amountUnit;
+
+	@Column(name = "available", nullable = false)
+	private boolean available;				// logicko brisanje zbog starih narudzbina
 
 	@Column(name = "image")
 	private String image;
