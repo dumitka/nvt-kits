@@ -66,6 +66,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests().antMatchers("/auth/login").permitAll() //svi imaju pristup logovanju
 				.antMatchers("/api/hello").permitAll()
 				.antMatchers("/nvt-stomp-endpoint/**").permitAll()
+				.antMatchers("/cook/get").hasAuthority("ROLE_COOK")
+				.antMatchers("/chef/get").hasAuthority("ROLE_CHEF")
+				
 			.anyRequest().authenticated().and()
 			.cors().and()
 			.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, customUserDetailsService), BasicAuthenticationFilter.class);

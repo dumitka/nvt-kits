@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CookProfileService } from './cook-profile.service';
+import { AuthService } from '../login/auth.service';
 
 @Component({
   selector: 'app-cook-profile',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CookProfileComponent implements OnInit {
 
-  constructor() { }
+  loggedCook:any;
+
+  constructor(private service:CookProfileService,  private authService: AuthService) {
+    this.service.getCook().subscribe((data:any) => {this.loggedCook = data; console.log(this.loggedCook)})
+  }
 
   ngOnInit(): void {
   }
 
+  logout(){
+    this.authService.logout();
+  }
 }

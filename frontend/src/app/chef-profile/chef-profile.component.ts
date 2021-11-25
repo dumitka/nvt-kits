@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ChefProfileService } from './chef-profile.service';
+import { AuthService } from '../login/auth.service';
 
 @Component({
   selector: 'app-chef-profile',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChefProfileComponent implements OnInit {
 
-  constructor() { }
+  loggedChef:any;
+
+  constructor(private service:ChefProfileService, private authService: AuthService) {
+    this.service.getChef().subscribe((data:any) => {this.loggedChef = data; console.log(this.loggedChef)});
+
+    
+  }
 
   ngOnInit(): void {
   }
 
+  logout(){
+    this.authService.logout();
+  }
 }

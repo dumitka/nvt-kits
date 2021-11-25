@@ -26,6 +26,8 @@ import { HallManagerRoutes } from './user-routes/HallManagerRoutes';
 import { ManagerRoutes } from './user-routes/ManagerRoutes';
 import { WaiterRoutes } from './user-routes/WaiterRoutes';
 import { DirectorRoutes } from './user-routes/DirectorRoutes';
+import { MealCategoryComponent } from './meal-category/meal-category.component';
+import { MenuCategoryComponent } from './menu-category/menu-category.component';
 
 
 @NgModule({
@@ -39,7 +41,9 @@ import { DirectorRoutes } from './user-routes/DirectorRoutes';
     BartenderProfileComponent,
     ChefProfileComponent,
     HallManagerProfileComponent,
-    DirectorProfileComponent
+    DirectorProfileComponent,
+    MealCategoryComponent,
+    MenuCategoryComponent
   ],
   imports: [
     BrowserModule,
@@ -91,6 +95,16 @@ import { DirectorRoutes } from './user-routes/DirectorRoutes';
         path: 'WaiterProfile',
         canActivate: [WaiterRoutes],
         component: WaiterProfileComponent,
+      },
+      {
+        path: 'MealCategory',
+        canActivate: [ChefRoutes],
+        component: MealCategoryComponent,
+      },
+      {
+        path: 'MenuCategory',
+        canActivate: [ChefRoutes],
+        component: MenuCategoryComponent,
       }
       
     ]),
