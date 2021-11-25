@@ -67,6 +67,7 @@ public class DrinkCardController {
         DrinkCard nova = DrinkCard.builder().drinkPrices(listaCP).dateOfValidation(LocalDateTime.now())
                 .restaurant(restaurantService.findOne(drinkCardDTO.getRestaurantId())).build();
         listaCP.stream().forEach(cp -> { cp.getDrinkCards().add(nova); this.drinkPriceService.save(cp); });
+        this.drinkCardService.save(nova);
         DrinkCardDTO dto = this.drinkCardToDrinkCardDTO.convert(nova);
         return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
     }
