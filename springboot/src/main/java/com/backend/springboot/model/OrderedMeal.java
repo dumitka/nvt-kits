@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.backend.springboot.enums.OrderedItemStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,4 +43,7 @@ public class OrderedMeal {
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User cook;
+
+	@Column(name = "status")
+	private OrderedItemStatus status;
 }

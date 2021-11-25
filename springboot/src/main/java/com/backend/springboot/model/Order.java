@@ -2,6 +2,7 @@ package com.backend.springboot.model;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,4 +46,7 @@ public class Order {
 	@ManyToOne
 	@JoinColumn(name = "desk_id")
 	private Desk desk;
+	
+	@Column(name = "deleted")
+	private Boolean isDeleted;
 }
