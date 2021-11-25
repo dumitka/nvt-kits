@@ -12,4 +12,8 @@ public class OrderedMealService {
 	public OrderedMeal findOne(Integer id) {
 		return orderedMealRepository.findOneById(id);
 	}
+	
+	public OrderedMeal save(OrderedMeal orderedMeal) {
+		return orderedMealRepository.save(orderedMeal);
+	}
 }

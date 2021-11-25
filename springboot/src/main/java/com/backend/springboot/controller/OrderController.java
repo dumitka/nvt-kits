@@ -23,7 +23,6 @@ import com.backend.springboot.model.Order;
 import com.backend.springboot.model.OrderedDrink;
 import com.backend.springboot.model.OrderedMeal;
 import com.backend.springboot.model.User;
-import com.backend.springboot.repository.DeskRepository;
 import com.backend.springboot.service.DeskService;
 import com.backend.springboot.service.NotificationService;
 import com.backend.springboot.service.OrderService;
