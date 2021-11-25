@@ -1,9 +1,6 @@
 package com.backend.springboot.dto;
 
-import com.backend.springboot.model.DrinkCard;
 import lombok.*;
-
-import java.util.Set;
 
 @Getter
 @Setter

@@ -3,7 +3,6 @@ package com.backend.springboot.dtoTransformation;
 import com.backend.springboot.dto.DrinkCardDTO;
 import com.backend.springboot.dto.DrinkPriceDTO;
 import com.backend.springboot.model.DrinkCard;
-import com.backend.springboot.model.DrinkPrice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 

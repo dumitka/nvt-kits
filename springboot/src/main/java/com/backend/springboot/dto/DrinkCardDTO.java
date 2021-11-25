@@ -1,6 +1,5 @@
 package com.backend.springboot.dto;
 
-import com.backend.springboot.model.Restaurant;
 import lombok.*;
 
 import java.time.LocalDateTime;
