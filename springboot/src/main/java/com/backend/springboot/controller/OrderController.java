@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.backend.springboot.dto.OrderDTO;
 import com.backend.springboot.enums.DeskStatus;
 import com.backend.springboot.enums.NotificationStatus;
+import com.backend.springboot.enums.OrderedItemStatus;
 import com.backend.springboot.model.Desk;
 import com.backend.springboot.model.Notification;
 import com.backend.springboot.model.Order;
@@ -130,5 +131,41 @@ public class OrderController {
 		deskService.save(desk);
 		
         return new ResponseEntity<String>("Order successfully charged!", HttpStatus.OK);
+    }
+	
+	@PreAuthorize("hasRole('ROLE_WAITER')")
+    @PutMapping("/deliverDrinks/{id}")
+    public ResponseEntity<String> deliverDrinks(@PathVariable Integer id) {
+		Order order = orderService.findOne(id);
+		order.getOrderedDrinks().forEach(d -> d.setStatus(OrderedItemStatus.DELIVERED));
+		
+		Set<OrderedMeal> notDelivered = order.getOrderedMeals().stream().filter(m -> m.getStatus().equals(OrderedItemStatus.ORDERED) || m.getStatus().equals(OrderedItemStatus.IN_PROGRESS)).collect(Collectors.toSet());
+		if (notDelivered.isEmpty()) {
+			Desk desk = deskService.findOne(order.getDesk().getId());
+			desk.setDeskStatus(DeskStatus.DELIVERED);
+			deskService.save(desk);
+		}
+		
+		orderService.save(order);
+		
+        return new ResponseEntity<String>("Drinks successfully delivered!", HttpStatus.OK);
+    }
+	
+	@PreAuthorize("hasRole('ROLE_WAITER')")
+    @PutMapping("/deliverMeals/{id}")
+    public ResponseEntity<String> deliverMeals(@PathVariable Integer id) {
+		Order order = orderService.findOne(id);
+		order.getOrderedMeals().forEach(d -> d.setStatus(OrderedItemStatus.DELIVERED));
+		
+		Set<OrderedDrink> notDelivered = order.getOrderedDrinks().stream().filter(m -> m.getStatus().equals(OrderedItemStatus.ORDERED) || m.getStatus().equals(OrderedItemStatus.IN_PROGRESS)).collect(Collectors.toSet());
+		if (notDelivered.isEmpty()) {
+			Desk desk = deskService.findOne(order.getDesk().getId());
+			desk.setDeskStatus(DeskStatus.DELIVERED);
+			deskService.save(desk);
+		}
+		
+		orderService.save(order);
+		
+        return new ResponseEntity<String>("Meals successfully delivered!", HttpStatus.OK);
     }
 }
