@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@stomp/stompjs": "^6.1.2",
+    "sockjs-client": "^1.5.2"
+  },
+  "devDependencies": {
+    "@types/sockjs-client": "^1.5.1"
+  }
+}
