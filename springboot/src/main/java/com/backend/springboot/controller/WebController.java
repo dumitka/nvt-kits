@@ -8,11 +8,11 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class WebController {
 
-    @MessageMapping("/hello") //we can send objects to /nvt/hello
+    @MessageMapping("/hello")
     @SendTo("/topic/hi")
     public Notification greeting(String msg) throws Exception {
         return Notification.builder()
-                .message("How YOU doin'? :) " + msg)
+                .message("Test message " + msg)
                 .build();
     }
 }

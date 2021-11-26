@@ -9,6 +9,7 @@ import com.backend.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class UserController {
     private UserMapper userMapper;
 
     @GetMapping("/")
+    @PreAuthorize("hasRole('DIRECTOR')")
     public ResponseEntity<List<UserDto>> getAll() {
         List<UserDto> employees = userService.getAllEmployees().stream()
                 .map(user -> userMapper.convertUserToUserDto(user))
@@ -35,6 +37,7 @@ public class UserController {
     }
 
     @PostMapping("/")
+    @PreAuthorize("hasRole('DIRECTOR')")
     public ResponseEntity<UserDto> createUser(@RequestBody CreateUpdateUserDto createUserDto) {
         //validacija, nullchecks
         User user = userMapper.convertCreateUpdateUserDtoToUser(createUserDto);
@@ -47,6 +50,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('DIRECTOR')")
     public ResponseEntity<UserDto> updateUser(@PathVariable Integer id, @RequestBody CreateUpdateUserDto updateUserDto) {
         //validacija, nullchecks
 
@@ -61,6 +65,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('DIRECTOR')")
     public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
         User deletedUser = userService.deleteEmployee(id);
         if (deletedUser == null) {
