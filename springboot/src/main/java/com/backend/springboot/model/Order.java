@@ -1,22 +1,9 @@
 package com.backend.springboot.model;
 
+import lombok.*;
+
+import javax.persistence.*;
 import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Builder
 @Getter
@@ -46,7 +33,9 @@ public class Order {
 	@ManyToOne
 	@JoinColumn(name = "desk_id")
 	private Desk desk;
-	
+
 	@Column(name = "deleted")
 	private Boolean isDeleted;
+
+	//todo status porudzbine?
 }

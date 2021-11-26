@@ -1,31 +1,13 @@
 package com.backend.springboot.model;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
 
 @Builder
 @Getter
@@ -56,13 +38,8 @@ public class User implements UserDetails {
 	@Column(name = "fired", nullable = false)
 	private Boolean fired;
 
-	@OneToMany(mappedBy = "user")
-	private Set<Salary> salary;
-
 	@Column(name = "enabled")
 	private Boolean enabled;
-
-	
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role",

@@ -1,9 +1,13 @@
 package com.backend.springboot.repository;
 
+import com.backend.springboot.enums.OrderedItemStatus;
+import com.backend.springboot.model.OrderedDrink;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.backend.springboot.model.OrderedDrink;
+import java.util.List;
 
 public interface OrderedDrinkRepository extends JpaRepository<OrderedDrink, Integer>{
-	public OrderedDrink findOneById(Integer id);
+	OrderedDrink findOneById(Integer id);
+
+	List<OrderedDrink> findByStatus(OrderedItemStatus status);
 }

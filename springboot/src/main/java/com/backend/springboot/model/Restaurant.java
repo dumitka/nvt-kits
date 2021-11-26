@@ -1,19 +1,10 @@
 package com.backend.springboot.model;
 
 
-import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.*;
+import java.util.Set;
 
 @Builder
 @Getter
@@ -36,9 +27,4 @@ public class Restaurant {
 	@OneToMany(mappedBy = "restaurant")
 	private Set<DrinkCard> drinkCards;
 
-	@OneToMany(mappedBy = "restaurant")
-	private Set<Salary> salaries;
-
-	@OneToMany(mappedBy = "restaurant")
-	private Set<Report> reports;
 }

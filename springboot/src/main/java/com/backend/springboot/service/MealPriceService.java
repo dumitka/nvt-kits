@@ -1,5 +1,6 @@
 package com.backend.springboot.service;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.backend.springboot.enums.MealType;
 import com.backend.springboot.model.MealPrice;
 import com.backend.springboot.repository.MealPriceRepository;
+import java.time.LocalDateTime;
 
 
 @Component
@@ -22,4 +24,10 @@ public class MealPriceService {
 	public List<MealPrice> getAllMealPricebyMealType(MealType type){
 		return repository.findAllMealPricebyMealType(type);
 	}
+  
+  
+  public MealPrice findPriceOfMealForDate(LocalDateTime date, Integer mealId) { //todo date instead of datetime?
+        return repository.findOneByMealId(mealId);//
+    }
+
 }

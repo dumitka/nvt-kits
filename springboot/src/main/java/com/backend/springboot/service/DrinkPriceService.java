@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -21,11 +22,21 @@ public class DrinkPriceService {
         this.drinkPriceRepository = drinkPriceRepository;
     }
 
-    public List<DrinkPrice> findAll() { return this.drinkPriceRepository.findAll(); }
+    public DrinkPrice findPriceOfDrinkForDate(LocalDateTime date, Integer drinkId) {
+        return drinkPriceRepository.findOneByDrinkId(drinkId); //todo kalkulacija datuma
+    }
 
-    public DrinkPrice findOne(int id) { return this.drinkPriceRepository.findById(id).orElse(null); }
+    public List<DrinkPrice> findAll() {
+        return this.drinkPriceRepository.findAll();
+    }
 
-    public DrinkPrice save(DrinkPrice drinkPrice) { return this.drinkPriceRepository.save(drinkPrice); }
+    public DrinkPrice findOne(int id) {
+        return this.drinkPriceRepository.findById(id).orElse(null);
+    }
+
+    public DrinkPrice save(DrinkPrice drinkPrice) {
+        return this.drinkPriceRepository.save(drinkPrice);
+    }
 
     public DrinkPrice findByDrinkAndPrice(int id, float price) {
         List<DrinkPrice> pronadjeneCP = this.drinkPriceRepository.findAll().stream()

@@ -27,6 +27,7 @@ import { catchError, map } from 'rxjs/operators';
         .pipe(map((res) => {
           this.access_token = res.accessToken;
           this.token_data = res;
+          window.localStorage.setItem("token", this.access_token);
         }, catchError(this.errorHander)));
     }
   
