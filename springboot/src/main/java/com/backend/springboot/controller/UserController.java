@@ -45,4 +45,27 @@ public class UserController {
 
         return new ResponseEntity<>(userMapper.convertUserToUserDto(user), HttpStatus.OK);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable Integer id, @RequestBody CreateUpdateUserDto updateUserDto) {
+        //validacija, nullchecks
+
+        User user = userService.findById(id);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        user = userService.updateUser(user, updateUserDto);
+
+        return new ResponseEntity<>(userMapper.convertUserToUserDto(user), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
+        User deletedUser = userService.deleteEmployee(id);
+        if (deletedUser == null) {
+            return new ResponseEntity<>("User not found!", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>("User fired!", HttpStatus.OK);
+    }
 }

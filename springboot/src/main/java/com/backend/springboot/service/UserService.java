@@ -1,5 +1,6 @@
 package com.backend.springboot.service;
 
+import com.backend.springboot.dto.CreateUpdateUserDto;
 import com.backend.springboot.model.User;
 import com.backend.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,4 +57,39 @@ public class UserService {
 	}
 
 
+	public User updateUser(User user, CreateUpdateUserDto dto) {
+
+		if (dto.getPassword() != null) {
+			user.setPassword(encoder().encode(dto.getPassword()));
+		}
+		if (dto.getName() != null) {
+			user.setName(dto.getName());
+		}
+		if (dto.getLastName() != null) {
+			user.setLastName(dto.getLastName());
+		}
+		if (dto.getUsername() != null) {
+			user.setUsername(dto.getUsername());
+		}
+		if (dto.getRoleName() != null) {
+			user.setRoles(roleService.findByName(dto.getRoleName()));
+		}
+
+		user = userRepository.save(user);
+
+		if (dto.getSalary() != 0) {
+			salaryService.createNewSalary(user, dto.getSalary());
+		}
+
+		return user;
+	}
+
+	public User deleteEmployee(Integer id) {
+		User user = userRepository.getById(id);
+		if (user == null) {
+			return null;
+		}
+		user.setFired(true);
+		return userRepository.save(user);
+	}
 }
