@@ -1,21 +1,9 @@
 package com.backend.springboot.model;
 
+import lombok.*;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Builder
 @Getter
@@ -30,7 +18,7 @@ public class Salary {
 	private Integer id;
 
 	@Column(name = "amount", nullable = false)
-	private Float amount;
+	private float amount;
 
 	//pocetak vazenje plate
 	@Column(name = "date_Of_Validation", nullable = false)
@@ -39,8 +27,4 @@ public class Salary {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-
-	@ManyToOne
-	@JoinColumn(name = "restaurant_id", nullable = false)
-	private Restaurant restaurant;
 }
