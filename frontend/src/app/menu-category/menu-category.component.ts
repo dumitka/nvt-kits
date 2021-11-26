@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-menu-category',
   templateUrl: './menu-category.component.html',
@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuCategoryComponent implements OnInit {
 
-  constructor() { }
+  showMoney:boolean
+  
+  constructor(private router:Router) { 
+    this.showMoney = history.state.data.showMoney;
+    console.log(this.showMoney)
+  }
 
   ngOnInit(): void {
   }
 
 }
+
+
+
+
+
