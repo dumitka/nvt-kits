@@ -1,21 +1,9 @@
 package com.backend.springboot.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import com.backend.springboot.enums.DeskStatus;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.*;
 
 @Builder
 @Getter
@@ -36,12 +24,24 @@ public class Desk {
 	@Column(name = "tip")
 	private Float tip;
 
+	@Column(name = "x")
+	private int x;
+
+	@Column(name = "y")
+	private int y;
+
+	@Column(name = "height")
+	private float height;
+
+	@Column(name = "width")
+	private float width;
+
 	@Column(name = "reserved")
 	private Boolean reserved;
-	
+
 	@Column(name = "capacity")
 	private Integer capacity;
-	
+
 
 	@ManyToOne
 	@JoinColumn(name = "restaurant_id", nullable = false)

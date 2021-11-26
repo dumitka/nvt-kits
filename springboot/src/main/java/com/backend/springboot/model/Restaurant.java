@@ -27,6 +27,4 @@ public class Restaurant {
 	@OneToMany(mappedBy = "restaurant")
 	private Set<DrinkCard> drinkCards;
 
-	@OneToMany(mappedBy = "restaurant")
-	private Set<Report> reports;
 }

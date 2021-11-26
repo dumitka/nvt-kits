@@ -13,4 +13,6 @@ public interface SalaryRepository extends JpaRepository<Salary, Integer> {
 
     List<Salary> findByUserId(Integer userId);
 
+    Salary findOneByUserId(Integer userId);
+
 }

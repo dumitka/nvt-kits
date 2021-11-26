@@ -1,9 +1,10 @@
 package com.backend.springboot.repository;
 
+import com.backend.springboot.model.DrinkPrice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.backend.springboot.model.DrinkPrice;
+public interface DrinkPriceRepository extends JpaRepository<DrinkPrice, Integer> {
 
-public interface DrinkPriceRepository extends JpaRepository<DrinkPrice, Integer>{
+    DrinkPrice findOneByDrinkId(Integer drinkId);
 
 }
