@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-meal-category',
@@ -7,9 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MealCategoryComponent implements OnInit {
 
-  constructor() { }
+  showMoney:boolean
+
+  constructor(private router:Router) { 
+    this.showMoney = history.state.data.showMoney;
+    console.log(this.showMoney)
+  }
 
   ngOnInit(): void {
   }
 
+
+
+  coldAppetizer(){
+    this.router.navigate(['/ColdAppetizer'], {state:{data:{showPrice:true}}});
+  }
+
+  hotAppetizer(){
+    this.router.navigate(['/HotAppetizer'], {state:{data:{showPrice:true}}});
+  }
+
 }
+

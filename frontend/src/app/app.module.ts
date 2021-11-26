@@ -30,6 +30,7 @@ import { MealCategoryComponent } from './meal-category/meal-category.component';
 import { MenuCategoryComponent } from './menu-category/menu-category.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +44,8 @@ import { MenuCategoryComponent } from './menu-category/menu-category.component';
     HallManagerProfileComponent,
     DirectorProfileComponent,
     MealCategoryComponent,
-    MenuCategoryComponent
+    MenuCategoryComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -105,7 +107,9 @@ import { MenuCategoryComponent } from './menu-category/menu-category.component';
         path: 'MenuCategory',
         canActivate: [ChefRoutes],
         component: MenuCategoryComponent,
-      }
+      },
+      
+
       
     ]),
   ],

@@ -52,4 +52,7 @@ public class Meal {
 
 	@Column(name = "image")
 	private String image;
+	
+	@Column(name = "deleted")
+	private Boolean deleted;
 }
