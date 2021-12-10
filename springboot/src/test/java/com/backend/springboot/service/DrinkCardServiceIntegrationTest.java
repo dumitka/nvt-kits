@@ -17,7 +17,6 @@ import java.util.Set;
 
 import static com.backend.springboot.constants.DrinkCardConstants.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
