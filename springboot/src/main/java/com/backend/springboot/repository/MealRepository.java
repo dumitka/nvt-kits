@@ -10,7 +10,7 @@ import com.backend.springboot.model.Meal;
 
 public interface MealRepository extends JpaRepository<Meal, Integer>{
 
-	@Query("select m from Meal m where m.type = ?1")
+	@Query("select m from Meal m where m.type = ?1 and m.deleted = false")
 	List<Meal> findMealbyMealType(MealType mealTypeParam);
 	
 	@Query("select m from Meal m where m.id = ?1")
