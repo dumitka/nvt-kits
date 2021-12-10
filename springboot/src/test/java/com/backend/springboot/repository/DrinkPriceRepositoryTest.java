@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static com.backend.springboot.constants.DrinkCardConstants.*;
+import static com.backend.springboot.constants.DrinkConstants.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Set;
 
 import static com.backend.springboot.constants.DrinkCardConstants.*;
+import static com.backend.springboot.constants.DrinkConstants.*;
+import static com.backend.springboot.constants.DrinkPriceConstrants.*;
 import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)

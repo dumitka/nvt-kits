@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.backend.springboot.constants.DrinkConstants.*;
+import static com.backend.springboot.constants.DrinkPriceConstrants.*;
 import static com.backend.springboot.constants.DrinkCardConstants.*;
 import static org.junit.Assert.*;
 
