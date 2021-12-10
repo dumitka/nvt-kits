@@ -20,6 +20,7 @@ public interface MealPriceRepository extends JpaRepository<MealPrice, Integer>{
 	@Query("select m from MealPrice m where m.id = ?1")
 	MealPrice findMealPriceById(Integer id);
   
-  MealPrice findOneByMealId(Integer mealId);
+	
+	MealPrice findOneByMealId(Integer mealId);
 
 }

@@ -25,6 +25,18 @@ import lombok.Setter;
 @Table(name = "meal")
 public class Meal {
 
+	public Meal(String name, MealType type, String description, MealDifficulty mealDifficulty, int timePreparation, int amountNumber, String amountUnit, String image, boolean deleted) {
+		this.name = name;
+		this.type = type;
+		this.description = description;
+		this.mealDifficulty = mealDifficulty;
+		this.timePreparation = timePreparation;
+		this.amountNumber = amountNumber;
+		this.amountUnit = amountUnit;
+		this.image = image;
+		this.deleted = deleted;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
