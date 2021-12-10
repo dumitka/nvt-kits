@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -49,7 +50,7 @@ public class DrinkCardService {
         List<DrinkPrice> pronadjenaCena = najnovijaKP.getDrinkPrices().stream()
                 .filter(kp -> kp.getDrink().getId() == drink.getId()).toList();
         if (pronadjenaCena.isEmpty()) return false;                             // nije pronadjena cena za to pice
-        Set<DrinkPrice> lista = Set.copyOf(najnovijaKP.getDrinkPrices());
+        Set<DrinkPrice> lista = new HashSet<>(najnovijaKP.getDrinkPrices());
         lista.remove(pronadjenaCena.get(0));
         DrinkCard novaKarta = DrinkCard.builder().restaurant(najnovijaKP.getRestaurant())
                 .drinkPrices(lista).dateOfValidation(LocalDateTime.now()).build();
