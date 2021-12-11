@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +23,7 @@ import static com.backend.springboot.constants.DrinkPriceConstrants.*;
 import static com.backend.springboot.constants.DrinkCardConstants.*;
 import static com.backend.springboot.constants.RestaurantConstants.*;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -77,6 +80,7 @@ public class DrinkCardServiceIntegrationTest {
         Drink pice = Drink.builder().id(DRINK_ID).build();
         boolean izbrisano = drinkCardService.removeDrink(pice);
         assertTrue(izbrisano);
+        // mozda ubaciti kod za dodavanje cene pica nazad u listu
     }
 
     @Test
@@ -84,5 +88,18 @@ public class DrinkCardServiceIntegrationTest {
         Drink pice = Drink.builder().id(NOT_DRINK_ID).build();
         boolean izbrisano = drinkCardService.removeDrink(pice);
         assertFalse(izbrisano);
+    }
+
+    @Test
+    public void findPriceOfDrinkForDateTest() {
+        DrinkPrice pronadjena = this.drinkCardService.findPriceOfDrinkForDate(LocalDateTime.now(), DRINK_ID);
+        int id = pronadjena.getId();
+        assertEquals(DRINK_PRICE_ID, id);
+    }
+
+    @Test
+    public void failFindPriceOfDrinkForDateNotDrinkTest() {
+        DrinkPrice pronadjena = this.drinkCardService.findPriceOfDrinkForDate(LocalDateTime.now(), NOT_DRINK_ID);
+        assertNull(pronadjena);
     }
 }

@@ -22,10 +22,6 @@ public class DrinkPriceService {
         this.drinkPriceRepository = drinkPriceRepository;
     }
 
-    public DrinkPrice findPriceOfDrinkForDate(LocalDateTime date, Integer drinkId) {
-        return drinkPriceRepository.findOneByDrinkId(drinkId); //todo kalkulacija datuma
-    }
-
     public List<DrinkPrice> findAll() {
         return this.drinkPriceRepository.findAll();
     }

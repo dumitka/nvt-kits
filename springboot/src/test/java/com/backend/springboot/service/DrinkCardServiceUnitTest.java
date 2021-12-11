@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.mockito.BDDMockito.given;
 import static org.junit.Assert.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -42,9 +43,9 @@ public class DrinkCardServiceUnitTest {
     @Before
     public void setUpp() {
         List<DrinkCard> sveKartePica = new ArrayList<>();
-        DrinkPrice cena = DrinkPrice.builder().drink(Drink.builder()
+        DrinkPrice cena = DrinkPrice.builder().id(DRINK_PRICE_ID).drink(Drink.builder()
                 .id(DRINK_ID).name(DRINK_NAME).build()).price(DRINK_PRICE_PRICE).build();
-        Set listaCena = new HashSet();
+        Set<DrinkPrice> listaCena = new HashSet();
         listaCena.add(cena);
         this.kartaPica = DrinkCard.builder().id(DRINK_CARD_ID)
                 .dateOfValidation(TIME).
@@ -104,6 +105,7 @@ public class DrinkCardServiceUnitTest {
         boolean izbrisano = drinkCardService.removeDrink(cena.getDrink());
         verify(drinkCardRepository).findAll();
         assertTrue(izbrisano);
+        // mozda ubaciti kod za dodavanje cene pica nazad u listu
     }
 
     @Test
@@ -112,5 +114,20 @@ public class DrinkCardServiceUnitTest {
         boolean izbrisano = drinkCardService.removeDrink(pice);
         verify(drinkCardRepository).findAll();
         assertFalse(izbrisano);
+    }
+
+    @Test
+    public void findPriceOfDrinkForDateTest() {
+        DrinkPrice pronadjena = this.drinkCardService.findPriceOfDrinkForDate(LocalDateTime.now(), DRINK_ID);
+        verify(drinkCardRepository).findAll();
+        int id = pronadjena.getId();
+        assertEquals(DRINK_PRICE_ID, id);
+    }
+
+    @Test
+    public void failFindPriceOfDrinkForDateNotDrinkTest() {
+        DrinkPrice pronadjena = this.drinkCardService.findPriceOfDrinkForDate(LocalDateTime.now(), NOT_DRINK_ID);
+        verify(drinkCardRepository).findAll();
+        assertNull(pronadjena);
     }
 }
