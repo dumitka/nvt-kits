@@ -1,6 +1,5 @@
 package com.backend.springboot.service;
 
-import com.backend.springboot.enums.DrinkType;
 import com.backend.springboot.model.Drink;
 import com.backend.springboot.model.DrinkCard;
 import com.backend.springboot.model.DrinkPrice;
@@ -37,7 +36,7 @@ public class DrinkCardServiceIntegrationTest {
     @Test
     public void findAllTest() {
         List<DrinkCard> pronadjena = this.drinkCardService.findAll();
-        assertEquals(ITEM_NUMBER, pronadjena.size());
+        assertEquals(DRINK_CARD_NUMBER, pronadjena.size());
     }
 
     @Test
@@ -81,7 +80,7 @@ public class DrinkCardServiceIntegrationTest {
     }
 
     @Test
-    public void failRemoveDrinkTest() {
+    public void failRemoveDrinkNotDrinkIdTest() {
         Drink pice = Drink.builder().id(NOT_DRINK_ID).build();
         boolean izbrisano = drinkCardService.removeDrink(pice);
         assertFalse(izbrisano);
