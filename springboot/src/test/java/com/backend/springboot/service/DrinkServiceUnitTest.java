@@ -36,14 +36,14 @@ public class DrinkServiceUnitTest {
     @Before
     public void setUpp() {
         this.nesacuvanoPice = Drink.builder().name(DRINK_NAME).available(true).build();
-        Drink sacuvanoPice1 = Drink.builder().id(DRINK_ID).name(DRINK_NAME).available(true)
+        Drink sacuvanoPice = Drink.builder().id(DRINK_ID).name(DRINK_NAME).available(true)
                 .amountUnit(DRINK_AMOUNT_UNIT).amountNumber(DRINK_AMOUNT_NUMBER).build();
         List<Drink> svaPica = new ArrayList<>();
-        svaPica.add(sacuvanoPice1);
+        svaPica.add(sacuvanoPice);
 
         given(this.drinkRepository.findAll()).willReturn(svaPica);
-        given(this.drinkRepository.findById(DRINK_ID)).willReturn(java.util.Optional.of(sacuvanoPice1));
-        given(this.drinkRepository.save(this.nesacuvanoPice)).willReturn(sacuvanoPice1);
+        given(this.drinkRepository.findById(DRINK_ID)).willReturn(java.util.Optional.of(sacuvanoPice));
+        given(this.drinkRepository.save(this.nesacuvanoPice)).willReturn(sacuvanoPice);
     }
 
     @Test
