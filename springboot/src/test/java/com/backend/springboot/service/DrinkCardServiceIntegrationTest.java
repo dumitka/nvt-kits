@@ -13,7 +13,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +22,6 @@ import static com.backend.springboot.constants.DrinkPriceConstrants.*;
 import static com.backend.springboot.constants.DrinkCardConstants.*;
 import static com.backend.springboot.constants.RestaurantConstants.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
