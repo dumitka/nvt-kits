@@ -39,27 +39,29 @@ public class DrinkCardServiceUnitTest {
     @MockBean
     private DrinkCardRepository drinkCardRepository;
 
+    private DrinkCard kartaPica;
+
     @Before
     public void setUpp() {
         List<DrinkCard> sveKartePica = new ArrayList<>();
         DrinkPrice cena = DrinkPrice.builder().drink(Drink.builder()
-                .id(DRINK_ID).name(DRINK_NAME).build()).price(DRINK_PRICE).build();
+                .id(DRINK_ID).name(DRINK_NAME).build()).price(DRINK_PRICE_PRICE).build();
         Set listaCena = new HashSet();
         listaCena.add(cena);
-        DrinkCard kartaPica = DrinkCard.builder().id(DRINK_CARD_ID)
+        this.kartaPica = DrinkCard.builder().id(DRINK_CARD_ID)
                 .dateOfValidation(TIME).
                 drinkPrices(listaCena).build();
         sveKartePica.add(kartaPica);
 
         given(this.drinkCardRepository.findAll()).willReturn(sveKartePica);
 
-        kartaPica = DrinkCard.builder().dateOfValidation(TIME).
+        this.kartaPica = DrinkCard.builder().dateOfValidation(TIME).
                 drinkPrices(listaCena).build();
         DrinkCard sacuvanaKP = DrinkCard.builder().dateOfValidation(TIME).
                 drinkPrices(listaCena).id(DRINK_CARD_ID).build();
 
         given(this.drinkCardRepository.findById(DRINK_CARD_ID)).willReturn(java.util.Optional.of(sacuvanaKP));
-        given(this.drinkCardRepository.save(kartaPica)).willReturn(sacuvanaKP);
+        given(this.drinkCardRepository.save(this.kartaPica)).willReturn(sacuvanaKP);
 
     }
 
@@ -81,14 +83,7 @@ public class DrinkCardServiceUnitTest {
 
     @Test
     public void saveTest() {
-        DrinkPrice cena = DrinkPrice.builder().drink(Drink.builder()
-                .id(DRINK_ID).name(DRINK_NAME).build()).price(DRINK_PRICE).build();
-        Set listaCena = new HashSet();
-        listaCena.add(cena);
-        DrinkCard kartaPica = DrinkCard.builder().dateOfValidation(TIME).
-                drinkPrices(listaCena).build();
-
-        DrinkCard pronadjena = this.drinkCardService.save(kartaPica);
+        DrinkCard pronadjena = this.drinkCardService.save(this.kartaPica);
         verify(this.drinkCardRepository).save(kartaPica);
         assertNotNull(pronadjena);
         int id = pronadjena.getId();
@@ -107,9 +102,17 @@ public class DrinkCardServiceUnitTest {
     @Test
     public void removeDrinkTest() {
         DrinkPrice cena = DrinkPrice.builder().drink(Drink.builder()
-                .id(DRINK_ID).name(DRINK_NAME).build()).price(DRINK_PRICE).build();
+                .id(DRINK_ID).name(DRINK_NAME).build()).price(DRINK_PRICE_PRICE).build();
         boolean izbrisano = drinkCardService.removeDrink(cena.getDrink());
         verify(drinkCardRepository).findAll();
         assertTrue(izbrisano);
+    }
+
+    @Test
+    public void failRemoveDrinkTest() {
+        Drink pice = Drink.builder().id(NOT_DRINK_ID).build();
+        boolean izbrisano = drinkCardService.removeDrink(pice);
+        verify(drinkCardRepository).findAll();
+        assertFalse(izbrisano);
     }
 }

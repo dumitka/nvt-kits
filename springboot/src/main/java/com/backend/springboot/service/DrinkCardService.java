@@ -35,7 +35,7 @@ public class DrinkCardService {
     public DrinkCard findLatest() {
         List<DrinkCard> sveKartePica = findAll();
         DrinkCard najnovijaKartaPica = null;
-        LocalDateTime datum = LocalDateTime.now().minusYears(20);        // verovatno je najnovija mladja od 20 godina
+        LocalDateTime datum = LocalDateTime.now().minusYears(100);    // verovatno je najnovija mladja od 100 godina
         for (DrinkCard kartaPica : sveKartePica) {
             if (kartaPica.getDateOfValidation().isAfter(datum)) {
                 datum = kartaPica.getDateOfValidation();

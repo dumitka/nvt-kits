@@ -4,6 +4,8 @@ import com.backend.springboot.enums.DrinkType;
 import com.backend.springboot.model.Drink;
 import com.backend.springboot.model.DrinkCard;
 import com.backend.springboot.model.DrinkPrice;
+import com.backend.springboot.model.Restaurant;
+import com.backend.springboot.repository.DrinkCardRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import java.util.Set;
 import static com.backend.springboot.constants.DrinkConstants.*;
 import static com.backend.springboot.constants.DrinkPriceConstrants.*;
 import static com.backend.springboot.constants.DrinkCardConstants.*;
+import static com.backend.springboot.constants.RestaurantConstants.*;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -27,6 +30,10 @@ public class DrinkCardServiceIntegrationTest {
 
     @Autowired
     private DrinkCardService drinkCardService;
+
+    @Autowired
+    private DrinkCardRepository drinkCardRepository;
+
     @Test
     public void findAllTest() {
         List<DrinkCard> pronadjena = this.drinkCardService.findAll();
@@ -43,17 +50,19 @@ public class DrinkCardServiceIntegrationTest {
 
     @Test
     public void saveTest() {
-        DrinkPrice cena = DrinkPrice.builder().drink(Drink.builder()
-                .id(DRINK_ID).name(DRINK_NAME).build()).price(DRINK_PRICE).build();
+        Drink pice = Drink.builder().id(DRINK_ID).name(DRINK_NAME).build();
+        Restaurant restoran = Restaurant.builder().id(RESTAURANT_ID).build();
+        DrinkPrice cena = DrinkPrice.builder().id(DRINK_PRICE_ID).drink(pice).price(DRINK_PRICE_PRICE).build();
         Set listaCena = new HashSet();
         listaCena.add(cena);
-        DrinkCard kartaPica = DrinkCard.builder().dateOfValidation(TIME).
-                drinkPrices(listaCena).build();
+        DrinkCard kartaPica = DrinkCard.builder()
+                .dateOfValidation(TIME).drinkPrices(listaCena).restaurant(restoran).build();
 
         DrinkCard pronadjena = this.drinkCardService.save(kartaPica);
         assertNotNull(pronadjena);
         int id = pronadjena.getId();
-        assertEquals(DRINK_CARD_ID, id);
+        assertEquals(NEW_DC_ID, id);
+        this.drinkCardRepository.delete(pronadjena);
     }
 
     @Test
@@ -66,11 +75,15 @@ public class DrinkCardServiceIntegrationTest {
 
     @Test
     public void removeDrinkTest() {
-        Drink pice = Drink.builder()
-                .id(DRINK_ID).name(DRINK_NAME).type(DrinkType.HOT_DRINK).description("Milfordov caj")
-                .image("caj.jpg").amountNumber(0.2).amountUnit("l").available(true).build();
-        DrinkPrice cena = DrinkPrice.builder().drink(pice).price(DRINK_PRICE).build();
-        boolean izbrisano = drinkCardService.removeDrink(cena.getDrink());
+        Drink pice = Drink.builder().id(DRINK_ID).build();
+        boolean izbrisano = drinkCardService.removeDrink(pice);
         assertTrue(izbrisano);
+    }
+
+    @Test
+    public void failRemoveDrinkTest() {
+        Drink pice = Drink.builder().id(NOT_DRINK_ID).build();
+        boolean izbrisano = drinkCardService.removeDrink(pice);
+        assertFalse(izbrisano);
     }
 }
