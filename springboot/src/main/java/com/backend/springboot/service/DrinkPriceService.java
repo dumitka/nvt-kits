@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -20,10 +19,6 @@ public class DrinkPriceService {
     @Autowired
     public DrinkPriceService(DrinkPriceRepository drinkPriceRepository) {
         this.drinkPriceRepository = drinkPriceRepository;
-    }
-
-    public DrinkPrice findPriceOfDrinkForDate(LocalDateTime date, Integer drinkId) {
-        return drinkPriceRepository.findOneByDrinkId(drinkId); //todo kalkulacija datuma
     }
 
     public List<DrinkPrice> findAll() {

@@ -35,7 +35,7 @@ public class DrinkCardService {
     public DrinkCard findLatest() {
         List<DrinkCard> sveKartePica = findAll();
         DrinkCard najnovijaKartaPica = null;
-        LocalDateTime datum = LocalDateTime.now().minusYears(20);        // verovatno je najnovija mladja od 20 godina
+        LocalDateTime datum = LocalDateTime.now().minusYears(100);    // verovatno je najnovija mladja od 100 godina
         for (DrinkCard kartaPica : sveKartePica) {
             if (kartaPica.getDateOfValidation().isAfter(datum)) {
                 datum = kartaPica.getDateOfValidation();
@@ -57,4 +57,24 @@ public class DrinkCardService {
         this.drinkCardRepository.save(novaKarta);
         return true;
     }
+
+    public DrinkCard findByDate(LocalDateTime date) {
+        List<DrinkCard> listaKP = this.findAll();
+        DrinkCard pronadjena = null;
+        for (DrinkCard kp : listaKP) {
+            if (pronadjena == null) pronadjena = kp;
+            else {
+                if (kp.getDateOfValidation().isBefore(date)
+                        && kp.getDateOfValidation().isAfter(pronadjena.getDateOfValidation())) pronadjena = kp;
+            }
+        }
+        return pronadjena;
+    }
+
+    public DrinkPrice findPriceOfDrinkForDate(LocalDateTime date, Integer drinkId) {
+        DrinkCard pronadjenaKP = findByDate(date);
+        for (DrinkPrice cena : pronadjenaKP.getDrinkPrices()) if (cena.getDrink().getId() == drinkId) return cena;
+        return null;
+    }
+
 }
