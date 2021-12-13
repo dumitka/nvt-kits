@@ -19,10 +19,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.Assert.*;
 import static com.backend.springboot.constants.DrinkCardConstants.*;
@@ -31,7 +27,6 @@ import static com.backend.springboot.constants.DrinkPriceConstrants.*;
 import static com.backend.springboot.constants.RestaurantConstants.*;
 import static org.mockito.BDDMockito.given;
 
-import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -41,11 +36,6 @@ import java.util.Set;
 public class DrinkCardControllerUnitTest {
 
     private static final String URL_PREFIX = "/api/drinkCards/";
-
-    private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-            MediaType.APPLICATION_JSON.getSubtype());
-
-    private MockMvc mockMvc;
 
     @MockBean
     private DrinkCardService drinkCardService;
@@ -58,14 +48,6 @@ public class DrinkCardControllerUnitTest {
 
     @MockBean
     private RestaurantService restaurantService;
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @PostConstruct
-    public void setup() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
 
     @Autowired
     private TestRestTemplate restTemplate;

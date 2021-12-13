@@ -22,7 +22,6 @@ import static com.backend.springboot.constants.DrinkPriceConstrants.*;
 import static com.backend.springboot.constants.DrinkCardConstants.*;
 import static com.backend.springboot.constants.RestaurantConstants.*;
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -68,7 +67,7 @@ public class DrinkCardServiceIntegrationTest {
         DrinkCard pronadjena = this.drinkCardService.save(kartaPica);
         assertNotNull(pronadjena);
         int id = pronadjena.getId();
-        assertEquals(NEW_DC_ID, id);
+        assertEquals(NEW3_DC_ID, id);
         this.drinkCardRepository.delete(pronadjena);
     }
 

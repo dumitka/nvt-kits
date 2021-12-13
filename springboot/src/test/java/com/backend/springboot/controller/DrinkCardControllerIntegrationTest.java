@@ -86,7 +86,7 @@ public class DrinkCardControllerIntegrationTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         DrinkCardDTO nova = responseEntity.getBody();
         int id = nova.getId();
-        assertEquals(NEW_DC_ID, id);
+        assertEquals(NEW2_DC_ID, id);
         id = nova.getDrinkPriceDTOs().stream().toList().get(0).getId();
         assertEquals(DRINK_PRICE_ID, id);
         assertEquals(ONE_DRINK_PRICE, nova.getDrinkPriceDTOs().size());
