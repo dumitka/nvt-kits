@@ -1,14 +1,31 @@
+-- ROLE
+insert into role (name) values ('ROLE_ADMIN');
+insert into role (name) values ('ROLE_DIRECTOR');
+insert into role (name) values ('ROLE_WAITER');
+insert into role (name) values ('ROLE_COOK');
+insert into role (name) values ('ROLE_MANAGER');
+insert into role (name) values ('ROLE_BARTENDER');
+insert into role (name) values ('ROLE_CHEF');
+insert into role (name) values ('ROLE_SERVER');
 
-insert into users(username, password, name, last_name, fired, enabled) values ('masa', '$2a$10$INVaw70gvhwlo9eF2ctMpO8vDZx9q35o43GXsnVRhxklTKK5L6YV2', 'Magdalena', 'Gavrilovic', false, true); 
+--USER
+insert into users(username, password, name, last_name, fired, enabled)
+    values ('masa', '$2a$10$INVaw70gvhwlo9eF2ctMpO8vDZx9q35o43GXsnVRhxklTKK5L6YV2', 'Magdalena', 'Gavrilovic', false, true);
+insert into users(username, password, name, last_name, fired, enabled)
+    values ('otpusteni', '$2a$10$INVaw70gvhwlo9eF2ctMpO8vDZx9q35o43GXsnVRhxklTKK5L6YV2', 'Marko', 'Markovic', true, true);
+insert into users(username, password, name, last_name, fired, enabled   )-- sifra pera
+    values ('sef-sale', '$2a$10$hN88.iZa1VSk4Ncxjpt.M.xZ5swoN1EZwryN4oUY/8Uf6wUVEDtaO', 'Pera', 'Peric', false, true);
 
-insert into users(username, password, name, last_name, fired, enabled) values ('otpusteni', '$2a$10$INVaw70gvhwlo9eF2ctMpO8vDZx9q35o43GXsnVRhxklTKK5L6YV2', 'Marko', 'Markovic', true, true);
+-- USER -> ROLES
+insert into user_role (user_id, role_id) values (3, 8);
 
-
+-- MEAL
 insert into meal(name, type, description, meal_difficulty, time_preparation, amount_number, amount_unit, image, deleted) values ('Kajgana', 1, 'Domace, zdravo', 0, 5, 200, 'g', 'nema', false);
 insert into meal(name, type, description, meal_difficulty, time_preparation, amount_number, amount_unit, image, deleted) values ('Vocna salata', 3, 'Osvjezavajuce', 0, 10, 300, 'g', 'nema', true);
 insert into meal(name, type, description, meal_difficulty, time_preparation, amount_number, amount_unit, image, deleted) values ('Pasulj', 2, 'Jako', 2, 180, 330, 'g', 'nema', false);
 insert into meal(name, type, description, meal_difficulty, time_preparation, amount_number, amount_unit, image, deleted) values ('Pecenje', 2, 'Jako', 2, 300, 1, 'kg', 'nema', false);
 
+-- MEAL_PRICE
 insert into meal_price(meal_id, price_amount) values (1, 300);
 insert into meal_price(meal_id, price_amount) values (2, 330);
 insert into meal_price(meal_id, price_amount) values (3, 480);

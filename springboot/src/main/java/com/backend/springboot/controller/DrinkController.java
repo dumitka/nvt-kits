@@ -30,7 +30,7 @@ public class DrinkController {
     }
 
     @PostMapping("/addDrink")
-    @PreAuthorize("hasRole('SERVER')")
+    @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<DrinkDTO> addingNewDrink(@RequestBody DrinkDTO dto) {
         if (this.drinkService.freeNameAndAmount(dto.getName(), dto.getAmountUnit(), dto.getAmountNumber()))
             return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
@@ -44,7 +44,7 @@ public class DrinkController {
     }
 
     @PostMapping("/editDrink")
-    @PreAuthorize("hasRole('SERVER')")
+    @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<DrinkDTO> editingDrink(@RequestBody DrinkDTO dto) {
         Drink pice = this.drinkService.findOne(dto.getId());        // pice =! null
         if (!this.drinkService.editableDrink(dto.getId(), dto.getName(), dto.getAmountUnit(), dto.getAmountNumber()))
@@ -61,38 +61,38 @@ public class DrinkController {
     }
 
     @DeleteMapping("/deleteDrink")
-    @PreAuthorize("hasRole('SERVER')")
+    @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<DrinkDTO> deletingDrink(@RequestBody DrinkDTO dto) {
         Drink pice = this.drinkService.findOne(dto.getId());        // pice =! null
         pice.setAvailable(false);
         this.drinkService.save(pice);
         this.drinkCardService.removeDrink(pice);
-        return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @GetMapping("/searchDrinks")
-    @PreAuthorize("hasRole('SERVER')")
+    @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<List<DrinkDTO>> searchingDrinks(@RequestBody String input) {
         List<Drink> pronadjenaPica = this.drinkService.findByName(input);
         List<DrinkDTO> konvertovanaLista = this.drinkToDrinkDTO.convertList(pronadjenaPica);
-        return new ResponseEntity<>(konvertovanaLista, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(konvertovanaLista, HttpStatus.OK);
     }
 
     // uzima u obzir i search
     @GetMapping("/filterDrinks")
-    @PreAuthorize("hasRole('SERVER')")
+    @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<List<DrinkDTO>> filteringDrinks(@RequestBody String input, @RequestBody DrinkType drinkType) {
         List<Drink> pronadjenaPica = this.drinkService.findByName(input);
         pronadjenaPica = pronadjenaPica.stream().filter(p -> p.getType().equals(drinkType)).toList();
         List<DrinkDTO> konvertovanaLista = this.drinkToDrinkDTO.convertList(pronadjenaPica);
-        return new ResponseEntity<>(konvertovanaLista, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(konvertovanaLista, HttpStatus.OK);
     }
 
     @GetMapping("/")
-    @PreAuthorize("hasRole('SERVER')")
+    @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<List<DrinkDTO>> gettingDrinks() {
         List<Drink> pronadjenaPica = this.drinkService.findAllAvailable();
         List<DrinkDTO> konvertovanaLista = this.drinkToDrinkDTO.convertList(pronadjenaPica);
-        return new ResponseEntity<>(konvertovanaLista, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(konvertovanaLista, HttpStatus.OK);
     }
 }

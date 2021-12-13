@@ -5,7 +5,7 @@ insert into role (name) values ('ROLE_COOK');
 insert into role (name) values ('ROLE_MANAGER');
 insert into role (name) values ('ROLE_BARTENDER');
 insert into role (name) values ('ROLE_CHEF');
-insert into role (name) values ('ROLE_HALL_MANAGER');
+insert into role (name) values ('ROLE_SERVER');
 
 insert into users(username, password, name, last_name, fired, enabled) values ('pera', '$2a$10$hN88.iZa1VSk4Ncxjpt.M.xZ5swoN1EZwryN4oUY/8Uf6wUVEDtaO', 'Petar', 'Peric', false, true); --HESIRATI LOZINKU pera
 insert into user_role (user_id, role_id) values (1, 1);--PERA ADMIN

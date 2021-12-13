@@ -13,17 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @RestController
-@RequestMapping("api/drinkCards")
+@RequestMapping("/api/drinkCards")
 public class DrinkCardController {
 
     private final DrinkCardService drinkCardService;
@@ -44,20 +41,20 @@ public class DrinkCardController {
     }
 
     @GetMapping("/")
-    @PreAuthorize("hasRole('SERVER')")
+    //@PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<DrinkCardDTO> gettingDrinkCard() {
        DrinkCard najnovijaKP = this.drinkCardService.findLatest();
        DrinkCardDTO dto = this.drinkCardToDrinkCardDTO.convert(najnovijaKP);
-        return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     // dodavanje ili izmena, svede se na isto tj pravljenje nove karte pica
-    @GetMapping("/newDrinkCard")
-    @PreAuthorize("hasRole('SERVER')")
+    @PostMapping("/newDrinkCard")
+    //@PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<DrinkCardDTO> newDrinkCard(@RequestBody DrinkCardDTO drinkCardDTO) {
         Set<DrinkPrice> listaCP = new HashSet<>();
         for (DrinkPriceDTO dtoCP : drinkCardDTO.getDrinkPriceDTOs()) {
-            DrinkPrice cena = this.drinkPriceService.findByDrinkAndPrice(dtoCP.getId(), dtoCP.getPrice());
+            DrinkPrice cena = this.drinkPriceService.findByDrinkAndPrice(dtoCP.getDrinkDTO().getId(), dtoCP.getPrice());
             if (cena == null) {
                 cena = DrinkPrice.builder().drink(this.drinkService.findOne(dtoCP.getDrinkDTO().getId())).
                         price(dtoCP.getPrice()).drinkCards(new HashSet<>()).build();
@@ -69,7 +66,7 @@ public class DrinkCardController {
         listaCP.stream().forEach(cp -> { cp.getDrinkCards().add(nova); this.drinkPriceService.save(cp); });
         this.drinkCardService.save(nova);
         DrinkCardDTO dto = this.drinkCardToDrinkCardDTO.convert(nova);
-        return new ResponseEntity<>(dto, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
 }

@@ -8,20 +8,18 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.backend.springboot.constants.RestaurantConstants.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource("classpath:application-test.properties")
 public class RestaurantServiceUnitTest {
 
     @Autowired
@@ -46,14 +44,14 @@ public class RestaurantServiceUnitTest {
     }
 
     @Test
-    public void findAllTest() {
+    public void findAll_EverythingOk_ReturnListRestaurant() {
         List<Restaurant> pronadjena = this.restaurantService.findAll();
         verify(this.restaurantRepository).findAll();
         assertEquals(ONE_RESTAURANT, pronadjena.size());
     }
 
     @Test
-    public void findOneTest() {
+    public void findOne_EverythingOk_ReturnRestaurant() {
         Restaurant pronadjena = this.restaurantService.findOne(RESTAURANT_ID);
         verify(this.restaurantRepository).findById(RESTAURANT_ID);
         int id = pronadjena.getId();
@@ -61,7 +59,14 @@ public class RestaurantServiceUnitTest {
     }
 
     @Test
-    public void saveTest() {
+    public void findOne_NotExistId_ReturnNull() {
+        Restaurant pronadjena = this.restaurantService.findOne(NOT_RESTAURANT_ID);
+        verify(this.restaurantRepository).findById(NOT_RESTAURANT_ID);
+        assertNull(pronadjena);
+    }
+
+    @Test
+    public void save_EverythingOk_ReturnRestaurant() {
         Restaurant pronadjena = this.restaurantService.save(this.nesacuvanRestoran);
         verify(this.restaurantRepository).save(this.nesacuvanRestoran);
         int id = pronadjena.getId();

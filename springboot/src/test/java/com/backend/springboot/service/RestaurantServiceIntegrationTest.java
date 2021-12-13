@@ -13,6 +13,8 @@ import java.util.List;
 
 import static com.backend.springboot.constants.RestaurantConstants.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -26,20 +28,26 @@ public class RestaurantServiceIntegrationTest {
     private RestaurantRepository restaurantRepository;
 
     @Test
-    public void findAllTest() {
+    public void findAll_EverythingOk_ReturnListRestaurant() {
         List<Restaurant> pronadjena = this.restaurantService.findAll();
         assertEquals(ONE_RESTAURANT, pronadjena.size());
     }
 
     @Test
-    public void findOneTest() {
+    public void findOne_EverythingOk_ReturnRestaurant() {
         Restaurant pronadjena = this.restaurantService.findOne(RESTAURANT_ID);
         int id = pronadjena.getId();
         assertEquals(RESTAURANT_ID, id);
     }
 
     @Test
-    public void saveTest() {
+    public void findOne_NotExistId_ReturnNull() {
+        Restaurant pronadjena = this.restaurantService.findOne(NOT_RESTAURANT_ID);
+        assertNull(pronadjena);
+    }
+
+    @Test
+    public void save_EverythingOk_ReturnRestaurant() {
         Restaurant novi = new Restaurant();
         Restaurant pronadjena = this.restaurantService.save(novi);
         int id = pronadjena.getId();
