@@ -4,11 +4,6 @@ import com.backend.springboot.dto.DrinkCardDTO;
 import com.backend.springboot.dto.DrinkDTO;
 import com.backend.springboot.dto.DrinkPriceDTO;
 import com.backend.springboot.dto.JwtAuthenticationRequest;
-import com.backend.springboot.model.DrinkCard;
-import com.backend.springboot.service.DrinkCardService;
-import com.backend.springboot.service.DrinkPriceService;
-import com.backend.springboot.service.DrinkService;
-import com.backend.springboot.service.RestaurantService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,9 +13,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.context.WebApplicationContext;
-
-import javax.annotation.PostConstruct;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,6 +22,7 @@ import static com.backend.springboot.constants.DrinkConstants.*;
 import static com.backend.springboot.constants.DrinkPriceConstrants.*;
 import static com.backend.springboot.constants.RestaurantConstants.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -60,11 +53,13 @@ public class DrinkCardControllerIntegrationTest {
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Auth-Token", this.accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
-        ResponseEntity<DrinkCard> responseEntity =
-                this.restTemplate.exchange(URL_PREFIX, HttpMethod.GET, httpEntity, DrinkCard.class);
+        ResponseEntity<DrinkCardDTO> responseEntity =
+                this.restTemplate.exchange(URL_PREFIX, HttpMethod.GET, httpEntity, DrinkCardDTO.class);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        int id = responseEntity.getBody().getId();
+        DrinkCardDTO kartaPicaDTO = responseEntity.getBody();
+        assertNotNull(kartaPicaDTO);
+        int id = kartaPicaDTO.getId();
         assertEquals(DRINK_CARD_ID, id);
     }
 
@@ -85,6 +80,7 @@ public class DrinkCardControllerIntegrationTest {
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         DrinkCardDTO nova = responseEntity.getBody();
+        assertNotNull(nova);
         int id = nova.getId();
         assertEquals(NEW2_DC_ID, id);
         id = nova.getDrinkPriceDTOs().stream().toList().get(0).getId();

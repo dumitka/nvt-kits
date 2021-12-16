@@ -15,7 +15,6 @@ import static com.backend.springboot.constants.DrinkPriceConstrants.*;
 import static com.backend.springboot.constants.DrinkPriceConstrants.DRINK_PRICE_ID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

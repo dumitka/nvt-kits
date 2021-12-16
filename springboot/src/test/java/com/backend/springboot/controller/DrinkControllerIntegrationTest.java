@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.TestPropertySource;
@@ -178,9 +177,6 @@ public class DrinkControllerIntegrationTest {
     public void filteringDrinks_EverythingOk_ReturnListDrinkDTO() {
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-Auth-Token", this.accessToken);
-        Filter pomocnaKlasa = new Filter();
-        pomocnaKlasa.drinkType = DrinkType.HOT_DRINK;
-        pomocnaKlasa.input = DRINK_NAME;
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
         ResponseEntity<DrinkDTO[]> responseEntity =
                 this.restTemplate.exchange(URL_PREFIX + "filterDrinks/" + DRINK_NAME + "/"
@@ -204,10 +200,5 @@ public class DrinkControllerIntegrationTest {
         DrinkDTO[] niz = responseEntity.getBody();
         assertNotNull(niz);
         assertEquals(ONE_DRINK, niz.length);
-    }
-
-    private class Filter {
-        public String input;
-        public DrinkType drinkType;
     }
 }

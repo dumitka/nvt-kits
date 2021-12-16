@@ -82,7 +82,8 @@ public class DrinkCardControllerUnitTest {
     @Test
     public void gettingDrinkCard_EverythingOk_ReturnDrinkCardDTO() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Auth-Token", this.accessToken);
+        //headers.add("Role", "ROLE_SERVER");
+        //headers.add("X-Auth-Token", this.accessToken);
         //headers.add("x-auth-token", accessToken);
         //headers.add("Authorization", accessToken);
         //headers.setBasicAuth(accessToken);
@@ -100,7 +101,9 @@ public class DrinkCardControllerUnitTest {
                 this.restTemplate.exchange(URL_PREFIX, HttpMethod.GET, httpEntity, DrinkCard.class);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        int id = responseEntity.getBody().getId();
+        DrinkCard kartaPica = responseEntity.getBody();
+        assertNotNull(kartaPica);
+        int id = kartaPica.getId();
         assertEquals(DRINK_CARD_ID, id);
     }
 
