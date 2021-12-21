@@ -30,15 +30,15 @@ import com.backend.springboot.service.MealService;
 @RequestMapping(value = "/meal")
 public class MealController {
 	
-	@Autowired
-	private MealPriceService service;
+//	@Autowired
+//	private MealPriceService service;
 	
-	@Autowired
-	private MealService service2;
+//	@Autowired
+//	private MealService service2;
 	
 	
-	private MealPriceToMealWithPriceDTO mealPriceToMealWithPriceDTO;
-	
+	//private MealPriceToMealWithPriceDTO mealPriceToMealWithPriceDTO;
+	/*
 	@GetMapping(value = "/getColdAppetizers")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<List<MealWithPriceDTO>> getColdAppetizers(){
@@ -115,7 +115,7 @@ public class MealController {
 		service2.delete(meal);
 		return new ResponseEntity<String>("Deleted meal successfully.", HttpStatus.OK);
 	}
-	
+	*/
 	
 	
 }

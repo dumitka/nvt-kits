@@ -30,23 +30,25 @@ public class MenuController {
 	@Autowired
 	private MenuService service;
 	
+	/*
 	@GetMapping(value = "/getMenu")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<MenuDTO> getMenu(){
 		Menu current = this.service.getCurrentMenu();
-		MenuDTO menu = new MenuDTO(current.getId(), current.getDateOfValidation(), current.getMealPrices());
-        return new ResponseEntity<>(menu, HttpStatus.OK);
+	//	MenuDTO menu = new MenuDTO(current.getId(), current.getDateOfValidation(), current.getMealPrices());
+     //   return new ResponseEntity<>(menu, HttpStatus.OK);
 	}
+	*/
 	
-	
+	/*
 	@PostMapping(value = "/addMealToMenu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<String> addMealToMenu(@RequestBody MealPrice meal) {
 		service.addMeal(meal);
 		return new ResponseEntity<String>("Added meal sucesfully.", HttpStatus.OK);
-	}
+	}*/
 	
-	
+	/*
 	@PutMapping(value = "/changeMealPriceInMenu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<String> changeMealPriceInMenu(@RequestBody MealPrice mealprice) {
@@ -62,9 +64,9 @@ public class MenuController {
 		service.deleteMealPrice(mealprice);
 		return new ResponseEntity<String>("Meal is deleted sucesfully.", HttpStatus.OK);
 	}
+	*/
 	
-	
-	
+	/*
 	@PostMapping(value = "/newMenu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<String> newMenu(@RequestBody Menu menu) {
@@ -72,6 +74,6 @@ public class MenuController {
 		return new ResponseEntity<String>("Added new menu sucesfully.", HttpStatus.OK);
 	}
 	
-	
+	*/
 	
 }

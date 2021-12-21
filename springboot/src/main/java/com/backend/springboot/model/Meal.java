@@ -22,7 +22,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "meal")
+@Table(name = "meals")
 public class Meal {
 
 	public Meal(String name, MealType type, String description, MealDifficulty mealDifficulty, int timePreparation, int amountNumber, String amountUnit, String image, boolean deleted) {
@@ -67,4 +67,5 @@ public class Meal {
 	
 	@Column(name = "deleted")
 	private Boolean deleted;
+	
 }

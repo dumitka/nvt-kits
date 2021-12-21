@@ -1,16 +1,14 @@
 package com.backend.springboot.model;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -22,21 +20,21 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "meal_prices")
-public class MealPrice {
+@Table(name = "menus_meal_prices")
+public class MenuMealPrice {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Meal meal;
-
-    @Column(name = "price_amount", nullable = false)
-    private Float priceAmount;
-
-    @OneToMany(mappedBy = "mealPrice")
-	private Set<MenuMealPrice> menuMealPrices;
+	
+	@ManyToOne
+	@JoinColumn(name = "menu_id", nullable = false)
+	private Menu menu;
+	
+	@ManyToOne
+	@JoinColumn(name = "meal_price_id", nullable = false)
+	private MealPrice mealPrice;
+	
 }

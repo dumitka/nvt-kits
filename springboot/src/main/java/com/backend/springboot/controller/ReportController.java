@@ -34,6 +34,7 @@ public class ReportController {
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
+    
     @PostMapping("/")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     public ResponseEntity<ReportDto> createNew(@RequestBody CreateReportDto dto) {
@@ -41,4 +42,5 @@ public class ReportController {
 
         return new ResponseEntity<>(reportMapper.convertreportToReportDto(report), HttpStatus.OK);
     }
+    
 }

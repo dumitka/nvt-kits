@@ -21,37 +21,63 @@ public class MealService {
 	private MealRepository mealRepository;
 	
 	
+	
 	public List<Meal> getAllMealbyMealType(MealType type){
 		return mealRepository.findMealbyMealType(type);
 	}
 	
 	
+	
 	public boolean addMeal(Meal meal) {
-		mealRepository.save(meal);
-		return true;
+		//check if exists
+		Optional<Meal> found = mealRepository.findMealByNameAndDescription(meal.getName(), meal.getDescription());
+		
+		if(found.isEmpty()) {
+			//if doesn't, save
+			mealRepository.save(meal);
+			return true;
+		}else {
+			//if does, don't do anything
+			return false;
+		}
+		
 	}
 	
+	
+	
 	public boolean changeMeal(Meal meal) {
-		Meal current = mealRepository.findMealById(meal.getId());
-		current.setDescription(meal.getDescription());
-		current.setAmountNumber(meal.getAmountNumber());
-		current.setAmountUnit(meal.getAmountUnit());
-		current.setImage(meal.getImage());
-		current.setMealDifficulty(meal.getMealDifficulty());
-		current.setName(meal.getName());
-		current.setTimePreparation(meal.getTimePreparation());
-		current.setType(meal.getType());
-		mealRepository.save(current);
-		return true;
+		Optional<Meal> current  = mealRepository.findById(meal.getId());
+		
+		if(!current.isEmpty()) {
+			current.get().setDescription(meal.getDescription());
+			current.get().setAmountNumber(meal.getAmountNumber());
+			current.get().setAmountUnit(meal.getAmountUnit());
+			current.get().setImage(meal.getImage());
+			current.get().setMealDifficulty(meal.getMealDifficulty());
+			current.get().setName(meal.getName());
+			current.get().setTimePreparation(meal.getTimePreparation());
+			current.get().setType(meal.getType());
+			mealRepository.save(current.get());
+			return true;
+		}
+		
+		//it should not come to this line
+				return false;
+		
 	}
 	
 	
 	
 	public boolean delete(Meal meal) {
-		Meal current = mealRepository.findMealById(meal.getId());
-		current.setDeleted(true);
-		mealRepository.save(current);
-		return true;
+		Optional<Meal> current = mealRepository.findMealById(meal.getId());
+		if(!current.isEmpty()) {
+			current.get().setDeleted(true);
+			mealRepository.save(current.get());
+			return true;
+		}
+		
+		//it should not come to this line
+			return false;
 	}
 	
 	
