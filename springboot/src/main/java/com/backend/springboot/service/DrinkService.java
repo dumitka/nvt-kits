@@ -30,8 +30,10 @@ public class DrinkService {
     public Drink findOne(int id) { return this.drinkRepository.findById(id).orElse(null); }
 
     private List<Drink> getByNameAndAmount(String name, String amountUnit, double amountNumber) {
-        return this.drinkRepository.findAll().stream().filter(pice -> pice.getName().equals(name)
-                && pice.getAmountNumber() == amountNumber && pice.getAmountUnit().equals(amountUnit)
+        return this.drinkRepository.findAll().stream().filter(
+                pice -> pice.getName().toUpperCase().equals(name.toUpperCase())
+                && pice.getAmountNumber() == amountNumber
+                && pice.getAmountUnit().toUpperCase().equals(amountUnit.toUpperCase())
                 && pice.isAvailable()).toList();
     }
 
@@ -45,8 +47,10 @@ public class DrinkService {
 
     public boolean editableDrink(int id, String name, String amountUnit, double amountNumber) {
         List<Drink> pronadjenaPica = getByNameAndAmount(name, amountUnit, amountNumber);
+        System.out.println(pronadjenaPica.size());
         if (pronadjenaPica.size() > 1) return false;
         else if (pronadjenaPica.size() == 1) {
+            System.out.println(pronadjenaPica.get(0).getId() + "     " + id);
             if (pronadjenaPica.get(0).getId() != id)
                 return false;
             }
@@ -56,7 +60,7 @@ public class DrinkService {
     public Drink save(Drink drink) { return this.drinkRepository.save(drink); }
 
     public List<Drink> findByName(String search) {
-        return this.drinkRepository.findAll().stream().filter(p -> p.getName().toUpperCase().contains(search)
-                && p.isAvailable()).toList();
+        return this.drinkRepository.findAll().stream().filter(p ->
+                p.getName().toUpperCase().contains(search.toUpperCase()) && p.isAvailable()).toList();
     }
 }

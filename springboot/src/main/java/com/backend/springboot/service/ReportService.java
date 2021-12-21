@@ -27,7 +27,7 @@ public class ReportService {
     private UserService userService;
 
     @Autowired
-    private DrinkPriceService drinkPriceService;
+    private DrinkCardService drinkCardService;
 
     @Autowired
     private MealPriceService mealPriceService;
@@ -53,7 +53,7 @@ public class ReportService {
         List<OrderedDrink> drinks = orderedDrinkService.findByStatus(OrderedItemStatus.DELIVERED);
         Float incomeFromDrinks = drinks.stream()
                 .map(orderedDrink -> orderedDrink.getDrink())
-                .map(drink -> drinkPriceService.findPriceOfDrinkForDate(dto.getDate(), drink.getId()))
+                .map(drink -> drinkCardService.findPriceOfDrinkForDate(dto.getDate(), drink.getId()))
                 .map(drinkPrice -> drinkPrice.getPrice())
                 .reduce((float) 0, (subtotal, element) -> subtotal + element);
 
