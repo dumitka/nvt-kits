@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 
 
 import com.backend.springboot.enums.MealType;
-import com.backend.springboot.model.MealPrice;
+
 
 public interface MealPriceRepository extends JpaRepository<MealPrice, Integer>{
 	

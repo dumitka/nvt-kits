@@ -40,9 +40,9 @@ insert into meal_prices(meal_id, price_amount) values (4, 700);
 
 
 --MENU
-insert into menus (id, date_Of_Validation, current, restaurant_id) values (1, '2020-10-01 20:00'::timestamp, false, 1);
-insert into menus (id, date_Of_Validation, current, restaurant_id) values (2, '2021-04-01 20:00'::timestamp, true, 1);
-insert into menus (id, date_Of_Validation, current, restaurant_id) values (3, '2022-10-01 20:00'::timestamp, false, 1);
+insert into menus (id, date_Of_Validation, current, restaurant_id) values (1, '2020-10-01 00:00'::timestamp, false, 1);
+insert into menus (id, date_Of_Validation, current, restaurant_id) values (2, '2021-04-01 00:00'::timestamp, true, 1);
+insert into menus (id, date_Of_Validation, current, restaurant_id) values (3, '2022-10-01 00:00'::timestamp, false, 1);
 
 
 --MENU_MEAL_PRICE

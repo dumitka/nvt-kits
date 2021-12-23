@@ -3,8 +3,6 @@ package com.backend.springboot.dto;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import com.backend.springboot.enums.DrinkType;
-import com.backend.springboot.model.MealPrice;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +20,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 public class MenuDTO {
-	Integer id;
-	LocalDateTime dateOfValidation;
-	private Set<MealPrice> mealPrices;
+	private Integer id;
+	private LocalDateTime dateOfValidation;
+	private Boolean current;
+	private Set<MenuMealPriceDTO> menuMealPriceDTO;
 }

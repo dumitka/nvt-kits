@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.backend.springboot.repository.MealRepository;
 import com.backend.springboot.enums.MealType;
+import com.backend.springboot.exception.MealAlreadyExistsException;
+import com.backend.springboot.exception.MealDoesNotExist;
 import com.backend.springboot.model.Meal;
 
 @Component
@@ -28,24 +30,22 @@ public class MealService {
 	
 	
 	
-	public boolean addMeal(Meal meal) {
+	public boolean addMeal(Meal meal) throws Exception{
 		//check if exists
 		Optional<Meal> found = mealRepository.findMealByNameAndDescription(meal.getName(), meal.getDescription());
 		
 		if(found.isEmpty()) {
-			//if doesn't, save
 			mealRepository.save(meal);
 			return true;
 		}else {
-			//if does, don't do anything
-			return false;
+			throw new MealAlreadyExistsException("Ne mozete napraviti jelo koje vec postoji.");
 		}
 		
 	}
 	
 	
 	
-	public boolean changeMeal(Meal meal) {
+	public boolean changeMeal(Meal meal) throws Exception{
 		Optional<Meal> current  = mealRepository.findById(meal.getId());
 		
 		if(!current.isEmpty()) {
@@ -59,25 +59,22 @@ public class MealService {
 			current.get().setType(meal.getType());
 			mealRepository.save(current.get());
 			return true;
+		}else {
+			throw new MealDoesNotExist("Meal is not found.");
 		}
-		
-		//it should not come to this line
-				return false;
-		
 	}
 	
 	
 	
-	public boolean delete(Meal meal) {
+	public boolean delete(Meal meal) throws Exception{
 		Optional<Meal> current = mealRepository.findMealById(meal.getId());
 		if(!current.isEmpty()) {
 			current.get().setDeleted(true);
 			mealRepository.save(current.get());
 			return true;
+		}else {
+			throw new MealDoesNotExist("Meal is not found.");
 		}
-		
-		//it should not come to this line
-			return false;
 	}
 	
 	
