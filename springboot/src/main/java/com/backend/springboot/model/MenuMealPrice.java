@@ -1,8 +1,7 @@
 package com.backend.springboot.model;
 
-import java.time.LocalDateTime;
-import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,4 +36,6 @@ public class MenuMealPrice {
 	@JoinColumn(name = "meal_price_id", nullable = false)
 	private MealPrice mealPrice;
 	
+	@Column(name = "deleted")
+	private Boolean deleted;
 }

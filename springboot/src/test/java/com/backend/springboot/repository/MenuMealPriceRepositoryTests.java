@@ -21,6 +21,7 @@ import java.util.Set;
 
 import static com.backend.springboot.constants.MenuMealPriceConstants.CURRENT_MENU_ID;
 import static com.backend.springboot.constants.MenuMealPriceConstants.SIZE_OF_SET_OF_MEAL_PRICES;
+import static com.backend.springboot.constants.MenuMealPriceConstants.SIZE_OF_LIST_OF_MEAL_PRICES;
 import static com.backend.springboot.constants.MenuMealPriceConstants.NOT_CURRENT_MENU_ID;
 import static com.backend.springboot.constants.MenuMealPriceConstants.SIZE_OF_SET_OF_MEAL_PRICES_NCM;
 import static com.backend.springboot.constants.MenuMealPriceConstants.EXISTING_BOND_MENU_ID;
@@ -50,6 +51,13 @@ public class MenuMealPriceRepositoryTests {
 	public void findAllMealPricesByMenuId_NotCurrentMenuId_SetOfMealPricesOfNotCurrentMenu() {
 		Set<MealPrice> found = menuMealPriceRepository.findAllMealPricesByMenuId(NOT_CURRENT_MENU_ID);
 		assertEquals(SIZE_OF_SET_OF_MEAL_PRICES_NCM, found.size());
+	}
+	
+	
+	@Test
+	public void findAllMealsPricesByMenuId_CurrentMenuId_ListOfMealPricesOfCurrentMenu() {
+		List<MealPrice> found = menuMealPriceRepository.findAllMealsPricesByMenuId(CURRENT_MENU_ID);
+		assertEquals(SIZE_OF_LIST_OF_MEAL_PRICES, found.size());
 	}
 	
 	
