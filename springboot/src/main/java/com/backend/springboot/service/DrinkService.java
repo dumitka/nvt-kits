@@ -47,12 +47,9 @@ public class DrinkService {
 
     public boolean editableDrink(int id, String name, String amountUnit, double amountNumber) {
         List<Drink> pronadjenaPica = getByNameAndAmount(name, amountUnit, amountNumber);
-        System.out.println(pronadjenaPica.size());
         if (pronadjenaPica.size() > 1) return false;
         else if (pronadjenaPica.size() == 1) {
-            System.out.println(pronadjenaPica.get(0).getId() + "     " + id);
-            if (pronadjenaPica.get(0).getId() != id)
-                return false;
+            if (pronadjenaPica.get(0).getId() != id) return false;
             }
         return true;
     }

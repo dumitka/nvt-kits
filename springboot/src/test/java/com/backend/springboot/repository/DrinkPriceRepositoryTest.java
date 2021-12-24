@@ -20,7 +20,7 @@ public class DrinkPriceRepositoryTest {
     private DrinkPriceRepository drinkPriceRepository;
 
     @Test
-    public void findOneByDrinkIdTest() {
+    public void findOneByDrinkId_EverythingOk_ReturnDrinkPrice() {
         DrinkPrice pronadjen = this.drinkPriceRepository.findOneByDrinkId(DRINK_ID);
         assertEquals(DRINK_NAME, pronadjen.getDrink().getName());
     }

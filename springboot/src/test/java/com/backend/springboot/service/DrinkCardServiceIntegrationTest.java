@@ -35,13 +35,13 @@ public class DrinkCardServiceIntegrationTest {
     private DrinkCardRepository drinkCardRepository;
 
     @Test
-    public void findAllTest() {
+    public void findAll_EverythingOk_ReturnListDrinkCard() {
         List<DrinkCard> pronadjena = this.drinkCardService.findAll();
         assertEquals(DRINK_CARD_NUMBER, pronadjena.size());
     }
 
     @Test
-    public void findOneTest() {
+    public void findOne_EverythingOk_ReturnDrinkCard() {
         DrinkCard pronadjena = this.drinkCardService.findOne(DRINK_CARD_ID);
         assertNotNull(pronadjena);
         int id = pronadjena.getId();
@@ -49,7 +49,13 @@ public class DrinkCardServiceIntegrationTest {
     }
 
     @Test
-    public void saveTest() {
+    public void findOne_NotExistId_ReturnNull() {
+        DrinkCard pronadjena = this.drinkCardService.findOne(NOT_DRINK_ID);
+        assertNull(pronadjena);
+    }
+
+    @Test
+    public void save_EverythingOk_ReturnDrinkCard() {
         Drink pice = Drink.builder().id(DRINK_ID).name(DRINK_NAME).build();
         Restaurant restoran = Restaurant.builder().id(RESTAURANT_ID).build();
         DrinkPrice cena = DrinkPrice.builder().id(DRINK_PRICE_ID).drink(pice).price(DRINK_PRICE_PRICE).build();
@@ -61,12 +67,12 @@ public class DrinkCardServiceIntegrationTest {
         DrinkCard pronadjena = this.drinkCardService.save(kartaPica);
         assertNotNull(pronadjena);
         int id = pronadjena.getId();
-        assertEquals(NEW_DC_ID, id);
+        assertEquals(NEW3_DC_ID, id);
         this.drinkCardRepository.delete(pronadjena);
     }
 
     @Test
-    public void findLatestTest() {
+    public void findLatest_EverythingOk_ReturnDrinkCard() {
         DrinkCard pronadjena = this.drinkCardService.findLatest();
         assertNotNull(pronadjena);
         int id = pronadjena.getId();
@@ -74,29 +80,31 @@ public class DrinkCardServiceIntegrationTest {
     }
 
     @Test
-    public void removeDrinkTest() {
+    public void removeDrink_EverythingOk_ReturnTrue() {
         Drink pice = Drink.builder().id(DRINK_ID).build();
         boolean izbrisano = drinkCardService.removeDrink(pice);
         assertTrue(izbrisano);
+        DrinkCard najnovija = this.drinkCardService.findLatest();
+        this.drinkCardRepository.delete(najnovija);
         // mozda ubaciti kod za dodavanje cene pica nazad u listu
     }
 
     @Test
-    public void failRemoveDrinkNotDrinkIdTest() {
+    public void removeDrink_NotExistDrinkId_ReturnFalse() {
         Drink pice = Drink.builder().id(NOT_DRINK_ID).build();
         boolean izbrisano = drinkCardService.removeDrink(pice);
         assertFalse(izbrisano);
     }
 
     @Test
-    public void findPriceOfDrinkForDateTest() {
+    public void findPriceOfDrinkForDate_EverythingOk_ReturnDrinkPrice() {
         DrinkPrice pronadjena = this.drinkCardService.findPriceOfDrinkForDate(LocalDateTime.now(), DRINK_ID);
         int id = pronadjena.getId();
         assertEquals(DRINK_PRICE_ID, id);
     }
 
     @Test
-    public void failFindPriceOfDrinkForDateNotDrinkTest() {
+    public void findPriceOfDrinkForDate_NotExistDrinkId_ReturnNull() {
         DrinkPrice pronadjena = this.drinkCardService.findPriceOfDrinkForDate(LocalDateTime.now(), NOT_DRINK_ID);
         assertNull(pronadjena);
     }
