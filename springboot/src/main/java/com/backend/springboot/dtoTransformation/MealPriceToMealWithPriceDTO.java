@@ -5,17 +5,20 @@ import java.util.List;
 
 import org.springframework.core.convert.converter.Converter;
 
-import com.backend.springboot.dto.DrinkDTO;
+
+import com.backend.springboot.dto.MealDTO;
 import com.backend.springboot.dto.MealWithPriceDTO;
-import com.backend.springboot.model.Drink;
 import com.backend.springboot.model.MealPrice;
 
 public class MealPriceToMealWithPriceDTO implements Converter<MealPrice, MealWithPriceDTO>{
-
+	private MealToMealDTO mealToMealDTO;
+	
 	@Override
 	public MealWithPriceDTO convert(MealPrice source) {
 		MealWithPriceDTO returnValue = new MealWithPriceDTO();
-		returnValue.setMeal(source.getMeal());
+		returnValue.setId(source.getId());
+		MealDTO mealDTO = mealToMealDTO.convert(source.getMeal());
+		returnValue.setMealDTO(mealDTO);
 		returnValue.setPrice(source.getPriceAmount());
 		return returnValue;
 	}

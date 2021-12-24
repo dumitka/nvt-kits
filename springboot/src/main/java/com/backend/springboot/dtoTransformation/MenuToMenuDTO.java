@@ -1,0 +1,27 @@
+package com.backend.springboot.dtoTransformation;
+
+import java.util.Set;
+
+import org.springframework.core.convert.converter.Converter;
+
+
+import com.backend.springboot.dto.MenuDTO;
+import com.backend.springboot.dto.MenuMealPriceDTO;
+import com.backend.springboot.model.Menu;
+
+
+public class MenuToMenuDTO implements Converter<Menu, MenuDTO>{
+
+	private MenuMealPriceToMenuMealPriceDTO menuMealPriceToMenuMealPriceDTO;
+	
+	@Override
+	public MenuDTO convert(Menu source) {
+		MenuDTO returnValue = new MenuDTO();
+		returnValue.setId(source.getId());
+		returnValue.setDateOfValidation(source.getDateOfValidation());
+		Set<MenuMealPriceDTO> set = Set.copyOf(this.menuMealPriceToMenuMealPriceDTO.convert(source.getMenuMealPrices().stream().toList()));
+		returnValue.setMenuMealPriceDTO(set);
+		return returnValue;
+	}
+
+}

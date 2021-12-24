@@ -9,9 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -26,7 +25,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "menu")
+@Table(name = "menus")
 public class Menu {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,9 +34,11 @@ public class Menu {
     @Column(name = "date_Of_Validation", nullable = false)
     private LocalDateTime dateOfValidation;
 
-    @ManyToMany
-    @JoinTable(name = "meal_prices", joinColumns = @JoinColumn(name = "menu_id"), inverseJoinColumns = @JoinColumn(name = "meal_price_id"))
-    private Set<MealPrice> mealPrices;
+	@Column(name = "current")
+	private Boolean current;
+	
+	@OneToMany(mappedBy = "menu")
+	private Set<MenuMealPrice> menuMealPrices;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
