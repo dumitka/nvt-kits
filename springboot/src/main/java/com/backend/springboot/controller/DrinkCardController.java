@@ -41,7 +41,7 @@ public class DrinkCardController {
     }
 
     @GetMapping("/")
-    //@PreAuthorize("hasRole('ROLE_SERVER')")
+    @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<DrinkCardDTO> gettingDrinkCard() {
        DrinkCard najnovijaKP = this.drinkCardService.findLatest();
        DrinkCardDTO dto = this.drinkCardToDrinkCardDTO.convert(najnovijaKP);
@@ -50,7 +50,7 @@ public class DrinkCardController {
 
     // dodavanje ili izmena, svede se na isto tj pravljenje nove karte pica
     @PostMapping("/newDrinkCard")
-    //@PreAuthorize("hasRole('ROLE_SERVER')")
+    @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<DrinkCardDTO> newDrinkCard(@RequestBody DrinkCardDTO drinkCardDTO) {
         Set<DrinkPrice> listaCP = new HashSet<>();
         for (DrinkPriceDTO dtoCP : drinkCardDTO.getDrinkPriceDTOs()) {

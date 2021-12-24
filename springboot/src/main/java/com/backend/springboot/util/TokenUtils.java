@@ -1,9 +1,11 @@
 package com.backend.springboot.util;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.backend.springboot.model.Role;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -46,13 +48,11 @@ public class TokenUtils {
 		
 		// ============= Funkcije za generisanje JWT tokena =============
 		//generise token na osnovu prosljedjenog korisnickog imena
-		public String generateToken(String username) {
+		public String generateToken(String username, List<Role> roles) {
 			return Jwts.builder()
-					.setIssuer(APP_NAME)
 					.setSubject(username)
-					.setAudience(generateAudience())
+					.claim("role", roles.stream().map(x -> x.getName()).toList())
 					.setIssuedAt(new Date())
-					.setExpiration(generateExpirationDate())
 					.signWith(SIGNATURE_ALGORITHM, SECRET).compact();
 		}
 		

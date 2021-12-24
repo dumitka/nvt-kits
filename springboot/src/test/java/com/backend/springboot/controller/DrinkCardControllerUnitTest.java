@@ -58,11 +58,11 @@ public class DrinkCardControllerUnitTest {
     public void login() {
         JwtAuthenticationRequest prijava = JwtAuthenticationRequest.builder().username("sef-sale")
                 .password("pera").build();
-        ResponseEntity<String> responseEntity =
+        ResponseEntity<UserTokenState> responseEntity =
                 this.restTemplate.postForEntity("/auth/login",
                         prijava,
-                        String.class);
-        this.accessToken = responseEntity.getBody();
+                        UserTokenState.class);
+        this.accessToken = responseEntity.getBody().getAccessToken();
 
         Restaurant restoran = Restaurant.builder().id(RESTAURANT_ID).build();
         Drink pice = Drink.builder().id(DRINK_ID).name(DRINK_NAME).build();
@@ -82,21 +82,8 @@ public class DrinkCardControllerUnitTest {
     @Test
     public void gettingDrinkCard_EverythingOk_ReturnDrinkCardDTO() {
         HttpHeaders headers = new HttpHeaders();
-        //headers.add("Role", "ROLE_SERVER");
-        //headers.add("X-Auth-Token", this.accessToken);
-        //headers.add("x-auth-token", accessToken);
-        //headers.add("Authorization", accessToken);
-        //headers.setBasicAuth(accessToken);
-        //headers.add("authorization", accessToken);
-        //headers.add("auth", accessToken);
-        //headers.add("Auth", accessToken);
-        //headers.add("User", accessToken);
-        //headers.add("user", accessToken);
-        //headers.add("Authorize", accessToken);
-        //headers.add("authorize", accessToken);
-        //headers.add("authentication", accessToken);
-        //headers.add("Authentication", accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
+        headers.add("Authorization", "Bearer " + this.accessToken);
         ResponseEntity<DrinkCard> responseEntity =
                 this.restTemplate.exchange(URL_PREFIX, HttpMethod.GET, httpEntity, DrinkCard.class);
 
@@ -116,7 +103,7 @@ public class DrinkCardControllerUnitTest {
         DrinkCardDTO stara = DrinkCardDTO.builder().restaurantId(RESTAURANT_ID).drinkPriceDTOs(sveCene).build();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Auth-Token", this.accessToken);
+        headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(stara, headers);
 
         ResponseEntity<DrinkCardDTO> responseEntity =

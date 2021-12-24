@@ -30,7 +30,7 @@ public class DrinkController {
     }
 
     @PostMapping("/addDrink")
-    //@PreAuthorize("hasRole('ROLE_SERVER')")
+    @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<DrinkDTO> addingNewDrink(@RequestBody DrinkDTO dto) {
         if (!this.drinkService.freeNameAndAmount(dto.getName(), dto.getAmountUnit(), dto.getAmountNumber()))
             return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
@@ -44,7 +44,7 @@ public class DrinkController {
     }
 
     @PostMapping("/editDrink")
-    //@PreAuthorize("hasRole('ROLE_SERVER')")
+    @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<DrinkDTO> editingDrink(@RequestBody DrinkDTO dto) {
         Drink pice = this.drinkService.findOne(dto.getId());        // pice =! null
         if (!this.drinkService.editableDrink(dto.getId(), dto.getName(), dto.getAmountUnit(), dto.getAmountNumber()))
@@ -61,7 +61,7 @@ public class DrinkController {
     }
 
     @DeleteMapping("/deleteDrink")
-    //@PreAuthorize("hasRole('ROLE_SERVER')")
+    @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<DrinkDTO> deletingDrink(@RequestBody DrinkDTO dto) {
         Drink pice = this.drinkService.findOne(dto.getId());        // pice =! null
         pice.setAvailable(false);
@@ -71,7 +71,7 @@ public class DrinkController {
     }
 
     @GetMapping("/searchDrinks/{input}")
-    //@PreAuthorize("hasRole('ROLE_SERVER')")
+    @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<List<DrinkDTO>> searchingDrinks(@PathVariable String input) {
         List<Drink> pronadjenaPica = this.drinkService.findByName(input);
         List<DrinkDTO> konvertovanaLista = this.drinkToDrinkDTO.convertList(pronadjenaPica);
@@ -80,7 +80,7 @@ public class DrinkController {
 
     // uzima u obzir i search
     @GetMapping("/filterDrinks/{search}/{drinkType}")
-    //@PreAuthorize("hasRole('ROLE_SERVER')")
+    @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<List<DrinkDTO>> filteringDrinks(@PathVariable String search, @PathVariable DrinkType drinkType) {
         List<Drink> pronadjenaPica = this.drinkService.findByName(search);
         pronadjenaPica = pronadjenaPica.stream().filter(p -> p.getType().equals(drinkType)).toList();
@@ -89,7 +89,7 @@ public class DrinkController {
     }
 
     @GetMapping("/")
-    //@PreAuthorize("hasRole('ROLE_SERVER')")
+    @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<List<DrinkDTO>> gettingDrinks() {
         List<Drink> pronadjenaPica = this.drinkService.findAllAvailable();
         List<DrinkDTO> konvertovanaLista = this.drinkToDrinkDTO.convertList(pronadjenaPica);

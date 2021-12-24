@@ -1,9 +1,6 @@
 package com.backend.springboot.controller;
 
-import com.backend.springboot.dto.DrinkCardDTO;
-import com.backend.springboot.dto.DrinkDTO;
-import com.backend.springboot.dto.DrinkPriceDTO;
-import com.backend.springboot.dto.JwtAuthenticationRequest;
+import com.backend.springboot.dto.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,18 +37,17 @@ public class DrinkCardControllerIntegrationTest {
     public void login() {
         JwtAuthenticationRequest prijava = JwtAuthenticationRequest.builder().username("sef-sale")
                 .password("pera").build();
-        ResponseEntity<String> responseEntity =
+        ResponseEntity<UserTokenState> responseEntity =
                 this.restTemplate.postForEntity("/auth/login",
                         prijava,
-                        String.class);
-        this.accessToken = responseEntity.getBody();
-        System.out.println(this.accessToken);
+                        UserTokenState.class);
+        this.accessToken = responseEntity.getBody().getAccessToken();
     }
 
     @Test
     public void gettingDrinkCard_EverythingOk_ReturnDrinkCardDTO() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Auth-Token", this.accessToken);
+        headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
         ResponseEntity<DrinkCardDTO> responseEntity =
                 this.restTemplate.exchange(URL_PREFIX, HttpMethod.GET, httpEntity, DrinkCardDTO.class);
@@ -72,7 +68,7 @@ public class DrinkCardControllerIntegrationTest {
         DrinkCardDTO stara = DrinkCardDTO.builder().restaurantId(RESTAURANT_ID).drinkPriceDTOs(sveCene).build();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Auth-Token", this.accessToken);
+        headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(stara, headers);
 
         ResponseEntity<DrinkCardDTO> responseEntity =

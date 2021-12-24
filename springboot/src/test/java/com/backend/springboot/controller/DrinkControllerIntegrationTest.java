@@ -2,6 +2,7 @@ package com.backend.springboot.controller;
 
 import com.backend.springboot.dto.DrinkDTO;
 import com.backend.springboot.dto.JwtAuthenticationRequest;
+import com.backend.springboot.dto.UserTokenState;
 import com.backend.springboot.enums.DrinkType;
 import com.backend.springboot.model.Drink;
 import com.backend.springboot.repository.DrinkRepository;
@@ -54,11 +55,11 @@ public class DrinkControllerIntegrationTest {
     public void login() {
         JwtAuthenticationRequest prijava = JwtAuthenticationRequest.builder().username("sef-sale")
                 .password("pera").build();
-        ResponseEntity<String> responseEntity =
+        ResponseEntity<UserTokenState> responseEntity =
                 this.restTemplate.postForEntity("/auth/login",
                         prijava,
-                        String.class);
-        this.accessToken = responseEntity.getBody();
+                        UserTokenState.class);
+        this.accessToken = responseEntity.getBody().getAccessToken();
 
         Drink pice = Drink.builder().id(DRINK_ID).name(DRINK_NAME).type(DrinkType.HOT_DRINK).build();
         List<Drink> listaPica = new ArrayList<>();
@@ -76,7 +77,7 @@ public class DrinkControllerIntegrationTest {
     @Test
     public void addingNewDrink_EverythingOk_ReturnDrinkDTO() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Auth-Token", this.accessToken);
+        headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.piceNeImeDTO, headers);
         ResponseEntity<DrinkDTO> responseEntity =
                 this.restTemplate.exchange(URL_PREFIX + "addDrink", HttpMethod.POST, httpEntity, DrinkDTO.class);
@@ -90,7 +91,7 @@ public class DrinkControllerIntegrationTest {
     @Test
     public void editingDrink_NotEqualId_ReturnNull() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Auth-Token", this.accessToken);
+        headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.piceNeIdDTO, headers);
         ResponseEntity<DrinkDTO> responseEntity =
                 this.restTemplate.exchange(URL_PREFIX + "editDrink", HttpMethod.POST, httpEntity, DrinkDTO.class);
@@ -101,7 +102,7 @@ public class DrinkControllerIntegrationTest {
     @Test
     public void editingDrink_NotEqualName_ReturnDrink() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Auth-Token", this.accessToken);
+        headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.piceNeImeDTO, headers);
         ResponseEntity<DrinkDTO> responseEntity =
                 this.restTemplate.exchange(URL_PREFIX + "editDrink", HttpMethod.POST, httpEntity, DrinkDTO.class);
@@ -115,7 +116,7 @@ public class DrinkControllerIntegrationTest {
     @Test
     public void editingDrink_ExistDrink_ReturnDrink() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Auth-Token", this.accessToken);
+        headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.piceSveOkDTO, headers);
         ResponseEntity<DrinkDTO> responseEntity =
                 this.restTemplate.exchange(URL_PREFIX + "editDrink", HttpMethod.POST, httpEntity, DrinkDTO.class);
@@ -129,7 +130,7 @@ public class DrinkControllerIntegrationTest {
     @Test
     public void deletingDrink_EverythingOk_ReturnDrinkDTO() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Auth-Token", this.accessToken);
+        headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.piceSveOkDTO, headers);
         ResponseEntity<DrinkDTO> responseEntity =
                 this.restTemplate.exchange(URL_PREFIX + "deleteDrink", HttpMethod.DELETE, httpEntity, DrinkDTO.class);
@@ -146,7 +147,7 @@ public class DrinkControllerIntegrationTest {
     @Test
     public void searchingDrinks_EverythingOk_ReturnListDrinkDTO() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Auth-Token", this.accessToken);
+        headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
         ResponseEntity<DrinkDTO[]> responseEntity =
                 this.restTemplate.exchange(URL_PREFIX + "searchDrinks/" + DRINK_NAME,
@@ -161,7 +162,7 @@ public class DrinkControllerIntegrationTest {
     @Test
     public void searchingDrinks_NotExistName_ReturnEmptyList() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Auth-Token", this.accessToken);
+        headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
         ResponseEntity<DrinkDTO[]> responseEntity =
                 this.restTemplate.exchange(URL_PREFIX + "searchDrinks/" + NOT_DRINK_NAME,
@@ -176,7 +177,7 @@ public class DrinkControllerIntegrationTest {
     @Test
     public void filteringDrinks_EverythingOk_ReturnListDrinkDTO() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Auth-Token", this.accessToken);
+        headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
         ResponseEntity<DrinkDTO[]> responseEntity =
                 this.restTemplate.exchange(URL_PREFIX + "filterDrinks/" + DRINK_NAME + "/"
@@ -191,7 +192,7 @@ public class DrinkControllerIntegrationTest {
     @Test
     public void gettingDrinks_EverythingOk_ReturnListDrinkDTO() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-Auth-Token", this.accessToken);
+        headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
         ResponseEntity<DrinkDTO[]> responseEntity =
                 this.restTemplate.exchange(URL_PREFIX, HttpMethod.GET, httpEntity, DrinkDTO[].class);
