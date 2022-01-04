@@ -4,16 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.backend.springboot.dto.MealDTO;
 import com.backend.springboot.dto.MealWithPriceDTO;
 import com.backend.springboot.dtoTransformation.MealPriceToMealWithPriceDTO;
 import com.backend.springboot.enums.MealType;
@@ -90,9 +91,14 @@ public class MealController {
 	
 	
 	
-	@PostMapping(value = "/addMeal", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/addMeal")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
-	public ResponseEntity<Boolean> addMeal(@RequestBody Meal meal) throws Exception  {
+	public ResponseEntity<Boolean> addMeal(@RequestBody MealDTO mealDTO) throws Exception  {
+		Meal meal = Meal.builder().id(mealDTO.getId()).name(mealDTO.getName()).description(mealDTO.getDescription())
+				.amountNumber(mealDTO.getAmountNumber()).amountUnit(mealDTO.getAmountUnit()).deleted(mealDTO.getDeleted())
+				.image(mealDTO.getImage()).mealDifficulty(mealDTO.getMealDifficulty()).timePreparation(mealDTO.getTimePreparation())
+				.type(mealDTO.getType()).build();
+		
 		boolean response = service2.addMeal(meal);
 		if(!response) {
 			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -102,9 +108,14 @@ public class MealController {
 	
 	
 	
-	@PostMapping(value = "/changeMeal", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/changeMeal")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
-	public ResponseEntity<Boolean> changeMeal(@RequestBody Meal meal) throws Exception  {
+	public ResponseEntity<Boolean> changeMeal(@RequestBody MealDTO mealDTO) throws Exception  {
+		Meal meal = Meal.builder().id(mealDTO.getId()).name(mealDTO.getName()).description(mealDTO.getDescription())
+				.amountNumber(mealDTO.getAmountNumber()).amountUnit(mealDTO.getAmountUnit()).deleted(mealDTO.getDeleted())
+				.image(mealDTO.getImage()).mealDifficulty(mealDTO.getMealDifficulty()).timePreparation(mealDTO.getTimePreparation())
+				.type(mealDTO.getType()).build();
+		
 		boolean response = service2.changeMeal(meal);
 		if(!response) {
 			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
@@ -113,9 +124,14 @@ public class MealController {
 	}
 	
 	
-	@DeleteMapping(value = "/deleteMeal", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value = "/deleteMeal")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
-	public ResponseEntity<Boolean> deleteMeal(@RequestBody Meal meal) throws Exception{
+	public ResponseEntity<Boolean> deleteMeal(@RequestBody MealDTO mealDTO) throws Exception{
+		Meal meal = Meal.builder().id(mealDTO.getId()).name(mealDTO.getName()).description(mealDTO.getDescription())
+				.amountNumber(mealDTO.getAmountNumber()).amountUnit(mealDTO.getAmountUnit()).deleted(mealDTO.getDeleted())
+				.image(mealDTO.getImage()).mealDifficulty(mealDTO.getMealDifficulty()).timePreparation(mealDTO.getTimePreparation())
+				.type(mealDTO.getType()).build();
+		
 		boolean response = service2.delete(meal);
 		if(!response) {
 			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);

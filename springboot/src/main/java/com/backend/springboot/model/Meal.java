@@ -24,7 +24,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "meals")
 public class Meal {
-
+	
 	public Meal(String name, MealType type, String description, MealDifficulty mealDifficulty, int timePreparation, int amountNumber, String amountUnit, String image, boolean deleted) {
 		this.name = name;
 		this.type = type;
@@ -47,25 +47,25 @@ public class Meal {
 	@Column(name = "type", nullable = false)
 	private MealType type;
 
-	@Column(name = "description")
+	@Column(name = "description", nullable = true)
 	private String description;
 
-	@Column(name = "meal_difficulty")
+	@Column(name = "meal_difficulty", nullable = true)
 	private MealDifficulty mealDifficulty;
 
-	@Column(name = "time_preparation")
+	@Column(name = "time_preparation", nullable = true)
 	private Integer timePreparation;
 
-	@Column(name = "amount_number", nullable = false)
+	@Column(name = "amount_number", nullable = true)
 	private Integer amountNumber;
 
-	@Column(name = "amount_unit", nullable = false)
+	@Column(name = "amount_unit", nullable = true)
 	private String amountUnit;
 
-	@Column(name = "image")
+	@Column(name = "image", nullable = true)
 	private String image;
 	
-	@Column(name = "deleted")
+	@Column(name = "deleted", nullable = false)
 	private Boolean deleted;
 	
 }

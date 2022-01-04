@@ -33,7 +33,7 @@ import static com.backend.springboot.constants.MealConstants.CHANGE_EXISTING_MEA
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class MealServiceTests {
+public class MealServiceUnitTests {
 
 	@Autowired
 	private MealService mealService;

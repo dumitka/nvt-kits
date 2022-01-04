@@ -13,7 +13,7 @@ public class MealConstants {
 	public static Integer NON_EXISTING_MEAL_ID = 100;
 	public static String NON_EXISTING_MEAL_NAME = "Ime";
 	public static String NON_EXISTING_MEAL_DESCRIPTION = "Opis";
-	public static Meal NON_EXISTING_MEAL = Meal.builder().id(NON_EXISTING_MEAL_ID).name(NON_EXISTING_MEAL_NAME).description(NON_EXISTING_MEAL_DESCRIPTION).deleted(false).build();
+	public static Meal NON_EXISTING_MEAL = Meal.builder().id(NON_EXISTING_MEAL_ID).name(NON_EXISTING_MEAL_NAME).description(NON_EXISTING_MEAL_DESCRIPTION).deleted(false).type(MealType.APPENDICES).build();
 	
 	public static String EXISTING_NAME = "Pecenje";
 	public static String EXISTING_DESCRIPTION = "Jako";
@@ -34,7 +34,10 @@ public class MealConstants {
 	
 	
 	
-	
+	//integration tests
+	public static String INAME = "Kajgana";
+	public static String IDESCRIPTION = "Domace, zdravo";
+	public static Meal IMEAL = Meal.builder().id(10).name(INAME).description(IDESCRIPTION).build();
 	
 	
 	

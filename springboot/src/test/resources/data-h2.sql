@@ -17,6 +17,7 @@ insert into users(username, password, name, last_name, fired, enabled   )-- sifr
     values ('sef-sale', '$2a$10$hN88.iZa1VSk4Ncxjpt.M.xZ5swoN1EZwryN4oUY/8Uf6wUVEDtaO', 'Pera', 'Peric', false, true);
 
 -- USER -> ROLES
+insert into user_role (user_id, role_id) values (1, 7);
 insert into user_role (user_id, role_id) values (3, 8);
 
 -- RESTAURANT

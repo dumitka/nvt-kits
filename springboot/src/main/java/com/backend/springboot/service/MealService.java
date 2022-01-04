@@ -54,9 +54,7 @@ public class MealService {
 			current.get().setAmountUnit(meal.getAmountUnit());
 			current.get().setImage(meal.getImage());
 			current.get().setMealDifficulty(meal.getMealDifficulty());
-			current.get().setName(meal.getName());
 			current.get().setTimePreparation(meal.getTimePreparation());
-			current.get().setType(meal.getType());
 			mealRepository.save(current.get());
 			return true;
 		}else {

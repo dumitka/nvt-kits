@@ -25,7 +25,7 @@ import static com.backend.springboot.constants.MenuConstants.ID_OF_CURRENT_MENU;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class MenuServiceTests {
+public class MenuServiceUnitTests {
 
 	@Autowired
 	private MenuService menuService;

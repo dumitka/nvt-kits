@@ -52,8 +52,12 @@ public class MealPriceService {
 			Optional<MenuMealPrice> found = menuMealPriceRepository.findMenuMealPriceByMealPriceIdAndMenuId(mealPrice.getId(), currentMenu.get().getId());
 			//if mealPrice does not exists in menu, create it and add it.
 			if(found.isEmpty()) {
-				MenuMealPrice menuMealPrice = MenuMealPrice.builder().mealPrice(mealPrice).menu(currentMenu.get()).build();
+				MenuMealPrice menuMealPrice = MenuMealPrice.builder().mealPrice(mealPrice).menu(currentMenu.get()).deleted(false).build();
 				menuMealPriceRepository.save(menuMealPrice);
+				currentMenu.get().getMenuMealPrices().add(menuMealPrice);
+				mealPrice.getMenuMealPrices().add(menuMealPrice);
+				menuRepository.save(currentMenu.get());
+				mealPriceRepository.save(mealPrice);
 				return true;
 			}else {
 				throw new MealPriceAlreadyExistsException("MealPrice already exists.");

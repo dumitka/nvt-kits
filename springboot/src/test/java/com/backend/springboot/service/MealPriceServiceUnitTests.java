@@ -44,7 +44,7 @@ import static com.backend.springboot.constants.MealPriceConstants.LIST_ELEMENT3;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class MealPriceServiceTests {
+public class MealPriceServiceUnitTests {
 	@Autowired 
 	private MealPriceService mealPriceService;
 	

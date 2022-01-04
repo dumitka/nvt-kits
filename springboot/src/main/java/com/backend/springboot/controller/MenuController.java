@@ -25,6 +25,7 @@ import com.backend.springboot.model.Menu;
 import com.backend.springboot.service.MealPriceService;
 import com.backend.springboot.service.MenuService;
 
+
 @RestController
 @RequestMapping(value = "/menu")
 public class MenuController {
@@ -42,13 +43,14 @@ public class MenuController {
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<MenuDTO> getMenu() throws Exception{
 		Menu current = this.service.getCurrentMenu();
-		if(current != null) {
+		if(current.getCurrent()) {
 			MenuDTO dto = menuDTO.convert(current);
 			return new ResponseEntity<>(dto, HttpStatus.OK);
-		}else {
+		}
+		else {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
-	
+		
 	}
 	
 	
