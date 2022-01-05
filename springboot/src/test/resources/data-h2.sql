@@ -46,13 +46,14 @@ insert into meals(name, type, description, meal_difficulty, time_preparation, am
 insert into meals(name, type, description, meal_difficulty, time_preparation, amount_number, amount_unit, image, deleted) values ('Vocna salata', 3, 'Osvjezavajuce', 0, 10, 300, 'g', 'nema', true);
 insert into meals(name, type, description, meal_difficulty, time_preparation, amount_number, amount_unit, image, deleted) values ('Pasulj', 2, 'Jako', 2, 180, 330, 'g', 'nema', false);
 insert into meals(name, type, description, meal_difficulty, time_preparation, amount_number, amount_unit, image, deleted) values ('Pecenje', 2, 'Jako', 2, 300, 1, 'kg', 'nema', false);
+insert into meals(name, type, description, meal_difficulty, time_preparation, amount_number, amount_unit, image, deleted) values ('Supa', 1, 'Toplo', 1, 30, 200, 'ml', 'nema', false);
 
 
 --MEAL_PRICE
-insert into meal_prices(meal_id, price_amount) values (1, 300);
-insert into meal_prices(meal_id, price_amount) values (2, 330);
-insert into meal_prices(meal_id, price_amount) values (3, 480);
-insert into meal_prices(meal_id, price_amount) values (4, 700);
+insert into meal_prices(meal_id, price_amount, deleted) values (1, 300, false);
+insert into meal_prices(meal_id, price_amount, deleted) values (2, 330, false);
+insert into meal_prices(meal_id, price_amount, deleted) values (3, 480, false);
+insert into meal_prices(meal_id, price_amount, deleted) values (4, 700, false);
 
 
 --MENU

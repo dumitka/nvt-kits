@@ -49,19 +49,19 @@ public class MealPriceService {
 	public boolean addMealPrice(MealPrice mealPrice) throws Exception{
 		Optional<Menu> currentMenu = menuRepository.findByCurrent();
 		if(!currentMenu.isEmpty()) {
+			mealPriceRepository.save(mealPrice);
 			Optional<MenuMealPrice> found = menuMealPriceRepository.findMenuMealPriceByMealPriceIdAndMenuId(mealPrice.getId(), currentMenu.get().getId());
 			//if mealPrice does not exists in menu, create it and add it.
 			if(found.isEmpty()) {
 				MenuMealPrice menuMealPrice = MenuMealPrice.builder().mealPrice(mealPrice).menu(currentMenu.get()).deleted(false).build();
 				menuMealPriceRepository.save(menuMealPrice);
-				currentMenu.get().getMenuMealPrices().add(menuMealPrice);
-				mealPrice.getMenuMealPrices().add(menuMealPrice);
 				menuRepository.save(currentMenu.get());
-				mealPriceRepository.save(mealPrice);
 				return true;
+			
 			}else {
 				throw new MealPriceAlreadyExistsException("MealPrice already exists.");
 			}
+			
 		}else {
 			throw new CurrentMenuNotFoundException("Current menu not found.");
 		}
@@ -92,8 +92,11 @@ public class MealPriceService {
 		Optional<Menu> currentMenu = menuRepository.findByCurrent();
 		if(!currentMenu.isEmpty()) {
 			Optional<MenuMealPrice>menuMealPrice = menuMealPriceRepository.findMenuMealPriceByMealPriceIdAndMenuId(mealPrice.getId(), currentMenu.get().getId());
+			Optional<MealPrice> foundMealPrice = mealPriceRepository.findById(mealPrice.getId());
 			if(!menuMealPrice.isEmpty()) {
+				foundMealPrice.get().setDeleted(true);
 				menuMealPrice.get().setDeleted(true);
+				mealPriceRepository.save(foundMealPrice.get());
 				menuMealPriceRepository.save(menuMealPrice.get());
 				return true;
 			}else {
@@ -112,9 +115,15 @@ public class MealPriceService {
 		
 		List<MealPrice> returnList = new ArrayList<MealPrice>();
 		
-		for(MealPrice m : allMealPrices) {
-			if(!allMealPricesInMenu.contains(m)) {
-				returnList.add(m);
+		for(int i = 0; i<allMealPrices.size(); i++) {
+			boolean flag = false;
+			for(int j = 0; j<allMealPricesInMenu.size(); j++) {
+				if(allMealPrices.get(i).getId() == allMealPricesInMenu.get(j).getId()) {
+					flag = true; //contains
+				}
+			}
+			if(flag == false) {
+				returnList.add(allMealPrices.get(i));
 			}
 		}
 		return returnList;

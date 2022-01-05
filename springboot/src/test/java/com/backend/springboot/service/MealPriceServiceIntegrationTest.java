@@ -1,17 +1,13 @@
 package com.backend.springboot.service;
 
 import static com.backend.springboot.constants.MealPriceConstants.CHANGED_MEALPRICE;
-import static com.backend.springboot.constants.MealPriceConstants.EXISTING_MEALPRICE;
-import static com.backend.springboot.constants.MealPriceConstants.LIST_ELEMENT1;
-import static com.backend.springboot.constants.MealPriceConstants.LIST_ELEMENT3;
 import static com.backend.springboot.constants.MealPriceConstants.MENU_ID;
-import static com.backend.springboot.constants.MealPriceConstants.NEW_MEALPRICE;
 import static com.backend.springboot.constants.MealPriceConstants.NON_EXISTING_MEALPRICE;
 import static com.backend.springboot.constants.MealPriceConstants.IEXISTING_MEALPRICE;
 import static com.backend.springboot.constants.MealPriceConstants.INEW_MEALPRICE;
+import static com.backend.springboot.constants.MealPriceConstants.DELETE_MEAL_PRICE;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
@@ -24,8 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import com.backend.springboot.exception.CurrentMenuNotFoundException;
 import com.backend.springboot.exception.MealPriceAlreadyExistsException;
 import com.backend.springboot.exception.MealPriceNotFoundException;
 import com.backend.springboot.model.MealPrice;
@@ -36,8 +30,6 @@ import com.backend.springboot.model.MealPrice;
 public class MealPriceServiceIntegrationTest {
 	@Autowired 
 	private MealPriceService mealPriceService;
-	
-	
 	
 	
 	
@@ -52,15 +44,8 @@ public class MealPriceServiceIntegrationTest {
 	public void addMealPrice_EverythingOK_addedMeal() throws Exception {
 		boolean response = mealPriceService.addMealPrice(INEW_MEALPRICE);
 		assertTrue(response);
+		
 	}
-	
-	
-	/*
-	@Test(expected = CurrentMenuNotFoundException.class)
-	public void changeMealPrice_CurrentMenuNotFound_Exception() throws Exception {
-		mealPriceService.changeMealPrice(CHANGED_MEALPRICE);
-	}
-	
 	
 	
 	@Test(expected = MealPriceNotFoundException.class)
@@ -77,36 +62,24 @@ public class MealPriceServiceIntegrationTest {
 	}
 	
 	
-	
-	@Test(expected = CurrentMenuNotFoundException.class)
-	public void deleteMealPriceFromMenu_CurrentMenuNotFound_Exception() throws Exception {
-		mealPriceService.deleteMealPriceFromMenu(EXISTING_MEALPRICE);
-	}
-	
-	
-	
 	@Test(expected = MealPriceNotFoundException.class)
 	public void deleteMealPriceFromMenu_MealPriceNotFound_Exception() throws Exception {
 		mealPriceService.deleteMealPriceFromMenu(NON_EXISTING_MEALPRICE);
 	}
 	
 	
-	
-	
 	@Test
 	public void deleteMealPriceFromMenu_EverythingOK_deletedMealPrice() throws Exception {
-		boolean response = mealPriceService.deleteMealPriceFromMenu(EXISTING_MEALPRICE);
+		boolean response = mealPriceService.deleteMealPriceFromMenu(DELETE_MEAL_PRICE);
 		assertTrue(response);
 	}
-	
 	
 	
 	@Test
 	public void getMealPricesThatAreNotInMenu_gettingMealsFromCUrrentMenu_List() {
 		List<MealPrice> returnList = mealPriceService.getMealPricesThatAreNotInMenu(MENU_ID);
-		assertEquals(2, returnList.size());
-		assertFalse(returnList.contains(LIST_ELEMENT1));
-		assertFalse(returnList.contains(LIST_ELEMENT3));
+		assertEquals(1, returnList.size());
 	}
-	*/
+	
+	
 }

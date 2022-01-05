@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.backend.springboot.dto.MealDTO;
 import com.backend.springboot.dto.MealWithPriceDTO;
 import com.backend.springboot.dtoTransformation.MealPriceToMealWithPriceDTO;
+import com.backend.springboot.dtoTransformation.MealToMealDTO;
 import com.backend.springboot.enums.MealType;
 import com.backend.springboot.model.MealPrice;
 import com.backend.springboot.model.Meal;
@@ -37,7 +38,7 @@ public class MealController {
 	
 	private MealPriceToMealWithPriceDTO mealPriceToMealWithPriceDTO;
 	
-	
+	public MealController() {this.mealPriceToMealWithPriceDTO = new MealPriceToMealWithPriceDTO(new MealToMealDTO());}
 	
 	@GetMapping(value = "/getColdAppetizers")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
@@ -94,14 +95,15 @@ public class MealController {
 	@PostMapping(value = "/addMeal")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<Boolean> addMeal(@RequestBody MealDTO mealDTO) throws Exception  {
-		Meal meal = Meal.builder().id(mealDTO.getId()).name(mealDTO.getName()).description(mealDTO.getDescription())
+		
+		Meal meal = Meal.builder().name(mealDTO.getName()).description(mealDTO.getDescription())
 				.amountNumber(mealDTO.getAmountNumber()).amountUnit(mealDTO.getAmountUnit()).deleted(mealDTO.getDeleted())
 				.image(mealDTO.getImage()).mealDifficulty(mealDTO.getMealDifficulty()).timePreparation(mealDTO.getTimePreparation())
 				.type(mealDTO.getType()).build();
 		
 		boolean response = service2.addMeal(meal);
 		if(!response) {
-			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<Boolean>(response, HttpStatus.OK);
 	}
@@ -111,6 +113,7 @@ public class MealController {
 	@PutMapping(value = "/changeMeal")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<Boolean> changeMeal(@RequestBody MealDTO mealDTO) throws Exception  {
+		
 		Meal meal = Meal.builder().id(mealDTO.getId()).name(mealDTO.getName()).description(mealDTO.getDescription())
 				.amountNumber(mealDTO.getAmountNumber()).amountUnit(mealDTO.getAmountUnit()).deleted(mealDTO.getDeleted())
 				.image(mealDTO.getImage()).mealDifficulty(mealDTO.getMealDifficulty()).timePreparation(mealDTO.getTimePreparation())
@@ -118,7 +121,7 @@ public class MealController {
 		
 		boolean response = service2.changeMeal(meal);
 		if(!response) {
-			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Boolean>(response, HttpStatus.OK);
 	}
@@ -134,7 +137,7 @@ public class MealController {
 		
 		boolean response = service2.delete(meal);
 		if(!response) {
-			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

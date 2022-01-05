@@ -1,6 +1,7 @@
 package com.backend.springboot.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.backend.springboot.dto.MealWithPriceDTO;
 import com.backend.springboot.dto.MenuDTO;
 import com.backend.springboot.dtoTransformation.MealPriceToMealWithPriceDTO;
+import com.backend.springboot.dtoTransformation.MealToMealDTO;
+import com.backend.springboot.dtoTransformation.MenuMealPriceToMenuMealPriceDTO;
 import com.backend.springboot.dtoTransformation.MenuToMenuDTO;
 import com.backend.springboot.model.MealPrice;
 import com.backend.springboot.model.Menu;
@@ -38,6 +41,13 @@ public class MenuController {
 	
 	private MenuToMenuDTO menuDTO;
 	private MealPriceToMealWithPriceDTO mealPriceToMealWithPriceDTO;
+	
+	
+	public MenuController() {
+		this.mealPriceToMealWithPriceDTO = new MealPriceToMealWithPriceDTO(new MealToMealDTO());
+		this.menuDTO = new MenuToMenuDTO(new MenuMealPriceToMenuMealPriceDTO(new MealPriceToMealWithPriceDTO(new MealToMealDTO())));
+	}
+	
 	
 	@GetMapping(value = "/getMenu")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
@@ -109,7 +119,8 @@ public class MenuController {
 		Menu current = this.service.getCurrentMenu();
 		if(current != null) {
 			List<MealPrice> list = mealPriceService.getMealPricesThatAreNotInMenu(current.getId());
-			return new ResponseEntity<>(mealPriceToMealWithPriceDTO.convertList(list), HttpStatus.OK);
+			List<MealWithPriceDTO> dto = this.mealPriceToMealWithPriceDTO.convertList(list);
+			return new ResponseEntity<>(dto, HttpStatus.OK);
 		}else {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}

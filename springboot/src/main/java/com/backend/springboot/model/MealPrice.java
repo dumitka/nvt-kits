@@ -35,6 +35,9 @@ public class MealPrice {
 
     @Column(name = "price_amount", nullable = false)
     private Float priceAmount;
+    
+    @Column(name = "deleted", nullable = false)
+    private Boolean deleted;
 
     @OneToMany(mappedBy = "mealPrice")
 	private Set<MenuMealPrice> menuMealPrices;

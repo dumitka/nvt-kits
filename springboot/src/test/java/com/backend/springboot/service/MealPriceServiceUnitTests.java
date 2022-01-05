@@ -166,7 +166,9 @@ public class MealPriceServiceUnitTests {
 	
 	@Test
 	public void deleteMealPriceFromMenu_EverythingOK_deletedMealPrice() throws Exception {
-		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.of(CURRENT_MENU));			
+		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.of(CURRENT_MENU));	
+		Mockito.when(mealPriceRepository.findById(EXISTING_MEAL_PRICE_ID)).thenReturn(Optional.of(EXISTING_MEALPRICE));
+		Mockito.when(mealPriceRepository.save(EXISTING_MEALPRICE)).thenReturn(EXISTING_MEALPRICE);
 		Mockito.when(menuMealPriceRepository.findMenuMealPriceByMealPriceIdAndMenuId(EXISTING_MEAL_PRICE_ID, MENU_ID)).thenReturn(Optional.of(MENU_MEALPRICE));
 		Mockito.when(menuMealPriceRepository.save(MENU_MEALPRICE)).thenReturn(MENU_MEALPRICE);
 		

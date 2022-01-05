@@ -2,6 +2,7 @@ package com.backend.springboot.dtoTransformation;
 
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 
 
@@ -13,6 +14,11 @@ import com.backend.springboot.model.Menu;
 public class MenuToMenuDTO implements Converter<Menu, MenuDTO>{
 
 	private MenuMealPriceToMenuMealPriceDTO menuMealPriceToMenuMealPriceDTO;
+	
+	@Autowired
+    public MenuToMenuDTO(MenuMealPriceToMenuMealPriceDTO menuMealPriceToMenuMealPriceDTO) {
+        this.menuMealPriceToMenuMealPriceDTO = menuMealPriceToMenuMealPriceDTO;
+    }
 	
 	@Override
 	public MenuDTO convert(Menu source) {
