@@ -150,8 +150,8 @@ public class MealControllerUnitTests {
 	 
 	 
 	 @Test
-	 public void addMeal_MealAlreadyExistsException_BadRequest() throws Exception {
-		 given(mealService.addMeal(mealThatExists)).willThrow(MealAlreadyExistsException.class).willReturn(false);
+	 public void addMeal_MealAlreadyExistsException_BadRequest() {
+		 given(mealService.findById(mealThatExists.getId())).willReturn(mealThatExists);
 		 
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
@@ -167,10 +167,10 @@ public class MealControllerUnitTests {
 	 
 	 
 	 @Test
-	 public void addMeal_EverythingOK_OK() throws Exception {
+	 public void addMeal_EverythingOK_OK() {
+		 given(mealService.findById(mealThatDoenNotExists.getId())).willReturn(null);
 		 given(mealService.addMeal(mealThatDoenNotExists)).willReturn(true);
-		 
-		 
+
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
 	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.mealThatDoenNotExistsDTO, headers);
@@ -185,8 +185,8 @@ public class MealControllerUnitTests {
 	 
 	 
 	 @Test
-	 public void changeMeal_MealDoesNotExist_BadRequest() throws Exception {
-		 given(mealService.changeMeal(mealThatDoenNotExists)).willThrow(MealDoesNotExist.class);
+	 public void changeMeal_MealDoesNotExist_BadRequest() {
+		 given(mealService.findById(mealThatDoenNotExists.getId())).willReturn(null);
 		 
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
@@ -200,7 +200,8 @@ public class MealControllerUnitTests {
 	 
 	 
 	 @Test
-	 public void changeMeal_EverythingOK_OK() throws Exception {
+	 public void changeMeal_EverythingOK_OK()  {
+		 given(mealService.findById(mealThatExists.getId())).willReturn(mealThatExists);
 		 given(mealService.changeMeal(mealThatExists)).willReturn(true);
 		 
 		 HttpHeaders headers = new HttpHeaders();
@@ -215,7 +216,8 @@ public class MealControllerUnitTests {
 	 
 	 
 	 @Test
-	 public void deleteMeal_EverythingOK_OK() throws Exception {
+	 public void deleteMeal_EverythingOK_OK()  {
+		 given(mealService.findById(mealThatExists.getId())).willReturn(mealThatExists);
 		 given(mealService.delete(mealThatExists)).willReturn(true);
 		 
 		 HttpHeaders headers = new HttpHeaders();
@@ -231,8 +233,8 @@ public class MealControllerUnitTests {
 	 
 	 
 	 @Test
-	 public void deleteMeal_MealDoesNotExist_BadRequest() throws Exception {
-		 given(mealService.delete(this.mealThatDoenNotExists)).willThrow(MealDoesNotExist.class);
+	 public void deleteMeal_MealDoesNotExist_BadRequest() {
+		 given(mealService.findById(mealThatDoenNotExists.getId())).willReturn(null);
 		 
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);

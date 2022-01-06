@@ -94,17 +94,17 @@ public class MealController {
 	
 	@PostMapping(value = "/addMeal")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
-	public ResponseEntity<Boolean> addMeal(@RequestBody MealDTO mealDTO) throws Exception  {
-		
-		Meal meal = Meal.builder().name(mealDTO.getName()).description(mealDTO.getDescription())
+	public ResponseEntity<Boolean> addMeal(@RequestBody MealDTO mealDTO) {
+		Meal meal = this.service2.findById(mealDTO.getId());
+		if(meal != null) {
+			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.BAD_REQUEST);
+		}
+
+		meal = Meal.builder().id(mealDTO.getId()).name(mealDTO.getName()).description(mealDTO.getDescription())
 				.amountNumber(mealDTO.getAmountNumber()).amountUnit(mealDTO.getAmountUnit()).deleted(mealDTO.getDeleted())
 				.image(mealDTO.getImage()).mealDifficulty(mealDTO.getMealDifficulty()).timePreparation(mealDTO.getTimePreparation())
 				.type(mealDTO.getType()).build();
-		
 		boolean response = service2.addMeal(meal);
-		if(!response) {
-			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.BAD_REQUEST);
-		}
 		return new ResponseEntity<Boolean>(response, HttpStatus.OK);
 	}
 	
@@ -112,33 +112,30 @@ public class MealController {
 	
 	@PutMapping(value = "/changeMeal")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
-	public ResponseEntity<Boolean> changeMeal(@RequestBody MealDTO mealDTO) throws Exception  {
-		
-		Meal meal = Meal.builder().id(mealDTO.getId()).name(mealDTO.getName()).description(mealDTO.getDescription())
+	public ResponseEntity<Boolean> changeMeal(@RequestBody MealDTO mealDTO) {
+		Meal meal = service2.findById(mealDTO.getId());
+		if(meal == null) {
+			return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+		}
+
+		meal = Meal.builder().id(mealDTO.getId()).name(mealDTO.getName()).description(mealDTO.getDescription())
 				.amountNumber(mealDTO.getAmountNumber()).amountUnit(mealDTO.getAmountUnit()).deleted(mealDTO.getDeleted())
 				.image(mealDTO.getImage()).mealDifficulty(mealDTO.getMealDifficulty()).timePreparation(mealDTO.getTimePreparation())
 				.type(mealDTO.getType()).build();
-		
 		boolean response = service2.changeMeal(meal);
-		if(!response) {
-			return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<Boolean>(response, HttpStatus.OK);
 	}
 	
 	
 	@DeleteMapping(value = "/deleteMeal")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
-	public ResponseEntity<Boolean> deleteMeal(@RequestBody MealDTO mealDTO) throws Exception{
-		Meal meal = Meal.builder().id(mealDTO.getId()).name(mealDTO.getName()).description(mealDTO.getDescription())
-				.amountNumber(mealDTO.getAmountNumber()).amountUnit(mealDTO.getAmountUnit()).deleted(mealDTO.getDeleted())
-				.image(mealDTO.getImage()).mealDifficulty(mealDTO.getMealDifficulty()).timePreparation(mealDTO.getTimePreparation())
-				.type(mealDTO.getType()).build();
-		
-		boolean response = service2.delete(meal);
-		if(!response) {
+	public ResponseEntity<Boolean> deleteMeal(@RequestBody MealDTO mealDTO) {
+		Meal meal = this.service2.findById(mealDTO.getId());
+		if(meal == null) {
 			return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
 		}
+
+		boolean response = service2.delete(meal);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	

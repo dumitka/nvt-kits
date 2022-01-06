@@ -116,7 +116,7 @@ public class MealControllerIntegrationTest {
 	 
 	 
 	 @Test
-	 public void addMeal_MealAlreadyExistsException_BadRequest() throws Exception { 
+	 public void addMeal_MealAlreadyExistsException_BadRequest() {
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
 	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.mealThatExistsDTO, headers);
@@ -131,7 +131,7 @@ public class MealControllerIntegrationTest {
 	 
 	 
 	 @Test
-	 public void addMeal_EverythingOK_OK() throws Exception { 
+	 public void addMeal_EverythingOK_OK()  {
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
 	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.mealThatDoenNotExistsDTO, headers);
@@ -146,7 +146,7 @@ public class MealControllerIntegrationTest {
 	 
 	 
 	 @Test
-	 public void changeMeal_MealDoesNotExist_BadRequest() throws Exception { 
+	 public void changeMeal_MealDoesNotExist_BadRequest() {
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
 	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.mealThatDoenNotExistsDTO, headers);
@@ -159,7 +159,7 @@ public class MealControllerIntegrationTest {
 	 
 	 
 	 @Test
-	 public void changeMeal_EverythingOK_OK() throws Exception {
+	 public void changeMeal_EverythingOK_OK()  {
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
 	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.mealThatExistsDTO, headers);
@@ -172,7 +172,7 @@ public class MealControllerIntegrationTest {
 	 
 	 
 	 @Test
-	 public void deleteMeal_EverythingOK_OK() throws Exception { 
+	 public void deleteMeal_EverythingOK_OK()  {
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
 	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.mealThatExistsDTO, headers);
@@ -186,7 +186,7 @@ public class MealControllerIntegrationTest {
 	 
 	 
 	 @Test
-	 public void deleteMeal_MealDoesNotExist_BadRequest() throws Exception { 
+	 public void deleteMeal_MealDoesNotExist_BadRequest()  {
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
 	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.mealThatDoenNotExistsDTO, headers);

@@ -21,8 +21,8 @@ public class MealService {
 	
 	@Autowired
 	private MealRepository mealRepository;
-	
-	
+
+	public Meal findById(int id) {return this.mealRepository.findById(id).orElse(null);}
 	
 	public List<Meal> getAllMealbyMealType(MealType type){
 		return mealRepository.findMealbyMealType(type);
@@ -30,22 +30,14 @@ public class MealService {
 	
 	
 	
-	public boolean addMeal(Meal meal) throws Exception{
-		//check if exists
-		Optional<Meal> found = mealRepository.findMealByNameAndDescription(meal.getName(), meal.getDescription());
-		
-		if(found.isEmpty()) {
-			mealRepository.save(meal);
-			return true;
-		}else {
-			throw new MealAlreadyExistsException("Ne mozete napraviti jelo koje vec postoji.");
-		}
-		
+	public boolean addMeal(Meal meal) {
+		mealRepository.save(meal);
+		return true;
 	}
 	
 	
 	
-	public boolean changeMeal(Meal meal) throws Exception{
+	public boolean changeMeal(Meal meal) {
 		Optional<Meal> current  = mealRepository.findById(meal.getId());
 		
 		if(!current.isEmpty()) {
@@ -58,21 +50,16 @@ public class MealService {
 			mealRepository.save(current.get());
 			return true;
 		}else {
-			throw new MealDoesNotExist("Meal is not found.");
+			return false;
 		}
 	}
 	
 	
 	
-	public boolean delete(Meal meal) throws Exception{
-		Optional<Meal> current = mealRepository.findMealById(meal.getId());
-		if(!current.isEmpty()) {
-			current.get().setDeleted(true);
-			mealRepository.save(current.get());
-			return true;
-		}else {
-			throw new MealDoesNotExist("Meal is not found.");
-		}
+	public boolean delete(Meal meal) {
+		meal.setDeleted(true);
+		mealRepository.save(meal);
+		return true;
 	}
 	
 	
