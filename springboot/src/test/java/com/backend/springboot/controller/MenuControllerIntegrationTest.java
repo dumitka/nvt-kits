@@ -1,19 +1,20 @@
 package com.backend.springboot.controller;
 
+import static com.backend.springboot.constants.MealConstants.EXISTING_MEAL;
+import static com.backend.springboot.constants.MealPriceConstants.LIST_OF_MEALS_THAT_IS_NOT_IN_CURRENT_MENU;
+import static com.backend.springboot.constants.MenuConstants.CURRENT_MENU;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.BDDMockito.given;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -28,18 +29,8 @@ import com.backend.springboot.dto.MealDTO;
 import com.backend.springboot.dto.MealWithPriceDTO;
 import com.backend.springboot.dto.MenuDTO;
 import com.backend.springboot.dto.UserTokenState;
-import com.backend.springboot.enums.MealDifficulty;
-import com.backend.springboot.enums.MealType;
-import com.backend.springboot.exception.CurrentMenuNotFoundException;
-import com.backend.springboot.exception.MealPriceAlreadyExistsException;
-import com.backend.springboot.exception.MealPriceNotFoundException;
-import com.backend.springboot.model.Meal;
-import com.backend.springboot.model.MealPrice;
+import com.backend.springboot.dtoTransformation.MealToMealDTO;
 import com.backend.springboot.model.Menu;
-import com.backend.springboot.model.MenuMealPrice;
-import com.backend.springboot.model.Restaurant;
-import com.backend.springboot.service.MealPriceService;
-import com.backend.springboot.service.MenuService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -47,22 +38,20 @@ import com.backend.springboot.service.MenuService;
 public class MenuControllerIntegrationTest {
 	private static final String URL_PREFIX = "/menu/";
 	 
-	 @Autowired
-	 private MealPriceService mealPriceService;
-	 
-	 @Autowired
-	 private MenuService service;
 	 
 	 @Autowired
 	 private TestRestTemplate restTemplate;
 	 
 	 private String accessToken;
-	 private Meal meal;
-	 private Meal newMeal;
-	 private MealPrice newMealPrice;
-	 private MealPrice existingMealPrice;
-	 private MealPrice nonexistingMealPrice;
-	 private Menu menu;
+	 //params
+	 MealDTO mealDTO;
+	 MealWithPriceDTO existingMealPriceDTO;
+	 MealWithPriceDTO newMealPriceDTO;
+	 MealWithPriceDTO nonexistingMealPriceDTO;
+	 MenuDTO newMenuDTO;
+	 Menu newMenu;
+	 
+	 MealToMealDTO mealToMealDTO;
 	 
 	 
 	 
@@ -76,23 +65,40 @@ public class MenuControllerIntegrationTest {
 	                        UserTokenState.class);
 	        this.accessToken = responseEntity.getBody().getAccessToken();
 	        
+	        
 	        //params
-	        float price = 0;
-	        meal = Meal.builder().id(1).name("Kajgana").description("Domace, zdravo").amountNumber(200).amountUnit("g")
-		    		   .deleted(false).image("nema").mealDifficulty(MealDifficulty.EASY).timePreparation(5).type(MealType.COLD_APPETIZER)
-		    		   .build();
-	        newMeal = Meal.builder().id(1).name("Kajgana").description("Domace, zdravo").amountNumber(200).amountUnit("g")
-		    		   .deleted(false).image("nema").mealDifficulty(MealDifficulty.EASY).timePreparation(5).type(MealType.COLD_APPETIZER)
-		    		   .build();
-	        newMealPrice = MealPrice.builder().meal(newMeal).priceAmount(price + 200).deleted(false).build();
-	        existingMealPrice = MealPrice.builder().id(1).meal(meal).priceAmount(price + 300).deleted(false).build();
-	        nonexistingMealPrice =  MealPrice.builder().id(100).meal(newMeal).priceAmount(price + 500).build();
-	        menu = Menu.builder().dateOfValidation(LocalDateTime.now()).restaurant(null).build();
+	        this.mealToMealDTO = new MealToMealDTO();
+	        this.mealDTO = this.mealToMealDTO.convert(EXISTING_MEAL);
+	        
+	        float startingPrice = 0;
+	        this.existingMealPriceDTO = MealWithPriceDTO.builder().id(1).mealDTO(mealDTO).price(startingPrice + 300).build();
+	        this.newMealPriceDTO = MealWithPriceDTO.builder().id(-1).mealDTO(mealDTO).price(startingPrice + 100).build();
+	        this.nonexistingMealPriceDTO = MealWithPriceDTO.builder().id(-1).mealDTO(mealDTO).price(startingPrice + 100).build();
+	        
+	        this.newMenuDTO = MenuDTO.builder().current(false).dateOfValidation(LocalDateTime.now()).build();
+	        this.newMenu = Menu.builder().current(false).dateOfValidation(LocalDateTime.now()).build();
 	 }
 	 
 	 
+	 /*
 	 @Test
-	 public void getMenu_EverythingOK_OK() throws Exception {
+	 public void getMenu_CurrentMenuNotFound_NotFound() {
+		 HttpHeaders headers = new HttpHeaders();
+	     headers.add("Authorization", "Bearer " + this.accessToken);
+	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
+	     ResponseEntity<MenuDTO> responseEntity =
+	                this.restTemplate.exchange(URL_PREFIX + "getMenu", HttpMethod.GET, httpEntity, MenuDTO.class);
+
+	     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+	     assertEquals(Integer.valueOf(0), responseEntity.getBody().getId());
+	     
+	 }
+	 */
+	 
+	 
+	 
+	 @Test
+	 public void getMenu_EverythingOK_OK(){
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
 	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -100,78 +106,77 @@ public class MenuControllerIntegrationTest {
 	                this.restTemplate.exchange(URL_PREFIX + "getMenu", HttpMethod.GET, httpEntity, MenuDTO.class);
 
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	     assertEquals(CURRENT_MENU.getId(), responseEntity.getBody().getId());
 	 }
 	 
 	 
 	 
 	 @Test
-	 public void addMealToMenu_MealPriceAlreadyExistsException_BadRequest() throws Exception {
+	 public void addMealToMenu_MealPriceAlreadyExists_BadRequest() {
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.existingMealPrice, headers);
+	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.existingMealPriceDTO, headers);
 	     ResponseEntity<Boolean> responseEntity =
 	                this.restTemplate.exchange(URL_PREFIX + "addMealToMenu", HttpMethod.POST, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+	     assertFalse(responseEntity.getBody());
 	 }
 	 
 	 
+	 
 	 @Test
-	 public void addMealToMenu_EverythingOK_OK() throws Exception {
+	 public void addMealToMenu_EverythingOK_OK() {
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.newMealPrice, headers);
+	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.newMealPriceDTO, headers);
 	     ResponseEntity<Boolean> responseEntity =
 	                this.restTemplate.exchange(URL_PREFIX + "addMealToMenu", HttpMethod.POST, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	     assertTrue(responseEntity.getBody());
 	 }
-	 
-	 
-	
 	 
 	 
 	 
 	 @Test
-	 public void changeMealPriceInMenu_MealPriceNotFoundException_BadRequest() throws Exception { 
+	 public void changeMealPriceInMenu_MealPriceNotFoundException_BadRequest(){
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.nonexistingMealPrice, headers);
+	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.nonexistingMealPriceDTO, headers);
 	     ResponseEntity<Boolean> responseEntity =
 	                this.restTemplate.exchange(URL_PREFIX + "changeMealPriceInMenu", HttpMethod.PUT, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+	     assertFalse(responseEntity.getBody());
 	 }
 	 
 	 
 	 
 	 @Test
-	 public void changeMealPriceInMenu_EverythingOK_OK() throws Exception {
+	 public void changeMealPriceInMenu_EverythingOK_OK(){
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.existingMealPrice, headers);
+	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.existingMealPriceDTO, headers);
 	     ResponseEntity<Boolean> responseEntity =
 	                this.restTemplate.exchange(URL_PREFIX + "changeMealPriceInMenu", HttpMethod.PUT, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	     assertTrue(responseEntity.getBody());
 	 }
 	 
 	 
 	 
-	 
-
-	 
-	 
-	 
 	 @Test
-	 public void deleteMealInMenu_MealPriceNotFoundException_BadRequest() throws Exception { 
+	 public void deleteMealInMenu_MealPriceNotFound_BadRequest() throws Exception {
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.nonexistingMealPrice, headers);
+	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.nonexistingMealPriceDTO, headers);
 	     ResponseEntity<Boolean> responseEntity =
 	                this.restTemplate.exchange(URL_PREFIX + "deleteMealInMenu", HttpMethod.DELETE, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+	     assertFalse(responseEntity.getBody());
 	 }
 	 
 	 
@@ -180,29 +185,32 @@ public class MenuControllerIntegrationTest {
 	 public void deleteMealInMenu_EverythingOK_OK() throws Exception {
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.existingMealPrice, headers);
+	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.existingMealPriceDTO, headers);
 	     ResponseEntity<Boolean> responseEntity =
 	                this.restTemplate.exchange(URL_PREFIX + "deleteMealInMenu", HttpMethod.DELETE, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	     assertTrue(responseEntity.getBody());
 	 }
 	 
 	 
 	 
 	 @Test
-	 public void newMenu_EverythingOK_OK() throws Exception {
+	 public void newMenu_EverythingOK_OK() throws Exception { 
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(menu, headers);
+	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.newMenuDTO, headers);
 	     ResponseEntity<Boolean> responseEntity =
 	                this.restTemplate.exchange(URL_PREFIX + "newMenu", HttpMethod.POST, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	     assertTrue(responseEntity.getBody());
 	 }
 	 
 	 
+	 
 	 @Test
-	 public void getMealPricesNotInMenu_EverythingOK_OK() throws Exception {Integer ID_OF_CURRENT_MENU = 2;
+	 public void getMealPricesNotInMenu_EverythingOK_OK() throws Exception {
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
 	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
@@ -210,6 +218,10 @@ public class MenuControllerIntegrationTest {
 	                this.restTemplate.exchange(URL_PREFIX + "getMealPricesNotInMenu", HttpMethod.GET, httpEntity, MealWithPriceDTO[].class);
 
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	     //+1 for meal that is deleted in previous method Kajgana
+	     assertEquals(LIST_OF_MEALS_THAT_IS_NOT_IN_CURRENT_MENU.size() + 1, responseEntity.getBody().length);
+	     assertEquals(Integer.valueOf(1), responseEntity.getBody()[0].getId());
+	     assertEquals(Integer.valueOf(5), responseEntity.getBody()[1].getId());
 	 }
 	 
 }

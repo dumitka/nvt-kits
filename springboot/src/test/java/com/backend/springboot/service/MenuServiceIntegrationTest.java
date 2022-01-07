@@ -22,9 +22,9 @@ public class MenuServiceIntegrationTest {
 	private MenuService menuService;
 	
 
-	/*
-	@Test(expected = CurrentMenuNotFoundException.class)
-	public void getCurrentMenu_CurrentMenuNotFound_Exception() throws Exception {
+	/* this test will run true if you put all menus on current false
+	@Test
+	public void getCurrentMenu_CurrentMenuNotFound_Null(){
 		menuService.getCurrentMenu();
 	}
 	*/

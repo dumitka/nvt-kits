@@ -3,17 +3,12 @@ package com.backend.springboot.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.BDDMockito.given;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,16 +22,8 @@ import com.backend.springboot.dto.JwtAuthenticationRequest;
 import com.backend.springboot.dto.MealDTO;
 import com.backend.springboot.dto.MealWithPriceDTO;
 import com.backend.springboot.dto.UserTokenState;
-import com.backend.springboot.dtoTransformation.MealPriceToMealWithPriceDTO;
-import com.backend.springboot.dtoTransformation.MealToMealDTO;
 import com.backend.springboot.enums.MealDifficulty;
 import com.backend.springboot.enums.MealType;
-import com.backend.springboot.exception.MealAlreadyExistsException;
-import com.backend.springboot.exception.MealDoesNotExist;
-import com.backend.springboot.model.Meal;
-import com.backend.springboot.model.MealPrice;
-import com.backend.springboot.service.MealPriceService;
-import com.backend.springboot.service.MealService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -44,12 +31,7 @@ import com.backend.springboot.service.MealService;
 public class MealControllerIntegrationTest {
  private static final String URL_PREFIX = "/meal/";
 	 
- 	 @Autowired
-	 private MealPriceService mealPriceService;
-	 
-	 @Autowired
-	 private MealService mealService;
-	 
+ 	 
 	 @Autowired
 	 private TestRestTemplate restTemplate;
 	 
@@ -59,7 +41,8 @@ public class MealControllerIntegrationTest {
 	 //params
 	 private MealDTO mealThatExistsDTO;
 	 private MealDTO mealThatDoenNotExistsDTO;
-	 
+	 private MealDTO newMeal;
+	 private MealDTO deleteMeal;
 	 
 	 
 	 
@@ -77,11 +60,16 @@ public class MealControllerIntegrationTest {
 	       
 	       
 	       //params
-	       mealThatExistsDTO = MealDTO.builder().id(1).name("Kajgana").description("Domace, zdravo").amountNumber(200).amountUnit("g")
+	       this.mealThatExistsDTO = MealDTO.builder().id(1).name("Kajgana").description("Domace, zdravo").amountNumber(200).amountUnit("g")
 	    		   .deleted(false).image("nema").mealDifficulty(MealDifficulty.EASY).timePreparation(5).type(MealType.COLD_APPETIZER)
 	    		   .build();
-	       mealThatDoenNotExistsDTO = MealDTO.builder().id(100).name("Novo jelo").description("Opis novog jela").amountNumber(100).amountUnit("g")
+	       this.mealThatDoenNotExistsDTO = MealDTO.builder().id(100).name("Novo jelo").description("Opis novog jela").amountNumber(100).amountUnit("g")
 	    		   .deleted(false).image("image").mealDifficulty(MealDifficulty.EASY).timePreparation(60).type(MealType.DESERT)
+	    		   .build();
+	       this.newMeal = MealDTO.builder().name("Novo jelo").description("Opis novog jela").amountNumber(100).amountUnit("g")
+	    		   .deleted(false).image("image").mealDifficulty(MealDifficulty.EASY).timePreparation(60).type(MealType.DESERT)
+	    		   .build();
+	       this.deleteMeal = MealDTO.builder().id(5).name("Supa").type(MealType.HOT_APPETIZER).deleted(false)
 	    		   .build();
 	       
 	       
@@ -124,6 +112,7 @@ public class MealControllerIntegrationTest {
 	                this.restTemplate.exchange(URL_PREFIX + "addMeal", HttpMethod.POST, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+	     assertFalse(responseEntity.getBody());
 	     
 	 }
 	 
@@ -134,7 +123,7 @@ public class MealControllerIntegrationTest {
 	 public void addMeal_EverythingOK_OK()  {
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.mealThatDoenNotExistsDTO, headers);
+	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.newMeal, headers);
 	     ResponseEntity<Boolean> responseEntity =
 	                this.restTemplate.exchange(URL_PREFIX + "addMeal", HttpMethod.POST, httpEntity, Boolean.class);
 
@@ -154,6 +143,7 @@ public class MealControllerIntegrationTest {
 	                this.restTemplate.exchange(URL_PREFIX + "changeMeal", HttpMethod.PUT, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+	     assertFalse(responseEntity.getBody());
 	     
 	 }
 	 
@@ -167,7 +157,7 @@ public class MealControllerIntegrationTest {
 	                this.restTemplate.exchange(URL_PREFIX + "changeMeal", HttpMethod.PUT, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-	    
+	     assertTrue(responseEntity.getBody());
 	 }
 	 
 	 
@@ -175,11 +165,12 @@ public class MealControllerIntegrationTest {
 	 public void deleteMeal_EverythingOK_OK()  {
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.mealThatExistsDTO, headers);
+	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.deleteMeal, headers);
 	     ResponseEntity<Boolean> responseEntity =
 	                this.restTemplate.exchange(URL_PREFIX + "deleteMeal", HttpMethod.DELETE, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	     assertTrue(responseEntity.getBody());
 	     
 	 }
 	 
@@ -194,7 +185,7 @@ public class MealControllerIntegrationTest {
 	                this.restTemplate.exchange(URL_PREFIX + "deleteMeal", HttpMethod.DELETE, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-	  
+	     assertFalse(responseEntity.getBody());
 	 }
 	 
 	 

@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.backend.springboot.exception.CurrentMenuNotFoundException;
 import com.backend.springboot.model.Menu;
 import com.backend.springboot.repository.MenuRepository;
 
@@ -33,26 +32,21 @@ public class MenuServiceUnitTests {
 	@MockBean
 	private MenuRepository menuRepository;
 
-	
-	@Test(expected = CurrentMenuNotFoundException.class)
-	public void getCurrentMenu_CurrentMenuNotFound_Exception() throws Exception {
+	@Test
+	public void getCurrentMenu_CurrentMenuNotFound_Null() {
 		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.empty());
-		
-		menuService.getCurrentMenu();
-		
+		Menu returnValue = menuService.getCurrentMenu();
+		assertEquals(returnValue, null);
 		verify(menuRepository, times(1)).findByCurrent();
 	}
 	
 	
 	
 	@Test
-	public void getCurrentMenu_CurrentMenuFound_Menu() throws Exception {
+	public void getCurrentMenu_CurrentMenuFound_Menu(){
 		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.of(CURRENT_MENU));
-		
 		Menu returnValue = menuService.getCurrentMenu();
-		
 		assertEquals(ID_OF_CURRENT_MENU, returnValue.getId());
-		
 		verify(menuRepository, times(1)).findByCurrent();
 	}
 	

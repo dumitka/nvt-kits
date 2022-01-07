@@ -9,11 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.backend.springboot.exception.CurrentMenuNotFoundException;
-import com.backend.springboot.exception.MealPriceAlreadyExistsException;
-import com.backend.springboot.exception.MealPriceNotFoundException;
+
+import com.backend.springboot.model.Meal;
 import com.backend.springboot.model.MealPrice;
 import com.backend.springboot.repository.MealPriceRepository;
+import com.backend.springboot.repository.MealRepository;
 import com.backend.springboot.repository.MenuMealPriceRepository;
 import com.backend.springboot.repository.MenuRepository;
 
@@ -26,21 +26,20 @@ import static org.mockito.Mockito.verify;
 import java.util.List;
 import java.util.Optional;
 
-import static com.backend.springboot.constants.MealPriceConstants.EXISTING_MEALPRICE;
-import static com.backend.springboot.constants.MealPriceConstants.CURRENT_MENU;
-import static com.backend.springboot.constants.MealPriceConstants.MENU_ID;
-import static com.backend.springboot.constants.MealPriceConstants.EXISTING_MEAL_PRICE_ID;
-import static com.backend.springboot.constants.MealPriceConstants.MENU_MEALPRICE;
-import static com.backend.springboot.constants.MealPriceConstants.NEW_MEALPRICE_ID;
-import static com.backend.springboot.constants.MealPriceConstants.NEW_MEALPRICE;
-import static com.backend.springboot.constants.MealPriceConstants.CHANGED_MEALPRICE_ID;
-import static com.backend.springboot.constants.MealPriceConstants.CHANGED_MEALPRICE;
-import static com.backend.springboot.constants.MealPriceConstants.NON_EXISTING_MEALPRICE;
-import static com.backend.springboot.constants.MealPriceConstants.NON_EXISTING_MEAL_PRICE_ID;
-import static com.backend.springboot.constants.MealPriceConstants.ALL_MEAL_PRICES;
-import static com.backend.springboot.constants.MealPriceConstants.MEALS_FROM_CURRENT_MENU;
-import static com.backend.springboot.constants.MealPriceConstants.LIST_ELEMENT1;
-import static com.backend.springboot.constants.MealPriceConstants.LIST_ELEMENT3;
+
+import static com.backend.springboot.constants.MealPriceConstants.EXISTING_MEAL_PRICE;
+import static com.backend.springboot.constants.MealPriceConstants.NON_EXISTING_MEAL_PRICE;
+import static com.backend.springboot.constants.MealPriceConstants.MAIN_COURSE_MEAL_PRICE_LIST;
+import static com.backend.springboot.constants.MealPriceConstants.MAIN_COURSE_MEAL_PRICE_LIST_SIZE;
+import static com.backend.springboot.constants.MealConstants.MEALTYPE_MAIN_COURSE;
+import static com.backend.springboot.constants.MealPriceConstants.NEW_MEAL_PRICE;
+import static com.backend.springboot.constants.MenuConstants.CURRENT_MENU;
+import static com.backend.springboot.constants.MealPriceConstants.NEW_MENU_MEAL_PRICE;
+import static com.backend.springboot.constants.MealPriceConstants.CHANGED_MEAL_PRICE;
+import static com.backend.springboot.constants.MealPriceConstants.EXISTING_MENU_MEAL_PRICE;
+import static com.backend.springboot.constants.MealPriceConstants.LIST_OF_ALL_MEALS;
+import static com.backend.springboot.constants.MealPriceConstants.LIST_OF_MEAL_PRICES_IN_CURRENT_MENU;
+import static com.backend.springboot.constants.MealPriceConstants.LIST_OF_MEALS_THAT_IS_NOT_IN_CURRENT_MENU;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -57,145 +56,97 @@ public class MealPriceServiceUnitTests {
 	@MockBean
 	private MenuMealPriceRepository menuMealPriceRepository;
 	
-	
-	@Test(expected = CurrentMenuNotFoundException.class)
-	public void addMealPrice_CurrentMenuNotFound_Exception() throws Exception {
-		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.empty());
-		
-		mealPriceService.addMealPrice(EXISTING_MEALPRICE);
-		
-		verify(menuRepository, times(1)).findByCurrent();
-	}
+	@MockBean
+	private MealRepository mealRepository;
 	
 	
-	
-	@Test(expected = MealPriceAlreadyExistsException.class)
-	public void addMealPrice_MealAlreadyExistsInMenu_Exception() throws Exception {
-		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.of(CURRENT_MENU));			
-		Mockito.when(menuMealPriceRepository.findMenuMealPriceByMealPriceIdAndMenuId(EXISTING_MEAL_PRICE_ID, MENU_ID)).thenReturn(Optional.of(MENU_MEALPRICE));
-		
-		mealPriceService.addMealPrice(EXISTING_MEALPRICE);
-		
-		verify(menuRepository, times(1)).findByCurrent();
-		verify(menuMealPriceRepository, times(1)).findMenuMealPriceByMealPriceIdAndMenuId(EXISTING_MEAL_PRICE_ID, MENU_ID);
+	@Test
+	public void exists_MealPriceExists_True() {
+		Mockito.when(mealPriceRepository.findById(EXISTING_MEAL_PRICE.getId())).thenReturn(Optional.of(EXISTING_MEAL_PRICE));
+		boolean returnValue = mealPriceService.exists(EXISTING_MEAL_PRICE.getId());
+		assertTrue(returnValue);
+		verify(mealPriceRepository, times(1)).findById(EXISTING_MEAL_PRICE.getId());
 	}
 	
 	
 
 	@Test
-	public void addMealPrice_EverythingOK_addedMeal() throws Exception {
+	public void exists_MealPriceDoesNotExist_False() {
+		Mockito.when(mealPriceRepository.findById(NON_EXISTING_MEAL_PRICE.getId())).thenReturn(Optional.empty());
+		boolean returnValue = mealPriceService.exists(NON_EXISTING_MEAL_PRICE.getId());
+		assertFalse(returnValue);
+		verify(mealPriceRepository, times(1)).findById(NON_EXISTING_MEAL_PRICE.getId());
+	}
+	
+	
+	
+	@Test
+	public void getAllMealPricebyMealType_MainCourse_List() {
+		Mockito.when(mealPriceRepository.findAllMealPricebyMealType(MEALTYPE_MAIN_COURSE)).thenReturn(MAIN_COURSE_MEAL_PRICE_LIST);
+		List<MealPrice> returnList = mealPriceService.getAllMealPricebyMealType(MEALTYPE_MAIN_COURSE);
+		assertEquals(MAIN_COURSE_MEAL_PRICE_LIST_SIZE, returnList.size());
+		assertEquals(MAIN_COURSE_MEAL_PRICE_LIST.get(0).getId(), returnList.get(0).getId());
+		verify(mealPriceRepository, times(1)).findAllMealPricebyMealType(MEALTYPE_MAIN_COURSE);
+	}
+	
+	
+	
+	@Test
+	public void addMealPrice_ExistingMenuMealPrice_True() {
+		Mockito.when(mealPriceRepository.save(NEW_MEAL_PRICE)).thenReturn(NEW_MEAL_PRICE);
 		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.of(CURRENT_MENU));
-		Mockito.when(menuMealPriceRepository.findMenuMealPriceByMealPriceIdAndMenuId(NEW_MEALPRICE_ID, MENU_ID)).thenReturn(Optional.empty());
-		Mockito.when(menuMealPriceRepository.save(MENU_MEALPRICE)).thenReturn(MENU_MEALPRICE);
-		
-		boolean response = mealPriceService.addMealPrice(NEW_MEALPRICE);
-		
-		assertTrue(response);
-		
+		Mockito.when(menuMealPriceRepository.save(NEW_MENU_MEAL_PRICE)).thenReturn(NEW_MENU_MEAL_PRICE);
+		Mockito.when(menuRepository.save(CURRENT_MENU)).thenReturn(CURRENT_MENU);
+		boolean returnValue = mealPriceService.addMealPrice(NEW_MEAL_PRICE);
+		assertTrue(returnValue);
+		verify(mealPriceRepository, times(1)).save(NEW_MEAL_PRICE);
 		verify(menuRepository, times(1)).findByCurrent();
-		verify(menuMealPriceRepository, times(1)).findMenuMealPriceByMealPriceIdAndMenuId(NEW_MEALPRICE_ID, MENU_ID);
+		verify(menuRepository, times(1)).save(CURRENT_MENU);
 	}
 	
 	
-	
-	@Test(expected = CurrentMenuNotFoundException.class)
-	public void changeMealPrice_CurrentMenuNotFound_Exception() throws Exception {
-		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.empty());
-		
-		mealPriceService.changeMealPrice(CHANGED_MEALPRICE);
-		
-		verify(menuRepository, times(1)).findByCurrent();
+
+	@Test
+	public void changeMealPrice_ExistingMealPrice_True() {
+		Mockito.when(mealPriceRepository.findById(CHANGED_MEAL_PRICE.getId())).thenReturn(Optional.of(EXISTING_MEAL_PRICE));
+		Mockito.when(mealPriceRepository.save(EXISTING_MEAL_PRICE)).thenReturn(EXISTING_MEAL_PRICE);
+		boolean returnValue = mealPriceService.changeMealPrice(CHANGED_MEAL_PRICE);
+		assertTrue(returnValue);
+		verify(mealPriceRepository, times(1)).findById(CHANGED_MEAL_PRICE.getId());
+		verify(mealPriceRepository, times(1)).save(EXISTING_MEAL_PRICE);
 	}
 	
 	
-	
-	@Test(expected = MealPriceNotFoundException.class)
-	public void changeMealPrice_MealPriceNotFound_Exception() throws Exception {
-		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.of(CURRENT_MENU));			
-		Mockito.when(mealPriceRepository.findMealPriceById(NON_EXISTING_MEAL_PRICE_ID)).thenReturn(Optional.empty());
+	@Test
+	public void deleteMealPriceFromMenu_ExistingMealPrice_True() {
+		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.of(CURRENT_MENU));
+		Mockito.when(menuMealPriceRepository.findMenuMealPriceByMealPriceIdAndMenuId(EXISTING_MEAL_PRICE.getId(), CURRENT_MENU.getId())).thenReturn(Optional.of(EXISTING_MENU_MEAL_PRICE));
+		Mockito.when(mealPriceRepository.findById(EXISTING_MEAL_PRICE.getId())).thenReturn(Optional.of(EXISTING_MEAL_PRICE));
 		
-		mealPriceService.changeMealPrice(NON_EXISTING_MEALPRICE);
-		
+		Mockito.when(mealPriceRepository.save(EXISTING_MEAL_PRICE)).thenReturn(EXISTING_MEAL_PRICE);
+		Mockito.when(menuMealPriceRepository.save(EXISTING_MENU_MEAL_PRICE)).thenReturn(EXISTING_MENU_MEAL_PRICE);
+		Mockito.when(menuRepository.save(CURRENT_MENU)).thenReturn(CURRENT_MENU);
+		boolean returnValue = mealPriceService.deleteMealPriceFromMenu(EXISTING_MEAL_PRICE.getId());
+		assertTrue(returnValue);
 		verify(menuRepository, times(1)).findByCurrent();
-		verify(mealPriceRepository, times(1)).findMealPriceById(NON_EXISTING_MEAL_PRICE_ID);
+		verify(menuMealPriceRepository, times(1)).findMenuMealPriceByMealPriceIdAndMenuId(EXISTING_MEAL_PRICE.getId(), CURRENT_MENU.getId());
+		verify(mealPriceRepository, times(1)).findById(EXISTING_MEAL_PRICE.getId());
+		verify(mealPriceRepository, times(1)).save(EXISTING_MEAL_PRICE);
+		verify(menuMealPriceRepository, times(1)).save(EXISTING_MENU_MEAL_PRICE);
+		verify(menuRepository, times(1)).save(CURRENT_MENU);
 	}
 	
 	
 	
 	@Test
-	public void changeMealPrice_EverythingOK_changedMealPrice() throws Exception {
-		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.of(CURRENT_MENU));			
-		Mockito.when(mealPriceRepository.findMealPriceById(CHANGED_MEALPRICE_ID)).thenReturn(Optional.of(EXISTING_MEALPRICE));
-		Mockito.when(mealPriceRepository.save(EXISTING_MEALPRICE)).thenReturn(EXISTING_MEALPRICE);
-		
-		boolean response = mealPriceService.changeMealPrice(CHANGED_MEALPRICE);
-		
-		assertTrue(response);
-		
-		verify(menuRepository, times(1)).findByCurrent();
-		verify(mealPriceRepository, times(1)).findMealPriceById(CHANGED_MEALPRICE_ID);
-		verify(mealPriceRepository, times(1)).save(EXISTING_MEALPRICE);
-	}
-	
-	
-	
-	@Test(expected = CurrentMenuNotFoundException.class)
-	public void deleteMealPriceFromMenu_CurrentMenuNotFound_Exception() throws Exception {
-		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.empty());
-		
-		mealPriceService.deleteMealPriceFromMenu(EXISTING_MEALPRICE);
-		
-		verify(menuRepository, times(1)).findByCurrent();
-	}
-	
-	
-	
-	@Test(expected = MealPriceNotFoundException.class)
-	public void deleteMealPriceFromMenu_MealPriceNotFound_Exception() throws Exception {
-		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.of(CURRENT_MENU));			
-		Mockito.when(mealPriceRepository.findMealPriceById(NON_EXISTING_MEAL_PRICE_ID)).thenReturn(Optional.empty());
-		
-		mealPriceService.deleteMealPriceFromMenu(NON_EXISTING_MEALPRICE);
-		
-		verify(menuRepository, times(1)).findByCurrent();
-		verify(mealPriceRepository, times(1)).findMealPriceById(NON_EXISTING_MEAL_PRICE_ID);
-	}
-	
-	
-	
-	
-	@Test
-	public void deleteMealPriceFromMenu_EverythingOK_deletedMealPrice() throws Exception {
-		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.of(CURRENT_MENU));	
-		Mockito.when(mealPriceRepository.findById(EXISTING_MEAL_PRICE_ID)).thenReturn(Optional.of(EXISTING_MEALPRICE));
-		Mockito.when(mealPriceRepository.save(EXISTING_MEALPRICE)).thenReturn(EXISTING_MEALPRICE);
-		Mockito.when(menuMealPriceRepository.findMenuMealPriceByMealPriceIdAndMenuId(EXISTING_MEAL_PRICE_ID, MENU_ID)).thenReturn(Optional.of(MENU_MEALPRICE));
-		Mockito.when(menuMealPriceRepository.save(MENU_MEALPRICE)).thenReturn(MENU_MEALPRICE);
-		
-		boolean response = mealPriceService.deleteMealPriceFromMenu(EXISTING_MEALPRICE);
-		
-		assertTrue(response);
-		
-		verify(menuRepository, times(1)).findByCurrent();
-		verify(menuMealPriceRepository, times(1)).findMenuMealPriceByMealPriceIdAndMenuId(EXISTING_MEAL_PRICE_ID, MENU_ID);
-		verify(menuMealPriceRepository, times(1)).save(MENU_MEALPRICE);
-	}
-	
-	
-	
-	@Test
-	public void getMealPricesThatAreNotInMenu_gettingMealsFromCUrrentMenu_List() {
-		Mockito.when(mealPriceRepository.findAll()).thenReturn(ALL_MEAL_PRICES);
-		Mockito.when( menuMealPriceRepository.findAllMealsPricesByMenuId(MENU_ID)).thenReturn(MEALS_FROM_CURRENT_MENU);
-		
-		List<MealPrice> returnList = mealPriceService.getMealPricesThatAreNotInMenu(MENU_ID);
-		
-		assertEquals(2, returnList.size());
-		assertFalse(returnList.contains(LIST_ELEMENT1));
-		assertFalse(returnList.contains(LIST_ELEMENT3));
-		
-		verify(mealPriceRepository, times(1)).findAll();
-		verify(menuMealPriceRepository, times(1)).findAllMealsPricesByMenuId(MENU_ID);
+	public void getMealPricesThatAreNotInMenu_EverythingOK_List() {
+		Mockito.when(mealRepository.findAll()).thenReturn(LIST_OF_ALL_MEALS);
+		Mockito.when(menuMealPriceRepository.findAllMealsPricesByMenuId(CURRENT_MENU.getId())).thenReturn(LIST_OF_MEAL_PRICES_IN_CURRENT_MENU);
+		List<Meal> returnList = mealPriceService.getMealPricesThatAreNotInMenu(CURRENT_MENU.getId());
+		assertEquals(LIST_OF_MEALS_THAT_IS_NOT_IN_CURRENT_MENU.size(), returnList.size());
+		assertEquals(LIST_OF_MEALS_THAT_IS_NOT_IN_CURRENT_MENU.get(0).getName(), returnList.get(0).getName());
+		verify(mealRepository, times(1)).findAll();
+		verify(menuMealPriceRepository, times(1)).findAllMealsPricesByMenuId(CURRENT_MENU.getId());
 	}
 	
 }

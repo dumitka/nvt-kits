@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.backend.springboot.repository.MealRepository;
 import com.backend.springboot.enums.MealType;
-import com.backend.springboot.exception.MealAlreadyExistsException;
-import com.backend.springboot.exception.MealDoesNotExist;
 import com.backend.springboot.model.Meal;
 
 @Component
@@ -19,10 +17,32 @@ import com.backend.springboot.model.Meal;
 @Service
 public class MealService {
 	
+	//repositories
 	@Autowired
 	private MealRepository mealRepository;
-
-	public Meal findById(int id) {return this.mealRepository.findById(id).orElse(null);}
+	
+	
+	
+	//methods
+	public boolean exists(Integer id) {
+		Optional<Meal> found = mealRepository.findById(id);
+		if(found.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+	
+	
+	
+	public boolean findByNameAndDescription(String name, String description) {
+		Optional<Meal> found = mealRepository.findMealByNameAndDescription(name, description);
+		if(found.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+	
+	
 	
 	public List<Meal> getAllMealbyMealType(MealType type){
 		return mealRepository.findMealbyMealType(type);
@@ -41,6 +61,7 @@ public class MealService {
 		Optional<Meal> current  = mealRepository.findById(meal.getId());
 		
 		if(!current.isEmpty()) {
+			current.get().setType(meal.getType());
 			current.get().setDescription(meal.getDescription());
 			current.get().setAmountNumber(meal.getAmountNumber());
 			current.get().setAmountUnit(meal.getAmountUnit());
@@ -49,6 +70,7 @@ public class MealService {
 			current.get().setTimePreparation(meal.getTimePreparation());
 			mealRepository.save(current.get());
 			return true;
+			
 		}else {
 			return false;
 		}
@@ -56,9 +78,15 @@ public class MealService {
 	
 	
 	
-	public boolean delete(Meal meal) {
-		meal.setDeleted(true);
-		mealRepository.save(meal);
+	public boolean delete(Integer id) {
+		Optional<Meal> found  = mealRepository.findById(id);
+		
+		if(found.get().getDeleted()) {
+			return false;
+		}
+		
+		found.get().setDeleted(true);
+		mealRepository.save(found.get());
 		return true;
 	}
 	

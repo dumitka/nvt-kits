@@ -30,20 +30,29 @@ import com.backend.springboot.service.MealService;
 @RequestMapping(value = "/meal")
 public class MealController {
 	
+	//services
 	@Autowired
-	private MealPriceService service;
+	private MealPriceService mealPriceService;
 	
 	@Autowired
-	private MealService service2;
+	private MealService mealService;
 	
+	
+	//dto transformations
 	private MealPriceToMealWithPriceDTO mealPriceToMealWithPriceDTO;
 	
-	public MealController() {this.mealPriceToMealWithPriceDTO = new MealPriceToMealWithPriceDTO(new MealToMealDTO());}
+	
+	//constructor
+	public MealController() {
+		this.mealPriceToMealWithPriceDTO = new MealPriceToMealWithPriceDTO(new MealToMealDTO());
+	}
+	
+	
 	
 	@GetMapping(value = "/getColdAppetizers")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<List<MealWithPriceDTO>> getColdAppetizers(){
-		List<MealPrice> meals = service.getAllMealPricebyMealType(MealType.COLD_APPETIZER);
+		List<MealPrice> meals = mealPriceService.getAllMealPricebyMealType(MealType.COLD_APPETIZER);
 		List<MealWithPriceDTO> dto = this.mealPriceToMealWithPriceDTO.convertList(meals);
         return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
@@ -52,15 +61,16 @@ public class MealController {
 	@GetMapping(value = "/getHotAppetizer")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<List<MealWithPriceDTO>> getHotAppetizer(){
-		List<MealPrice> meals = service.getAllMealPricebyMealType(MealType.HOT_APPETIZER);
+		List<MealPrice> meals = mealPriceService.getAllMealPricebyMealType(MealType.HOT_APPETIZER);
 		List<MealWithPriceDTO> dto = this.mealPriceToMealWithPriceDTO.convertList(meals);
         return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
+	
 	@GetMapping(value = "/getMainCourse")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<List<MealWithPriceDTO>> getMainCourse(){
-		List<MealPrice> meals = service.getAllMealPricebyMealType(MealType.MAIN_COURSE);
+		List<MealPrice> meals = mealPriceService.getAllMealPricebyMealType(MealType.MAIN_COURSE);
 		List<MealWithPriceDTO> dto = this.mealPriceToMealWithPriceDTO.convertList(meals);
         return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
@@ -69,43 +79,50 @@ public class MealController {
 	@GetMapping(value = "/getDesert")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<List<MealWithPriceDTO>> getDesert(){
-		List<MealPrice> meals = service.getAllMealPricebyMealType(MealType.DESERT);
+		List<MealPrice> meals = mealPriceService.getAllMealPricebyMealType(MealType.DESERT);
 		List<MealWithPriceDTO> dto = this.mealPriceToMealWithPriceDTO.convertList(meals);
         return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
+	
 	
 	@GetMapping(value = "/getSalad")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<List<MealWithPriceDTO>> getSalad(){
-		List<MealPrice> meals = service.getAllMealPricebyMealType(MealType.SALAD);
+		List<MealPrice> meals = mealPriceService.getAllMealPricebyMealType(MealType.SALAD);
 		List<MealWithPriceDTO> dto = this.mealPriceToMealWithPriceDTO.convertList(meals);
         return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
+	
 	
 	@GetMapping(value = "/getAppendices")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<List<MealWithPriceDTO>> getAppendices(){
-		List<MealPrice> meals = service.getAllMealPricebyMealType(MealType.APPENDICES);
+		List<MealPrice> meals = mealPriceService.getAllMealPricebyMealType(MealType.APPENDICES);
 		List<MealWithPriceDTO> dto = this.mealPriceToMealWithPriceDTO.convertList(meals);
         return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
-	
+
 	
 	@PostMapping(value = "/addMeal")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<Boolean> addMeal(@RequestBody MealDTO mealDTO) {
-		Meal meal = this.service2.findById(mealDTO.getId());
-		if(meal != null) {
+		boolean found = this.mealService.findByNameAndDescription(mealDTO.getName(), mealDTO.getDescription());
+		
+		if(found) {
 			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.BAD_REQUEST);
 		}
 
-		meal = Meal.builder().id(mealDTO.getId()).name(mealDTO.getName()).description(mealDTO.getDescription())
-				.amountNumber(mealDTO.getAmountNumber()).amountUnit(mealDTO.getAmountUnit()).deleted(mealDTO.getDeleted())
+		
+		Meal meal = Meal.builder().name(mealDTO.getName()).description(mealDTO.getDescription())
+				.amountNumber(mealDTO.getAmountNumber()).amountUnit(mealDTO.getAmountUnit())
 				.image(mealDTO.getImage()).mealDifficulty(mealDTO.getMealDifficulty()).timePreparation(mealDTO.getTimePreparation())
 				.type(mealDTO.getType()).build();
-		boolean response = service2.addMeal(meal);
-		return new ResponseEntity<Boolean>(response, HttpStatus.OK);
+		
+		meal.setDeleted(false);
+		
+		boolean response = mealService.addMeal(meal);
+		return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
 	}
 	
 	
@@ -113,30 +130,38 @@ public class MealController {
 	@PutMapping(value = "/changeMeal")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<Boolean> changeMeal(@RequestBody MealDTO mealDTO) {
-		Meal meal = service2.findById(mealDTO.getId());
-		if(meal == null) {
-			return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+		boolean found  = mealService.exists(mealDTO.getId());
+		if(!found) {
+			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
 		}
 
-		meal = Meal.builder().id(mealDTO.getId()).name(mealDTO.getName()).description(mealDTO.getDescription())
-				.amountNumber(mealDTO.getAmountNumber()).amountUnit(mealDTO.getAmountUnit()).deleted(mealDTO.getDeleted())
+		Meal meal = Meal.builder().id(mealDTO.getId()).name(mealDTO.getName()).description(mealDTO.getDescription())
+				.amountNumber(mealDTO.getAmountNumber()).amountUnit(mealDTO.getAmountUnit())
 				.image(mealDTO.getImage()).mealDifficulty(mealDTO.getMealDifficulty()).timePreparation(mealDTO.getTimePreparation())
 				.type(mealDTO.getType()).build();
-		boolean response = service2.changeMeal(meal);
-		return new ResponseEntity<Boolean>(response, HttpStatus.OK);
+		
+		boolean response = mealService.changeMeal(meal);
+		return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
 	}
+	
 	
 	
 	@DeleteMapping(value = "/deleteMeal")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<Boolean> deleteMeal(@RequestBody MealDTO mealDTO) {
-		Meal meal = this.service2.findById(mealDTO.getId());
-		if(meal == null) {
-			return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+		boolean found = this.mealService.exists(mealDTO.getId());
+		if(!found) {
+			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
 		}
 
-		boolean response = service2.delete(meal);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		boolean response = mealService.delete(mealDTO.getId());
+		if(response) {
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}else {
+			//it's already deleted!
+			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}
+		
 	}
 	
 	

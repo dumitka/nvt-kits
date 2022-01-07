@@ -18,11 +18,8 @@ import com.backend.springboot.dto.JwtAuthenticationRequest;
 import com.backend.springboot.dto.MealDTO;
 import com.backend.springboot.dto.MealWithPriceDTO;
 import com.backend.springboot.dto.UserTokenState;
-import com.backend.springboot.dtoTransformation.MealToMealDTO;
 import com.backend.springboot.enums.MealDifficulty;
 import com.backend.springboot.enums.MealType;
-import com.backend.springboot.exception.MealAlreadyExistsException;
-import com.backend.springboot.exception.MealDoesNotExist;
 import com.backend.springboot.model.Meal;
 import com.backend.springboot.model.MealPrice;
 import com.backend.springboot.service.MealPriceService;
@@ -31,6 +28,7 @@ import com.backend.springboot.service.MealService;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;;
 
 @RunWith(SpringRunner.class)
@@ -50,22 +48,15 @@ public class MealControllerUnitTests {
 	 @Autowired
 	 private TestRestTemplate restTemplate;
 	 
+	 
 	 private String accessToken;
-	 
-	 
-	 private MealToMealDTO mealToMealDTO;
-	 
-	 public MealControllerUnitTests() {
-		 this.mealToMealDTO = new MealToMealDTO();
-	 }
 	 
 	 
 	 //params
 	 private MealDTO mealThatExistsDTO;
 	 private MealDTO mealThatDoenNotExistsDTO;
+	 private MealDTO newMealDTO;
 	 
-	 private Meal mealThatExists;
-	 private Meal mealThatDoenNotExists;
 	 
 	 
 	 @Before
@@ -79,25 +70,17 @@ public class MealControllerUnitTests {
 	        this.accessToken = responseEntity.getBody().getAccessToken();
 	        
 	       
-	       
 	       //params
 	     
-	       mealThatExistsDTO = MealDTO.builder().id(1).name("Kajgana").description("Domace, zdravo").amountNumber(200).amountUnit("g")
+	       this.mealThatExistsDTO = MealDTO.builder().id(1).name("Kajgana").description("Domace, zdravo").amountNumber(200).amountUnit("g")
 	    		   .deleted(false).image("nema").mealDifficulty(MealDifficulty.EASY).timePreparation(5).type(MealType.COLD_APPETIZER)
 	    		   .build();
-	       mealThatDoenNotExistsDTO = MealDTO.builder().id(100).name("Novo jelo").description("Opis novog jela").amountNumber(100).amountUnit("g")
+	       this.mealThatDoenNotExistsDTO = MealDTO.builder().id(100).name("Nepostojece jelo").description("Opis nepostojeceg jela").amountNumber(100).amountUnit("g")
 	    		   .deleted(false).image("image").mealDifficulty(MealDifficulty.EASY).timePreparation(60).type(MealType.DESERT)
 	    		   .build();
 	       
-	       mealThatExists = Meal.builder().id(mealThatExistsDTO.getId()).name(mealThatExistsDTO.getName()).description(mealThatExistsDTO.getDescription())
-	    		   .amountNumber(mealThatExistsDTO.getAmountNumber()).amountUnit(mealThatExistsDTO.getAmountUnit())
-	    		   .deleted(mealThatExistsDTO.getDeleted()).image(mealThatExistsDTO.getImage()).mealDifficulty(mealThatExistsDTO.getMealDifficulty())
-	    		   .timePreparation(mealThatExistsDTO.getTimePreparation()).type(mealThatExistsDTO.getType())
-	    		   .build();
-	       mealThatDoenNotExists = Meal.builder().id(mealThatDoenNotExistsDTO.getId()).name(mealThatDoenNotExistsDTO.getName()).description(mealThatDoenNotExistsDTO.getDescription())
-	    		   .amountNumber(mealThatDoenNotExistsDTO.getAmountNumber()).amountUnit(mealThatDoenNotExistsDTO.getAmountUnit())
-	    		   .deleted(mealThatDoenNotExistsDTO.getDeleted()).image(mealThatDoenNotExistsDTO.getImage()).mealDifficulty(mealThatDoenNotExistsDTO.getMealDifficulty())
-	    		   .timePreparation(mealThatDoenNotExistsDTO.getTimePreparation()).type(mealThatDoenNotExistsDTO.getType())
+	       this.newMealDTO = MealDTO.builder().name("Novo jelo").description("Opis novog jela").amountNumber(100).amountUnit("g")
+	    		   .deleted(false).image("image").mealDifficulty(MealDifficulty.EASY).timePreparation(60).type(MealType.DESERT)
 	    		   .build();
 	 }
 
@@ -121,7 +104,6 @@ public class MealControllerUnitTests {
 	                this.restTemplate.exchange(URL_PREFIX + "getColdAppetizers", HttpMethod.GET, httpEntity, MealWithPriceDTO[].class);
 	                
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-	     
 	 }
 	 
 	 
@@ -144,49 +126,51 @@ public class MealControllerUnitTests {
 	                this.restTemplate.exchange(URL_PREFIX + "getHotAppetizer", HttpMethod.GET, httpEntity, MealWithPriceDTO[].class);
 	                
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-	     
 	 }
 	
 	 
 	 
 	 @Test
-	 public void addMeal_MealAlreadyExistsException_BadRequest() {
-		 given(mealService.findById(mealThatExists.getId())).willReturn(mealThatExists);
+	 public void addMeal_MealAlreadyExists_BadRequest() {
+		 given(this.mealService.findByNameAndDescription(this.mealThatExistsDTO.getName(), this.mealThatExistsDTO.getDescription())).willReturn(true);
 		 
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.mealThatExists, headers);
+	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.mealThatExistsDTO, headers);
 	     ResponseEntity<Boolean> responseEntity =
 	                this.restTemplate.exchange(URL_PREFIX + "addMeal", HttpMethod.POST, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-	     
+	     assertFalse(responseEntity.getBody());
 	 }
 	 
 	 
 	 
 	 
 	 @Test
-	 public void addMeal_EverythingOK_OK() {
-		 given(mealService.findById(mealThatDoenNotExists.getId())).willReturn(null);
-		 given(mealService.addMeal(mealThatDoenNotExists)).willReturn(true);
-
+	 public void addMeal_MealDoesNotExist_OK() {
+		 given(this.mealService.findByNameAndDescription(this.newMealDTO.getName(), this.newMealDTO.getDescription())).willReturn(false);
+		 Meal meal = Meal.builder().name(newMealDTO.getName()).description(newMealDTO.getDescription())
+					.amountNumber(newMealDTO.getAmountNumber()).amountUnit(newMealDTO.getAmountUnit())
+					.image(newMealDTO.getImage()).mealDifficulty(newMealDTO.getMealDifficulty()).timePreparation(newMealDTO.getTimePreparation())
+					.type(newMealDTO.getType()).build();
+		 given(this.mealService.addMeal(meal)).willReturn(true);
+		 
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.mealThatDoenNotExistsDTO, headers);
+	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.newMealDTO, headers);
 	     ResponseEntity<Boolean> responseEntity =
 	                this.restTemplate.exchange(URL_PREFIX + "addMeal", HttpMethod.POST, httpEntity, Boolean.class);
 
-	    assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-	    assertFalse(responseEntity.getBody());
-	     
+	    assertEquals(HttpStatus.OK, responseEntity.getStatusCode());    
+	    assertTrue(responseEntity.getBody());
 	 }
 	 
 	 
 	 
 	 @Test
-	 public void changeMeal_MealDoesNotExist_BadRequest() {
-		 given(mealService.findById(mealThatDoenNotExists.getId())).willReturn(null);
+	 public void changeMeal_MealDoesNotExist_NotFound() {
+		 given(this.mealService.exists(this.mealThatDoenNotExistsDTO.getId())).willReturn(false);
 		 
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
@@ -195,14 +179,18 @@ public class MealControllerUnitTests {
 	                this.restTemplate.exchange(URL_PREFIX + "changeMeal", HttpMethod.PUT, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-	     
+	     assertFalse(responseEntity.getBody());
 	 }
 	 
 	 
 	 @Test
 	 public void changeMeal_EverythingOK_OK()  {
-		 given(mealService.findById(mealThatExists.getId())).willReturn(mealThatExists);
-		 given(mealService.changeMeal(mealThatExists)).willReturn(true);
+		 given(mealService.exists(mealThatExistsDTO.getId())).willReturn(true);
+		 Meal meal = Meal.builder().name(mealThatExistsDTO.getName()).description(mealThatExistsDTO.getDescription())
+					.amountNumber(mealThatExistsDTO.getAmountNumber()).amountUnit(mealThatExistsDTO.getAmountUnit())
+					.image(mealThatExistsDTO.getImage()).mealDifficulty(mealThatExistsDTO.getMealDifficulty()).timePreparation(mealThatExistsDTO.getTimePreparation())
+					.type(mealThatExistsDTO.getType()).build();
+		 given(mealService.changeMeal(meal)).willReturn(true);
 		 
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
@@ -211,14 +199,14 @@ public class MealControllerUnitTests {
 	                this.restTemplate.exchange(URL_PREFIX + "changeMeal", HttpMethod.PUT, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-	    
+	     assertTrue(responseEntity.getBody());
 	 }
 	 
 	 
 	 @Test
 	 public void deleteMeal_EverythingOK_OK()  {
-		 given(mealService.findById(mealThatExists.getId())).willReturn(mealThatExists);
-		 given(mealService.delete(mealThatExists)).willReturn(true);
+		 given(this.mealService.exists(this.mealThatExistsDTO.getId())).willReturn(true);
+		 given(this.mealService.delete(this.mealThatExistsDTO.getId())).willReturn(true);
 		 
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
@@ -227,14 +215,13 @@ public class MealControllerUnitTests {
 	                this.restTemplate.exchange(URL_PREFIX + "deleteMeal", HttpMethod.DELETE, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-	     
 	 }
 	 
 	 
 	 
 	 @Test
-	 public void deleteMeal_MealDoesNotExist_BadRequest() {
-		 given(mealService.findById(mealThatDoenNotExists.getId())).willReturn(null);
+	 public void deleteMeal_MealDoesNotExist_NotFound() {
+		 given(this.mealService.exists(this.mealThatDoenNotExistsDTO.getId())).willReturn(false);
 		 
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
@@ -243,7 +230,7 @@ public class MealControllerUnitTests {
 	                this.restTemplate.exchange(URL_PREFIX + "deleteMeal", HttpMethod.DELETE, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-	  
 	 }
+	 
 	
 }

@@ -20,14 +20,15 @@ import java.util.Optional;
 import java.util.Set;
 
 import static com.backend.springboot.constants.MenuMealPriceConstants.CURRENT_MENU_ID;
-import static com.backend.springboot.constants.MenuMealPriceConstants.SIZE_OF_SET_OF_MEAL_PRICES;
-import static com.backend.springboot.constants.MenuMealPriceConstants.SIZE_OF_LIST_OF_MEAL_PRICES;
+import static com.backend.springboot.constants.MenuMealPriceConstants.SET_MEAL_PRICES_OF_CURRENT_MENU_SIZE;
+import static com.backend.springboot.constants.MenuMealPriceConstants.LIST_MEAL_PRICES_OF_CURRENT_MENU_SIZE;
 import static com.backend.springboot.constants.MenuMealPriceConstants.NOT_CURRENT_MENU_ID;
-import static com.backend.springboot.constants.MenuMealPriceConstants.SIZE_OF_SET_OF_MEAL_PRICES_NCM;
+import static com.backend.springboot.constants.MenuMealPriceConstants.SET_MEAL_PRICES_OF_NOT_CURRENT_MENU_SIZE;
 import static com.backend.springboot.constants.MenuMealPriceConstants.EXISTING_BOND_MENU_ID;
 import static com.backend.springboot.constants.MenuMealPriceConstants.EXISTING_BOND_MEAL_PRICE_ID;
 import static com.backend.springboot.constants.MenuMealPriceConstants.NOT_EXISTING_BOND_MENU_ID;
 import static com.backend.springboot.constants.MenuMealPriceConstants.NOT_EXISTING_BOND_MEAL_PRICE_ID;
+import static com.backend.springboot.constants.MenuMealPriceConstants.LIST_MEAL_PRICES_OF_NOT_CURRENT_MENU_SIZE;
 
 
 @RunWith(SpringRunner.class)
@@ -43,21 +44,28 @@ public class MenuMealPriceRepositoryTests {
 	@Test
 	public void findAllMealPricesByMenuId_CurrentMenuId_SetOfMealPricesOfCurrentMenu() {
 		Set<MealPrice> found = menuMealPriceRepository.findAllMealPricesByMenuId(CURRENT_MENU_ID);
-		assertEquals(SIZE_OF_SET_OF_MEAL_PRICES, found.size());
+		assertEquals(SET_MEAL_PRICES_OF_CURRENT_MENU_SIZE, found.size());
 	}
 	
 	
 	@Test
 	public void findAllMealPricesByMenuId_NotCurrentMenuId_SetOfMealPricesOfNotCurrentMenu() {
 		Set<MealPrice> found = menuMealPriceRepository.findAllMealPricesByMenuId(NOT_CURRENT_MENU_ID);
-		assertEquals(SIZE_OF_SET_OF_MEAL_PRICES_NCM, found.size());
+		assertEquals(SET_MEAL_PRICES_OF_NOT_CURRENT_MENU_SIZE, found.size());
 	}
 	
 	
 	@Test
 	public void findAllMealsPricesByMenuId_CurrentMenuId_ListOfMealPricesOfCurrentMenu() {
 		List<MealPrice> found = menuMealPriceRepository.findAllMealsPricesByMenuId(CURRENT_MENU_ID);
-		assertEquals(SIZE_OF_LIST_OF_MEAL_PRICES, found.size());
+		assertEquals(LIST_MEAL_PRICES_OF_CURRENT_MENU_SIZE, found.size());
+	}
+	
+	
+	@Test
+	public void findAllMealsPricesByMenuId_NotCurrentMenuId_ListOfMealPricesOfCurrentMenu() {
+		List<MealPrice> found = menuMealPriceRepository.findAllMealsPricesByMenuId(NOT_CURRENT_MENU_ID);
+		assertEquals(LIST_MEAL_PRICES_OF_NOT_CURRENT_MENU_SIZE, found.size());
 	}
 	
 	

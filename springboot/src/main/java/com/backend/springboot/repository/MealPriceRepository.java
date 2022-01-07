@@ -15,13 +15,14 @@ import com.backend.springboot.enums.MealType;
 
 public interface MealPriceRepository extends JpaRepository<MealPrice, Integer>{
 	
-	@Query("select m from MealPrice m where m.meal.type = ?1")
+	@Query("select m from MealPrice m where m.meal.type = ?1 and m.deleted = false")
 	List<MealPrice> findAllMealPricebyMealType(MealType mealTypeParam);
 	
-	@Query("select m from MealPrice m where m.id = ?1")
+	@Query("select m from MealPrice m where m.id = ?1 and m.deleted = false")
 	Optional<MealPrice> findMealPriceById(Integer id);
   
 	
 	Optional<MealPrice> findOneByMealId(Integer mealId);
+	
 	
 }

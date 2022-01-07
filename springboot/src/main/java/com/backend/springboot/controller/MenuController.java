@@ -1,8 +1,10 @@
 package com.backend.springboot.controller;
 
-
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,112 +19,145 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.backend.springboot.dto.MealDTO;
 import com.backend.springboot.dto.MealWithPriceDTO;
 import com.backend.springboot.dto.MenuDTO;
 import com.backend.springboot.dtoTransformation.MealPriceToMealWithPriceDTO;
 import com.backend.springboot.dtoTransformation.MealToMealDTO;
 import com.backend.springboot.dtoTransformation.MenuMealPriceToMenuMealPriceDTO;
 import com.backend.springboot.dtoTransformation.MenuToMenuDTO;
+import com.backend.springboot.model.Meal;
 import com.backend.springboot.model.MealPrice;
 import com.backend.springboot.model.Menu;
+import com.backend.springboot.model.Restaurant;
 import com.backend.springboot.service.MealPriceService;
 import com.backend.springboot.service.MenuService;
-
+import com.backend.springboot.model.MenuMealPrice;
 
 @RestController
 @RequestMapping(value = "/menu")
 public class MenuController {
 	
 	@Autowired
-	private MenuService service;
+	private MenuService menuService;
 	
 	@Autowired
 	private MealPriceService mealPriceService;
 	
 	private MenuToMenuDTO menuDTO;
 	private MealPriceToMealWithPriceDTO mealPriceToMealWithPriceDTO;
+	private MealToMealDTO mealToMealDTO;
 	
 	
 	public MenuController() {
 		this.mealPriceToMealWithPriceDTO = new MealPriceToMealWithPriceDTO(new MealToMealDTO());
 		this.menuDTO = new MenuToMenuDTO(new MenuMealPriceToMenuMealPriceDTO(new MealPriceToMealWithPriceDTO(new MealToMealDTO())));
+		this.mealToMealDTO = new MealToMealDTO();
 	}
+	
 	
 	
 	@GetMapping(value = "/getMenu")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
-	public ResponseEntity<MenuDTO> getMenu() throws Exception{
-		Menu current = this.service.getCurrentMenu();
-		if(current.getCurrent()) {
+	public ResponseEntity<MenuDTO> getMenu(){
+		Menu current = this.menuService.getCurrentMenu();
+		if(current != null) {
 			MenuDTO dto = menuDTO.convert(current);
 			return new ResponseEntity<>(dto, HttpStatus.OK);
 		}
 		else {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			Menu menu = Menu.builder().id(0).dateOfValidation(LocalDateTime.now()).current(false)
+					.restaurant(Restaurant.builder().id(1).build())
+					.build();
+			Set<MenuMealPrice> set = Collections.<MenuMealPrice>emptySet();
+			menu.setMenuMealPrices(set);
+			MenuDTO dto = menuDTO.convert(menu);
+			return new ResponseEntity<>(dto, HttpStatus.NOT_FOUND);
 		}
 		
 	}
 	
 	
 	
-	@PostMapping(value = "/addMealToMenu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	
+	@PostMapping(value = "/addMealToMenu")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
-	public ResponseEntity<Boolean> addMealToMenu(@RequestBody MealPrice meal)throws Exception {
-		Boolean response =  mealPriceService.addMealPrice(meal);
-		if(response) {
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		}else {
-			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+	public ResponseEntity<Boolean> addMealToMenu(@RequestBody MealWithPriceDTO mealPriceDTO)throws Exception {
+		boolean found = mealPriceService.exists(mealPriceDTO.getId());
+		if(found) {
+			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.BAD_REQUEST);
 		}
 		
+		Meal meal = Meal.builder().id(mealPriceDTO.getMealDTO().getId()).amountNumber(mealPriceDTO.getMealDTO().getAmountNumber())
+				.amountUnit(mealPriceDTO.getMealDTO().getAmountUnit()).deleted(mealPriceDTO.getMealDTO().getDeleted())
+				.description(mealPriceDTO.getMealDTO().getDescription()).image(mealPriceDTO.getMealDTO().getImage())
+				.mealDifficulty(mealPriceDTO.getMealDTO().getMealDifficulty()).name(mealPriceDTO.getMealDTO().getName()).
+				timePreparation(mealPriceDTO.getMealDTO().getTimePreparation()).type(mealPriceDTO.getMealDTO().getType()).build();
+		MealPrice mealPrice = MealPrice.builder().meal(meal).priceAmount(mealPriceDTO.getPrice()).deleted(false).build();
+		
+		mealPriceService.addMealPrice(mealPrice);
+		return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
 	}
 	
 	
-	@PutMapping(value = "/changeMealPriceInMenu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	
+	
+	@PutMapping(value = "/changeMealPriceInMenu")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
-	public ResponseEntity<Boolean> changeMealPriceInMenu(@RequestBody MealPrice mealprice) throws Exception {
-		Boolean response =  mealPriceService.changeMealPrice(mealprice);
-		if(response) {
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		}else {
-			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+	public ResponseEntity<Boolean> changeMealPriceInMenu(@RequestBody MealWithPriceDTO mealPriceDTO) {
+		boolean found = mealPriceService.exists(mealPriceDTO.getId());
+		if(!found) {
+			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
 		}
+		
+		Meal meal = Meal.builder().id(mealPriceDTO.getMealDTO().getId()).amountNumber(mealPriceDTO.getMealDTO().getAmountNumber())
+				.amountUnit(mealPriceDTO.getMealDTO().getAmountUnit()).deleted(mealPriceDTO.getMealDTO().getDeleted())
+				.description(mealPriceDTO.getMealDTO().getDescription()).image(mealPriceDTO.getMealDTO().getImage())
+				.mealDifficulty(mealPriceDTO.getMealDTO().getMealDifficulty()).name(mealPriceDTO.getMealDTO().getName()).
+				timePreparation(mealPriceDTO.getMealDTO().getTimePreparation()).type(mealPriceDTO.getMealDTO().getType()).build();
+		MealPrice mealPrice = MealPrice.builder().id(mealPriceDTO.getId()).meal(meal).priceAmount(mealPriceDTO.getPrice()).deleted(false).build();
+		
+		
+		mealPriceService.changeMealPrice(mealPrice);
+		return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
 	}
+	
 	
 	
 	
 	@DeleteMapping(value = "/deleteMealInMenu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ROLE_CHEF')")
-	public ResponseEntity<Boolean> deleteMealInMenu(@RequestBody MealPrice mealprice)throws Exception {
-		Boolean response =  mealPriceService.deleteMealPriceFromMenu(mealprice);
-		if(response) {
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		}else {
-			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+	public ResponseEntity<Boolean> deleteMealInMenu(@RequestBody MealWithPriceDTO mealPriceDTO)throws Exception {
+		boolean found = mealPriceService.exists(mealPriceDTO.getId());
+		if(!found) {
+			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
 		}
+		mealPriceService.deleteMealPriceFromMenu(mealPriceDTO.getId());
+		return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
 	}
 	
 	
 	
-	@PostMapping(value = "/newMenu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/newMenu")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<Boolean> newMenu(@RequestBody Menu menu) {
-		Boolean response = service.addNewMenu(menu);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		menuService.addNewMenu(menu);
+		return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
 	}
 	
 	
 	
 	@GetMapping(value = "/getMealPricesNotInMenu")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
-	public ResponseEntity<List<MealWithPriceDTO>> getMealPricesNotInMenu() throws Exception {
-		Menu current = this.service.getCurrentMenu();
+	public ResponseEntity<List<MealDTO>> getMealPricesNotInMenu() throws Exception {
+		Menu current = this.menuService.getCurrentMenu();
 		if(current != null) {
-			List<MealPrice> list = mealPriceService.getMealPricesThatAreNotInMenu(current.getId());
-			List<MealWithPriceDTO> dto = this.mealPriceToMealWithPriceDTO.convertList(list);
+			List<Meal> list = mealPriceService.getMealPricesThatAreNotInMenu(current.getId());
+			List<MealDTO> dto = this.mealToMealDTO.convertList(list);
 			return new ResponseEntity<>(dto, HttpStatus.OK);
 		}else {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			List<MealDTO> list = Collections.emptyList();
+			return new ResponseEntity<>(list, HttpStatus.NOT_FOUND);
 		}
 	
 	}

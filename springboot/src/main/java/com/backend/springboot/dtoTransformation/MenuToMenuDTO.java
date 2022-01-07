@@ -25,8 +25,10 @@ public class MenuToMenuDTO implements Converter<Menu, MenuDTO>{
 		MenuDTO returnValue = new MenuDTO();
 		returnValue.setId(source.getId());
 		returnValue.setDateOfValidation(source.getDateOfValidation());
-		Set<MenuMealPriceDTO> set = Set.copyOf(this.menuMealPriceToMenuMealPriceDTO.convert(source.getMenuMealPrices().stream().toList()));
-		returnValue.setMenuMealPriceDTO(set);
+		if(!source.getMenuMealPrices().isEmpty()){
+			Set<MenuMealPriceDTO> set = Set.copyOf(this.menuMealPriceToMenuMealPriceDTO.convert(source.getMenuMealPrices().stream().toList()));
+			returnValue.setMenuMealPriceDTO(set);
+		}
 		return returnValue;
 	}
 
