@@ -11,13 +11,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.backend.springboot.enums.MealType;
-import com.backend.springboot.exception.CurrentMenuNotFoundException;
-import com.backend.springboot.exception.MealPriceAlreadyExistsException;
-import com.backend.springboot.exception.MealPriceNotFoundException;
+import com.backend.springboot.model.Meal;
 import com.backend.springboot.model.MealPrice;
 import com.backend.springboot.model.Menu;
 import com.backend.springboot.model.MenuMealPrice;
 import com.backend.springboot.repository.MealPriceRepository;
+import com.backend.springboot.repository.MealRepository;
 import com.backend.springboot.repository.MenuMealPriceRepository;
 import com.backend.springboot.repository.MenuRepository;
 
@@ -38,6 +37,17 @@ public class MealPriceService {
 	@Autowired
 	private MenuMealPriceRepository menuMealPriceRepository;
 	
+	@Autowired
+	private MealRepository mealRepository;
+	
+	public boolean exists(Integer id) {
+		Optional<MealPrice> found = mealPriceRepository.findById(id);
+		if(found.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+	
 	
 	
 	public List<MealPrice> getAllMealPricebyMealType(MealType type){
@@ -46,71 +56,59 @@ public class MealPriceService {
   
 	
 	
-	public boolean addMealPrice(MealPrice mealPrice) throws Exception{
+	public boolean addMealPrice(MealPrice mealPrice){
+		mealPrice.setDeleted(false);
+		mealPriceRepository.save(mealPrice);
 		Optional<Menu> currentMenu = menuRepository.findByCurrent();
-		if(!currentMenu.isEmpty()) {
-			Optional<MenuMealPrice> found = menuMealPriceRepository.findMenuMealPriceByMealPriceIdAndMenuId(mealPrice.getId(), currentMenu.get().getId());
-			//if mealPrice does not exists in menu, create it and add it.
-			if(found.isEmpty()) {
-				MenuMealPrice menuMealPrice = MenuMealPrice.builder().mealPrice(mealPrice).menu(currentMenu.get()).build();
-				menuMealPriceRepository.save(menuMealPrice);
-				return true;
-			}else {
-				throw new MealPriceAlreadyExistsException("MealPrice already exists.");
-			}
-		}else {
-			throw new CurrentMenuNotFoundException("Current menu not found.");
-		}
+		MenuMealPrice menuMealPrice = MenuMealPrice.builder().mealPrice(mealPrice).menu(currentMenu.get()).deleted(false).build();
+		menuMealPriceRepository.save(menuMealPrice);
+		menuRepository.save(currentMenu.get());
+		return true;
 	}
 	
 	
 	
-	public boolean changeMealPrice(MealPrice mealPrice)throws Exception {
-		Optional<Menu> currentMenu = menuRepository.findByCurrent();
-		if(!currentMenu.isEmpty()) {
-			Optional<MealPrice> mealPriceInRepository = mealPriceRepository.findMealPriceById(mealPrice.getId());
-			if(!mealPriceInRepository.isEmpty()) {
-				mealPriceInRepository.get().setPriceAmount(mealPrice.getPriceAmount());
-				mealPriceRepository.save(mealPriceInRepository.get());
-				return true;
-			}else {
-				throw new MealPriceNotFoundException("MealPrice is not found.");
-			}
-		}else {
-			throw new CurrentMenuNotFoundException("Current menu not found.");
-		}
+	public boolean changeMealPrice(MealPrice mealPrice) {
+		Optional<MealPrice> found = mealPriceRepository.findById(mealPrice.getId());
+		found.get().setPriceAmount(mealPrice.getPriceAmount());
+		mealPriceRepository.save(found.get());
+		return true;
 	}
   
 	
 	
 	
-	public boolean deleteMealPriceFromMenu(MealPrice mealPrice) throws Exception {
-		Optional<Menu> currentMenu = menuRepository.findByCurrent();
-		if(!currentMenu.isEmpty()) {
-			Optional<MenuMealPrice>menuMealPrice = menuMealPriceRepository.findMenuMealPriceByMealPriceIdAndMenuId(mealPrice.getId(), currentMenu.get().getId());
-			if(!menuMealPrice.isEmpty()) {
-				menuMealPrice.get().setDeleted(true);
-				menuMealPriceRepository.save(menuMealPrice.get());
-				return true;
-			}else {
-				throw new MealPriceNotFoundException("MealPrice is not found.");
-			}
-		}else {
-			throw new CurrentMenuNotFoundException("Current menu not found.");
-		}
+	public boolean deleteMealPriceFromMenu(Integer id) {
+		Optional<Menu>currentMenu = menuRepository.findByCurrent();
+		Optional<MenuMealPrice>menuMealPrice = menuMealPriceRepository.findMenuMealPriceByMealPriceIdAndMenuId(id, currentMenu.get().getId());
+		Optional<MealPrice> foundMealPrice = mealPriceRepository.findById(id);
+		
+		foundMealPrice.get().setDeleted(true);
+		menuMealPrice.get().setDeleted(true);
+		mealPriceRepository.save(foundMealPrice.get());
+		menuMealPriceRepository.save(menuMealPrice.get());
+		menuRepository.save(currentMenu.get());
+		return true;
 		
 	}
 	
 	
-	public List<MealPrice> getMealPricesThatAreNotInMenu(Integer menuId){
-		List<MealPrice> allMealPrices = mealPriceRepository.findAll();
+	
+	public List<Meal> getMealPricesThatAreNotInMenu(Integer menuId){
+		List<Meal> allMeals = mealRepository.findAll();
 		List<MealPrice> allMealPricesInMenu = menuMealPriceRepository.findAllMealsPricesByMenuId(menuId);
-		
-		List<MealPrice> returnList = new ArrayList<MealPrice>();
-		
-		for(MealPrice m : allMealPrices) {
-			if(!allMealPricesInMenu.contains(m)) {
-				returnList.add(m);
+		List<Meal> returnList = new ArrayList<Meal>();
+		for(int i = 0; i<allMeals.size(); i++) {
+			boolean flag = false;
+			if(!allMeals.get(i).getDeleted()) {
+				for(int j = 0; j<allMealPricesInMenu.size(); j++) {
+					if(allMeals.get(i).getId() == allMealPricesInMenu.get(j).getMeal().getId()) {
+						flag = true; //contains
+					}
+				}
+				if(flag == false) {
+					returnList.add(allMeals.get(i));
+				}
 			}
 		}
 		return returnList;

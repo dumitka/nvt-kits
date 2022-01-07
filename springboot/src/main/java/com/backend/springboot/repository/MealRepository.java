@@ -14,9 +14,9 @@ public interface MealRepository extends JpaRepository<Meal, Integer>{
 	@Query("select m from Meal m where m.type = ?1 and m.deleted = false")
 	List<Meal>findMealbyMealType(MealType mealTypeParam);
 	
-	@Query("select m from Meal m where m.id = ?1")
+	@Query("select m from Meal m where m.id = ?1 and m.deleted = false")
 	Optional<Meal>findMealById(Integer id);
 	
-	@Query("select m from Meal m where m.name = ?1 and m.description = ?2")
+	@Query("select m from Meal m where m.name = ?1 and m.description = ?2 and m.deleted = false")
 	Optional<Meal>findMealByNameAndDescription(String name, String description);
 }

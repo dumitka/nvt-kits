@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.backend.springboot.repository.MealRepository;
 import com.backend.springboot.enums.MealType;
-import com.backend.springboot.exception.MealAlreadyExistsException;
-import com.backend.springboot.exception.MealDoesNotExist;
 import com.backend.springboot.model.Meal;
 
 @Component
@@ -19,8 +17,30 @@ import com.backend.springboot.model.Meal;
 @Service
 public class MealService {
 	
+	//repositories
 	@Autowired
 	private MealRepository mealRepository;
+	
+	
+	
+	//methods
+	public boolean exists(Integer id) {
+		Optional<Meal> found = mealRepository.findById(id);
+		if(found.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
+	
+	
+	
+	public boolean findByNameAndDescription(String name, String description) {
+		Optional<Meal> found = mealRepository.findMealByNameAndDescription(name, description);
+		if(found.isEmpty()) {
+			return false;
+		}
+		return true;
+	}
 	
 	
 	
@@ -30,51 +50,44 @@ public class MealService {
 	
 	
 	
-	public boolean addMeal(Meal meal) throws Exception{
-		//check if exists
-		Optional<Meal> found = mealRepository.findMealByNameAndDescription(meal.getName(), meal.getDescription());
-		
-		if(found.isEmpty()) {
-			mealRepository.save(meal);
-			return true;
-		}else {
-			throw new MealAlreadyExistsException("Ne mozete napraviti jelo koje vec postoji.");
-		}
-		
+	public boolean addMeal(Meal meal) {
+		mealRepository.save(meal);
+		return true;
 	}
 	
 	
 	
-	public boolean changeMeal(Meal meal) throws Exception{
+	public boolean changeMeal(Meal meal) {
 		Optional<Meal> current  = mealRepository.findById(meal.getId());
 		
 		if(!current.isEmpty()) {
+			current.get().setType(meal.getType());
 			current.get().setDescription(meal.getDescription());
 			current.get().setAmountNumber(meal.getAmountNumber());
 			current.get().setAmountUnit(meal.getAmountUnit());
 			current.get().setImage(meal.getImage());
 			current.get().setMealDifficulty(meal.getMealDifficulty());
-			current.get().setName(meal.getName());
 			current.get().setTimePreparation(meal.getTimePreparation());
-			current.get().setType(meal.getType());
 			mealRepository.save(current.get());
 			return true;
+			
 		}else {
-			throw new MealDoesNotExist("Meal is not found.");
+			return false;
 		}
 	}
 	
 	
 	
-	public boolean delete(Meal meal) throws Exception{
-		Optional<Meal> current = mealRepository.findMealById(meal.getId());
-		if(!current.isEmpty()) {
-			current.get().setDeleted(true);
-			mealRepository.save(current.get());
-			return true;
-		}else {
-			throw new MealDoesNotExist("Meal is not found.");
+	public boolean delete(Integer id) {
+		Optional<Meal> found  = mealRepository.findById(id);
+		
+		if(found.get().getDeleted()) {
+			return false;
 		}
+		
+		found.get().setDeleted(true);
+		mealRepository.save(found.get());
+		return true;
 	}
 	
 	

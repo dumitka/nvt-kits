@@ -3,6 +3,7 @@ package com.backend.springboot.dtoTransformation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 
 import com.backend.springboot.model.MenuMealPrice;
@@ -12,6 +13,12 @@ import com.backend.springboot.dto.MenuMealPriceDTO;
 public class MenuMealPriceToMenuMealPriceDTO implements Converter<MenuMealPrice, MenuMealPriceDTO>{
 
 	private MealPriceToMealWithPriceDTO mealPriceToMealWithPriceDTO;
+	
+	@Autowired
+	public MenuMealPriceToMenuMealPriceDTO(MealPriceToMealWithPriceDTO mealPriceToMealWithPriceDTO) {
+		this.mealPriceToMealWithPriceDTO = mealPriceToMealWithPriceDTO;
+	}
+	
 	@Override
 	public MenuMealPriceDTO convert(MenuMealPrice source) {
 		MenuMealPriceDTO returnValue = new MenuMealPriceDTO();

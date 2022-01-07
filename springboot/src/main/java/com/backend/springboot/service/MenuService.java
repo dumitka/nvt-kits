@@ -10,8 +10,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import com.backend.springboot.exception.CurrentMenuNotFoundException;
 import com.backend.springboot.model.Menu;
+import com.backend.springboot.model.Restaurant;
 import com.backend.springboot.repository.MenuRepository;
 
 @Component
@@ -22,10 +22,10 @@ public class MenuService {
 	private MenuRepository menuRepository;
 	
 	
-	public Menu getCurrentMenu() throws Exception {
+	public Menu getCurrentMenu() {
 		Optional<Menu> current = menuRepository.findByCurrent();
 		if(current.isEmpty()) {
-			throw new CurrentMenuNotFoundException("Current menu not found.");
+			return null;
 		}else {
 			return current.get();
 		}
@@ -33,6 +33,8 @@ public class MenuService {
 	
 	
 	public boolean addNewMenu(Menu menu) {
+		Restaurant restaurant = Restaurant.builder().id(1).build();
+		menu.setRestaurant(restaurant);
 		menuRepository.save(menu);
 		return true;
 	}
