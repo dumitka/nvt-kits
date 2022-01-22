@@ -28,6 +28,7 @@ import { WaiterRoutes } from './user-routes/WaiterRoutes';
 import { DirectorRoutes } from './user-routes/DirectorRoutes';
 import { MealCategoryComponent } from './meal-category/meal-category.component';
 import { MenuCategoryComponent } from './menu-category/menu-category.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -112,6 +113,8 @@ import { MenuCategoryComponent } from './menu-category/menu-category.component';
 
       
     ]),
+
+    BrowserAnimationsModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
