@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChefProfileService } from './chef-profile.service';
-import { AuthService } from '../login/auth.service';
+import { AuthService } from '../../../login/auth.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-chef-profile',

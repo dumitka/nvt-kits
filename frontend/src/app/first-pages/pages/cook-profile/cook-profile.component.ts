@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CookProfileService } from './cook-profile.service';
-import { AuthService } from '../login/auth.service';
+import { AuthService } from '../../../login/auth.service';
 
 @Component({
   selector: 'app-cook-profile',

@@ -8,21 +8,21 @@ import { TokenInterceptor } from './login/TokenInterceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { AdminProfileComponent } from './admin-profile/admin-profile.component';
-import { WaiterProfileComponent } from './waiter-profile/waiter-profile.component';
-import { CookProfileComponent } from './cook-profile/cook-profile.component';
-import { ManagerProfileComponent } from './manager-profile/manager-profile.component';
-import { BartenderProfileComponent } from './bartender-profile/bartender-profile.component';
-import { ChefProfileComponent } from './chef-profile/chef-profile.component';
-import { HallManagerProfileComponent } from './hall-manager-profile/hall-manager-profile.component';
-import { DirectorProfileComponent } from './director-profile/director-profile.component';
+import { AdminProfileComponent } from './first-pages/pages/admin-profile/admin-profile.component';
+import { WaiterProfileComponent } from './first-pages/pages/waiter-profile/waiter-profile.component';
+import { CookProfileComponent } from './first-pages/pages/cook-profile/cook-profile.component';
+import { ManagerProfileComponent } from './first-pages/pages/manager-profile/manager-profile.component';
+import { BartenderProfileComponent } from './first-pages/pages/bartender-profile/bartender-profile.component';
+import { ChefProfileComponent } from './first-pages/pages/chef-profile/chef-profile.component';
+import { DirectorProfileComponent } from './first-pages/pages/director-profile/director-profile.component';
+import { ServerProfileComponent } from './first-pages/pages/server-profile/server-profile.component';
 import { AuthService } from './login/auth.service';
 
 import { AdminRoutes } from './user-routes/AdminRoutes';
 import { BartenderRoutes } from './user-routes/BartenderRoutes';
 import { ChefRoutes } from './user-routes/ChefRoutes';
 import { CookRoutes } from './user-routes/CookRoutes';
-import { HallManagerRoutes } from './user-routes/HallManagerRoutes';
+import { ServerRoutes } from './user-routes/ServerRoutes';
 import { ManagerRoutes } from './user-routes/ManagerRoutes';
 import { WaiterRoutes } from './user-routes/WaiterRoutes';
 import { DirectorRoutes } from './user-routes/DirectorRoutes';
@@ -42,10 +42,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ManagerProfileComponent,
     BartenderProfileComponent,
     ChefProfileComponent,
-    HallManagerProfileComponent,
     DirectorProfileComponent,
     MealCategoryComponent,
     MenuCategoryComponent,
+    ServerProfileComponent,
     
   ],
   imports: [
@@ -85,9 +85,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         component: DirectorProfileComponent,
       },
       {
-        path: 'HallManagerProfile',
-        canActivate: [HallManagerRoutes],
-        component: HallManagerProfileComponent,
+        path: 'ServerProfile',
+        canActivate: [ServerRoutes],
+        component: ServerProfileComponent,
       },
       {
         path: 'ManagerProfile',
