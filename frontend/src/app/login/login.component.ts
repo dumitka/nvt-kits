@@ -50,8 +50,8 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/BartenderProfile']);
           } else if (this.authService.getTokenData()?.role === "ROLE_CHEF") {
             this.router.navigate(['/ChefProfile']);
-          } else if (this.authService.getTokenData()?.role === "ROLE_HALL_MANAGER") {
-            this.router.navigate(['/HallManagerProfile']);
+          } else if (this.authService.getTokenData()?.role === "ROLE_SERVER") {
+            this.router.navigate(['/ServerProfile']);
           }
         },
         error => {

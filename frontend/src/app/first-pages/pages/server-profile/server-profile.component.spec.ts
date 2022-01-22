@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HallManagerProfileComponent } from './hall-manager-profile.component';
+import { ServerProfileComponent } from './server-profile.component';
 
-describe('HallManagerProfileComponent', () => {
-  let component: HallManagerProfileComponent;
-  let fixture: ComponentFixture<HallManagerProfileComponent>;
+describe('ServerProfileComponent', () => {
+  let component: ServerProfileComponent;
+  let fixture: ComponentFixture<ServerProfileComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HallManagerProfileComponent ]
+      declarations: [ ServerProfileComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HallManagerProfileComponent);
+    fixture = TestBed.createComponent(ServerProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

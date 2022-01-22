@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { Main} from '../../main';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +24,7 @@ import { catchError, map } from 'rxjs/operators';
         'username': user.username,
         'password': user.password
       };
-      return this.http.post<any>("http://localhost:8080/auth/login", body)
+      return this.http.post<any>(Main.PATH + "auth/login", body)
         .pipe(map((res) => {
           this.access_token = res.accessToken;
           this.token_data = res;

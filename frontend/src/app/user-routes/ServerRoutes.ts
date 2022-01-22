@@ -5,12 +5,12 @@ import { AuthService } from "../login/auth.service";
 @Injectable({
     providedIn: 'root'
   })
-  export class HallManagerRoutes implements CanActivate {
+  export class ServerRoutes implements CanActivate {
   
     constructor(private authService: AuthService) { }
   
     canActivate() {
-      if (this.authService.getTokenData()?.role === 'ROLE_HALL_MANAGER') {
+      if (this.authService.getTokenData()?.role === 'ROLE_SERVER') {
         return true;
       }
       return false;
