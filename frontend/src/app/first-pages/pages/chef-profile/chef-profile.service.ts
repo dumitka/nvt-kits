@@ -7,7 +7,7 @@ import { Main} from '../../../../main';
 })
 export class ChefProfileService {
 
-  readonly URL : string = Main.PATH + "/chef/get";
+  readonly URL : string = Main.PATH + "chef/get";
   
   constructor(private http: HttpClient) { }
 

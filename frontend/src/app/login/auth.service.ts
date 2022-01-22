@@ -24,7 +24,7 @@ import { Main} from '../../main';
         'username': user.username,
         'password': user.password
       };
-      return this.http.post<any>(Main.PATH + "/auth/login", body)
+      return this.http.post<any>(Main.PATH + "auth/login", body)
         .pipe(map((res) => {
           this.access_token = res.accessToken;
           this.token_data = res;

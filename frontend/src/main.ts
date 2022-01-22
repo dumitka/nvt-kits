@@ -6,7 +6,7 @@ import { environment } from './environments/environment';
 
 
 export class Main { 
-  public static PATH = "http://localhost:8080"
+  public static PATH = "http://localhost:8080/"
 };
 
 if (environment.production) {

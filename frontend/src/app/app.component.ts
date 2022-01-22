@@ -30,7 +30,7 @@ export class AppComponent {
 
   connect() {
     this.stompClient = Stomp.over(function(){
-             return new SockJS(Main.PATH + '/nvt-stomp-endpoint');
+             return new SockJS(Main.PATH + 'nvt-stomp-endpoint');
           });
     // this.stompClient.reconnect_delay = 3000;
 
