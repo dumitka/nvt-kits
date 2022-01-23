@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CookProfileService } from './cook-profile.service';
 import { AuthService } from '../../../login/auth.service';
 
+import {MatCardModule} from '@angular/material/card';
 @Component({
   selector: 'app-cook-profile',
   templateUrl: './cook-profile.component.html',
