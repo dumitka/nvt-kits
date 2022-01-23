@@ -8,11 +8,11 @@ import { Router } from '@angular/router';
 })
 export class MealCategoryComponent implements OnInit {
 
-  showMoney:boolean
+  //showMoney:boolean
 
   constructor(private router:Router) { 
-    this.showMoney = history.state.data.showMoney;
-    console.log(this.showMoney)
+    //this.showMoney = history.state.data.showMoney;
+    //console.log(this.showMoney)
   }
 
   ngOnInit(): void {

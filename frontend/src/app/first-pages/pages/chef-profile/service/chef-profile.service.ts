@@ -1,17 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Main} from '../../../../main';
+import { Main} from '../../../../../main';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CookProfileService {
+export class ChefProfileService {
 
-  readonly URL : string = Main.PATH + "cook/get";
+  readonly URL : string = Main.PATH + "chef/get";
   
   constructor(private http: HttpClient) { }
 
-  getCook(){
+  getChef(){
     return this.http.get(this.URL);
   }
 }

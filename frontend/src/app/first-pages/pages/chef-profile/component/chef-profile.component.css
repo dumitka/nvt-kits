@@ -1,0 +1,55 @@
+
+body{
+    background-image: url('../static/background.webp');
+  }
+  
+  
+  .cook_profile_card {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+    
+  }
+  
+  .profile_picture{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  
+  .cook_data{
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif; 
+    font-size: 30px; 
+    font-weight: normal; 
+    line-height: 48px;
+    
+    text-align: center;
+   
+  }
+  
+  
+  mat-card-actions{
+    margin-left: 450px;
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif; 
+  }
+  
+  .option_button{
+    margin-top: 25px;
+  
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  
+    background-color: #5d7c77; 
+    
+    width: 250px;
+    
+    text-align: center;
+    color: whitesmoke; 
+    font-family: 'Trocchi', serif;
+    font-size: 20px;
+  }
