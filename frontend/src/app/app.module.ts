@@ -31,6 +31,7 @@ import { MenuCategoryComponent } from './menu-category/menu-category.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
+import { AngularMaterialModule } from './angular_material.module';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AngularMaterialModule,
+    
 
     RouterModule.forRoot([
       { path: '', redirectTo: 'login', pathMatch: 'full' },
