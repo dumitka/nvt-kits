@@ -2,6 +2,7 @@ package com.backend.springboot.controller;
 
 import com.backend.springboot.dto.CreateUpdateUserDto;
 import com.backend.springboot.dto.UserDto;
+import com.backend.springboot.dto.UserProfileDataDTO;
 import com.backend.springboot.dtoTransformation.UserMapper;
 import com.backend.springboot.model.User;
 import com.backend.springboot.service.SalaryService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -72,5 +74,13 @@ public class UserController {
             return new ResponseEntity<>("User not found!", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>("User fired!", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/info")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<UserProfileDataDTO> getPerson() {
+        User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserProfileDataDTO dto = new UserProfileDataDTO(loggedUser.getId(), loggedUser.getName(), loggedUser.getLastName());
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }

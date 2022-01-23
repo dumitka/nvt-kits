@@ -1,1 +1,31 @@
-<p>server-profile works!</p>
+<body>
+
+    <div class="card_div">
+      <mat-card class="server_profile_card">
+        <img mat-card-lg-image name="profile_picture" class="profile_picture" src="assets\server_profile.jpg" >
+          
+          <mat-card-content>
+            <div class="server_data">
+              <span>{{firstName}}</span>
+              <span>&nbsp;</span>
+              <span>{{lastName}}</span>
+            </div>
+  
+            <br>
+            <span>Prijavi se kao:</span>
+            <div class="options">
+              <button mat-raised-button class="option_button" id="opcijaSS" (click) = "redirektujSS()">SEF SALE</button>
+              <button mat-raised-button class="option_button" id="opcijaK" (click) = "redirektujK()">KONOBAR</button>
+            </div>
+          </mat-card-content>
+  
+          <mat-card-actions>
+            <button mat-button (click) = "odjava()">ODJAVA</button>
+          </mat-card-actions>
+      </mat-card>
+  </div>
+  
+  </body>
+
+
+
