@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CookProfileService } from './cook-profile.service';
-import { AuthService } from '../../../login/auth.service';
+import { CookProfileService } from '../service/cook-profile.service';
+import { AuthService } from '../../../../login/auth.service';
 
 import {MatCardModule} from '@angular/material/card';
 @Component({
@@ -10,10 +10,18 @@ import {MatCardModule} from '@angular/material/card';
 })
 export class CookProfileComponent implements OnInit {
 
-  loggedCook:any;
+  loggedCookName:string;
+  loggedCookLastName:string;
 
   constructor(private service:CookProfileService,  private authService: AuthService) {
-    this.service.getCook().subscribe((data:any) => {this.loggedCook = data; console.log(this.loggedCook)})
+    this.service.getCook().subscribe((data:any) => {
+      this.loggedCookName = data.name; 
+      this.loggedCookLastName = data.lastName;
+
+      //provjera ispis
+      console.log(this.loggedCookName);
+      console.log(this.loggedCookLastName);
+    })
   }
 
   ngOnInit(): void {

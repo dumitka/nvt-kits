@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ChefProfileService } from './chef-profile.service';
-import { AuthService } from '../../../login/auth.service';
+import { ChefProfileService } from '../service/chef-profile.service';
+import { AuthService } from '../../../../login/auth.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-chef-profile',
@@ -9,10 +9,19 @@ import { Router } from '@angular/router';
 })
 export class ChefProfileComponent implements OnInit {
 
-  loggedChef:any;
+  loggedChefName:string;
+  loggedChefLastName:string;
+
 
   constructor(private service:ChefProfileService, private authService: AuthService, private router:Router) {
-    this.service.getChef().subscribe((data:any) => {this.loggedChef = data; console.log(this.loggedChef)});
+    this.service.getChef().subscribe((data:any) => {
+      this.loggedChefName = data.name; 
+      this.loggedChefLastName = data.lastName; 
+      
+      //provjera
+      console.log(this.loggedChefName);
+      console.log(this.loggedChefLastName);
+    });
 
     
   }

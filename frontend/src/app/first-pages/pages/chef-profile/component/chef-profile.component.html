@@ -1,0 +1,32 @@
+<body>
+
+    <div class="card_div">
+      <mat-card class="cook_profile_card">
+        <img mat-card-lg-image name="profile_picture" class="profile_picture" src="assets\chef_profile.jpg" >
+          
+          <mat-card-content>
+            <div class="cook_data">
+              <span>{{loggedChefName}}</span>
+              <span>&nbsp;</span>
+              <span>{{loggedChefLastName}}</span>
+            </div>
+  
+            <br>
+
+            <div class="options">
+              <button mat-raised-button class="option_button" id="orders">PORUDŽBINE</button>
+              <button mat-raised-button class="option_button" id="orders" (click) = "meal()">JELA</button>
+              <button mat-raised-button class="option_button" id="orders" (click) = "menu()">JELOVNIK</button>
+            </div>
+          </mat-card-content>
+  
+          <mat-card-actions>
+            <button mat-button (click) = "logout()">ODJAVA</button>
+          </mat-card-actions>
+      </mat-card>
+  </div>
+  
+  </body>
+
+
+
