@@ -29,10 +29,15 @@ import { DirectorRoutes } from './user-routes/DirectorRoutes';
 import { MenuCategoryComponent } from './menu-category/menu-category.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 import { AngularMaterialModule } from './angular_material.module';
 import { MealCategoriesComponent } from './meal-category/categories/component/meal-categories.component';
 import { MealsOfCategoryComponent } from './meal-category/meals-of-category/component/meals-of-category.component';
+import { ServerFirstPageComponent } from './first-pages/pages/server-first-page/server-first-page.component';
+import { AddDrinkComponent } from './drinks/pages/add-drink/add-drink.component';
+import { AllDrinksComponent } from './drinks/pages/all-drinks/all-drinks.component';
+import { DrinkPageComponent } from './drinks/pages/drink-page/drink-page.component';
+import { DrinksTableComponent } from './drinks/components/drinks-table/drinks-table.component';
+import { DrinkCardPageComponent } from './drink-cards/pages/drink-card-page/drink-card-page.component';
 
 
 @NgModule({
@@ -50,6 +55,12 @@ import { MealsOfCategoryComponent } from './meal-category/meals-of-category/comp
     ServerProfileComponent,
     MealCategoriesComponent,
     MealsOfCategoryComponent,
+    ServerFirstPageComponent,
+    AddDrinkComponent,
+    AllDrinksComponent,
+    DrinkPageComponent,
+    DrinksTableComponent,
+    DrinkCardPageComponent,
     
   ],
   imports: [
@@ -96,6 +107,11 @@ import { MealsOfCategoryComponent } from './meal-category/meals-of-category/comp
         component: ServerProfileComponent,
       },
       {
+        path: 'ServerFirstPage',
+        canActivate: [ServerRoutes],
+        component: ServerFirstPageComponent,
+      },
+      {
         path: 'ManagerProfile',
         canActivate: [ManagerRoutes],
         component: ManagerProfileComponent,
@@ -106,9 +122,9 @@ import { MealsOfCategoryComponent } from './meal-category/meals-of-category/comp
         component: WaiterProfileComponent,
       },
       {
-        path: 'MenuCategory',
-        canActivate: [ChefRoutes],
-        component: MenuCategoryComponent,
+        path: 'WaiterProfileServer',
+        canActivate: [ServerRoutes],
+        component: WaiterProfileComponent,
       },
       {
         path: 'MealCategories',
@@ -120,7 +136,31 @@ import { MealsOfCategoryComponent } from './meal-category/meals-of-category/comp
         canActivate: [ChefRoutes],
         component: MealsOfCategoryComponent,
       },
-
+      {
+        path: 'AddDrink',
+        canActivate: [ServerRoutes],
+        component: AddDrinkComponent,
+      },
+      {
+        path: 'AllDrinks',
+        canActivate: [ServerRoutes],
+        component: AllDrinksComponent,
+      },
+      {
+        path: 'Drink',
+        canActivate: [ServerRoutes],
+        component: DrinkPageComponent,
+      },
+      {
+        path: 'DrinksTable',
+        canActivate: [ServerRoutes],
+        component: DrinksTableComponent,
+      },
+      {
+        path: 'DrinkCard',
+        canActivate: [ServerRoutes],
+        component: DrinkCardPageComponent,
+      },
       
     ]),
 

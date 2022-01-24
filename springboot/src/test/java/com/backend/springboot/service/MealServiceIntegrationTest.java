@@ -20,6 +20,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import com.backend.springboot.repository.MealRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -39,7 +40,9 @@ public class MealServiceIntegrationTest {
 	
 	@Autowired
 	private MealService mealService;
-	
+
+	@Autowired
+	private MealRepository mealRepository;
 	
 	//S1
 	@Test
@@ -142,5 +145,8 @@ public class MealServiceIntegrationTest {
 	public void delete_MealIsNotDeleted_True() {
 		boolean returnValue = mealService.delete(EXISTING_MEAL_ID);
 		assertTrue(returnValue);
+		Meal meal = this.mealRepository.findById(EXISTING_MEAL_ID).orElse(null);
+		meal.setDeleted(false);
+		this.mealRepository.save(meal);
 	}
 }
