@@ -47,6 +47,7 @@ insert into meals(name, type, description, meal_difficulty, time_preparation, am
 insert into meals(name, type, description, meal_difficulty, time_preparation, amount_number, amount_unit, image, deleted) values ('Pasulj', 2, 'Jako', 2, 180, 330, 'g', 'nema', false);
 insert into meals(name, type, description, meal_difficulty, time_preparation, amount_number, amount_unit, image, deleted) values ('Pecenje', 2, 'Jako', 2, 300, 1, 'kg', 'nema', false);
 insert into meals(name, type, description, meal_difficulty, time_preparation, amount_number, amount_unit, image, deleted) values ('Supa', 1, 'Toplo', 1, 30, 200, 'ml', 'nema', false);
+insert into meals(name, type, description, meal_difficulty, time_preparation, amount_number, amount_unit, image, deleted) values ('Hladno', 0, 'Toplo', 1, 30, 200, 'ml', 'nema', false);
 
 
 --MEAL_PRICE

@@ -26,18 +26,19 @@ import { ServerRoutes } from './user-routes/ServerRoutes';
 import { ManagerRoutes } from './user-routes/ManagerRoutes';
 import { WaiterRoutes } from './user-routes/WaiterRoutes';
 import { DirectorRoutes } from './user-routes/DirectorRoutes';
-import { MealCategoryComponent } from './meal-category/meal-category.component';
 import { MenuCategoryComponent } from './menu-category/menu-category.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 import { AngularMaterialModule } from './angular_material.module';
+import { MealCategoriesComponent } from './meal-category/categories/component/meal-categories.component';
+import { MealsOfCategoryComponent } from './meal-category/meals-of-category/component/meals-of-category.component';
 import { ServerFirstPageComponent } from './first-pages/pages/server-first-page/server-first-page.component';
 import { AddDrinkComponent } from './drinks/pages/add-drink/add-drink.component';
 import { AllDrinksComponent } from './drinks/pages/all-drinks/all-drinks.component';
 import { DrinkPageComponent } from './drinks/pages/drink-page/drink-page.component';
 import { DrinksTableComponent } from './drinks/components/drinks-table/drinks-table.component';
 import { DrinkCardPageComponent } from './drink-cards/pages/drink-card-page/drink-card-page.component';
+
 
 @NgModule({
   declarations: [
@@ -50,9 +51,10 @@ import { DrinkCardPageComponent } from './drink-cards/pages/drink-card-page/drin
     BartenderProfileComponent,
     ChefProfileComponent,
     DirectorProfileComponent,
-    MealCategoryComponent,
     MenuCategoryComponent,
     ServerProfileComponent,
+    MealCategoriesComponent,
+    MealsOfCategoryComponent,
     ServerFirstPageComponent,
     AddDrinkComponent,
     AllDrinksComponent,
@@ -125,14 +127,14 @@ import { DrinkCardPageComponent } from './drink-cards/pages/drink-card-page/drin
         component: WaiterProfileComponent,
       },
       {
-        path: 'MealCategory',
+        path: 'MealCategories',
         canActivate: [ChefRoutes],
-        component: MealCategoryComponent,
+        component: MealCategoriesComponent,
       },
       {
-        path: 'MenuCategory',
+        path: 'MealsOfCategory',
         canActivate: [ChefRoutes],
-        component: MenuCategoryComponent,
+        component: MealsOfCategoryComponent,
       },
       {
         path: 'AddDrink',
