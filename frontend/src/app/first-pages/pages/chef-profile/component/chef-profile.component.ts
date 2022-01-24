@@ -32,7 +32,7 @@ export class ChefProfileComponent implements OnInit {
 
 
   meal(){
-    this.router.navigate(['/MealCategory']);
+    this.router.navigate(['/MealCategories']);
   }
 
 

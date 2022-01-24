@@ -26,12 +26,14 @@ import { ServerRoutes } from './user-routes/ServerRoutes';
 import { ManagerRoutes } from './user-routes/ManagerRoutes';
 import { WaiterRoutes } from './user-routes/WaiterRoutes';
 import { DirectorRoutes } from './user-routes/DirectorRoutes';
-import { MealCategoryComponent } from './meal-category/meal-category.component';
 import { MenuCategoryComponent } from './menu-category/menu-category.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { AngularMaterialModule } from './angular_material.module';
+import { MealCategoriesComponent } from './meal-category/categories/component/meal-categories.component';
+import { MealsOfCategoryComponent } from './meal-category/meals-of-category/component/meals-of-category.component';
+
 
 @NgModule({
   declarations: [
@@ -44,9 +46,10 @@ import { AngularMaterialModule } from './angular_material.module';
     BartenderProfileComponent,
     ChefProfileComponent,
     DirectorProfileComponent,
-    MealCategoryComponent,
     MenuCategoryComponent,
     ServerProfileComponent,
+    MealCategoriesComponent,
+    MealsOfCategoryComponent,
     
   ],
   imports: [
@@ -103,16 +106,20 @@ import { AngularMaterialModule } from './angular_material.module';
         component: WaiterProfileComponent,
       },
       {
-        path: 'MealCategory',
-        canActivate: [ChefRoutes],
-        component: MealCategoryComponent,
-      },
-      {
         path: 'MenuCategory',
         canActivate: [ChefRoutes],
         component: MenuCategoryComponent,
       },
-      
+      {
+        path: 'MealCategories',
+        canActivate: [ChefRoutes],
+        component: MealCategoriesComponent,
+      },
+      {
+        path: 'MealsOfCategory',
+        canActivate: [ChefRoutes],
+        component: MealsOfCategoryComponent,
+      },
 
       
     ]),
