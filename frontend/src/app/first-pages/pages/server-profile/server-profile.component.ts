@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../login/auth.service';
-import { ServerServiceService } from '../../services/server-service/server-service.service';
+import { UserService } from '../../services/user-service/user.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,25 +9,27 @@ import { Router } from '@angular/router';
   styleUrls: ['./server-profile.component.css']
 })
 export class ServerProfileComponent implements OnInit {
-  firstName:string;
-  lastName:string;
+  ime:string;
+  prezime:string;
   
-  constructor(private service:ServerServiceService, private authService: AuthService, private router:Router) {
+  constructor(private service:UserService, private authService: AuthService, private router: Router) {
     this.service.getInfo().subscribe((data:any) => {
-      this.firstName = data.name; 
-      this.lastName = data.lastName; 
+      this.ime = data.name; 
+      this.prezime = data.lastName; 
     });
   }
 
   ngOnInit(): void {
   }
   
-  redirektujSS(){
-    console.log("redirekti sef sale");
+  redirektujSefSale(){
+    console.log("redirekt sef sale");
+    this.router.navigate(['/ServerFirstPage']);
   }
   
-  redirektujK(){
-    console.log("redirekti konobar");
+  redirektujKonobar(){
+    console.log("redirekt konobar");
+    this.router.navigate(['/WaiterProfileServer']);
   }
 
   odjava(){

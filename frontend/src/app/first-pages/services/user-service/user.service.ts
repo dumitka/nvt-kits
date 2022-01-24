@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class ServerServiceService {
+export class UserService {
 
   constructor(private http: HttpClient) { }
   
@@ -14,5 +14,5 @@ export class ServerServiceService {
   getInfo(){
     return this.http.get(this.URL);
   }
-  
+
 }
