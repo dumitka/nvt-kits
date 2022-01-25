@@ -11,11 +11,11 @@ export class DrinkCardService {
   
   readonly URL : string = Main.PATH + "api/drinkCards/";
 
-  getDrinks() {
+  trenutnaKartaPica() {
     return this.http.get(this.URL);
   }
   
-  addDrink(novoPice){
-    return this.http.get(this.URL + "newDrinkCard", {params: {'drinkCardDTO': novoPice}});
+  dodajKartuPica(novaKartaPica){
+    return this.http.get(this.URL + "newDrinkCard", novaKartaPica);
   }
 }

@@ -73,6 +73,47 @@ insert into meals(name, type, description, meal_difficulty, time_preparation, am
 --APPENDICES
 insert into meals(name, type, description, meal_difficulty, time_preparation, amount_number, amount_unit, image, deleted) values ('Pomfrit', 5, '', 0, 10, 150, 'g', 'nema', false);
 
+-- RESTAURANT
+insert into restaurant (id) values (1);
 
+-- DRINK
+insert into drink (name, type, description, amount_number, amount_unit, available, image)
+    values ('Sprajt', 0, 'Gazirano pice', 0.2, 'l', true, 'pice.png');
+insert into drink (name, type, description, amount_number, amount_unit, available, image)
+    values ('Koka kola', 0, 'Gazirano pice', 0.2, 'l', true, 'pice.png');
+insert into drink (name, type, description, amount_number, amount_unit, available, image)
+    values ('Jabuka', 1, 'Nektar sok od jabuke. Negazirano.', 0.2, 'l', true, 'pice.png');
+insert into drink (name, type, description, amount_number, amount_unit, available, image)
+    values ('Limunada', 1, 'Sveze cedjen sok od limuna', 0.2, 'l', true, 'pice.png');
+insert into drink (name, type, description, amount_number, amount_unit, available, image)
+    values ('Vino', 2, 'Gazirano pice', 0.2, 'l', true, 'pice.png');
+insert into drink (name, type, description, amount_number, amount_unit, available, image)
+    values ('Jelen', 2, 'Jelen pivo - veliko', 0.5, 'l', true, 'pice.png');
+insert into drink (name, type, description, amount_number, amount_unit, available, image)
+    values ('Jelen', 2, 'Jelen pivo - malo', 0.3, 'l', true, 'pice.png');
+insert into drink (name, type, description, amount_number, amount_unit, available, image)
+    values ('Caj', 3, 'Milfordov caj', 0.2, 'l', true, 'pice.png');
+insert into drink (name, type, description, amount_number, amount_unit, available, image)
+    values ('Kafa', 3, 'Domaca kafa', 0.2, 'l', true, 'pice.png');
 
+-- DRINK_PRICE
+insert into drink_price (price, drink_id) values ('120', 2);
+insert into drink_price (price, drink_id) values ('100', 3);
+insert into drink_price (price, drink_id) values ('150', 4);
+insert into drink_price (price, drink_id) values ('130', 5);
+insert into drink_price (price, drink_id) values ('90', 6);
+insert into drink_price (price, drink_id) values ('100', 7);
 
+-- DRINK_CARD
+insert into drink_card (date_Of_Validation, restaurant_id) values ('1995-05-25 06:10'::timestamp, 1);
+insert into drink_card (date_Of_Validation, restaurant_id) values ('1999-10-28 06:10'::timestamp, 1);
+
+-- DRINK_CARD -> DRINK_PRICE
+insert into drink_prices (drink_card_id, drink_price_id) values (1, 1);
+insert into drink_prices (drink_card_id, drink_price_id) values (1, 2);
+insert into drink_prices (drink_card_id, drink_price_id) values (2, 1);
+insert into drink_prices (drink_card_id, drink_price_id) values (2, 2);
+insert into drink_prices (drink_card_id, drink_price_id) values (2, 3);
+insert into drink_prices (drink_card_id, drink_price_id) values (2, 4);
+insert into drink_prices (drink_card_id, drink_price_id) values (2, 5);
+insert into drink_prices (drink_card_id, drink_price_id) values (2, 6);

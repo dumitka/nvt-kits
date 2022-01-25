@@ -1,1 +1,26 @@
-<p>all-drinks works!</p>
+<body>
+    <h1><a (click) = "nazadNaProfil()">VAŠ PROFIL</a></h1>
+  
+    <br>
+    <br>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Kategorija</mat-label>
+        <mat-select>
+          <mat-option (click) = "promenaKategorije($event)" value="sve">Sve kategorije</mat-option>
+          <mat-option (click) = "promenaKategorije($event)" value="gazirana">Gazirana pica</mat-option>
+          <mat-option (click) = "promenaKategorije($event)" value="negazirana">Negazirana pica</mat-option>
+          <mat-option (click) = "promenaKategorije($event)" value="alkoholna">Alkoholna pica</mat-option>
+          <mat-option (click) = "promenaKategorije($event)" value="topla">Topla pica</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+    <br>
+    <br>
+
+    <section id='divZaPica'></section>
+</body>
+  
+  
+  
+  

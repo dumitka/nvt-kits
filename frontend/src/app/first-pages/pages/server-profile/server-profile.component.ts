@@ -23,12 +23,10 @@ export class ServerProfileComponent implements OnInit {
   }
   
   redirektujSefSale(){
-    console.log("redirekt sef sale");
     this.router.navigate(['/ServerFirstPage']);
   }
   
   redirektujKonobar(){
-    console.log("redirekt konobar");
     this.router.navigate(['/WaiterProfileServer']);
   }
 
