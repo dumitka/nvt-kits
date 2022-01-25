@@ -74,7 +74,7 @@ export class AllDrinksComponent implements OnInit {
       slika.setAttribute("class", "mat-card-lg-image");
       slika.setAttribute("src", "assets\\" + pice.image);
       slika.setAttribute("name", pice.id);
-      slika.ondblclick = this.dupliKlikNaPice;
+      slika.ondblclick = (e: any) => {this.dupliKlikNaPice(e);};
       div2.appendChild(slika);
       div.appendChild(div2);
       // ----------
@@ -94,7 +94,7 @@ export class AllDrinksComponent implements OnInit {
       dugme.setAttribute("style", "background-color: #5d7c77;width: 100px;text-align: center;color: whitesmoke; " 
         + "font-family: 'Trocchi', serif;font-size: 20px; margin-left: 100px;");
       dugme.appendChild(document.createTextNode("IZBRISI"));
-      dugme.onclick = this.izbrisi;
+      dugme.onclick = (e:any) => {console.log(e.srcElement.name); this.izbrisi(e);};
       div4.appendChild(dugme);
       div.appendChild(div4);
 
@@ -106,10 +106,24 @@ export class AllDrinksComponent implements OnInit {
   izbrisi(e) {
     // iskace prozor sa pitanjem
     console.log(e.srcElement.name);
+    let odabranoPice;
+    for (let elem of this.svaDostupnaPica) {
+      if (elem.id == e.srcElement.name) {
+        odabranoPice = elem;
+        break;
+      }
+    }
+    console.log(odabranoPice);
   }
 
   dupliKlikNaPice(e) {
-    // redirekcija na sledecu stranu
-    console.log(e.srcElement.name);
+    let odabranoPice;
+    for (let elem of this.svaDostupnaPica) {
+      if (elem.id == e.srcElement.name) {
+        odabranoPice = elem;
+        break;
+      }
+    }
+    this.ruter.navigate(["/Drink"], {state: {data: {'pice': odabranoPice}}});
   }
 }
