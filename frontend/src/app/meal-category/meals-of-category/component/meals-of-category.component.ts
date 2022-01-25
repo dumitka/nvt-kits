@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MealsOfCategoryService } from '../service/meals-of-category.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-meals-of-category',
@@ -10,8 +11,12 @@ export class MealsOfCategoryComponent implements OnInit {
 
   category:number;
   listOfMeals:any;
+  position:number = 0;
+  displayedColumns: string[] = ['position', 'name', 'description'];
 
-  constructor(public service: MealsOfCategoryService,) {
+  title:string;
+
+  constructor(public service: MealsOfCategoryService, private router:Router) {
     this.category = history.state.data.category;
 
 
@@ -19,34 +24,37 @@ export class MealsOfCategoryComponent implements OnInit {
       console.log("Usla");
       this.service.getColdAppetizers().subscribe((data:any) =>{
         this.listOfMeals = data;
-        console.log(data);
-        console.log("-----------------------------")
-        console.log(this.listOfMeals);
+        this.title = "HLADNA PREDJELA";
       })
       
     }else if(this.category == 2){
       this.service.getHotAppetizer().subscribe((data:any) =>{
         this.listOfMeals = data;
+        this.title = "TOPLA PREDJELA";
       })
 
     }else if(this.category == 3){
       this.service.getMainCourse().subscribe((data:any) =>{
         this.listOfMeals = data;
+        this.title = "GLAVNA JELA";
       })
 
     }else if(this.category == 4){
       this.service.getDesert().subscribe((data:any) =>{
         this.listOfMeals = data;
+        this.title = "DESERTI";
       })
 
     }else if(this.category == 5){
       this.service.getSalad().subscribe((data:any) =>{
         this.listOfMeals = data;
+        this.title = "SALATE";
       })
 
     }else{
       this.service.getAppendices().subscribe((data:any) =>{
         this.listOfMeals = data;
+        this.title = "DODACI";
       })
 
     }
@@ -57,4 +65,13 @@ export class MealsOfCategoryComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  mealProfile(meal:any){
+    this.router.navigate(['/MealProfile'], {state:{data:{"meal":meal}}});
+  }
+
+
+  add(){
+    
+  }
 }

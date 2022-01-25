@@ -40,11 +40,13 @@ public class MealController {
 	
 	//dto transformations
 	private MealPriceToMealWithPriceDTO mealPriceToMealWithPriceDTO;
+	private MealToMealDTO mealToMealDTO;
 	
 	
 	//constructor
 	public MealController() {
 		this.mealPriceToMealWithPriceDTO = new MealPriceToMealWithPriceDTO(new MealToMealDTO());
+		this.mealToMealDTO = new MealToMealDTO();
 	}
 	
 	
@@ -166,4 +168,58 @@ public class MealController {
 	
 	
 	
+	
+	
+	@GetMapping(value = "/getColdAppetizerMeals")
+	@PreAuthorize("hasRole('ROLE_CHEF')")
+	public ResponseEntity<List<MealDTO>> getColdAppetizerMeals(){
+		List<Meal> meals = mealService.getAllMealbyMealType(MealType.COLD_APPETIZER);
+		List<MealDTO> dto = this.mealToMealDTO.convertList(meals);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping(value = "/getHotAppetizerMeals")
+	@PreAuthorize("hasRole('ROLE_CHEF')")
+	public ResponseEntity<List<MealDTO>> getHotAppetizerMeals(){
+		List<Meal> meals = mealService.getAllMealbyMealType(MealType.HOT_APPETIZER);
+		List<MealDTO> dto = this.mealToMealDTO.convertList(meals);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping(value = "/getMainCourseMeals")
+	@PreAuthorize("hasRole('ROLE_CHEF')")
+	public ResponseEntity<List<MealDTO>> getMainCourseMeals(){
+		List<Meal> meals = mealService.getAllMealbyMealType(MealType.MAIN_COURSE);
+		List<MealDTO> dto = this.mealToMealDTO.convertList(meals);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping(value = "/getDesertMeals")
+	@PreAuthorize("hasRole('ROLE_CHEF')")
+	public ResponseEntity<List<MealDTO>> getDesertMeals(){
+		List<Meal> meals = mealService.getAllMealbyMealType(MealType.DESERT);
+		List<MealDTO> dto = this.mealToMealDTO.convertList(meals);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping(value = "/getSaladMeals")
+	@PreAuthorize("hasRole('ROLE_CHEF')")
+	public ResponseEntity<List<MealDTO>> getSaladMeals(){
+		List<Meal> meals = mealService.getAllMealbyMealType(MealType.SALAD);
+		List<MealDTO> dto = this.mealToMealDTO.convertList(meals);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping(value = "/getAppendicesMeals")
+	@PreAuthorize("hasRole('ROLE_CHEF')")
+	public ResponseEntity<List<MealDTO>> getAppendicesMeals(){
+		List<Meal> meals = mealService.getAllMealbyMealType(MealType.APPENDICES);
+		List<MealDTO> dto = this.mealToMealDTO.convertList(meals);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
 }

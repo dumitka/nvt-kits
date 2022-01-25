@@ -7,12 +7,12 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class MealsOfCategoryService {
-  private readonly COLD_APPETIZER_URL : string = Main.PATH + "meal/getColdAppetizers";
-  private readonly HOT_APPETIZER_URL : string = Main.PATH + "meal/getHotAppetizer";
-  private readonly MAIN_MEAL_URL : string = Main.PATH + "meal/getMainCourse";
-  private readonly DESSERT_URL : string = Main.PATH + "meal/getDesert";
-  private readonly SALATE_URL : string = Main.PATH + "meal/getSalad";
-  private readonly APPENDICES_URL : string = Main.PATH + "meal/getAppendices";
+  private readonly COLD_APPETIZER_URL : string = Main.PATH + "meal/getColdAppetizerMeals";
+  private readonly HOT_APPETIZER_URL : string = Main.PATH + "meal/getHotAppetizerMeals";
+  private readonly MAIN_MEAL_URL : string = Main.PATH + "meal/getMainCourseMeals";
+  private readonly DESSERT_URL : string = Main.PATH + "meal/getDesertMeals";
+  private readonly SALATE_URL : string = Main.PATH + "meal/getSaladMeals";
+  private readonly APPENDICES_URL : string = Main.PATH + "meal/getAppendicesMeals";
 
   constructor(private http: HttpClient) { }
 

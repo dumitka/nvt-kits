@@ -38,70 +38,78 @@ body {
 
 
 
-  table{
+  .meal_card {
     display: block;
     margin-left: auto;
     margin-right: auto;
+    width: 35%;
+    
+  }
+  
+  .profile_picture{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
 
-    background-color: whitesmoke;
+  .food_data{
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif; 
+    font-size: 20px; 
+    font-weight: normal; 
+    line-height: 48px;
+    
+    text-align: center;
+   
   }
 
 
   b{
     color: #5d7c77; 
     font-family: 'Trocchi', serif; 
-    font-size: 20px; 
-  }
-
-
-  td{
-    color: #5d7c77; 
-    font-family: 'Trocchi', serif; 
-    font-size: 15px; 
-  }
-
-
-.position{
-    width: 10%;
-}
-
-.name{
-    width: 20%;
-}
-
-.description{
-    width: 30%;
-}
-
-
-.demo-table {
-    width: 60%;
-  }
-  
-  .mat-row .mat-cell {
-    border-bottom: 1px solid transparent;
-    border-top: 1px solid transparent;
-    cursor: pointer;
-  }
-  
-  .mat-row:hover .mat-cell {
-    border-color: currentColor;
-  }
-  
-  .demo-row-is-clicked {
-    font-weight: bold;
-  }
-  
-  
-  .option_button{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-
-    background-color: whitesmoke;
+    font-size: 30px; 
+    font-weight: normal; 
+    line-height: 48px;
     
     text-align: center;
+  }
+
+
+  i{
     color: #5d7c77; 
+    font-family: 'Trocchi', serif; 
+    font-size: 23px; 
+    font-weight: normal; 
+    line-height: 48px;
+    
+    text-align: center;
+  }
+
+
+
+  mat-card-actions{
+    margin-left: 200px;
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif; 
+  }
+  
+  .option_button{
+    background-color: #5d7c77;
+    
+    text-align: center;
+    color: whitesmoke; 
     font-family: 'Trocchi', serif;
     font-size: 20px;
   }
+
+  
+
+  .change_button_span{
+      margin-left: 30%;
+  }
+
+  .deleted_button_span{
+    margin-left: 50%;
+}
+  
