@@ -38,6 +38,7 @@ import { AllDrinksComponent } from './drinks/pages/all-drinks/all-drinks.compone
 import { DrinkPageComponent } from './drinks/pages/drink-page/drink-page.component';
 import { DrinksTableComponent } from './drinks/components/drinks-table/drinks-table.component';
 import { DrinkCardPageComponent } from './drink-cards/pages/drink-card-page/drink-card-page.component';
+import { MealProfileComponent } from './meal-category/pages/meal-profile/meal-profile.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { DrinkCardPageComponent } from './drink-cards/pages/drink-card-page/drin
     DrinkPageComponent,
     DrinksTableComponent,
     DrinkCardPageComponent,
+    MealProfileComponent,
     
   ],
   imports: [
@@ -160,6 +162,11 @@ import { DrinkCardPageComponent } from './drink-cards/pages/drink-card-page/drin
         path: 'DrinkCard',
         canActivate: [ServerRoutes],
         component: DrinkCardPageComponent,
+      },
+      {
+        path: 'MealProfile',
+        canActivate: [ChefRoutes],
+        component: MealProfileComponent,
       },
       
     ]),

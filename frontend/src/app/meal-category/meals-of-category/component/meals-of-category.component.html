@@ -1,1 +1,46 @@
-<p>meals-of-category works!</p>
+
+<body>
+
+    <h1><a href="#0">{{title}}</a></h1>
+
+    <br>
+    <br>
+    <br>
+
+     <table mat-table [dataSource]="listOfMeals" class="mat-elevation-z8 demo-table">
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+        <th mat-header-cell  class="position"  *matHeaderCellDef><b>No.</b></th>
+        <td mat-cell *matCellDef="let element; let i = index">{{i+1}}.</td>
+        </ng-container>
+    
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+        <th mat-header-cell  class="name"  *matHeaderCellDef><b>NAZIV JELA</b></th>
+        <td mat-cell *matCellDef="let element">{{element.name}}</td>
+        </ng-container>
+    
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+        <th mat-header-cell  class="description" *matHeaderCellDef><b>OPIS JELA</b></th>
+        <td mat-cell *matCellDef="let element"><i>{{element.description}}</i></td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        
+        <tr
+            mat-row
+            (click)="mealProfile(row)"
+            *matRowDef="let row; columns: displayedColumns;"
+        ></tr>
+    </table>
+
+    <br>
+    <span class="add_button_span"><button mat-raised-button class="option_button" id="add_button" (click) = "add()" >DODAJ NOVO JELO</button></span>
+
+
+
+
+   
+
+</body>

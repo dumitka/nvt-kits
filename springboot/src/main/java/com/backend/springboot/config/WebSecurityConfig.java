@@ -81,7 +81,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/menu/changeMealPriceInMenu").hasAuthority("ROLE_CHEF")
 				.antMatchers("/menu/deleteMealInMenu").hasAuthority("ROLE_CHEF")
 				.antMatchers("/menu/newMenu").hasAuthority("ROLE_CHEF")
-
+				.antMatchers("/meal/getColdAppetizerMeals").hasAuthority("ROLE_CHEF")
+				.antMatchers("/meal/getHotAppetizerMeals").hasAuthority("ROLE_CHEF")
+				.antMatchers("/meal/getMainCourseMeals").hasAuthority("ROLE_CHEF")
+				.antMatchers("/meal/getDesertMeals").hasAuthority("ROLE_CHEF")
+				.antMatchers("/meal/getSaladMeals").hasAuthority("ROLE_CHEF")
+				.antMatchers("/meal/getAppendicesMeals").hasAuthority("ROLE_CHEF")
 				.antMatchers("/api/**").permitAll()
 			.anyRequest().authenticated().and()
 			.cors().and()
