@@ -26,7 +26,7 @@ export class DrinkPageComponent implements OnInit {
   }
   
   izmeni() {
-    console.log("izmeni -----------");
+    this.ruter.navigate(["/AddDrink"], {state: {data: {'pice': this.pice}}});
   }
   
   nazadNaProfil() {
