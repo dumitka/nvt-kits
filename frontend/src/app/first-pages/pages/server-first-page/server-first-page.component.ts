@@ -13,8 +13,7 @@ export class ServerFirstPageComponent implements OnInit {
   ime:string;
   prezime:string;
 
-  constructor(private service:UserService, private authService: AuthService, private router: Router, private drinkService: DrinkService,) {
-    //nekako poslati preko konstruktora podatke da ne trazi opet
+  constructor(private service:UserService, private authService: AuthService, private ruter: Router, private drinkService: DrinkService,) {
     this.service.getInfo().subscribe((data:any) => {
       this.ime = data.name; 
       this.prezime = data.lastName; 
@@ -25,36 +24,19 @@ export class ServerFirstPageComponent implements OnInit {
   }
 
   dodajPice(){
-    console.log("dodaj novo pice");
-    this.router.navigate(["/AddDrink"]);
-
-    var novoPice = {
-      "id": 12,
-      "name": "Piceee",
-      "type": 1,
-      "description": "Piceee",
-      "amountNumber": 12,
-      "amountUnit": "l",
-      "available": true,
-      "image": "Piceee.jpg",
-    };
-    var odgovor = this.drinkService.editDrink(novoPice);
-    console.log(odgovor);
+    this.ruter.navigate(["/AddDrink"]);
   }
   
   svaPica(){
-    console.log("pregled svih pica");
-    this.router.navigate(["/AllDrinks"]);
+    this.ruter.navigate(["/AllDrinks"]);
   }
 
   dodajKP(){
-    console.log("dodaj novu kartu pica");
-    //this.router.navigate(["/AllDrinks"]);   // ako budem mogla da namestim parametre
+    //this.ruter.navigate(["/AllDrinks"]);   // ako budem mogla da namestim parametre
   }
   
   kartaPica(){
-    console.log("pregled karte pica");
-    this.router.navigate(["/DrinkCard"]);
+    this.ruter.navigate(["/DrinkCard"]);
   }
 
   odjava(){

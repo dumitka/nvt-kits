@@ -1,28 +1,35 @@
 <body>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
 
-    <div class="card_div">
-      <mat-card class="server_profile_card">
-        <img mat-card-lg-image name="profile_picture" class="profile_picture" src="assets\server_profile.jpg" >
+  <div class="card_div">
+    <mat-card class="server_profile_card">
+      <img mat-card-lg-image name="profile_picture" class="profile_picture" src="assets\server_profile.jpg" >
+        
+        <mat-card-content>
+          <div class="server_data">
+            <span>{{ime}}</span>
+            <span>&nbsp;</span>
+            <span>{{prezime}}</span>
+          </div>
           
-          <mat-card-content>
-            <div class="server_data">
-              <span>{{ime}}</span>
-              <span>&nbsp;</span>
-              <span>{{prezime}}</span>
-            </div>
-            
-            <div class="options">
-              <button mat-raised-button class="option_button" id="opcijaSS" (click) = "dodajPice()">DODAJ PICE</button>
-              <button mat-raised-button class="option_button" id="opcijaK" (click) = "svaPica()">PREGLED PICA</button>
-              <button mat-raised-button class="option_button" id="opcijaK" (click) = "dodajKP()">KREIRAJ NOVU KARTU PICA</button>
-              <button mat-raised-button class="option_button" id="opcijaK" (click) = "kartaPica()">PREGLED KARTE PICA</button>
-            </div>
-          </mat-card-content>
-  
-          <mat-card-actions>
-            <button mat-button (click) = "odjava()">ODJAVA</button>
-          </mat-card-actions>
-      </mat-card>
+          <div class="options">
+            <button mat-raised-button class="option_button" id="opcijaSS" (click) = "dodajPice()">DODAJ PICE</button>
+            <button mat-raised-button class="option_button" id="opcijaK" (click) = "svaPica()">PREGLED PICA</button>
+            <button mat-raised-button class="option_button" id="opcijaK" (click) = "dodajKP()">KREIRAJ NOVU KARTU PICA</button>
+            <button mat-raised-button class="option_button" id="opcijaK" (click) = "kartaPica()">PREGLED KARTE PICA</button>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-button (click) = "odjava()">ODJAVA</button>
+        </mat-card-actions>
+    </mat-card>
   </div>
   
   </body>

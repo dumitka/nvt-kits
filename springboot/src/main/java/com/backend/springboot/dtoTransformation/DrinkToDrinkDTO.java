@@ -20,6 +20,7 @@ public class DrinkToDrinkDTO implements Converter<Drink, DrinkDTO> {
         povratna.setAvailable(drink.isAvailable());
         povratna.setType(drink.getType());
         povratna.setName(drink.getName());
+        povratna.setImage(drink.getImage());
         povratna.setDescription(drink.getDescription());
         return povratna;
     }
