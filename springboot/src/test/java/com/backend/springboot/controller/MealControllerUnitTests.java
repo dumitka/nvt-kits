@@ -90,8 +90,8 @@ public class MealControllerUnitTests {
 		 float STARTING_PRICE = 0;
          Meal CA_MEAL1 = Meal.builder().id(1).name("Hladno predjelo 1").deleted(false).type(MealType.COLD_APPETIZER).description("Hladno predjelo 1 opis").mealDifficulty(MealDifficulty.EASY).timePreparation(5).amountNumber(500).amountUnit("g").image("http//www.image1.jpg").build();
          Meal CA_MEAL2 = Meal.builder().id(2).name("Hladno predjelo 2").deleted(false).type(MealType.COLD_APPETIZER).description("Hladno predjelo 2 opis").mealDifficulty(MealDifficulty.MEDIUM).timePreparation(10).amountNumber(300).amountUnit("g").image("http//www.image2.jpg").build();
-         MealPrice CA_LIST_ELEMENT1 = MealPrice.builder().id(1).meal(CA_MEAL1).priceAmount(STARTING_PRICE + 200).build();
-         MealPrice CA_LIST_ELEMENT2 = MealPrice.builder().id(2).meal(CA_MEAL2).priceAmount(STARTING_PRICE + 300).build();
+         MealPrice CA_LIST_ELEMENT1 = MealPrice.builder().id(1).meal(CA_MEAL1).price(STARTING_PRICE + 200).build();
+         MealPrice CA_LIST_ELEMENT2 = MealPrice.builder().id(2).meal(CA_MEAL2).price(STARTING_PRICE + 300).build();
          List<MealPrice> COLD_APPETIZER_LIST = new ArrayList<>();
          COLD_APPETIZER_LIST.add(CA_LIST_ELEMENT1);
          COLD_APPETIZER_LIST.add(CA_LIST_ELEMENT2);
@@ -112,8 +112,8 @@ public class MealControllerUnitTests {
 		 float STARTING_PRICE = 0;
          Meal HA_MEAL1 = Meal.builder().id(1).name("Toplo predjelo 1").deleted(false).type(MealType.HOT_APPETIZER).description("Toplo predjelo 1 opis").mealDifficulty(MealDifficulty.EASY).timePreparation(5).amountNumber(500).amountUnit("g").image("http//www.image1.jpg").build();
          Meal HA_MEAL2 = Meal.builder().id(2).name("Toplo predjelo 2").deleted(false).type(MealType.HOT_APPETIZER).description("Toplo predjelo 2 opis").mealDifficulty(MealDifficulty.MEDIUM).timePreparation(10).amountNumber(300).amountUnit("g").image("http//www.image2.jpg").build();
-         MealPrice HA_LIST_ELEMENT1 = MealPrice.builder().id(1).meal(HA_MEAL1).priceAmount(STARTING_PRICE + 200).build();
-         MealPrice HA_LIST_ELEMENT2 = MealPrice.builder().id(2).meal(HA_MEAL2).priceAmount(STARTING_PRICE + 300).build();
+         MealPrice HA_LIST_ELEMENT1 = MealPrice.builder().id(1).meal(HA_MEAL1).price(STARTING_PRICE + 200).build();
+         MealPrice HA_LIST_ELEMENT2 = MealPrice.builder().id(2).meal(HA_MEAL2).price(STARTING_PRICE + 300).build();
          List<MealPrice> HOT_APPETIZER_LIST = new ArrayList<>();
          HOT_APPETIZER_LIST.add(HA_LIST_ELEMENT1);
          HOT_APPETIZER_LIST.add(HA_LIST_ELEMENT2);

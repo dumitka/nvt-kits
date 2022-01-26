@@ -21,7 +21,7 @@ public class OrderedMeal {
 	private Integer amount;
 
 	@ManyToOne
-	@JoinColumn(name = "meal", nullable = false)
+	@JoinColumn(name = "meal_id", nullable = false)
 	private Meal meal;
 
 	@ManyToOne

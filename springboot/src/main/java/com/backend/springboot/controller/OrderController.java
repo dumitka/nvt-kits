@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,11 +31,12 @@ import com.backend.springboot.model.OrderedDrink;
 import com.backend.springboot.model.OrderedMeal;
 import com.backend.springboot.model.User;
 import com.backend.springboot.service.DeskService;
+import com.backend.springboot.service.DrinkCardService;
+import com.backend.springboot.service.MenuService;
 import com.backend.springboot.service.NotificationService;
 import com.backend.springboot.service.OrderService;
 import com.backend.springboot.service.OrderedDrinkService;
 import com.backend.springboot.service.OrderedMealService;
-import com.backend.springboot.service.UserService;
 
 @RestController
 @RequestMapping("api/orders")
@@ -58,9 +60,12 @@ public class OrderController {
 	private OrderService orderService;
 	
 	@Autowired
-	private UserService userService;
+	private DrinkCardService drinkCardService;
+	
+	@Autowired
+	private MenuService menuService;
 
-	//@PreAuthorize("hasRole('ROLE_WAITER')")
+	@PreAuthorize("hasRole('ROLE_WAITER')")
 	@PostMapping("/createOrder/{deskId}")
 	public ResponseEntity<String> createOrder(@PathVariable Integer deskId, @RequestBody OrderDTO orderDTO) {
 		Set<OrderedMeal> orderedMeals = new HashSet<OrderedMeal>();
@@ -69,9 +74,9 @@ public class OrderController {
 		Set<OrderedMealDTO> orderedMealsDTO = orderDTO.getOrderedMeals();
 		Set<OrderedDrinkDTO> orderedDrinkDTO = orderDTO.getOrderedDrinks();
 		
-		/*if (orderedMealsDTO == null && orderedDrinkDTO == null) {
-			return new ResponseEntity<String>("Order must have either drinks or meals!", HttpStatus.BAD_REQUEST);
-		}*/
+		if (orderedMealsDTO == null && orderedDrinkDTO == null) {
+			return new ResponseEntity<String>("Porudžbina mora imati bar jedno jelo ili piće!", HttpStatus.BAD_REQUEST);
+		}
 		
 		if(orderedMealsDTO != null) {
 			orderedMeals = orderDTO.getOrderedMeals().stream().map(m -> orderedMealService.findOne(m.getId())).collect(Collectors.toSet());
@@ -81,7 +86,7 @@ public class OrderController {
 			orderedDrinks = orderDTO.getOrderedDrinks().stream().map(d -> orderedDrinkService.findOne(d.getId())).collect(Collectors.toSet());
 		}
 
-		User waiter = userService.findById(3);// TODO: (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User waiter = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 		if (orderDTO.getNotificationIds() != null) {
 			notifications = orderDTO.getNotificationIds().stream().map(n -> notificationService.findOne(n)).collect(Collectors.toSet());
@@ -89,9 +94,8 @@ public class OrderController {
 		
 		Notification notification = Notification.builder()
 				.status(NotificationStatus.SENT)
-				.message("New order!")
+				.message("Nova porudžbina!")
 				.build();
-		notificationService.save(notification);
 		brokerMessagingTemplate.convertAndSend("/topic/hi", notification);
 		notifications.add(notification);
 
@@ -100,42 +104,80 @@ public class OrderController {
 		deskService.save(desk);
 
 		Order newOrder = Order.builder()
-				.orderedMeals(orderedMeals)
-				.orderedDrinks(orderedDrinks)
 				.waiter(waiter)
-				//.notifications(notifications)
 				.desk(desk)
 				.isDeleted(false)
 				.build();
-		Order savedOrder = orderService.save(newOrder); // TODO: ordered items
+		Order savedOrder = orderService.save(newOrder);
+		
+		if (!orderedDrinks.isEmpty()) {
+			orderedDrinks.forEach(d -> {
+				d.setOrder(savedOrder);
+				orderedDrinkService.save(d);
+			});
+		}
+		
+		if (!orderedMeals.isEmpty()) {
+			orderedMeals.forEach(m -> {
+				m.setOrder(savedOrder);
+				orderedMealService.save(m);
+			});
+		}
+		
 		notification.setOrder(savedOrder);
 		notificationService.save(notification);
 
-		return new ResponseEntity<String>("Order successfully created!", HttpStatus.OK);
+		return new ResponseEntity<String>("Porudžbina je uspešno kreirana!", HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('ROLE_WAITER')") // TODO: ispraviti kao kreiranje
+	@PreAuthorize("hasRole('ROLE_WAITER')")
 	@PutMapping("/updateOrder/{deskId}")
 	public ResponseEntity<String> updateOrder(@PathVariable Integer deskId, @RequestBody OrderDTO orderDTO) {
-		Set<OrderedMeal> orderedMeals = orderDTO.getOrderedMeals().stream().map(m -> orderedMealService.findOne(m.getId())).collect(Collectors.toSet());
-		Set<OrderedDrink> orderedDrinks = orderDTO.getOrderedDrinks().stream().map(d -> orderedDrinkService.findOne(d.getId())).collect(Collectors.toSet());
-
+		Set<OrderedMeal> orderedMeals = new HashSet<OrderedMeal>();
+		Set<OrderedDrink> orderedDrinks = new HashSet<OrderedDrink>();
+		Set<OrderedMealDTO> orderedMealsDTO = orderDTO.getOrderedMeals();
+		Set<OrderedDrinkDTO> orderedDrinkDTO = orderDTO.getOrderedDrinks();
+		
+		if (orderedMealsDTO == null && orderedDrinkDTO == null) {
+			return new ResponseEntity<String>("Porudžbina mora imati bar jedno jelo ili piće!", HttpStatus.BAD_REQUEST);
+		}
+		
+		if(orderedMealsDTO != null) {
+			orderedMeals = orderDTO.getOrderedMeals().stream().map(m -> orderedMealService.findOne(m.getId())).collect(Collectors.toSet());
+		}
+		
+		if(orderedDrinkDTO != null) {
+			orderedDrinks = orderDTO.getOrderedDrinks().stream().map(d -> orderedDrinkService.findOne(d.getId())).collect(Collectors.toSet());
+		}
+		
 		Set<Notification> notifications = orderDTO.getNotificationIds().stream().map(n -> notificationService.findOne(n)).collect(Collectors.toSet());
 		Notification notification = Notification.builder()
 				.status(NotificationStatus.SENT)
-				.message("Order updated!")
+				.message("Porudžbina je izmenjena!")
 				.build();
-		notificationService.save(notification);
 		brokerMessagingTemplate.convertAndSend("/topic/hi", notification);
 		notifications.add(notification);
 
 		Order updatedOrder = orderService.findOne(orderDTO.getId());
-		updatedOrder.setOrderedMeals(orderedMeals);
-		updatedOrder.setOrderedDrinks(orderedDrinks);
-		updatedOrder.setNotifications(notifications);
-		orderService.save(updatedOrder);
-
-		return new ResponseEntity<String>("Order successfully updated!", HttpStatus.OK);
+		
+		if (!orderedDrinks.isEmpty()) {
+			orderedDrinks.forEach(d -> {
+				d.setOrder(updatedOrder);
+				orderedDrinkService.save(d);
+			});
+		}
+		
+		if (!orderedMeals.isEmpty()) {
+			orderedMeals.forEach(m -> {
+				m.setOrder(updatedOrder);
+				orderedMealService.save(m);
+			});
+		}
+		
+		notification.setOrder(updatedOrder);
+		notificationService.save(notification);
+		
+		return new ResponseEntity<String>("Porudžbina je uspešno izmenjena!", HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ROLE_WAITER')")
@@ -149,28 +191,31 @@ public class OrderController {
 		desk.setDeskStatus(DeskStatus.NOT_ORDERED);
 		deskService.save(desk);
 
-		return new ResponseEntity<String>("Order successfully deleted!", HttpStatus.OK);
+		return new ResponseEntity<String>("Porudžbina je uspešno obrisana!", HttpStatus.OK);
 	}
 
-	//@PreAuthorize("hasRole('ROLE_WAITER')")
+	@PreAuthorize("hasRole('ROLE_WAITER')")
 	@GetMapping("/chargeOrder/{id}")
 	public ResponseEntity<String> chargeOrder(@PathVariable Integer id) {
 		Order order = orderService.findOne(id);
-		float charge = 0;
+		float charge = 0, price = 0;
 		
 		for (OrderedDrink orderedDrink : order.getOrderedDrinks()) {
-			//charge += orderedDrink.getAmount() * orderedDrink.getDrinkPrice().getPrice();
+			price = drinkCardService.getLatestForDrink(orderedDrink.getDrink().getId());
+			charge += orderedDrink.getAmount() * price;
 		}
 		
 		for (OrderedMeal orderedMeal : order.getOrderedMeals()) {
-			//charge += orderedMeal.getAmount() * orderedMeal.getMealPrice().getPrice();
+			price = menuService.getLatestForMeal(orderedMeal.getMeal().getId());
+			charge += orderedMeal.getAmount() * price;
 		}
 		
 		Desk desk = deskService.findOne(order.getDesk().getId());
+		charge += desk.getTip();
 		desk.setDeskStatus(DeskStatus.CHARGED);
 		deskService.save(desk);
-
-		return new ResponseEntity<String>("Order successfully charged!", HttpStatus.OK);
+		
+		return new ResponseEntity<String>("Vaš račun je " + String.format("%.2f", charge) + " dinara.", HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ROLE_WAITER')")
@@ -191,7 +236,7 @@ public class OrderController {
 
 		orderService.save(order);
 
-		return new ResponseEntity<String>("Drinks successfully delivered!", HttpStatus.OK);
+		return new ResponseEntity<String>("Pića su uspešno poslužena!", HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ROLE_WAITER')")
@@ -212,6 +257,6 @@ public class OrderController {
 
 		orderService.save(order);
 
-		return new ResponseEntity<String>("Meals successfully delivered!", HttpStatus.OK);
+		return new ResponseEntity<String>("Jela su uspešno poslužena!", HttpStatus.OK);
 	}
 }

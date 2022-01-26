@@ -7,6 +7,7 @@ import com.backend.springboot.enums.OrderedItemStatus;
 import com.backend.springboot.model.Notification;
 import com.backend.springboot.model.Order;
 import com.backend.springboot.model.OrderedDrink;
+import com.backend.springboot.model.User;
 import com.backend.springboot.service.NotificationService;
 import com.backend.springboot.service.OrderService;
 import com.backend.springboot.service.OrderedDrinkService;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -50,22 +52,21 @@ public class OrderedDrinkController {
 	@PutMapping("/acceptDrink/{id}")
 	public ResponseEntity<String> acceptOrderedDrink(@PathVariable Integer id) {
 		OrderedDrink drink = orderedDrinkService.findOne(id);
-		//drink.setBartender(userService.findById()); //TODO: dobaviti trenutno ulogovanog
+		User bartender = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		drink.setBartender(bartender); 
 		drink.setStatus(OrderedItemStatus.IN_PROGRESS);
 		orderedDrinkService.save(drink);
-
+		
+		Order order = orderService.findOne(drink.getOrder().getId());
 		Notification notification = Notification.builder()
 				.status(NotificationStatus.SENT)
-				.message("Drink " + drink.getDrink().getName() + " is in progress!")
+				.message("Piće " + drink.getDrink().getName() + " je u pripremi!")
+				.order(order)
 				.build();
 		notificationService.save(notification);
 		brokerMessagingTemplate.convertAndSend("/topic/hi", notification);
 
-		Order order = orderService.findOne(drink.getOrder().getId());
-		order.getNotifications().add(notification);
-		orderService.save(order);
-
-		return new ResponseEntity<String>("Ordered drink successfully accepted!", HttpStatus.OK);
+		return new ResponseEntity<String>("Poručeno piće je uspešno prihvaćeno!", HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ROLE_BARTENDER')")
@@ -75,17 +76,15 @@ public class OrderedDrinkController {
 		drink.setStatus(OrderedItemStatus.DONE);
 		orderedDrinkService.save(drink);
 
+		Order order = orderService.findOne(drink.getOrder().getId());
 		Notification notification = Notification.builder()
 				.status(NotificationStatus.SENT)
-				.message("Drink " + drink.getDrink().getName() + " is done!")
+				.message("Piće " + drink.getDrink().getName() + " je gotovo!")
+				.order(order)
 				.build();
 		notificationService.save(notification);
 		brokerMessagingTemplate.convertAndSend("/topic/hi", notification);
 
-		Order order = orderService.findOne(drink.getOrder().getId());
-		order.getNotifications().add(notification);
-		orderService.save(order);
-
-		return new ResponseEntity<String>("Ordered drink successfully finished!", HttpStatus.OK);
+		return new ResponseEntity<String>("Poručeno piće je uspešno završeno!", HttpStatus.OK);
 	}
 }
