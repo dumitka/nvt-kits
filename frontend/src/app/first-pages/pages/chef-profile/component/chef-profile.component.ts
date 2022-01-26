@@ -36,10 +36,13 @@ export class ChefProfileComponent implements OnInit {
   }
 
 
-  menu(){
-    this.router.navigate(['/MenuCategory']);
+  currentMenu(){
+    this.router.navigate(['/CurrentMenuCategories']);
   }
 
+  newMenu(){
+    console.log("Treba implementirati");
+  }
 
   logout(){
     this.authService.logout();
