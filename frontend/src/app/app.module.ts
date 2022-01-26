@@ -39,6 +39,9 @@ import { DrinkPageComponent } from './drinks/pages/drink-page/drink-page.compone
 import { DrinksTableComponent } from './drinks/components/drinks-table/drinks-table.component';
 import { DrinkCardPageComponent } from './drink-cards/pages/drink-card-page/drink-card-page.component';
 import { MealProfileComponent } from './meal-category/pages/meal-profile/meal-profile.component';
+import { NewMealComponent } from './meal-category/pages/new-meal/new-meal.component';
+import { ChangeMealComponent } from './meal-category/pages/change-meal/change-meal.component';
+import { DeleteMealDialogComponent } from './meal-category/pages/delete-meal/delete-meal-dialog.component';
 
 
 @NgModule({
@@ -63,8 +66,13 @@ import { MealProfileComponent } from './meal-category/pages/meal-profile/meal-pr
     DrinksTableComponent,
     DrinkCardPageComponent,
     MealProfileComponent,
+    NewMealComponent,
+    ChangeMealComponent,
+    DeleteMealDialogComponent,
     
   ],
+  entryComponents: [DeleteMealDialogComponent],
+  
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -168,7 +176,16 @@ import { MealProfileComponent } from './meal-category/pages/meal-profile/meal-pr
         canActivate: [ChefRoutes],
         component: MealProfileComponent,
       },
-      
+      {
+        path: 'NewMeal',
+        canActivate: [ChefRoutes],
+        component: NewMealComponent,
+      },
+      {
+        path: 'ChangeMeal',
+        canActivate: [ChefRoutes],
+        component: ChangeMealComponent,
+      },
     ]),
 
     BrowserAnimationsModule,

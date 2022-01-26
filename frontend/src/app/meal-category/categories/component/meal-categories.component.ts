@@ -45,5 +45,10 @@ export class MealCategoriesComponent implements OnInit {
   getAppendices(){
     this.router.navigate(['/MealsOfCategory'], {state:{data:{category:6}}});
   }
+
+
+  returnToProfile(){
+    this.router.navigate(['/ChefProfile']);
+  }
 }
 

@@ -1,0 +1,107 @@
+<body>
+
+    <h1><a href="#0">NOVO JELO</a></h1>
+
+    <br>
+
+    <mat-card class="new-meal-card">
+        <mat-card-title-group>
+            <img mat-card-lg-image class="picture" src="../../../../assets/food-profile.jpg" >
+          </mat-card-title-group>
+        
+        <mat-card-content>
+
+          <br />
+          <form class="form" [formGroup] = "newMealForm">
+
+            <mat-form-field appearance="legacy">
+              <mat-label for="name">NAZIV JELA</mat-label>
+              <input type="text" class="form-control" formControlName="name" matInput >
+              <mat-error *ngIf = "requiredError('name', 'required')">Potrebno je uneti naziv jela!</mat-error>
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+            <br />
+            
+
+            <mat-form-field appearance="legacy">
+              <mat-label for="description">OPIS JELA</mat-label>
+              <textarea matInput  type="text" class="form-control" formControlName="description"></textarea>
+              <mat-error *ngIf = "requiredError('description', 'required')">Potrebno je uneti opis jela!</mat-error>
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+            <br />
+
+            
+
+            <mat-form-field appearance="legacy">
+                <mat-label for="type">TIP JELA</mat-label>
+                <mat-select class="form-control" formControlName="type">
+                    <mat-option value="COLD_APPETIZER">Hladno predjelo</mat-option>
+                    <mat-option value="HOT_APPETIZER">Toplo predjelo</mat-option>
+                    <mat-option value="MAIN_COURSE">Glavno jelo</mat-option>
+                    <mat-option value="DESERT">Desert</mat-option>
+                    <mat-option value="SALAD">Salata</mat-option>
+                    <mat-option value="APPENDICES">Dodaci</mat-option>
+                </mat-select>
+                <mat-error *ngIf = "requiredError('type', 'required')">Potrebno je uneti tip jela!</mat-error>
+            </mat-form-field>
+            <br />
+
+
+            <mat-form-field appearance="legacy">
+                <mat-label for="timePreparation">VREME PRIPREME</mat-label>
+                <input type="number" class="form-control" formControlName="timePreparation" matInput >
+                <mat-error *ngIf = "requiredError('timePreparation', 'required') || mindError('amountNumber', 'min')">Potrebno je uneti vreme pripreme jela  veću od 0!</mat-error>
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+            <br />
+
+
+            <mat-form-field appearance="legacy">
+                <mat-label for="mealDifficulty">TEŽINA PRIPREME JELA</mat-label>
+                <mat-select class="form-control" formControlName="mealDifficulty">
+                    <mat-option value="EASY">Lako</mat-option>
+                    <mat-option value="MEDIUM">Srednje</mat-option>
+                    <mat-option value="HARD">Teško</mat-option>
+                </mat-select>
+                <mat-error *ngIf = "requiredError('mealDifficulty', 'required')">Potrebno je uneti težinu pripreme jela!</mat-error>
+            </mat-form-field>
+            <br />
+
+
+            <mat-form-field appearance="legacy">
+                <mat-label for="amountNumber">KOLIČINA SERVIRANJA</mat-label>
+                <input type="number" class="form-control" formControlName="amountNumber" matInput >
+                <mat-error *ngIf = "requiredError('amountNumber', 'required') || mindError('amountNumber', 'min')">Potrebno je uneti količinu serviranja jela veću od 0!</mat-error>
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                <mat-hint>Hint</mat-hint>
+            </mat-form-field>
+            <br />
+
+
+            <mat-form-field appearance="legacy">
+                <mat-label for="amountUnit">JEDINICA KOLIČINE SERVIRANJA</mat-label>
+                <mat-select class="form-control" formControlName="amountUnit">
+                    <mat-option value="g">g</mat-option>
+                    <mat-option value="kg">kg</mat-option>
+                    <mat-option value="ml">ml</mat-option>
+                    <mat-option value="ml">l</mat-option>
+                </mat-select>
+                <mat-error *ngIf = "requiredError('amountUnit', 'required')">Potrebno je uneti jedinicu količine serviranja!</mat-error>
+            </mat-form-field>
+            
+        </form>
+          <br />
+          
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-raised-button type="submit" class="option_button" id="add_new_meal_button"  [disabled] = "newMealForm.invalid" (click) = "addNewMeal()" > DODAJ JELO</button>
+        </mat-card-actions>
+
+      </mat-card>
+
+</body>

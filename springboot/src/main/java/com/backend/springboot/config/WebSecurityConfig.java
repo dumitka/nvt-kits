@@ -73,6 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/meal/getDesert").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/getSalad").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/getAppendices").hasAuthority("ROLE_CHEF")
+				.antMatchers("/meal/getOne").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/addMeal").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/changeMeal").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/deleteMeal").hasAuthority("ROLE_CHEF")

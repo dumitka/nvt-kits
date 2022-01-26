@@ -1,9 +1,7 @@
 body {
+    height: 950px;
     background-color: #5d7c77;
-
-  }
-
-
+}
 
   h1 { 
     text-align: center;
@@ -38,84 +36,47 @@ body {
 
 
 
-  table{
+  .change-meal-card {
     display: block;
     margin-left: auto;
     margin-right: auto;
-
-    background-color: whitesmoke;
+    width: 35%;
+    
+  }
+  
+  .picture{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 
 
-  b{
+  mat-form-field{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+  }
+
+
+  mat-card-actions{
+
+    margin-left: 360px;
     color: #5d7c77; 
     font-family: 'Trocchi', serif; 
-    font-size: 20px; 
   }
-
-
-  td{
-    color: #5d7c77; 
-    font-family: 'Trocchi', serif; 
-    font-size: 15px; 
-  }
-
-
-.position{
-    width: 10%;
-}
-
-.name{
-    width: 20%;
-}
-
-.description{
-    width: 30%;
-}
-
-
-.demo-table {
-    width: 60%;
-  }
-  
-  .mat-row .mat-cell {
-    border-bottom: 1px solid transparent;
-    border-top: 1px solid transparent;
-    cursor: pointer;
-  }
-  
-  .mat-row:hover .mat-cell {
-    border-color: currentColor;
-  }
-  
-  .demo-row-is-clicked {
-    font-weight: bold;
-  }
-  
   
   .option_button{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-
-    background-color: whitesmoke;
+    background-color: #5d7c77;
     
     text-align: center;
-    color: #5d7c77; 
+    color: whitesmoke; 
     font-family: 'Trocchi', serif;
     font-size: 20px;
   }
 
 
-  .return_button{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-
-    background-color: whitesmoke;
-    
-    text-align: center;
-    color: #5d7c77; 
+  mat-label{
+    color: #5d7c77;
     font-family: 'Trocchi', serif;
-    font-size: 20px;
   }

@@ -72,6 +72,11 @@ export class MealsOfCategoryComponent implements OnInit {
 
 
   add(){
-    
+    this.router.navigate(['/NewMeal']);
+  }
+
+
+  returnToProfile(){
+    this.router.navigate(['/ChefProfile']);
   }
 }
