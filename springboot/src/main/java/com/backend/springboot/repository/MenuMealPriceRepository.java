@@ -7,7 +7,7 @@ import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import com.backend.springboot.model.MenuMealPrice;
-
+import com.backend.springboot.enums.MealType;
 import com.backend.springboot.model.MealPrice;
 
 public interface MenuMealPriceRepository extends JpaRepository<MenuMealPrice, Integer>{
@@ -20,5 +20,8 @@ public interface MenuMealPriceRepository extends JpaRepository<MenuMealPrice, In
 	@Query("select mmp from MenuMealPrice mmp join mmp.mealPrice mp join mmp.menu m where mmp.mealPrice.id = ?1 and mmp.menu.id = ?2")
 	Optional<MenuMealPrice> findMenuMealPriceByMealPriceIdAndMenuId(Integer mealPriceId, Integer menuId);
 	
+	
+	@Query("select distinct mp from MenuMealPrice mmp join mmp.mealPrice mp join mmp.menu m where mmp.menu.id = ?1 and mmp.mealPrice.deleted = false and mmp.mealPrice.meal.type = ?2")
+	List<MealPrice>findAllMealsPricesByMenuIdAndMealType(Integer id, MealType type);
 
 }
