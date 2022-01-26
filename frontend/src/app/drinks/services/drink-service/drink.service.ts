@@ -12,7 +12,7 @@ export class DrinkService {
   readonly URL : string = Main.PATH + "api/drinks/";
   
   dodajPice(novoPice){
-    return this.http.get(this.URL + "addDrink", novoPice);
+    return this.http.post(this.URL + "addDrink", novoPice);
   }
   
   izmeniPice(izmenjenoPice){
@@ -20,7 +20,7 @@ export class DrinkService {
   }
   
   izbrisiPice(piceZaBrisanje){
-    return this.http.get(this.URL + "deleteDrink", piceZaBrisanje);
+    return this.http.post(this.URL + "deleteDrink", piceZaBrisanje);
   }
 
   pretraziPica(unetiTekst: string) {

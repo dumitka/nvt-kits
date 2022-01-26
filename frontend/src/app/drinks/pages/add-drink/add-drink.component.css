@@ -1,6 +1,7 @@
 
 body {
-    background-color: #5d7c77; ;
+    background-color: #5d7c77;
+    height: 800px;
 }
   
 .server_profile_card {
@@ -43,25 +44,42 @@ h1 a {
     color: whitesmoke;
 }
 
-.server_data{
-    color: #5d7c77; 
-    font-family: 'Trocchi', serif; 
-    font-size: 15px; 
-    font-weight: normal; 
-    line-height: 48px;
-    text-align: left;
-    margin-left: 20px;
-}
-
-.option_button{
-    margin-top: 25px;
+.new-meal-card {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    background-color: #5d7c77; 
-    width: 250px;
+    width: 35%;
+    
+  }
+  
+  .picture{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  mat-form-field{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+  }
+
+  mat-card-actions{
+    margin-left: 360px;
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif; 
+  }
+  
+  .option_button{
+    background-color: #5d7c77;
     text-align: center;
     color: whitesmoke; 
     font-family: 'Trocchi', serif;
     font-size: 20px;
-}
+  }
+
+  mat-label{
+    color: #5d7c77;
+    font-family: 'Trocchi', serif;
+  }

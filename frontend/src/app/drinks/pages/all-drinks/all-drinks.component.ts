@@ -1,9 +1,11 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, Inject, NgModule, OnInit } from '@angular/core';
 import {DrinkService} from '../../services/drink-service/drink.service';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/first-pages/services/user-service/user.service';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY_PROVIDER_FACTORY } from '@angular/cdk/overlay/overlay-directives';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-all-drinks',
@@ -14,7 +16,8 @@ export class AllDrinksComponent implements OnInit {
   svaDostupnaPica: any;
   picaZaPrikaz: any;
 
-  constructor(private drinkService: DrinkService, private ruter: Router, private service:UserService,) {
+  constructor(private drinkService: DrinkService, private ruter: Router, private service:UserService,
+      private snackBar: MatSnackBar, public dialog: MatDialog,) {
     this.drinkService.svaPica().subscribe(response => {
       this.svaDostupnaPica = response;
       this.picaZaPrikaz = this.svaDostupnaPica;
@@ -105,7 +108,6 @@ export class AllDrinksComponent implements OnInit {
 
   izbrisi(e) {
     // iskace prozor sa pitanjem
-    console.log(e.srcElement.name);
     let odabranoPice;
     for (let elem of this.svaDostupnaPica) {
       if (elem.id == e.srcElement.name) {
@@ -113,7 +115,24 @@ export class AllDrinksComponent implements OnInit {
         break;
       }
     }
-    console.log(odabranoPice);
+
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      width: '500px',
+      data: odabranoPice.name,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.drinkService.izbrisiPice(odabranoPice).subscribe(
+          response => {
+            this.ispisPoruke("Uspesno ste izbrisali " + odabranoPice.name);
+          },
+          error => {
+            this.ispisPoruke("Niste uspesno izbrisali " + odabranoPice.name);
+          });
+        
+      }
+    });
   }
 
   dupliKlikNaPice(e) {
@@ -125,5 +144,34 @@ export class AllDrinksComponent implements OnInit {
       }
     }
     this.ruter.navigate(["/Drink"], {state: {data: {'pice': odabranoPice}}});
+  }
+
+  ispisPoruke(poruka: string) {
+    this.snackBar.open(poruka, "x", {
+      duration: 2000,
+      verticalPosition: "top",
+      panelClass:"back-green"
+    });
+  }
+}
+
+
+@Component({
+  selector: 'dialog-delete',
+  templateUrl: './dialog-delete.html',
+  styleUrls: ['./dialog-delete.css']
+})
+export class DialogOverviewExampleDialog {
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: string,
+  ) {}
+
+  zatvori(): void {
+    this.dialogRef.close(false);
+  }
+  
+  izbrisi(): void {
+    this.dialogRef.close(true);
   }
 }
