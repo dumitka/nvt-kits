@@ -2,6 +2,7 @@
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +52,11 @@ public class MealPriceService {
 	
 	
 	public List<MealPrice> getAllMealPricebyMealType(MealType type){
-		return mealPriceRepository.findAllMealPricebyMealType(type);
+		Optional<Menu> currentMenu = menuRepository.findByCurrent();
+		if(currentMenu.isPresent()) {
+			return menuMealPriceRepository.findAllMealsPricesByMenuIdAndMealType(currentMenu.get().getId(), type);
+		}
+		return new ArrayList<MealPrice>();
 	}
   
 	

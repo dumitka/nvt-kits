@@ -21,8 +21,9 @@
 
             <div class="options">
               <button mat-raised-button class="option_button" id="orders">PORUDŽBINE</button>
-              <button mat-raised-button class="option_button" id="orders" (click) = "meal()">JELA</button>
-              <button mat-raised-button class="option_button" id="orders" (click) = "menu()">JELOVNIK</button>
+              <button mat-raised-button class="option_button" id="meals" (click) = "meal()">JELA</button>
+              <button mat-raised-button class="option_button" id="current_menu" (click) = "currentMenu()">TRENUTNI &nbsp;JELOVNIK</button>
+              <button mat-raised-button class="option_button" id="new_menu" (click) = "newMenu()">NOVI &nbsp;JELOVNIK</button>
             </div>
           </mat-card-content>
   
