@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
+import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -11,11 +12,19 @@ import { AuthService } from './auth.service';
 export class LoginComponent implements OnInit {
    loginForm:FormGroup
 
+
+   RESPONSE_OK : number = 0;
+   RESPONSE_ERROR : number = -1;
+ 
+   verticalPosition: MatSnackBarVerticalPosition = "top";
+
+
   constructor
   (
     private fb: FormBuilder, 
     private router: Router,
     private authService: AuthService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +45,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.value)
       .subscribe(
         data => {
+          this.openSnackBar("Uspešno ste ulogovani. Dobrodošli! :)", this.RESPONSE_OK);
           if (this.authService.getTokenData()?.role === "ROLE_ADMIN") {
             this.router.navigate(['/AdminProfile']);
           } else if (this.authService.getTokenData()?.role === "ROLE_DIRECTOR") {
@@ -56,14 +66,20 @@ export class LoginComponent implements OnInit {
         },
         error => {
           if (error.status === 404) {
-            console.log("Invalid username/password!");
-          } else if (error.status === 403) {
-            console.log("Email has not been verifed!");
-          }
+            this.openSnackBar("Pogrešno korisničko ime ili lozinka :)", this.RESPONSE_OK);
+          } 
         });
     }
 
    
+
+    openSnackBar(msg: string, responseCode: number) {
+      this.snackBar.open(msg, "x", {
+        duration: responseCode === this.RESPONSE_OK ? 3000 : 20000,
+        verticalPosition: this.verticalPosition,
+        panelClass: responseCode === this.RESPONSE_OK ? "back-green" : "back-red"
+      });
+    }
 
 
 

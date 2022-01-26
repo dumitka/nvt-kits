@@ -1,0 +1,80 @@
+body {
+    background-color: #5d7c77;
+
+  }
+
+
+
+  h1 { 
+    text-align: center;
+    color: whitesmoke;
+    text-transform: uppercase;
+    padding: 1px;
+    font-family: 'Raleway', cursive;
+    font-weight: 100;
+    position: relative;
+    background: linear-gradient(to right, #6d918b, whitesmoke, #6d918b);
+  }
+  h1::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -50px;
+    width: 600px;
+    margin-left: -300px;
+    margin-top: -220px;
+    height: 600px;
+    background: radial-gradient(50% 50%, ellipse closest-side, #444, #6d918b);
+    z-index: -1;
+  }
+  h1 a {
+    background: #5d7c77;
+    display: block;
+    padding: 20px;
+    text-decoration: none;
+    letter-spacing: 30px;
+    color: whitesmoke;
+  }
+
+
+  
+  .login-card {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+    
+  }
+
+
+
+  mat-form-field{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+  }
+
+
+  mat-card-actions{
+    margin-left: 200px;
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif; 
+  }
+  
+  .option_button{
+    
+    background-color: #5d7c77;
+    
+    text-align: center;
+    color: whitesmoke; 
+    font-family: 'Trocchi', serif;
+    font-size: 20px;
+  }
+
+
+  .picture{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
