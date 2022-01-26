@@ -1,11 +1,49 @@
 
+<body>
 
-<div class = "main-div">
-    <form [formGroup] = "loginForm" class = "login-form">
-        <label>Username</label>
-        <input type = "text" matInput placeholder = "Username" formControlName = "username" required>
-        <label>Password</label>
-        <input type = "password" matInput placeholder = "Password" formControlName = "password" required>
-        <button (click) = "login()" [disabled] = "loginForm.invalid" >Login</button>
-    </form>
-</div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <mat-card class="login-card">
+        <mat-card-title-group>
+            <img mat-card-lg-image class="picture" src="../../assets/baklavice.jfif" >
+        </mat-card-title-group>
+
+        <mat-card-content>
+            <div class = "main-div">
+                <form [formGroup] = "loginForm" class = "login-form">
+
+                    <mat-form-field appearance="legacy">
+                        <mat-label for="username">KORISNIČKO IME</mat-label>
+                        <input type="text" class="form-control" formControlName="username" matInput >
+                        <mat-error *ngIf = "hasError('username', 'required')">Potrebno je uneti korisničko ime!</mat-error>
+                        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                        <mat-hint>Hint</mat-hint>
+                    </mat-form-field>
+                    <br />
+                    <br />
+
+                    <mat-form-field appearance="legacy">
+                        <mat-label for="password">LOZINKA</mat-label>
+                        <input type="text" class="form-control" formControlName="password" matInput >
+                        <mat-error *ngIf = "hasError('password', 'required')">Potrebno je uneti lozinku!</mat-error>
+                        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                        <mat-hint>Hint</mat-hint>
+                    </mat-form-field>
+                    
+                </form>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button type="submit" class="option_button" id="login_button" (click) = "login()" [disabled] = "loginForm.invalid">PRIJAVI SE</button>
+        </mat-card-actions>
+      </mat-card>
+
+    
+
+</body>
