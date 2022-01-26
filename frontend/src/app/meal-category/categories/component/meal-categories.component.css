@@ -3,7 +3,7 @@
 
   body {
     background-color: #5d7c77;
-
+    height: 900px;
   }
 
 
@@ -120,3 +120,15 @@ mat-card-title{
     margin-left: 70px;
   }
 
+
+  .profile_button{
+    background-color: whitesmoke; 
+    margin-left: 600px;
+    
+    width: 300px;
+    
+    text-align: center;
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif;
+    font-size: 20px;
+  }

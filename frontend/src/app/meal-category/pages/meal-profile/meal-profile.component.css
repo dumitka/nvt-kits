@@ -89,7 +89,7 @@ body {
 
 
   mat-card-actions{
-    margin-left: 200px;
+    margin-left: 145px;
     color: #5d7c77; 
     font-family: 'Trocchi', serif; 
   }
@@ -105,11 +105,5 @@ body {
 
   
 
-  .change_button_span{
-      margin-left: 30%;
-  }
-
-  .deleted_button_span{
-    margin-left: 50%;
-}
+ 
   

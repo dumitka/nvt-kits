@@ -50,6 +50,14 @@ public class MealService {
 	
 	
 	
+	
+	public Meal getMeal(Integer id) {
+		Optional<Meal> meal = mealRepository.findById(id);
+		return meal.get();
+	}
+	
+	
+	
 	public boolean addMeal(Meal meal) {
 		mealRepository.save(meal);
 		return true;
@@ -59,6 +67,19 @@ public class MealService {
 	
 	public boolean changeMeal(Meal meal) {
 		Optional<Meal> current  = mealRepository.findById(meal.getId());
+		
+		//check if meal with same name and same description already exists
+		Optional<Meal> sameMeal = mealRepository.findMealByNameAndDescription(meal.getName(), meal.getDescription());
+		
+		if(!sameMeal.isEmpty()) {
+			System.out.println("TACA");
+			System.out.print("SAME MEAL --> " + sameMeal.get().getId());
+			System.out.print("MEAL --> " + meal.getId());
+			if(sameMeal.get().getId() != meal.getId()) {
+				System.out.print("VRACA RETURN" + meal.getId());
+				return false;
+			}
+		}
 		
 		if(!current.isEmpty()) {
 			current.get().setType(meal.getType());
@@ -79,9 +100,15 @@ public class MealService {
 	
 	
 	public boolean delete(Integer id) {
+		System.out.println("TACA");
+		System.out.println(id);
+		
 		Optional<Meal> found  = mealRepository.findById(id);
 		
+		System.out.println(found.get().getName() + "  id --> " + found.get().getId() + "    deleted -->" + found.get().getDeleted());
+		;
 		if(found.get().getDeleted()) {
+			System.out.println("Uslo ovdje");
 			return false;
 		}
 		

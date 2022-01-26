@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -132,23 +133,32 @@ public class MealController {
 	@PutMapping(value = "/changeMeal")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<Boolean> changeMeal(@RequestBody MealDTO mealDTO) {
+		System.out.println("TACA");
+		System.out.println(mealDTO.getId());
+		
 		boolean found  = mealService.exists(mealDTO.getId());
+		System.out.println(found);
+		
 		if(!found) {
+			System.out.println("Uslo u !found ");
 			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
 		}
+		
+		System.out.println("Pravimo meal");
 
 		Meal meal = Meal.builder().id(mealDTO.getId()).name(mealDTO.getName()).description(mealDTO.getDescription())
 				.amountNumber(mealDTO.getAmountNumber()).amountUnit(mealDTO.getAmountUnit())
 				.image(mealDTO.getImage()).mealDifficulty(mealDTO.getMealDifficulty()).timePreparation(mealDTO.getTimePreparation())
 				.type(mealDTO.getType()).build();
 		
+		System.out.println("Treba pozvati change funkciju");
 		boolean response = mealService.changeMeal(meal);
 		return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
 	}
 	
 	
 	
-	@DeleteMapping(value = "/deleteMeal")
+	@PutMapping(value = "/deleteMeal")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<Boolean> deleteMeal(@RequestBody MealDTO mealDTO) {
 		boolean found = this.mealService.exists(mealDTO.getId());
@@ -166,6 +176,15 @@ public class MealController {
 		
 	}
 	
+	
+	
+	@GetMapping(value = "getOne/id={id}")
+	@PreAuthorize("hasRole('ROLE_CHEF')")
+	public ResponseEntity<MealDTO> getOne(@PathVariable("id") Integer id){
+		Meal meal = mealService.getMeal(id);
+		MealDTO dto = this.mealToMealDTO.convert(meal);
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
 	
 	
 	
