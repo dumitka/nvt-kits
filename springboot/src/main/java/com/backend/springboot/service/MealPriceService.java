@@ -70,7 +70,7 @@ public class MealPriceService {
 	
 	public boolean changeMealPrice(MealPrice mealPrice) {
 		Optional<MealPrice> found = mealPriceRepository.findById(mealPrice.getId());
-		found.get().setPriceAmount(mealPrice.getPriceAmount());
+		found.get().setPrice(mealPrice.getPrice());
 		mealPriceRepository.save(found.get());
 		return true;
 	}

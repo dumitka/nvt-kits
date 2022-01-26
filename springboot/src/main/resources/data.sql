@@ -117,3 +117,6 @@ insert into drink_prices (drink_card_id, drink_price_id) values (2, 3);
 insert into drink_prices (drink_card_id, drink_price_id) values (2, 4);
 insert into drink_prices (drink_card_id, drink_price_id) values (2, 5);
 insert into drink_prices (drink_card_id, drink_price_id) values (2, 6);
+
+-- DESK
+insert into desk (desk_status, tip, x, y, height, width, reserved, capacity, restaurant_id) values (0, 0.0, 0, 0, 50, 50, false, 4, 1)
