@@ -10,7 +10,7 @@ import { DrinkService } from '../../services/drink-service/drink.service';
   styleUrls: ['./add-drink.component.css']
 })
 export class AddDrinkComponent implements OnInit {
-  piceForma: FormGroup;
+  public piceForma: FormGroup;
 
   constructor(private ruter: Router, private formBuilder: FormBuilder, private drinkService: DrinkService, 
       private snackBar: MatSnackBar) {
@@ -45,19 +45,19 @@ export class AddDrinkComponent implements OnInit {
   sacuvaj() {
     if (this.piceForma.value.id === '') this.drinkService.dodajPice(this.piceForma.value).subscribe(
       response => {
-        this.ispisPoruke("Uspesno ste dodali " + this.piceForma.value.name);
+        this.ispisPoruke("Uspešno ste dodali " + this.piceForma.value.name);
         this.ruter.navigate(["/ServerFirstPage"]);
       },
       error => {
-        this.ispisPoruke("Niste uspesno dodali novo pice");
+        this.ispisPoruke("Niste uspešno dodali novo piće - identicni naziv, količina i jedinica već postoje.");
       });
     else this.drinkService.izmeniPice(this.piceForma.value).subscribe(
       response => {
-        this.ispisPoruke("Uspesno ste izmenili " + this.piceForma.value.name);
+        this.ispisPoruke("Uspešno ste izmenili " + this.piceForma.value.name);
         this.ruter.navigate(["/Drink"], {state: {data: this.piceForma.value}});
       },
       error => {
-        this.ispisPoruke("Niste uspesno izmenili " + this.piceForma.value.name + "identicni naziv, kolicina i jedinica vec postoje.");
+        this.ispisPoruke("Niste uspešno izmenili " + this.piceForma.value.name + "- identicni naziv, količina i jedinica već postoje.");
       });
   }
   

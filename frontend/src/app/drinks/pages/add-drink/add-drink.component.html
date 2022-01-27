@@ -1,8 +1,8 @@
 <body>
     <h1><a (click) = "nazadNaProfil()">VAŠ PROFIL</a></h1>
   
-    <br>
-    <br>
+    <br/>
+    <br/>
     
     <mat-card class="new-meal-card">
       <mat-card-title-group>
@@ -15,47 +15,43 @@
         <form class="form" [formGroup] = "piceForma">
 
           <mat-form-field appearance="legacy">
-            <mat-label for="name">NAZIV PICA</mat-label>
+            <mat-label for="name">NAZIV PIĆA</mat-label>
             <input type="text" class="form-control" formControlName="name"  matInput>
-            <mat-error *ngIf = "requiredError('name', 'required')">Potrebno je uneti naziv pica!</mat-error>
+            <mat-error *ngIf = "requiredError('name', 'required')">Potrebno je uneti naziv pića!</mat-error>
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             <mat-hint></mat-hint>
           </mat-form-field>
           <br />
           
-
           <mat-form-field appearance="legacy">
-            <mat-label for="description">OPIS PICA</mat-label>
+            <mat-label for="description">OPIS PIĆA</mat-label>
             <textarea matInput  type="text" class="form-control" formControlName="description"></textarea>
-            <mat-error *ngIf = "requiredError('description', 'required')">Potrebno je uneti opis pica!</mat-error>
+            <mat-error *ngIf = "requiredError('description', 'required')">Potrebno je uneti opis pića!</mat-error>
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             <mat-hint></mat-hint>
           </mat-form-field>
           <br />
 
-          
-
           <mat-form-field appearance="legacy">
-              <mat-label for="type">KATEGORIJA PICA</mat-label>
+              <mat-label for="type">KATEGORIJA PIĆA</mat-label>
               <mat-select class="form-control" formControlName="type">
-                  <mat-option value="CARBONATED_DRINK">Gazirano pice</mat-option>
-                  <mat-option value="NOCARBONATED_DRINK">Negazirano pice</mat-option>
-                  <mat-option value="ALCOHOL">Alkoholno pice</mat-option>
+                  <mat-option value="CARBONATED_DRINK">Gazirano piće</mat-option>
+                  <mat-option value="NOCARBONATED_DRINK">Negazirano piće</mat-option>
+                  <mat-option value="ALCOHOL">Alkoholno piće</mat-option>
                   <mat-option value="HOT_DRINK">Topli napitci</mat-option>
               </mat-select>
-              <mat-error *ngIf = "requiredError('type', 'required')">Potrebno je uneti kategoriju pica!</mat-error>
+              <mat-error *ngIf = "requiredError('type', 'required')">Potrebno je uneti kategoriju pićA!</mat-error>
           </mat-form-field>
           <br />
 
           <mat-form-field appearance="legacy">
-              <mat-label for="amountNumber">KOLICINA</mat-label>
+              <mat-label for="amountNumber">KOLIČINA</mat-label>
               <input type="number" class="form-control" formControlName="amountNumber" matInput>
-              <mat-error *ngIf = "requiredError('amountNumber', 'required') || mindError('amountNumber', 'min')">Potrebno je uneti količinu pica vecu od 0!</mat-error>
+              <mat-error *ngIf = "requiredError('amountNumber', 'required') || mindError('amountNumber', 'min')">Potrebno je uneti količinu pica veću od 0!</mat-error>
               <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
               <mat-hint></mat-hint>
           </mat-form-field>
           <br />
-
 
           <mat-form-field appearance="legacy">
               <mat-label for="amountUnit">MERNA JEDINICA</mat-label>
@@ -66,14 +62,13 @@
               </mat-select>
               <mat-error *ngIf = "requiredError('amountUnit', 'required')">Potrebno je uneti mernu jedinicu!</mat-error>
           </mat-form-field>
-          
-      </form>
-        <br />
-        
+
+        </form>
+        <br/>
       </mat-card-content>
 
       <mat-card-actions>
-          <button mat-raised-button type="submit" class="option_button" id="add_new_meal_button"  [disabled] = "piceForma.invalid" (click) = "sacuvaj()" >SACUVAJ</button>
+          <button mat-raised-button type="submit" class="option_button" id="add_new_meal_button"  [disabled] = "piceForma.invalid" (click) = "sacuvaj()" >SAČUVAJ</button>
       </mat-card-actions>
 
     </mat-card>
