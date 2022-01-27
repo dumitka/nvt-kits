@@ -50,6 +50,8 @@ import { CurrentMenuAddMealComponent } from './current-menu/pages/current-menu-a
 import { CurrentMenuMealProfileComponent } from './current-menu/pages/current-menu-meal-profile/current-menu-meal-profile.component';
 import { CurrentMenuMealsComponent } from './current-menu/pages/current-menu-meals/current-menu-meals.component';
 import { ChangeMealPriceDialogComponent } from './current-menu/component/change-meal-price-dialog/change-meal-price-dialog.component';
+import { TablesModule } from './tables/tables.module';
+import { TablesLayoutComponent } from './tables/tables-layout/tables-layout.component';
 
 
 
@@ -101,10 +103,13 @@ import { ChangeMealPriceDialogComponent } from './current-menu/component/change-
     ReactiveFormsModule,
     HttpClientModule,
     AngularMaterialModule,
+    TablesModule,
     
 
     RouterModule.forRoot([
-      { path: '', redirectTo: 'login', pathMatch: 'full' },
+      // { path: '', redirectTo: 'login', pathMatch: 'full' },
+      { path: '', redirectTo: 'layout', pathMatch: 'full' },
+      { path: 'layout', component: TablesLayoutComponent},
       { path: 'login', component: LoginComponent },
       {
         path: 'AdminProfile',
