@@ -50,6 +50,8 @@ import { CurrentMenuAddMealComponent } from './current-menu/pages/current-menu-a
 import { CurrentMenuMealProfileComponent } from './current-menu/pages/current-menu-meal-profile/current-menu-meal-profile.component';
 import { CurrentMenuMealsComponent } from './current-menu/pages/current-menu-meals/current-menu-meals.component';
 import { ChangeMealPriceDialogComponent } from './current-menu/component/change-meal-price-dialog/change-meal-price-dialog.component';
+import { DeleteDialogComponent } from './drink-cards/components/delete-dialog/delete-dialog.component';
+import { PriceDialogComponent } from './drink-cards/components/price-dialog/price-dialog.component';
 
 
 
@@ -86,6 +88,8 @@ import { ChangeMealPriceDialogComponent } from './current-menu/component/change-
     CurrentMenuMealProfileComponent,
     CurrentMenuMealsComponent,
     ChangeMealPriceDialogComponent,
+    DeleteDialogComponent,
+    PriceDialogComponent,
     
   ],
   entryComponents: [

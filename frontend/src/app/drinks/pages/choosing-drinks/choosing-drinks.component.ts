@@ -29,17 +29,7 @@ export class ChoosingDrinksComponent implements OnInit {
       };
     }
     this.drinkService.svaPica().subscribe((response: any) => {
-      this.picaZaPrikaz = [];
-      for (let pice of response) {
-        let dodato = false;
-        for (let elem of this.kartaPica.drinkPriceDTOs) {
-          if (elem.drinkDTO.id == pice.id) {
-            dodato = true;
-            break;
-          }
-        }
-        if (!dodato) this.picaZaPrikaz.push(pice);
-      }
+      this.picaZaPrikaz = response;
       this.prikaziPica();
   });
 }
@@ -89,7 +79,24 @@ export class ChoosingDrinksComponent implements OnInit {
     }
   }
 
+  izbaciVecIskoriscene() {
+    if (this.kartaPica.drinkPriceDTOs.length == 0) return;
+    let odabranaLista = [];
+    for (let pice of this.picaZaPrikaz) {
+      let dodato = false;
+      for (let elem of this.kartaPica.drinkPriceDTOs) {
+        if (elem.drinkDTO.id == pice.id) {
+          dodato = true;
+          break;
+        }
+      }
+      if (!dodato) odabranaLista.push(pice);
+    }
+    this.picaZaPrikaz = odabranaLista;
+  }
+
   prikaziPica() {
+    this.izbaciVecIskoriscene();
     let divZaPica = document.getElementById("divZaPica");
     // brisemo sve postojece
     while (divZaPica.firstChild) {
