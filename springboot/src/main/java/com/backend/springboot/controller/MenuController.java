@@ -105,7 +105,7 @@ public class MenuController {
 			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
 		}	
 		MealPrice mealPrice = mealPriceService.getMealPrice(mealPriceDTO.getId());
-		mealPrice.setPriceAmount(mealPriceDTO.getPrice());
+		mealPrice.setPrice(mealPriceDTO.getPrice());
 		
 		Boolean  returnValue = mealPriceService.changeMealPrice(mealPrice);
 		return new ResponseEntity<>(returnValue, HttpStatus.OK);
