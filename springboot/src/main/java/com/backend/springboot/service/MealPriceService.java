@@ -102,7 +102,7 @@ public class MealPriceService {
 	
 	
 	public boolean changeMealPrice(MealPrice mealPrice) {
-		MealPrice newMealPrice = MealPrice.builder().meal(mealPrice.getMeal()).deleted(false).priceAmount(mealPrice.getPriceAmount()).build();
+		MealPrice newMealPrice = MealPrice.builder().meal(mealPrice.getMeal()).deleted(false).price(mealPrice.getPrice()).build();
 		mealPriceRepository.save(newMealPrice);
 		
 		Optional<Menu> oldMenu = menuRepository.findByCurrent();
