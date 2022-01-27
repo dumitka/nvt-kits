@@ -85,38 +85,38 @@ insert into meals(name, type, description, meal_difficulty, time_preparation, am
 
 --MEAL PRICES
 --COLD APPETIZER
-insert into meal_prices(meal_id, price_amount, deleted) values (1, 300, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (2, 280, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (3, 200, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (4, 200, false);
+insert into meal_prices(meal_id, price, deleted) values (1, 300, false);
+insert into meal_prices(meal_id, price, deleted) values (2, 280, false);
+insert into meal_prices(meal_id, price, deleted) values (3, 200, false);
+insert into meal_prices(meal_id, price, deleted) values (4, 200, false);
 
 --HOT APPETIZER
-insert into meal_prices(meal_id, price_amount, deleted) values (7, 350, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (8, 300, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (9, 180, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (11, 230, false);
+insert into meal_prices(meal_id, price, deleted) values (7, 350, false);
+insert into meal_prices(meal_id, price, deleted) values (8, 300, false);
+insert into meal_prices(meal_id, price, deleted) values (9, 180, false);
+insert into meal_prices(meal_id, price, deleted) values (11, 230, false);
 
 --MAIN MEAL
-insert into meal_prices(meal_id, price_amount, deleted) values (13, 480, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (15, 500, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (17, 480, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (18, 590, false);
+insert into meal_prices(meal_id, price, deleted) values (13, 480, false);
+insert into meal_prices(meal_id, price, deleted) values (15, 500, false);
+insert into meal_prices(meal_id, price, deleted) values (17, 480, false);
+insert into meal_prices(meal_id, price, deleted) values (18, 590, false);
 
 --DESERT
-insert into meal_prices(meal_id, price_amount, deleted) values (19, 300, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (20, 350, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (22, 370, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (23, 320, false);
+insert into meal_prices(meal_id, price, deleted) values (19, 300, false);
+insert into meal_prices(meal_id, price, deleted) values (20, 350, false);
+insert into meal_prices(meal_id, price, deleted) values (22, 370, false);
+insert into meal_prices(meal_id, price, deleted) values (23, 320, false);
 
 --SALAT
-insert into meal_prices(meal_id, price_amount, deleted) values (26, 200, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (27, 230, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (28, 180, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (29, 300, false);
+insert into meal_prices(meal_id, price, deleted) values (26, 200, false);
+insert into meal_prices(meal_id, price, deleted) values (27, 230, false);
+insert into meal_prices(meal_id, price, deleted) values (28, 180, false);
+insert into meal_prices(meal_id, price, deleted) values (29, 300, false);
 
 --APPENDICES
-insert into meal_prices(meal_id, price_amount, deleted) values (31, 200, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (32, 200, false);
+insert into meal_prices(meal_id, price, deleted) values (31, 200, false);
+insert into meal_prices(meal_id, price, deleted) values (32, 200, false);
 
 --MENU 1
 insert into menus (date_Of_Validation, current, restaurant_id) values ('2021-11-01 00:00'::timestamp, true, 1);
@@ -193,3 +193,6 @@ insert into drink_prices (drink_card_id, drink_price_id) values (2, 3);
 insert into drink_prices (drink_card_id, drink_price_id) values (2, 4);
 insert into drink_prices (drink_card_id, drink_price_id) values (2, 5);
 insert into drink_prices (drink_card_id, drink_price_id) values (2, 6);
+
+-- DESK
+insert into desk (desk_status, tip, x, y, height, width, reserved, capacity, restaurant_id) values (0, 0.0, 0, 0, 50, 50, false, 4, 1)

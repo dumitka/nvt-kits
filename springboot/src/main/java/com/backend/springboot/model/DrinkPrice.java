@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "drink_price")
 public class DrinkPrice {
-	 @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

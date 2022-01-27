@@ -1,28 +1,48 @@
 import { Component, OnInit } from '@angular/core';
-import {DrinkService} from '../../services/drink-service/drink.service';
-import { Router } from '@angular/router';
-import { UserService } from 'src/app/first-pages/services/user-service/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DialogDeleteComponent } from '../../components/dialog-delete/dialog-delete.component';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/first-pages/services/user-service/user.service';
+import { DialogInputPriceComponent } from '../../components/dialog-input-price/dialog-input-price.component';
+import { DrinkService } from '../../services/drink-service/drink.service';
 
 @Component({
-  selector: 'app-all-drinks',
-  templateUrl: './all-drinks.component.html',
-  styleUrls: ['./all-drinks.component.css']
+  selector: 'app-choosing-drinks',
+  templateUrl: './choosing-drinks.component.html',
+  styleUrls: ['./choosing-drinks.component.css']
 })
-export class AllDrinksComponent implements OnInit {
+export class ChoosingDrinksComponent implements OnInit {
   picaZaPrikaz: any;
   pretraga: string = '';
   kategorija: string = '';
-
+  kartaPica: any;
+  
   constructor(private drinkService: DrinkService, private ruter: Router, private service:UserService,
       private snackBar: MatSnackBar, public dialog: MatDialog,) {
-    this.drinkService.svaPica().subscribe(response => {
-      this.picaZaPrikaz = response;
+    this.kartaPica = history.state.data?.kartaPica;
+    if (this.kartaPica == undefined) {
+      this.kartaPica = {
+        id: undefined,
+        dateOfValidation: undefined,
+        drinkPriceDTOs: [],
+        restaurantId: undefined,
+      };
+    }
+    this.drinkService.svaPica().subscribe((response: any) => {
+      this.picaZaPrikaz = [];
+      for (let pice of response) {
+        let dodato = false;
+        for (let elem of this.kartaPica.drinkPriceDTOs) {
+          if (elem.drinkDTO.id == pice.id) {
+            dodato = true;
+            break;
+          }
+        }
+        if (!dodato) this.picaZaPrikaz.push(pice);
+      }
       this.prikaziPica();
-    });
-  }
+  });
+}
 
   ngOnInit(): void {
   }
@@ -34,9 +54,9 @@ export class AllDrinksComponent implements OnInit {
   promenaKategorije(e) {
     let k = e.target.innerHTML;
     if (k === "Sve kategorije") this.kategorija = "SVE";
-    else if (k === "Gazirana pića") this.kategorija = "CARBONATED_DRINK";
-    else if (k === "Negazirana pića") this.kategorija = "NOCARBONATED_DRINK";
-    else if (k === "Alkoholna pića") this.kategorija = "ALCOHOL";
+    else if (k === "Gazirana pica") this.kategorija = "CARBONATED_DRINK";
+    else if (k === "Negazirana pica") this.kategorija = "NOCARBONATED_DRINK";
+    else if (k === "Alkoholna pica") this.kategorija = "ALCOHOL";
     else this.kategorija = "HOT_DRINK";
     this.pretrazi();
   }
@@ -114,40 +134,13 @@ export class AllDrinksComponent implements OnInit {
       dugme.setAttribute("name", pice.id);
       dugme.setAttribute("style", "background-color: #5d7c77;width: 100px;text-align: center;color: whitesmoke; " 
         + "font-family: 'Trocchi', serif;font-size: 20px; margin-left: 100px;");
-      dugme.appendChild(document.createTextNode("IZBRIŠI"));
-      dugme.onclick = (e:any) => {console.log(e.srcElement.name); this.izbrisi(e);};
+      dugme.appendChild(document.createTextNode("DODAJ"));
+      dugme.onclick = (e:any) => {console.log(e.srcElement.name); this.dodaj(e);};
       div4.appendChild(dugme);
       div.appendChild(div4);
 
       divZaPica.appendChild(div);
       redniBr++;
-    });
-  }
-
-  izbrisi(e) {
-    let odabranoPice;
-    for (let elem of this.picaZaPrikaz) {
-      if (elem.id == e.srcElement.name) {
-        odabranoPice = elem;
-        break;
-      }
-    }
-
-    const dialogRef = this.dialog.open(DialogDeleteComponent, {
-      width: '500px',
-      data: odabranoPice.name,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.drinkService.izbrisiPice(odabranoPice).subscribe(
-          response => {
-            this.ispisPoruke("Uspešno ste izbrisali " + odabranoPice.name);
-          },
-          error => {
-            this.ispisPoruke("Niste uspešno izbrisali " + odabranoPice.name);
-          });
-      }
     });
   }
 
@@ -159,9 +152,48 @@ export class AllDrinksComponent implements OnInit {
         break;
       }
     }
-    this.ruter.navigate(["/Drink"], {state: {data: {'pice': odabranoPice}}});
+    this.ruter.navigate(["/DrinkView"], {state: {data: {'pice': odabranoPice}}});
   }
 
+  dodaj(event) {
+    let odabranoPice;
+    for (let elem of this.picaZaPrikaz) {
+      if (elem.id == event.srcElement.name) {
+        odabranoPice = elem;
+        break;
+      }
+    }
+
+    const dialogRef = this.dialog.open(DialogInputPriceComponent, {
+      width: '500px',
+      data: odabranoPice.name,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.ispisPoruke("Uspesno ste dodali " + odabranoPice.name + " u kartu pica");
+        //izbrisi iz liste za prikaz
+        let izbrisiPice = 0;
+        for (let elem of this.picaZaPrikaz) {
+          if (elem.id == odabranoPice.id) break;
+          izbrisiPice++;
+        }
+        this.picaZaPrikaz.splice(izbrisiPice, izbrisiPice);
+        this.prikaziPica();
+        //dodaj u drinkCard
+        let novaCena = {
+          drinkDTO: odabranoPice,
+          price: result,
+        }
+        this.kartaPica.drinkPriceDTOs.push(novaCena);
+      }
+    });
+  }
+
+  redirektuj() {
+    this.ruter.navigate(['/DrinkCard'], {state: {data: {'kartaPica': this.kartaPica}}});
+  }
+    
   ispisPoruke(poruka: string) {
     this.snackBar.open(poruka, "x", {
       duration: 2000,
@@ -170,3 +202,4 @@ export class AllDrinksComponent implements OnInit {
     });
   }
 }
+

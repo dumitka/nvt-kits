@@ -88,7 +88,7 @@ public class MenuController {
 				.description(mealPriceDTO.getMealDTO().getDescription()).image(mealPriceDTO.getMealDTO().getImage())
 				.mealDifficulty(mealPriceDTO.getMealDTO().getMealDifficulty()).name(mealPriceDTO.getMealDTO().getName()).
 				timePreparation(mealPriceDTO.getMealDTO().getTimePreparation()).type(mealPriceDTO.getMealDTO().getType()).build();
-		MealPrice mealPrice = MealPrice.builder().meal(meal).priceAmount(mealPriceDTO.getPrice()).deleted(false).build();
+		MealPrice mealPrice = MealPrice.builder().meal(meal).price(mealPriceDTO.getPrice()).deleted(false).build();
 		
 		mealPriceService.addMealPrice(mealPrice);
 		return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
@@ -110,7 +110,6 @@ public class MenuController {
 		Boolean  returnValue = mealPriceService.changeMealPrice(mealPrice);
 		return new ResponseEntity<>(returnValue, HttpStatus.OK);
 	}
-	
 	
 	
 	

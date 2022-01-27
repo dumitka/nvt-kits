@@ -33,15 +33,11 @@ mat-card-actions{
 
 .option_button{
     margin-top: 25px;
-
     display: block;
     margin-left: auto;
     margin-right: auto;
-
     background-color: #5d7c77; 
-
     width: 250px;
-
     text-align: center;
     color: whitesmoke; 
     font-family: 'Trocchi', serif;

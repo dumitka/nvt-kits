@@ -41,11 +41,16 @@ import { MealProfileComponent } from './meal-category/pages/meal-profile/meal-pr
 import { NewMealComponent } from './meal-category/pages/new-meal/new-meal.component';
 import { ChangeMealComponent } from './meal-category/pages/change-meal/change-meal.component';
 import { DeleteMealDialogComponent } from './meal-category/pages/delete-meal/delete-meal-dialog.component';
+import { ChoosingDrinksComponent } from './drinks/pages/choosing-drinks/choosing-drinks.component';
+import { DrinkViewComponent } from './drinks/pages/drink-view/drink-view.component';
+import { DialogDeleteComponent } from './drinks/components/dialog-delete/dialog-delete.component';
+import { DialogInputPriceComponent } from './drinks/components/dialog-input-price/dialog-input-price.component';
 import { CurrentMenuCategoriesComponent } from './current-menu/pages/current-menu-categories/current-menu-categories.component';
 import { CurrentMenuAddMealComponent } from './current-menu/pages/current-menu-add-meal/current-menu-add-meal.component';
 import { CurrentMenuMealProfileComponent } from './current-menu/pages/current-menu-meal-profile/current-menu-meal-profile.component';
 import { CurrentMenuMealsComponent } from './current-menu/pages/current-menu-meals/current-menu-meals.component';
 import { ChangeMealPriceDialogComponent } from './current-menu/component/change-meal-price-dialog/change-meal-price-dialog.component';
+
 
 
 @NgModule({
@@ -72,6 +77,10 @@ import { ChangeMealPriceDialogComponent } from './current-menu/component/change-
     NewMealComponent,
     ChangeMealComponent,
     DeleteMealDialogComponent,
+    ChoosingDrinksComponent,
+    DrinkViewComponent,
+    DialogDeleteComponent,
+    DialogInputPriceComponent,
     CurrentMenuCategoriesComponent,
     CurrentMenuAddMealComponent,
     CurrentMenuMealProfileComponent,
@@ -171,6 +180,16 @@ import { ChangeMealPriceDialogComponent } from './current-menu/component/change-
         path: 'Drink',
         canActivate: [ServerRoutes],
         component: DrinkPageComponent,
+      },
+      {
+        path: 'DrinkView',
+        canActivate: [ServerRoutes],
+        component: DrinkViewComponent,
+      },
+      {
+        path: 'ChooseDrinks',
+        canActivate: [ServerRoutes],
+        component: ChoosingDrinksComponent,
       },
       {
         path: 'DrinksTable',

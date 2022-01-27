@@ -24,7 +24,7 @@ public class MealPriceToMealWithPriceDTO implements Converter<MealPrice, MealWit
 		MealWithPriceDTO returnValue = new MealWithPriceDTO();
 		returnValue.setId(source.getId());
 		returnValue.setMealDTO(mealToMealDTO.convert(source.getMeal()));
-		returnValue.setPrice(source.getPriceAmount());
+		returnValue.setPrice(source.getPrice());
 		return returnValue;
 	}
 	

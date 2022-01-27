@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.backend.springboot.model.Menu;
+import com.backend.springboot.model.MenuMealPrice;
 import com.backend.springboot.model.Restaurant;
 import com.backend.springboot.repository.MenuRepository;
 
@@ -31,6 +32,15 @@ public class MenuService {
 		}
 	}
 	
+	public Float getLatestForMeal(Integer mealId) {
+        Menu current = getCurrentMenu();
+        for (MenuMealPrice menuMealPrice : current.getMenuMealPrices()) {
+			if (menuMealPrice.getMealPrice().getMeal().getId() == mealId) {
+				return menuMealPrice.getMealPrice().getPrice();
+			}
+		}
+        return null;
+    }
 	
 	public boolean addNewMenu(Menu menu) {
 		Restaurant restaurant = Restaurant.builder().id(1).build();

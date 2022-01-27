@@ -32,7 +32,7 @@ export class ServerFirstPageComponent implements OnInit {
   }
 
   dodajKP(){
-    //this.ruter.navigate(["/AllDrinks"]);   // ako budem mogla da namestim parametre
+    this.ruter.navigate(["/ChooseDrinks"]);
   }
   
   kartaPica(){

@@ -25,7 +25,6 @@ public class OrderToOrderDTO implements Converter<Order, OrderDTO> {
 				.id(order.getId())
 				.orderedMeals(mealToMealDTO.convertSet(order.getOrderedMeals()))
 				.orderedDrinks(drinkToDrinkDTO.convertSet(order.getOrderedDrinks()))
-				.waiterId(order.getWaiter().getId())
 				.notificationIds(notificationIds)
 				.deskId(order.getDesk().getId())
 				.build();
