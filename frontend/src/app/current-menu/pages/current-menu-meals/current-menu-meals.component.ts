@@ -67,7 +67,7 @@ export class CurrentMenuMealsComponent implements OnInit {
   }
 
   add(){
-    this.router.navigate(['/CurrentMenuAddMeal']);
+    this.router.navigate(['/CurrentMenuAddMeal'], {state:{data:{category:this.category}}});
   }
 
 
@@ -76,8 +76,8 @@ export class CurrentMenuMealsComponent implements OnInit {
   }
 
 
-  mealProfile(meal){
-    this.router.navigate(['/CurrentMenuMealProfile']);
+  mealProfile(mealPrice){
+    this.router.navigate(['/CurrentMenuMealProfile'], {state:{data:{"mealPrice":mealPrice}}});
   }
 
 

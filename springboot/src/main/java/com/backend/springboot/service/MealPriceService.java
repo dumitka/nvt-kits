@@ -16,6 +16,7 @@ import com.backend.springboot.model.Meal;
 import com.backend.springboot.model.MealPrice;
 import com.backend.springboot.model.Menu;
 import com.backend.springboot.model.MenuMealPrice;
+import com.backend.springboot.model.Restaurant;
 import com.backend.springboot.repository.MealPriceRepository;
 import com.backend.springboot.repository.MealRepository;
 import com.backend.springboot.repository.MenuMealPriceRepository;
@@ -51,6 +52,13 @@ public class MealPriceService {
 	
 	
 	
+	public MealPrice getMealPrice(Integer id) {
+		Optional<MealPrice> found = mealPriceRepository.findById(id);
+		return found.get();
+	}
+	
+	
+	
 	public List<MealPrice> getAllMealPricebyMealType(MealType type){
 		Optional<Menu> currentMenu = menuRepository.findByCurrent();
 		if(currentMenu.isPresent()) {
@@ -62,39 +70,105 @@ public class MealPriceService {
 	
 	
 	public boolean addMealPrice(MealPrice mealPrice){
-		mealPrice.setDeleted(false);
 		mealPriceRepository.save(mealPrice);
-		Optional<Menu> currentMenu = menuRepository.findByCurrent();
-		MenuMealPrice menuMealPrice = MenuMealPrice.builder().mealPrice(mealPrice).menu(currentMenu.get()).deleted(false).build();
-		menuMealPriceRepository.save(menuMealPrice);
-		menuRepository.save(currentMenu.get());
+		
+		Optional<Menu>oldCurrent = menuRepository.findByCurrent();
+		Integer oldCurrentId = oldCurrent.get().getId();
+		oldCurrent.get().setCurrent(false);
+		menuRepository.save(oldCurrent.get());
+		
+		Restaurant restaurant = Restaurant.builder().id(1).build();
+		Menu newMenu = Menu.builder().restaurant(restaurant).current(true).dateOfValidation(LocalDateTime.now()).build();
+		menuRepository.save(newMenu);
+		
+		Optional<Menu> newCurrent = menuRepository.findByCurrent();
+		
+		List<MealPrice> allMealPricesInOldMenu = menuMealPriceRepository.findAllMealsPricesByMenuId(oldCurrentId);
+		for(MealPrice m : allMealPricesInOldMenu) {
+			MenuMealPrice mmp = MenuMealPrice.builder().menu(newCurrent.get()).mealPrice(m).deleted(false).build();
+			menuMealPriceRepository.save(mmp);
+		}
+		
+		List<MealPrice> all = mealPriceRepository.findAll();
+		MealPrice lastOne = all.get(all.size()-1);
+		MenuMealPrice mmp = MenuMealPrice.builder().menu(newCurrent.get()).mealPrice(lastOne).deleted(false).build();
+		menuMealPriceRepository.save(mmp);
+		
+		
+		
 		return true;
 	}
 	
 	
 	
 	public boolean changeMealPrice(MealPrice mealPrice) {
-		Optional<MealPrice> found = mealPriceRepository.findById(mealPrice.getId());
-		found.get().setPrice(mealPrice.getPrice());
-		mealPriceRepository.save(found.get());
+		MealPrice newMealPrice = MealPrice.builder().meal(mealPrice.getMeal()).deleted(false).priceAmount(mealPrice.getPriceAmount()).build();
+		mealPriceRepository.save(newMealPrice);
+		
+		Optional<Menu> oldMenu = menuRepository.findByCurrent();
+		if(oldMenu.isEmpty()) {
+			return false;
+		}
+		Integer idOfOldMenu = oldMenu.get().getId();
+		oldMenu.get().setCurrent(false);
+		Restaurant restaurant = Restaurant.builder().id(1).build();
+		Menu newMenu = Menu.builder().restaurant(restaurant).current(true).dateOfValidation(LocalDateTime.now()).build();
+		menuRepository.save(oldMenu.get());
+		menuRepository.save(newMenu);
+		
+		Optional<Menu> newCurrent = menuRepository.findByCurrent();
+		
+		List<MealPrice> allMealPricesInOldMenu = menuMealPriceRepository.findAllMealsPricesByMenuId(idOfOldMenu);
+		for(MealPrice m : allMealPricesInOldMenu) {
+			
+			if(m.getId() == mealPrice.getId()) {
+				List<MealPrice> all = mealPriceRepository.findAll();
+				MealPrice lastOne = all.get(all.size()-1);
+				MenuMealPrice mmp = MenuMealPrice.builder().menu(newCurrent.get()).mealPrice(lastOne).deleted(false).build();
+				menuMealPriceRepository.save(mmp);
+			}else {
+				MenuMealPrice mmp = MenuMealPrice.builder().menu(newCurrent.get()).mealPrice(m).deleted(false).build();
+				menuMealPriceRepository.save(mmp);
+			}
+		}
+		
 		return true;
 	}
   
 	
 	
 	
+	
 	public boolean deleteMealPriceFromMenu(Integer id) {
-		Optional<Menu>currentMenu = menuRepository.findByCurrent();
-		Optional<MenuMealPrice>menuMealPrice = menuMealPriceRepository.findMenuMealPriceByMealPriceIdAndMenuId(id, currentMenu.get().getId());
+		
+		Optional<Menu>oldCurrent = menuRepository.findByCurrent();
+		Integer oldCurrentId = oldCurrent.get().getId();
+		oldCurrent.get().setCurrent(false);
+		menuRepository.save(oldCurrent.get());
+		
+		Restaurant restaurant = Restaurant.builder().id(1).build();
+		Menu newMenu = Menu.builder().restaurant(restaurant).current(true).dateOfValidation(LocalDateTime.now()).build();
+		menuRepository.save(newMenu);
+		
+		Optional<Menu> newCurrent = menuRepository.findByCurrent();
+		
+		List<MealPrice> allMealPricesInOldMenu = menuMealPriceRepository.findAllMealsPricesByMenuId(oldCurrentId);
+		for(MealPrice m : allMealPricesInOldMenu) {
+			
+			if(m.getId() == id) {
+				MenuMealPrice mmp = MenuMealPrice.builder().menu(newCurrent.get()).mealPrice(m).deleted(true).build();
+				menuMealPriceRepository.save(mmp);
+			}else {
+				MenuMealPrice mmp = MenuMealPrice.builder().menu(newCurrent.get()).mealPrice(m).deleted(false).build();
+				menuMealPriceRepository.save(mmp);
+			}
+		}
+		
 		Optional<MealPrice> foundMealPrice = mealPriceRepository.findById(id);
-		
 		foundMealPrice.get().setDeleted(true);
-		menuMealPrice.get().setDeleted(true);
 		mealPriceRepository.save(foundMealPrice.get());
-		menuMealPriceRepository.save(menuMealPrice.get());
-		menuRepository.save(currentMenu.get());
-		return true;
 		
+		return true;
 	}
 	
 	

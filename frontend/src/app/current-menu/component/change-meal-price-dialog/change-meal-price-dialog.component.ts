@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Inject} from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog'
+
+
+export interface MealPriceInterface {
+  newPrice: number;
+}
+
 
 @Component({
   selector: 'app-change-meal-price-dialog',
@@ -7,7 +14,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChangeMealPriceDialogComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: MealPriceInterface,
+  ) {}
 
   ngOnInit(): void {
   }
