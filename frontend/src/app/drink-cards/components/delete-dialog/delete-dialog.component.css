@@ -1,3 +1,7 @@
+h1 {
+    font-family: 'Trocchi', serif;
+}
+
 button {
     margin-top: 25px;
     display: block;
@@ -9,12 +13,4 @@ button {
     color: whitesmoke; 
     font-family: 'Trocchi', serif;
     font-size: 20px;
-}
-
-mat-form-field {
-    padding: 10px;
-    left: 4%;
-    color: #5d7c77;
-    font-family: 'Raleway', cursive;
-    background-color: whitesmoke;
 }
