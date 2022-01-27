@@ -82,6 +82,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/menu/changeMealPriceInMenu").hasAuthority("ROLE_CHEF")
 				.antMatchers("/menu/deleteMealInMenu").hasAuthority("ROLE_CHEF")
 				.antMatchers("/menu/newMenu").hasAuthority("ROLE_CHEF")
+				.antMatchers("/menu/getMealPricesNotInMenu").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/getColdAppetizerMeals").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/getHotAppetizerMeals").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/getMainCourseMeals").hasAuthority("ROLE_CHEF")
@@ -94,6 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, customUserDetailsService), BasicAuthenticationFilter.class);
 		http.csrf().disable();
 	}
+	
 
 	//definisanje konfiguracije koja utice na generalnu bezbednost aplikacije
 	@Override

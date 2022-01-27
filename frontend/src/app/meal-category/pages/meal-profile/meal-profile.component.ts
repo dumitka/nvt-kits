@@ -57,33 +57,34 @@ export class MealProfileComponent implements OnInit {
     let dialogReturnValue = this.dialog.open(DeleteMealDialogComponent, {
       height: '30%',
       width: '45%',
-  });
+    });
 
     dialogReturnValue.afterClosed().subscribe(returnValue => {
       
-      this.service.deleteMeal(this.meal).subscribe(
-        response => {
-            this.openSnackBar("Uspešno ste obrisali jelo", this.RESPONSE_OK);
-            
-            if(this.meal.type =="COLD_APPETIZER"){
-              this.router.navigate(['/MealsOfCategory'], {state:{data:{category:1}}});
-            }else if(this.meal.type =="HOT_APPETIZER"){
-              this.router.navigate(['/MealsOfCategory'], {state:{data:{category:2}}});
-            }else if(this.meal.type =="MAIN_COURSE"){
-              this.router.navigate(['/MealsOfCategory'], {state:{data:{category:3}}});
-            }else if(this.meal.type =="DESERT"){
-              this.router.navigate(['/MealsOfCategory'], {state:{data:{category:4}}});
-            }else if(this.meal.type =="SALAD"){
-              this.router.navigate(['/MealsOfCategory'], {state:{data:{category:5}}});
-            }else{
-              this.router.navigate(['/MealsOfCategory'], {state:{data:{category:6}}});
-            }
-        },
-        error => {
-          this.openSnackBar("Došlo je do nekakvog problema, molim Vas pokušajte ponovo kasnije! :)", this.RESPONSE_ERROR);
-        }
-      )
-
+      if(returnValue == "true"){
+        this.service.deleteMeal(this.meal).subscribe(
+          response => {
+              this.openSnackBar("Uspešno ste obrisali jelo", this.RESPONSE_OK);
+              
+              if(this.meal.type =="COLD_APPETIZER"){
+                this.router.navigate(['/MealsOfCategory'], {state:{data:{category:1}}});
+              }else if(this.meal.type =="HOT_APPETIZER"){
+                this.router.navigate(['/MealsOfCategory'], {state:{data:{category:2}}});
+              }else if(this.meal.type =="MAIN_COURSE"){
+                this.router.navigate(['/MealsOfCategory'], {state:{data:{category:3}}});
+              }else if(this.meal.type =="DESERT"){
+                this.router.navigate(['/MealsOfCategory'], {state:{data:{category:4}}});
+              }else if(this.meal.type =="SALAD"){
+                this.router.navigate(['/MealsOfCategory'], {state:{data:{category:5}}});
+              }else{
+                this.router.navigate(['/MealsOfCategory'], {state:{data:{category:6}}});
+              }
+          },
+          error => {
+            this.openSnackBar("Došlo je do nekakvog problema, molim Vas pokušajte ponovo kasnije! :)", this.RESPONSE_ERROR);
+          }
+        )
+      }
 
     });
   }

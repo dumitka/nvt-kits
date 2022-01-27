@@ -1,1 +1,41 @@
-<p>current-menu-meal-profile works!</p>
+<body>
+
+    <h1><a href="#0">JELO</a></h1>
+  
+      <br>
+      <br>
+      <br>
+  
+      <div class="card_div">
+        <mat-card class="meal_card">
+          <img mat-card-lg-image *ngIf="mealHasItsOwnPicture"  name="profile_picture" class="profile_picture" src=meal.image >
+          
+          <img mat-card-lg-image *ngIf="mealDoesNotHaveItsOwnPicture" name="profile_picture" class="profile_picture" src="../../../../assets/food-profile.jpg" >
+           
+
+            <mat-card-content>
+              <div class="food_data">
+                <div><b>{{mealPrice.mealDTO.name}}</b></div>
+                <div><i>( {{mealPrice.mealDTO.description}} )</i></div>
+                <br>
+                <div>Težina pripreme: &nbsp;{{prepDifficulty}}</div>
+                <div>Vreme pripreme: &nbsp;{{mealPrice.mealDTO.timePreparation}} minuta</div>
+                <div>Količina: &nbsp;{{mealPrice.mealDTO.amountNumber}} {{mealPrice.mealDTO.amountUnit}}</div>
+                <div>Cena: &nbsp;{{mealPrice.price}} RSD</div>
+              </div>
+              <br>
+
+  
+            </mat-card-content>
+            <mat-card-actions>
+                <span class="change_button_span"><button mat-raised-button class="option_button" id="change_button" (click) = "change()"> IZMENA CENE </button></span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span class="delete_button_span"><button mat-raised-button class="option_button" id="delete_button" (click) = "delete()"> OBRIŠI </button></span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span class="return_button_span"><button mat-raised-button class="option_button" id="return_button" (click) = "returnButton()"> POVRATAK </button></span>
+                <br>
+            </mat-card-actions>
+        </mat-card>
+     </div>
+    
+    </body>

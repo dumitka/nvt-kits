@@ -82,12 +82,7 @@ public class MenuController {
 	
 	@PostMapping(value = "/addMealToMenu")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
-	public ResponseEntity<Boolean> addMealToMenu(@RequestBody MealWithPriceDTO mealPriceDTO)throws Exception {
-		boolean found = mealPriceService.exists(mealPriceDTO.getId());
-		if(found) {
-			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.BAD_REQUEST);
-		}
-		
+	public ResponseEntity<Boolean> addMealToMenu(@RequestBody MealWithPriceDTO mealPriceDTO) {
 		Meal meal = Meal.builder().id(mealPriceDTO.getMealDTO().getId()).amountNumber(mealPriceDTO.getMealDTO().getAmountNumber())
 				.amountUnit(mealPriceDTO.getMealDTO().getAmountUnit()).deleted(mealPriceDTO.getMealDTO().getDeleted())
 				.description(mealPriceDTO.getMealDTO().getDescription()).image(mealPriceDTO.getMealDTO().getImage())
@@ -108,33 +103,29 @@ public class MenuController {
 		boolean found = mealPriceService.exists(mealPriceDTO.getId());
 		if(!found) {
 			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
-		}
+		}	
+		MealPrice mealPrice = mealPriceService.getMealPrice(mealPriceDTO.getId());
+		mealPrice.setPriceAmount(mealPriceDTO.getPrice());
 		
-		Meal meal = Meal.builder().id(mealPriceDTO.getMealDTO().getId()).amountNumber(mealPriceDTO.getMealDTO().getAmountNumber())
-				.amountUnit(mealPriceDTO.getMealDTO().getAmountUnit()).deleted(mealPriceDTO.getMealDTO().getDeleted())
-				.description(mealPriceDTO.getMealDTO().getDescription()).image(mealPriceDTO.getMealDTO().getImage())
-				.mealDifficulty(mealPriceDTO.getMealDTO().getMealDifficulty()).name(mealPriceDTO.getMealDTO().getName()).
-				timePreparation(mealPriceDTO.getMealDTO().getTimePreparation()).type(mealPriceDTO.getMealDTO().getType()).build();
-		MealPrice mealPrice = MealPrice.builder().id(mealPriceDTO.getId()).meal(meal).priceAmount(mealPriceDTO.getPrice()).deleted(false).build();
-		
-		
-		mealPriceService.changeMealPrice(mealPrice);
-		return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+		Boolean  returnValue = mealPriceService.changeMealPrice(mealPrice);
+		return new ResponseEntity<>(returnValue, HttpStatus.OK);
 	}
 	
 	
 	
 	
-	@DeleteMapping(value = "/deleteMealInMenu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/deleteMealInMenu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ROLE_CHEF')")
 	public ResponseEntity<Boolean> deleteMealInMenu(@RequestBody MealWithPriceDTO mealPriceDTO)throws Exception {
 		boolean found = mealPriceService.exists(mealPriceDTO.getId());
 		if(!found) {
 			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
 		}
-		mealPriceService.deleteMealPriceFromMenu(mealPriceDTO.getId());
-		return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
+		Boolean response = mealPriceService.deleteMealPriceFromMenu(mealPriceDTO.getId());
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+	
+	
 	
 	
 	

@@ -1,1 +1,22 @@
-<p>change-meal-price-dialog works!</p>
+
+<body>
+
+    <h2 mat-dialog-title>NOVA CENA</h2>
+
+    <br />
+
+    <div mat-dialog-content>
+        <mat-form-field appearance="fill">
+          <mat-label>Unesite ovde novu cenu...</mat-label>
+          <input type="number" matInput [(ngModel)]="data.newPrice">
+        </mat-form-field>
+    </div>
+    <br />
+
+    <mat-dialog-actions>
+        <button mat-raised-button class="option_button" id="change_option" [mat-dialog-close]="data.newPrice"> SAČUVAJ </button>
+        <button mat-raised-button class="option_button" id="quit_option" mat-dialog-close> ODUSTANI</button>
+    </mat-dialog-actions>
+
+    
+</body>
