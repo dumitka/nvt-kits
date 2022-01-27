@@ -45,13 +45,17 @@ h1 a {
 
 mat-form-field {
     padding: 10px;
-    left: 10%;
+    left: 4%;
     color: #5d7c77;
     font-family: 'Raleway', cursive;
     background-color: whitesmoke;
 }
 
-.mat-card-title{
+.pretraga {
+    width: 47%;
+}
+
+.mat-card-title {
     display: block;
     color: #5d7c77; 
     font-family: 'Trocchi', serif; 
@@ -62,7 +66,7 @@ mat-form-field {
     margin-right: auto;
 }
 
-.sayings{
+.sayings {
     text-align: center;
     color: #5d7c77; 
     font-family: 'Trocchi', serif; 
@@ -71,7 +75,7 @@ mat-form-field {
     line-height: 48px;
 }
 
-.option_button{
+.option_button {
     background-color: #5d7c77; 
     width: 100px;
     text-align: center;

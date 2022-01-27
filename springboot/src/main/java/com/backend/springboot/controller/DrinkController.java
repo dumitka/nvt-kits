@@ -60,7 +60,7 @@ public class DrinkController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteDrink")
+    @PostMapping("/deleteDrink")
     @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<DrinkDTO> deletingDrink(@RequestBody DrinkDTO dto) {
         Drink pice = this.drinkService.findOne(dto.getId());        // pice =! null

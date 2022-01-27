@@ -42,3 +42,19 @@ h1 a {
     letter-spacing: 30px;
     color: whitesmoke;
 }
+
+.profile_picture {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.server_data {
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif; 
+    font-size: 30px; 
+    font-weight: normal; 
+    line-height: 48px;
+    text-align: left;
+    margin-left: 20px;
+}

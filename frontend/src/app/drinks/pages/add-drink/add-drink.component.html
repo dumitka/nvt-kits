@@ -1,64 +1,77 @@
 <body>
     <h1><a (click) = "nazadNaProfil()">VAŠ PROFIL</a></h1>
   
-    <br>
-    <br>
+    <br/>
+    <br/>
+    
+    <mat-card class="new-meal-card">
+      <mat-card-title-group>
+          <img mat-card-lg-image class="picture" src="assets\pice.png" >
+        </mat-card-title-group>
+      
+      <mat-card-content>
 
-    <div class="card_div">
-      <mat-card class="server_profile_card">
+        <br />
+        <form class="form" [formGroup] = "piceForma">
+
+          <mat-form-field appearance="legacy">
+            <mat-label for="name">NAZIV PIĆA</mat-label>
+            <input type="text" class="form-control" formControlName="name"  matInput>
+            <mat-error *ngIf = "requiredError('name', 'required')">Potrebno je uneti naziv pića!</mat-error>
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <mat-hint></mat-hint>
+          </mat-form-field>
+          <br />
           
-          <mat-card-content>
-            <div class="server_data">
-              <span>Naziv:</span>
-              <span style="color:black">&nbsp;</span>
-              <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Naziv pica</mat-label>
-                <input matInput style="color:black" value="{{pice?.name}}" [(ngModel)]="pice.name">
-              </mat-form-field>
-              <br/>
-              <span>Opis:</span>
-              <span style="color:black">&nbsp;</span>
-              <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Opis pica</mat-label>
-                <input matInput style="color:black" value="{{pice?.description}}" [(ngModel)]="pice.description">
-              </mat-form-field>
-              <br/>
-              <span>Kolicina:&nbsp;</span>
-              <mat-form-field appearance="fill">
-                <mat-label>Vrednost</mat-label>
-                <input matInput style="color:black;" type="number" value="{{pice?.amountNumber}}" [(ngModel)]="pice.amountNumber">
-              </mat-form-field>
-              <span>&emsp;&emsp;</span>
-              <mat-form-field appearance="fill">
-                <mat-label>Jedinica</mat-label>
-                <input matInput style="color:black;" value="{{pice?.amountUnit}}" [(ngModel)]="pice.amountUnit">
-              </mat-form-field>
-              <br/>
-              <span>Kategorija:&nbsp;</span>
-              <mat-form-field appearance="fill" style="color:black">
-                <mat-label>Kategorija</mat-label>
-                <mat-select [(value)]="kategorija" [(ngModel)]="kategorija">
-                  <mat-option value="gazirano">Gazirana pica</mat-option>
-                  <mat-option value="negazirano">Negazirana pica</mat-option>
-                  <mat-option value="alkoholno">Alkoholna pica</mat-option>
-                  <mat-option value="toplo">Topli napitci</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <br/>
-              <span>Slika:</span>
-              <span style="color:black">&nbsp;</span>
-              <mat-form-field class="example-full-width" appearance="fill">
-                <mat-label>Odabrana slika</mat-label>
-                <input matInput style="color:black" value="{{pice?.image}}" [(ngModel)]="pice.image">
-              </mat-form-field>
-            </div>
+          <mat-form-field appearance="legacy">
+            <mat-label for="description">OPIS PIĆA</mat-label>
+            <textarea matInput  type="text" class="form-control" formControlName="description"></textarea>
+            <mat-error *ngIf = "requiredError('description', 'required')">Potrebno je uneti opis pića!</mat-error>
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <mat-hint></mat-hint>
+          </mat-form-field>
+          <br />
 
-            <div class="options">
-              <button mat-raised-button class="option_button" (click) = "sacuvaj()">SACUVAJ</button>
-            </div>
-          </mat-card-content>
-      </mat-card>
-  </div>
+          <mat-form-field appearance="legacy">
+              <mat-label for="type">KATEGORIJA PIĆA</mat-label>
+              <mat-select class="form-control" formControlName="type">
+                  <mat-option value="CARBONATED_DRINK">Gazirano piće</mat-option>
+                  <mat-option value="NOCARBONATED_DRINK">Negazirano piće</mat-option>
+                  <mat-option value="ALCOHOL">Alkoholno piće</mat-option>
+                  <mat-option value="HOT_DRINK">Topli napitci</mat-option>
+              </mat-select>
+              <mat-error *ngIf = "requiredError('type', 'required')">Potrebno je uneti kategoriju pićA!</mat-error>
+          </mat-form-field>
+          <br />
+
+          <mat-form-field appearance="legacy">
+              <mat-label for="amountNumber">KOLIČINA</mat-label>
+              <input type="number" class="form-control" formControlName="amountNumber" matInput>
+              <mat-error *ngIf = "requiredError('amountNumber', 'required') || mindError('amountNumber', 'min')">Potrebno je uneti količinu pica veću od 0!</mat-error>
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              <mat-hint></mat-hint>
+          </mat-form-field>
+          <br />
+
+          <mat-form-field appearance="legacy">
+              <mat-label for="amountUnit">MERNA JEDINICA</mat-label>
+              <mat-select class="form-control" formControlName="amountUnit">
+                  <mat-option value="l">l</mat-option>
+                  <mat-option value="dl">dl</mat-option>
+                  <mat-option value="ml">ml</mat-option>
+              </mat-select>
+              <mat-error *ngIf = "requiredError('amountUnit', 'required')">Potrebno je uneti mernu jedinicu!</mat-error>
+          </mat-form-field>
+
+        </form>
+        <br/>
+      </mat-card-content>
+
+      <mat-card-actions>
+          <button mat-raised-button type="submit" class="option_button" id="add_new_meal_button"  [disabled] = "piceForma.invalid" (click) = "sacuvaj()" >SAČUVAJ</button>
+      </mat-card-actions>
+
+    </mat-card>
 </body>
   
   
