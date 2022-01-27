@@ -1,5 +1,6 @@
 package com.backend.springboot.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import com.backend.springboot.dtoTransformation.MealPriceToMealWithPriceDTO;
 import com.backend.springboot.dtoTransformation.MealToMealDTO;
 import com.backend.springboot.enums.MealType;
 import com.backend.springboot.model.MealPrice;
+import com.backend.springboot.model.Menu;
 import com.backend.springboot.model.User;
 import com.backend.springboot.model.Meal;
 import com.backend.springboot.service.MealPriceService;
@@ -179,6 +181,15 @@ public class MealController {
 	}
 	
 	
+	@GetMapping(value = "getAllMeals")
+	@PreAuthorize("hasRole('ROLE_CHEF')")
+	public ResponseEntity<List<MealDTO>> getAllMeals(){
+		List<Meal> allMeals = this.mealService.getAllMeals();
+		List<MealDTO> dto = this.mealToMealDTO.convertList(allMeals);
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+	}
+	
+	
 	
 	@GetMapping(value = "getOne/id={id}")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
@@ -188,7 +199,7 @@ public class MealController {
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
-	
+		
 	
 	
 	@GetMapping(value = "/getColdAppetizerMeals")

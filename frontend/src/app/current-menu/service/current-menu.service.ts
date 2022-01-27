@@ -16,10 +16,14 @@ export class CurrentMenuService {
   private readonly APPENDICES_URL : string = Main.PATH + "meal/getAppendices";
   
 
-  private readonly DELETE_MEAL_PRICE : string = Main.PATH + "menu/deleteMealInMenu";
-  private readonly CHANGE_MEAL_PRICE : string =Main.PATH + "menu/changeMealPriceInMenu"; 
+  private readonly DELETE_MEAL_PRICE_URL : string = Main.PATH + "menu/deleteMealInMenu";
+  private readonly CHANGE_MEAL_PRICE_URL : string =Main.PATH + "menu/changeMealPriceInMenu"; 
   private readonly MEAL_NOT_IN_MENU_URL : string = Main.PATH + "menu/getMealPricesNotInMenu";
-  private readonly ADD_MEAL_MENU : string = Main.PATH + "menu/addMealToMenu";
+  private readonly ADD_MEAL_MENU_URL : string = Main.PATH + "menu/addMealToMenu";
+
+  private readonly NEW_MENU_URL : string = Main.PATH + "menu/newMenu";
+
+
 
   constructor(private http: HttpClient) { }
 
@@ -56,12 +60,12 @@ export class CurrentMenuService {
 
   
   public delete(mealPrice:any) {
-    return this.http.put<any>(this.DELETE_MEAL_PRICE, mealPrice).pipe(catchError(this.errorHandler));
+    return this.http.put<any>(this.DELETE_MEAL_PRICE_URL, mealPrice).pipe(catchError(this.errorHandler));
   }
 
 
   public change(mealPrice:any){
-    return this.http.put<any>(this.CHANGE_MEAL_PRICE, mealPrice).pipe(catchError(this.errorHandler));
+    return this.http.put<any>(this.CHANGE_MEAL_PRICE_URL, mealPrice).pipe(catchError(this.errorHandler));
   }
 
 
@@ -71,8 +75,16 @@ export class CurrentMenuService {
 
 
   public addMeal(mealPrice:any){
-    return this.http.post<any>(this.ADD_MEAL_MENU, mealPrice).pipe(catchError(this.errorHandler));
+    return this.http.post<any>(this.ADD_MEAL_MENU_URL, mealPrice).pipe(catchError(this.errorHandler));
   }
+
+
+ 
+  public newMenu(list:any){
+    return this.http.post<any>(this.NEW_MENU_URL, list).pipe(catchError(this.errorHandler));
+  }
+ 
+
 
   errorHandler(error:HttpErrorResponse){
     return throwError(error);

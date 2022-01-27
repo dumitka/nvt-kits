@@ -118,4 +118,9 @@ public class MealService {
 	}
 	
 	
+	
+	public List<Meal> getAllMeals(){
+		return mealRepository.findAll();
+	}
+	
 }

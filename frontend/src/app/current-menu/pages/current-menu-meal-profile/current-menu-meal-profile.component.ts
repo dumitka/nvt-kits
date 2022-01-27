@@ -62,8 +62,11 @@ export class CurrentMenuMealProfileComponent implements OnInit {
 
     dialogReturnValue.afterClosed().subscribe(result => {
       let newPriceReturnValue = result;
+      console.log("Printa --> " + newPriceReturnValue);
 
-      if(newPriceReturnValue > 0){
+      if(newPriceReturnValue == 9376193218740986283){
+
+      }else if(newPriceReturnValue > 0){
         this.mealPrice.price = newPriceReturnValue;
         console.log(this.mealPrice);
 
@@ -92,6 +95,8 @@ export class CurrentMenuMealProfileComponent implements OnInit {
           this.openSnackBar("Došlo je do nekakve greške. Molim, pokušajte kasnije :)", this.RESPONSE_ERROR);
         }
         );
+      }else{
+        this.openSnackBar("Morate uneti cenu veću od 0! :)", this.RESPONSE_ERROR); 
       }
 
     });
