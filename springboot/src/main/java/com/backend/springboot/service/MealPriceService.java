@@ -70,6 +70,7 @@ public class MealPriceService {
 	
 	
 	public boolean addMealPrice(MealPrice mealPrice){
+		mealPrice.setDeleted(false);
 		mealPriceRepository.save(mealPrice);
 		
 		Optional<Menu>oldCurrent = menuRepository.findByCurrent();

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CurrentMenuService } from '../../service/current-menu.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteMealDialogComponent } from '../../../meal-category/pages/delete-meal/delete-meal-dialog.component';
 import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { ChangeMealPriceDialogComponent } from '../../component/change-meal-price-dialog/change-meal-price-dialog.component';
 
@@ -47,8 +46,11 @@ export class CurrentMenuAddMealComponent implements OnInit {
 
     dialogReturnValue.afterClosed().subscribe(result => {
       let newPriceReturnValue = result;
+      console.log(newPriceReturnValue);
 
-      if(newPriceReturnValue > 0){
+      if(newPriceReturnValue == 9376193218740986283){
+        
+      }else if(newPriceReturnValue > 0){
 
         let sendData:any = {"id": -1, "mealDTO":meal, "price":newPriceReturnValue};
 

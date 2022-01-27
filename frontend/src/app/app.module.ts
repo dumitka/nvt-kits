@@ -50,6 +50,11 @@ import { CurrentMenuAddMealComponent } from './current-menu/pages/current-menu-a
 import { CurrentMenuMealProfileComponent } from './current-menu/pages/current-menu-meal-profile/current-menu-meal-profile.component';
 import { CurrentMenuMealsComponent } from './current-menu/pages/current-menu-meals/current-menu-meals.component';
 import { ChangeMealPriceDialogComponent } from './current-menu/component/change-meal-price-dialog/change-meal-price-dialog.component';
+import { NewMenuCategoriesComponent } from './current-menu/pages/new-menu-categories/new-menu-categories.component';
+import { NewMenuMealsComponent } from './current-menu/pages/new-menu-meals/new-menu-meals.component';
+import { NewMenuReviewComponent } from './current-menu/pages/new-menu-review/new-menu-review.component';
+import { AreYouSureDialogComponent } from './current-menu/component/are-you-sure-dialog/are-you-sure-dialog.component';
+import { SaveMenuDialogComponent } from './current-menu/component/save-menu-dialog/save-menu-dialog.component';
 
 
 
@@ -86,11 +91,18 @@ import { ChangeMealPriceDialogComponent } from './current-menu/component/change-
     CurrentMenuMealProfileComponent,
     CurrentMenuMealsComponent,
     ChangeMealPriceDialogComponent,
+    NewMenuCategoriesComponent,
+    NewMenuMealsComponent,
+    NewMenuReviewComponent,
+    AreYouSureDialogComponent,
+    SaveMenuDialogComponent,
     
   ],
   entryComponents: [
     DeleteMealDialogComponent,
     ChangeMealPriceDialogComponent,
+    AreYouSureDialogComponent,
+    SaveMenuDialogComponent
   ],
   
   imports: [
@@ -236,7 +248,21 @@ import { ChangeMealPriceDialogComponent } from './current-menu/component/change-
         canActivate: [ChefRoutes],
         component: CurrentMenuMealsComponent,
       },
-
+      {
+        path: 'NewMenuCategories',
+        canActivate: [ChefRoutes],
+        component: NewMenuCategoriesComponent,
+      },
+      {
+        path: 'NewMenuMeals',
+        canActivate: [ChefRoutes],
+        component: NewMenuMealsComponent,
+      },
+      {
+        path: 'NewMenuReview',
+        canActivate: [ChefRoutes],
+        component: NewMenuReviewComponent,
+      },
 
     ]),
 
