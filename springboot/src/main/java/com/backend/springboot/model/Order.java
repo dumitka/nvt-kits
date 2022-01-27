@@ -36,6 +36,4 @@ public class Order {
 
 	@Column(name = "deleted")
 	private Boolean isDeleted;
-
-	//todo status porudzbine?
 }

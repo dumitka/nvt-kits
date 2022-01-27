@@ -26,7 +26,6 @@ import { ServerRoutes } from './user-routes/ServerRoutes';
 import { ManagerRoutes } from './user-routes/ManagerRoutes';
 import { WaiterRoutes } from './user-routes/WaiterRoutes';
 import { DirectorRoutes } from './user-routes/DirectorRoutes';
-import { MenuCategoryComponent } from './menu-category/menu-category.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AngularMaterialModule } from './angular_material.module';
@@ -46,6 +45,12 @@ import { ChoosingDrinksComponent } from './drinks/pages/choosing-drinks/choosing
 import { DrinkViewComponent } from './drinks/pages/drink-view/drink-view.component';
 import { DialogDeleteComponent } from './drinks/components/dialog-delete/dialog-delete.component';
 import { DialogInputPriceComponent } from './drinks/components/dialog-input-price/dialog-input-price.component';
+import { CurrentMenuCategoriesComponent } from './current-menu/pages/current-menu-categories/current-menu-categories.component';
+import { CurrentMenuAddMealComponent } from './current-menu/pages/current-menu-add-meal/current-menu-add-meal.component';
+import { CurrentMenuMealProfileComponent } from './current-menu/pages/current-menu-meal-profile/current-menu-meal-profile.component';
+import { CurrentMenuMealsComponent } from './current-menu/pages/current-menu-meals/current-menu-meals.component';
+import { ChangeMealPriceDialogComponent } from './current-menu/component/change-meal-price-dialog/change-meal-price-dialog.component';
+
 
 
 @NgModule({
@@ -59,7 +64,6 @@ import { DialogInputPriceComponent } from './drinks/components/dialog-input-pric
     BartenderProfileComponent,
     ChefProfileComponent,
     DirectorProfileComponent,
-    MenuCategoryComponent,
     ServerProfileComponent,
     MealCategoriesComponent,
     MealsOfCategoryComponent,
@@ -77,9 +81,17 @@ import { DialogInputPriceComponent } from './drinks/components/dialog-input-pric
     DrinkViewComponent,
     DialogDeleteComponent,
     DialogInputPriceComponent,
+    CurrentMenuCategoriesComponent,
+    CurrentMenuAddMealComponent,
+    CurrentMenuMealProfileComponent,
+    CurrentMenuMealsComponent,
+    ChangeMealPriceDialogComponent,
     
   ],
-  entryComponents: [DeleteMealDialogComponent],
+  entryComponents: [
+    DeleteMealDialogComponent,
+    ChangeMealPriceDialogComponent,
+  ],
   
   imports: [
     BrowserModule,
@@ -204,6 +216,28 @@ import { DialogInputPriceComponent } from './drinks/components/dialog-input-pric
         canActivate: [ChefRoutes],
         component: ChangeMealComponent,
       },
+      {
+        path: 'CurrentMenuCategories',
+        canActivate: [ChefRoutes],
+        component: CurrentMenuCategoriesComponent,
+      },
+      {
+        path: 'CurrentMenuAddMeal',
+        canActivate: [ChefRoutes],
+        component: CurrentMenuAddMealComponent,
+      },
+      {
+        path: 'CurrentMenuMealProfile',
+        canActivate: [ChefRoutes],
+        component: CurrentMenuMealProfileComponent,
+      },
+      {
+        path: 'CurrentMenuMeals',
+        canActivate: [ChefRoutes],
+        component: CurrentMenuMealsComponent,
+      },
+
+
     ]),
 
     BrowserAnimationsModule,

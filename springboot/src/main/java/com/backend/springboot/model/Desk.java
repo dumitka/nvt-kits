@@ -13,7 +13,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "desk")
 public class Desk {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -41,7 +40,6 @@ public class Desk {
 
 	@Column(name = "capacity")
 	private Integer capacity;
-
 
 	@ManyToOne
 	@JoinColumn(name = "restaurant_id", nullable = false)

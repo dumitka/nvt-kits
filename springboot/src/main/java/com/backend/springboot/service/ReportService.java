@@ -46,7 +46,7 @@ public class ReportService {
         Float incomeFromMeals = meals.stream()
                 .map(orderedMeal -> orderedMeal.getMeal())
                 .map(meal -> mealPriceService.findPriceOfMealForDate(dto.getDate(), meal.getId()))
-                .map(mealPrice -> mealPrice.getPriceAmount())
+                .map(mealPrice -> mealPrice.getPrice())
                 .reduce((float) 0, (subtotal, element) -> subtotal + element);
 
         //income drinks

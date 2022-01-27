@@ -44,6 +44,16 @@ public class DrinkCardService {
         }
         return najnovijaKartaPica;
     }
+    
+    public Float getLatestForDrink(Integer drinkId) {
+        DrinkCard latest = findLatest();
+        for (DrinkPrice drinkPrice : latest.getDrinkPrices()) {
+			if (drinkPrice.getDrink().getId() == drinkId) {
+				return drinkPrice.getPrice();
+			}
+		}
+        return null;
+    }
 
     public boolean removeDrink(Drink drink) {
         DrinkCard najnovijaKP = findLatest();

@@ -33,8 +33,8 @@ public class MealPrice {
     @ManyToOne(fetch = FetchType.LAZY)
     private Meal meal;
 
-    @Column(name = "price_amount", nullable = false)
-    private Float priceAmount;
+    @Column(name = "price", nullable = false)
+    private Float price;
     
     @Column(name = "deleted", nullable = false)
     private Boolean deleted;

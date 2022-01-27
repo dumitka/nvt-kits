@@ -26,8 +26,8 @@ public class MenuConstants {
 	public static float STARTING_PRICE = 0;
 	public static Meal MEAL1 = Meal.builder().id(1).name("Hladno predjelo 1").deleted(false).type(MealType.COLD_APPETIZER).description("Hladno predjelo 1 opis").mealDifficulty(MealDifficulty.EASY).timePreparation(5).amountNumber(500).amountUnit("g").image("http//www.image1.jpg").build();
     public static Meal MEAL2 = Meal.builder().id(2).name("Hladno predjelo 2").deleted(false).type(MealType.COLD_APPETIZER).description("Hladno predjelo 2 opis").mealDifficulty(MealDifficulty.MEDIUM).timePreparation(10).amountNumber(300).amountUnit("g").image("http//www.image2.jpg").build();
-    public static MealPrice ELEMENT1 = MealPrice.builder().id(1).meal(MEAL1).priceAmount(STARTING_PRICE + 200).build();
-    public static MealPrice ELEMENT2 = MealPrice.builder().id(2).meal(MEAL2).priceAmount(STARTING_PRICE + 300).build();
+    public static MealPrice ELEMENT1 = MealPrice.builder().id(1).meal(MEAL1).price(STARTING_PRICE + 200).build();
+    public static MealPrice ELEMENT2 = MealPrice.builder().id(2).meal(MEAL2).price(STARTING_PRICE + 300).build();
     
 	
 	
