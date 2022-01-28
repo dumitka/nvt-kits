@@ -79,7 +79,7 @@ public class OrderedMealController {
 	@PreAuthorize("hasAnyRole('ROLE_COOK', 'ROLE_CHEF')")
 	@GetMapping("/accepted/{userId}")
 	public ResponseEntity<Set<OrderedMealDTO>> acceptedOrderedMeals(@PathVariable Integer userId) {
-		List<OrderedMeal> listOrderedMeals = orderedMealService.findByUser(userId);
+		List<OrderedMeal> listOrderedMeals = orderedMealService.findByCook(userId);
 		Set<OrderedMeal> setOrderedMeals = new HashSet<OrderedMeal>(listOrderedMeals);
         Set<OrderedMealDTO> dto = orderedMealToDTO.convertSet(setOrderedMeals);
 

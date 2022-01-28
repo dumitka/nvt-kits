@@ -21,8 +21,8 @@ public class OrderedMealService {
 		return orderedMealRepository.findByStatus(status);
 	}
 	
-	public List<OrderedMeal> findByUser(Integer userId) {
-		return orderedMealRepository.findByUserId(userId);
+	public List<OrderedMeal> findByCook(Integer userId) {
+		return orderedMealRepository.findByCookId(userId);
 	}
 
 	public OrderedMeal save(OrderedMeal orderedMeal) {

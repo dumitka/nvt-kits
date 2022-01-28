@@ -1,5 +1,21 @@
 package com.backend.springboot.controller;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.backend.springboot.dto.OrderedDrinkDTO;
 import com.backend.springboot.dtoTransformation.OrderedDrinkToOrderedDrinkDTO;
 import com.backend.springboot.enums.NotificationStatus;
@@ -11,25 +27,12 @@ import com.backend.springboot.model.User;
 import com.backend.springboot.service.NotificationService;
 import com.backend.springboot.service.OrderService;
 import com.backend.springboot.service.OrderedDrinkService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/orderedDrinks")
 public class OrderedDrinkController {
 	@Autowired
 	private OrderedDrinkService orderedDrinkService;
-
-	@Autowired
-	private OrderedDrinkToOrderedDrinkDTO mapper;
 
 	@Autowired
 	private NotificationService notificationService;
@@ -39,13 +42,17 @@ public class OrderedDrinkController {
 
 	@Autowired
 	private SimpMessagingTemplate brokerMessagingTemplate;
+	
+	private OrderedDrinkToOrderedDrinkDTO orderedDrinkToDTO;
+	
+	@PreAuthorize("hasAnyRole('ROLE_BARTENDER')")
+	@GetMapping("/notAccepted")
+	public ResponseEntity<Set<OrderedDrinkDTO>> notAcceptedOrderedMeals() {
+		List<OrderedDrink> listOrderedDrinks = orderedDrinkService.findByStatus(OrderedItemStatus.ORDERED);
+		Set<OrderedDrink> setOrderedDrinks = new HashSet<OrderedDrink>(listOrderedDrinks);
+        Set<OrderedDrinkDTO> dto = orderedDrinkToDTO.convertSet(setOrderedDrinks);
 
-	@PreAuthorize("hasRole('ROLE_BARTENDER')")
-	@GetMapping("/ordered")
-	public ResponseEntity<Set<OrderedDrinkDTO>> getOrderedDrinks() {
-		//todo po konobaru
-		Set<OrderedDrink> drinks = orderedDrinkService.findByStatus(OrderedItemStatus.ORDERED).stream().collect(Collectors.toSet());
-		return new ResponseEntity<>(mapper.convertSet(drinks), HttpStatus.OK);
+		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ROLE_BARTENDER')")
@@ -67,6 +74,16 @@ public class OrderedDrinkController {
 		brokerMessagingTemplate.convertAndSend("/topic/hi", notification);
 
 		return new ResponseEntity<String>("Poručeno piće je uspešno prihvaćeno!", HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_BARTENDER')")
+	@GetMapping("/accepted/{userId}")
+	public ResponseEntity<Set<OrderedDrinkDTO>> acceptedOrderedDrinks(@PathVariable Integer userId) {
+		List<OrderedDrink> listOrderedDrinks = orderedDrinkService.findByBartender(userId);
+		Set<OrderedDrink> setOrderedDrinks = new HashSet<OrderedDrink>(listOrderedDrinks);
+        Set<OrderedDrinkDTO> dto = orderedDrinkToDTO.convertSet(setOrderedDrinks);
+
+		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ROLE_BARTENDER')")
