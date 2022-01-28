@@ -50,6 +50,7 @@ import { CurrentMenuAddMealComponent } from './current-menu/pages/current-menu-a
 import { CurrentMenuMealProfileComponent } from './current-menu/pages/current-menu-meal-profile/current-menu-meal-profile.component';
 import { CurrentMenuMealsComponent } from './current-menu/pages/current-menu-meals/current-menu-meals.component';
 import { ChangeMealPriceDialogComponent } from './current-menu/component/change-meal-price-dialog/change-meal-price-dialog.component';
+import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.component';
 
 
 
@@ -86,6 +87,7 @@ import { ChangeMealPriceDialogComponent } from './current-menu/component/change-
     CurrentMenuMealProfileComponent,
     CurrentMenuMealsComponent,
     ChangeMealPriceDialogComponent,
+    DeskOrderComponent,
     
   ],
   entryComponents: [
@@ -235,6 +237,11 @@ import { ChangeMealPriceDialogComponent } from './current-menu/component/change-
         path: 'CurrentMenuMeals',
         canActivate: [ChefRoutes],
         component: CurrentMenuMealsComponent,
+      },
+      {
+        path: 'DeskOrder',
+        canActivate: [WaiterRoutes],
+        component: DeskOrderComponent,
       },
 
 

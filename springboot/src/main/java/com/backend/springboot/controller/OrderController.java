@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.backend.springboot.dto.OrderDTO;
 import com.backend.springboot.dto.OrderedDrinkDTO;
 import com.backend.springboot.dto.OrderedMealDTO;
+import com.backend.springboot.dtoTransformation.OrderToOrderDTO;
 import com.backend.springboot.enums.DeskStatus;
 import com.backend.springboot.enums.NotificationStatus;
 import com.backend.springboot.enums.OrderedItemStatus;
@@ -64,10 +65,29 @@ public class OrderController {
 	
 	@Autowired
 	private MenuService menuService;
+	
+	@PreAuthorize("hasRole('ROLE_WAITER')")
+	@GetMapping("/deskOrder/{deskId}")
+	public ResponseEntity<OrderDTO> getOrderForDesk(@PathVariable Integer deskId) {
+		OrderDTO orderDTO = null;
+		
+		Order order = orderService.findOrderForDesk(deskId);
+		if (order != null) {
+			OrderToOrderDTO orderToDTO = new OrderToOrderDTO();
+			orderDTO = orderToDTO.convert(order);
+		}
+
+		return new ResponseEntity<OrderDTO>(orderDTO, HttpStatus.OK);
+	}
 
 	@PreAuthorize("hasRole('ROLE_WAITER')")
 	@PostMapping("/createOrder/{deskId}")
 	public ResponseEntity<String> createOrder(@PathVariable Integer deskId, @RequestBody OrderDTO orderDTO) {
+		Desk desk = deskService.findOne(deskId);
+		if (desk.getDeskStatus() != DeskStatus.NOT_ORDERED) {
+			return new ResponseEntity<String>("Za odabranim stolom je već poručeno!", HttpStatus.BAD_REQUEST);
+		}
+		
 		Set<OrderedMeal> orderedMeals = new HashSet<OrderedMeal>();
 		Set<OrderedDrink> orderedDrinks = new HashSet<OrderedDrink>();
 		Set<Notification> notifications = new HashSet<Notification>();
@@ -99,7 +119,6 @@ public class OrderController {
 		brokerMessagingTemplate.convertAndSend("/topic/hi", notification);
 		notifications.add(notification);
 
-		Desk desk = deskService.findOne(deskId);
 		desk.setDeskStatus(DeskStatus.ORDERED);
 		deskService.save(desk);
 
@@ -133,6 +152,13 @@ public class OrderController {
 	@PreAuthorize("hasRole('ROLE_WAITER')")
 	@PutMapping("/updateOrder/{deskId}")
 	public ResponseEntity<String> updateOrder(@PathVariable Integer deskId, @RequestBody OrderDTO orderDTO) {
+		Desk desk = deskService.findOne(deskId);
+		if (desk.getDeskStatus() == DeskStatus.NOT_ORDERED) {
+			return new ResponseEntity<String>("Za odabranim stolom još nije poručeno!", HttpStatus.BAD_REQUEST);
+		} else if (desk.getDeskStatus() == DeskStatus.DELIVERED) {
+			return new ResponseEntity<String>("Za odabranim stolom je dostavljena porudžbina!", HttpStatus.BAD_REQUEST);
+		}
+		
 		Set<OrderedMeal> orderedMeals = new HashSet<OrderedMeal>();
 		Set<OrderedDrink> orderedDrinks = new HashSet<OrderedDrink>();
 		Set<OrderedMealDTO> orderedMealsDTO = orderDTO.getOrderedMeals();
@@ -184,6 +210,9 @@ public class OrderController {
 	@PutMapping("/deleteOrder/{id}")
 	public ResponseEntity<String> deleteOrder(@PathVariable Integer id) {
 		Order order = orderService.findOne(id);
+		if (order == null) {
+			return new ResponseEntity<String>("Za odabranim stolom ne postoji porudžbina za brisanje!", HttpStatus.BAD_REQUEST);
+		}
 		order.setIsDeleted(true);
 		orderService.save(order);
 		
@@ -198,64 +227,106 @@ public class OrderController {
 	@GetMapping("/chargeOrder/{id}")
 	public ResponseEntity<String> chargeOrder(@PathVariable Integer id) {
 		Order order = orderService.findOne(id);
-		float charge = 0, price = 0;
-		
-		for (OrderedDrink orderedDrink : order.getOrderedDrinks()) {
-			price = drinkCardService.getLatestForDrink(orderedDrink.getDrink().getId());
-			charge += orderedDrink.getAmount() * price;
-		}
-		
-		for (OrderedMeal orderedMeal : order.getOrderedMeals()) {
-			price = menuService.getLatestForMeal(orderedMeal.getMeal().getId());
-			charge += orderedMeal.getAmount() * price;
-		}
-		
 		Desk desk = deskService.findOne(order.getDesk().getId());
-		charge += desk.getTip();
-		desk.setDeskStatus(DeskStatus.CHARGED);
+		if (desk.getDeskStatus() != DeskStatus.DELIVERED) {
+			return new ResponseEntity<String>("Za odabranim stolom još nije dostavljena porudžbina!", HttpStatus.BAD_REQUEST);
+		}
+		
+		float charge = 0, price = 0, tip = 0;
+		
+		if (order.getOrderedDrinks() != null) {
+			for (OrderedDrink orderedDrink : order.getOrderedDrinks()) {
+				price = drinkCardService.getLatestForDrink(orderedDrink.getDrink().getId());
+				charge += orderedDrink.getAmount() * price;
+			}
+		}
+		
+		if (order.getOrderedMeals() != null) {
+			for (OrderedMeal orderedMeal : order.getOrderedMeals()) {
+				price = menuService.getLatestForMeal(orderedMeal.getMeal().getId());
+				charge += orderedMeal.getAmount() * price;
+			}
+		}
+		
+		tip = charge * 0.15f; // Bakšiš je 15%
+		charge += tip;
+
+		desk.setTip(tip);
+		desk.setDeskStatus(DeskStatus.NOT_ORDERED);
 		deskService.save(desk);
+		
+		order.setDesk(null);
+		orderService.save(order);
 		
 		return new ResponseEntity<String>("Vaš račun je " + String.format("%.2f", charge) + " dinara.", HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ROLE_WAITER')")
-	@PutMapping("/deliverDrinks/{id}")
-	public ResponseEntity<String> deliverDrinks(@PathVariable Integer id) {
-		Order order = orderService.findOne(id);
-		order.getOrderedDrinks().forEach(d -> {
-			d.setStatus(OrderedItemStatus.DELIVERED);
-			orderedDrinkService.save(d);
-		});
-
-		Set<OrderedMeal> notDelivered = order.getOrderedMeals().stream().filter(m -> m.getStatus().equals(OrderedItemStatus.ORDERED) || m.getStatus().equals(OrderedItemStatus.IN_PROGRESS)).collect(Collectors.toSet());
-		if (notDelivered.isEmpty()) {
-			Desk desk = deskService.findOne(order.getDesk().getId());
-			desk.setDeskStatus(DeskStatus.DELIVERED);
-			deskService.save(desk);
+	@PutMapping("/deliverDrinks/{deskId}")
+	public ResponseEntity<String> deliverDrinks(@PathVariable Integer deskId) {
+		Desk desk = deskService.findOne(deskId);
+		if (desk.getDeskStatus() == DeskStatus.NOT_ORDERED) {
+			return new ResponseEntity<String>("Za odabranim stolom još nije poručeno!", HttpStatus.BAD_REQUEST);
+		} else if (desk.getDeskStatus() == DeskStatus.DELIVERED || desk.getDeskStatus() == DeskStatus.DELIVERED_DRINKS) {
+			return new ResponseEntity<String>("Za odabranim stolom su već dostavljena pića!", HttpStatus.BAD_REQUEST);
+		}
+		
+		Order order = orderService.findOrderForDesk(deskId);
+		
+		Set<OrderedDrink> orderedDrinks = order.getOrderedDrinks();
+		if (orderedDrinks != null) {
+			for (OrderedDrink orderedDrink : orderedDrinks) {
+				if (orderedDrink.getStatus() != OrderedItemStatus.DONE) {
+					return new ResponseEntity<String>("Pića nisu završena!", HttpStatus.BAD_REQUEST);
+				}
+				orderedDrink.setStatus(OrderedItemStatus.DELIVERED);
+				orderedDrinkService.save(orderedDrink);
+			}
+			desk.setDeskStatus(DeskStatus.DELIVERED_DRINKS);
+		} else {
+			return new ResponseEntity<String>("Za odabranim stolom nisu poručena pića!", HttpStatus.BAD_REQUEST);
 		}
 
-		orderService.save(order);
+		if (desk.getDeskStatus() == DeskStatus.DELIVERED_MEALS || order.getOrderedMeals() == null) {
+			desk.setDeskStatus(DeskStatus.DELIVERED);
+		}
+
+		deskService.save(desk);
 
 		return new ResponseEntity<String>("Pića su uspešno poslužena!", HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ROLE_WAITER')")
-	@PutMapping("/deliverMeals/{id}")
-	public ResponseEntity<String> deliverMeals(@PathVariable Integer id) {
-		Order order = orderService.findOne(id);
-		order.getOrderedMeals().forEach(m -> {
-			m.setStatus(OrderedItemStatus.DELIVERED);
-			orderedMealService.save(m);
-		});
-
-		Set<OrderedDrink> notDelivered = order.getOrderedDrinks().stream().filter(d -> d.getStatus().equals(OrderedItemStatus.ORDERED) || d.getStatus().equals(OrderedItemStatus.IN_PROGRESS)).collect(Collectors.toSet());
-		if (notDelivered.isEmpty()) {
-			Desk desk = deskService.findOne(order.getDesk().getId());
+	@PutMapping("/deliverMeals/{deskId}")
+	public ResponseEntity<String> deliverMeals(@PathVariable Integer deskId) {
+		Desk desk = deskService.findOne(deskId);
+		if (desk.getDeskStatus() == DeskStatus.NOT_ORDERED) {
+			return new ResponseEntity<String>("Za odabranim stolom još nije poručeno!", HttpStatus.BAD_REQUEST);
+		} else if (desk.getDeskStatus() == DeskStatus.DELIVERED || desk.getDeskStatus() == DeskStatus.DELIVERED_MEALS) {
+			return new ResponseEntity<String>("Za odabranim stolom su već dostavljena jela!", HttpStatus.BAD_REQUEST);
+		}
+		
+		Order order = orderService.findOrderForDesk(deskId);
+		
+		Set<OrderedMeal> orderedMeals = order.getOrderedMeals();
+		if (orderedMeals != null) {
+			for (OrderedMeal orderedMeal : orderedMeals) {
+				if (orderedMeal.getStatus() != OrderedItemStatus.DONE) {
+					return new ResponseEntity<String>("Jela nisu završena!", HttpStatus.BAD_REQUEST);
+				}
+				orderedMeal.setStatus(OrderedItemStatus.DELIVERED);
+				orderedMealService.save(orderedMeal);
+			}
+			desk.setDeskStatus(DeskStatus.DELIVERED_MEALS);
+		} else {
+			return new ResponseEntity<String>("Za odabranim stolom nisu poručena jela!", HttpStatus.BAD_REQUEST);
+		}
+		
+		if (desk.getDeskStatus() == DeskStatus.DELIVERED_DRINKS || order.getOrderedDrinks() == null) {
 			desk.setDeskStatus(DeskStatus.DELIVERED);
-			deskService.save(desk);
 		}
 
-		orderService.save(order);
+		deskService.save(desk);
 
 		return new ResponseEntity<String>("Jela su uspešno poslužena!", HttpStatus.OK);
 	}
