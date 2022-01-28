@@ -258,35 +258,46 @@ import { TableComponent } from './table/table.component';
         component: TablesLayoutComponent,
       },
       {
-              path: 'NewMenuCategories',
-              canActivate: [ChefRoutes],
-              component: NewMenuCategoriesComponent,
-            },
-            {
-              path: 'NewMenuMeals',
-              canActivate: [ChefRoutes],
-              component: NewMenuMealsComponent,
-            },
-            {
-              path: 'NewMenuReview',
-              canActivate: [ChefRoutes],
-              component: NewMenuReviewComponent,
-            },
-            {
-              path: 'NewMealOrders',
-              canActivate: [ChefRoutes],
-              component: NewMealOrdersComponent,
-            },
-            {
-              path: 'TakenMealOrders',
-              canActivate: [ChefRoutes],
-              component: TakenMealOrdersComponent,
-            },
-            {
-              path: 'DeskOrder',
-              canActivate: [WaiterRoutes],
-              component: DeskOrderComponent,
-            },
+        path: 'NewMenuCategories',
+        canActivate: [ChefRoutes],
+        component: NewMenuCategoriesComponent,
+      },
+      {
+        path: 'NewMenuMeals',
+        canActivate: [ChefRoutes],
+        component: NewMenuMealsComponent,
+      },
+      {
+        path: 'NewMenuReview',
+        canActivate: [ChefRoutes],
+        component: NewMenuReviewComponent,
+      },
+      {
+        path: 'NewMealOrders',
+        canActivate: [ChefRoutes],
+        component: NewMealOrdersComponent,
+      },
+      {
+        path: 'TakenMealOrders',
+        canActivate: [ChefRoutes],
+        component: TakenMealOrdersComponent,
+      },
+      {
+        path: 'DeskOrder',
+        canActivate: [WaiterRoutes],
+        component: DeskOrderComponent,
+      },
+      {
+        path: 'NewMealOrdersCook',
+        canActivate: [CookRoutes],
+        component: NewMealOrdersComponent,
+      },
+      {
+        path: 'TakenMealOrdersCook',
+        canActivate: [CookRoutes],
+        component: TakenMealOrdersComponent,
+      },
+
 
     ]),
 

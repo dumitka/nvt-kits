@@ -1,8 +1,40 @@
 
+
 body{
-  background-image: url('../static/background.webp');
+  background-color: #5d7c77;
 }
 
+
+h1 { 
+  text-align: center;
+  color: whitesmoke;
+  text-transform: uppercase;
+  padding: 1px;
+  font-family: 'Raleway', cursive;
+  font-weight: 100;
+  position: relative;
+  background: linear-gradient(to right, #6d918b, whitesmoke, #6d918b);
+}
+h1::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -50px;
+  width: 600px;
+  margin-left: -300px;
+  margin-top: -220px;
+  height: 600px;
+  background: radial-gradient(50% 50%, ellipse closest-side, #444, #6d918b);
+  z-index: -1;
+}
+h1 a {
+  background: #5d7c77;
+  display: block;
+  padding: 20px;
+  text-decoration: none;
+  letter-spacing: 30px;
+  color: whitesmoke;
+}
 
 .cook_profile_card {
   display: block;
