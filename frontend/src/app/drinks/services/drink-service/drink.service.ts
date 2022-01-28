@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Main } from '../../../../main';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class DrinkService {
   
   readonly URL : string = Main.PATH + "api/drinks/";
   
-  dodajPice(novoPice){
+  dodajPice(novoPice) {
     return this.http.post(this.URL + "addDrink", novoPice);
   }
   

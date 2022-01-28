@@ -76,3 +76,20 @@ mat-form-field {
     font-family: 'Raleway', cursive;
     background-color: whitesmoke;
 }
+
+.dugme_dodaj, .dugme_sacuvaj { 
+    background-color: whitesmoke; 
+    width: 200px;
+    text-align: center;
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif;
+    font-size: 20px;
+}
+
+.dugme_dodaj { 
+    left: 10%;
+}
+
+.dugme_sacuvaj { 
+    left: 60%;
+}

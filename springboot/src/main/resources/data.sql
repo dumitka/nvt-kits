@@ -162,13 +162,13 @@ insert into drink (name, type, description, amount_number, amount_unit, availabl
 insert into drink (name, type, description, amount_number, amount_unit, available, image)
     values ('Limunada', 1, 'Sveze cedjen sok od limuna', 0.2, 'l', true, 'sok.jpg');
 insert into drink (name, type, description, amount_number, amount_unit, available, image)
-    values ('Vino', 2, 'Gazirano pice', 0.2, 'l', true, 'pice.png');
+    values ('Vino', 2, 'Gazirano pice', 0.2, 'l', true, 'vino.jpg');
 insert into drink (name, type, description, amount_number, amount_unit, available, image)
     values ('Jelen', 2, 'Jelen pivo - veliko', 0.5, 'l', true, 'pivo.jpg');
 insert into drink (name, type, description, amount_number, amount_unit, available, image)
     values ('Jelen', 2, 'Jelen pivo - malo', 0.3, 'l', true, 'pivo.jpg');
 insert into drink (name, type, description, amount_number, amount_unit, available, image)
-    values ('Caj', 3, 'Milfordov caj', 0.2, 'l', true, 'pice.png');
+    values ('Caj', 3, 'Milfordov caj', 0.2, 'l', true, 'caj.png');
 insert into drink (name, type, description, amount_number, amount_unit, available, image)
     values ('Kafa', 3, 'Domaca kafa', 0.2, 'l', true, 'kafa.jpg');
 

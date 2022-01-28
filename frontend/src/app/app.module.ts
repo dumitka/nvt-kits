@@ -35,7 +35,6 @@ import { ServerFirstPageComponent } from './first-pages/pages/server-first-page/
 import { AddDrinkComponent } from './drinks/pages/add-drink/add-drink.component';
 import { AllDrinksComponent } from './drinks/pages/all-drinks/all-drinks.component';
 import { DrinkPageComponent } from './drinks/pages/drink-page/drink-page.component';
-import { DrinksTableComponent } from './drinks/components/drinks-table/drinks-table.component';
 import { DrinkCardPageComponent } from './drink-cards/pages/drink-card-page/drink-card-page.component';
 import { MealProfileComponent } from './meal-category/pages/meal-profile/meal-profile.component';
 import { NewMealComponent } from './meal-category/pages/new-meal/new-meal.component';
@@ -76,7 +75,6 @@ import { SaveMenuDialogComponent } from './current-menu/component/save-menu-dial
     AddDrinkComponent,
     AllDrinksComponent,
     DrinkPageComponent,
-    DrinksTableComponent,
     DrinkCardPageComponent,
     MealProfileComponent,
     NewMealComponent,
@@ -204,11 +202,6 @@ import { SaveMenuDialogComponent } from './current-menu/component/save-menu-dial
         path: 'ChooseDrinks',
         canActivate: [ServerRoutes],
         component: ChoosingDrinksComponent,
-      },
-      {
-        path: 'DrinksTable',
-        canActivate: [ServerRoutes],
-        component: DrinksTableComponent,
       },
       {
         path: 'DrinkCard',
