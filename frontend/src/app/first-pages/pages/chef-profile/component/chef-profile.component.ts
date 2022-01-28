@@ -11,16 +11,14 @@ export class ChefProfileComponent implements OnInit {
 
   loggedChefName:string;
   loggedChefLastName:string;
+  loggedChefId:number;
 
 
   constructor(private service:ChefProfileService, private authService: AuthService, private router:Router) {
     this.service.getChef().subscribe((data:any) => {
       this.loggedChefName = data.name; 
       this.loggedChefLastName = data.lastName; 
-      
-      //provjera
-      console.log(this.loggedChefName);
-      console.log(this.loggedChefLastName);
+      this.loggedChefId = data.id;
     });
 
     
@@ -30,7 +28,7 @@ export class ChefProfileComponent implements OnInit {
   }
 
   orders(){
-    this.router.navigate(['/NewMealOrders']);
+    this.router.navigate(['/NewMealOrders'], {state:{data:{"isChef": true, "userId":this.loggedChefId}}});
   }
 
   meal(){

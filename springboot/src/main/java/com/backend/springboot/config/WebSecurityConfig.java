@@ -73,7 +73,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/meal/getDesert").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/getSalad").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/getAppendices").hasAuthority("ROLE_CHEF")
-				.antMatchers("/meal/getOne").hasAuthority("ROLE_CHEF")
+				.antMatchers("/meal/getOne/id={id}").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/addMeal").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/changeMeal").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/deleteMeal").hasAuthority("ROLE_CHEF")
@@ -90,6 +90,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/meal/getSaladMeals").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/getAppendicesMeals").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/getAllMeals").hasAuthority("ROLE_CHEF")
+				
+				.antMatchers("api/orderedMeals/notAccepted").hasAnyRole("ROLE_CHEF", "ROLE_COOK")
+				.antMatchers("api/orderedMeals/acceptMeal").hasAnyRole("ROLE_CHEF", "ROLE_COOK")
+				.antMatchers("api/orderedMeals/accepted/{userId}").hasAnyRole("ROLE_CHEF", "ROLE_COOK")
+				.antMatchers("api/orderedMeals/finishMeal").hasAnyRole("ROLE_CHEF", "ROLE_COOK")
+				
+				
+				
 				.antMatchers("/api/**").permitAll()
 			.anyRequest().authenticated().and()
 			.cors().and()

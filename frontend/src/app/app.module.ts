@@ -278,6 +278,16 @@ import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.compone
         canActivate: [WaiterRoutes],
         component: DeskOrderComponent,
       },
+      {
+        path: 'NewMealOrdersCook',
+        canActivate: [CookRoutes],
+        component: NewMealOrdersComponent,
+      },
+      {
+        path: 'TakenMealOrdersCook',
+        canActivate: [CookRoutes],
+        component: TakenMealOrdersComponent,
+      },
 
     ]),
 
