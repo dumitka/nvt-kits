@@ -34,19 +34,6 @@ export class WaiterProfileComponent implements OnInit {
     })
   }
 
-  generateStyleString(table: Table) {
-    //objExp KEY VALUE PAIRS!
-    //izracunati klasu za status?
-    return {
-      'width.px': table.width,
-      'height.px': table.height,
-      'left.px': Number(table.x) + 50,
-      'top.px': Number(table.y) + 20,
-      'color': "red",
-      'background-color': "black"
-    }
-  }
-
 
 
 

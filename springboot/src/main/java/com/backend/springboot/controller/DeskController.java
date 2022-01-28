@@ -49,10 +49,12 @@ public class DeskController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<DeskDTO> deleteDesk (@PathVariable Integer id) {
         Desk desk = deskService.findOne(id);
+        if(desk != null){
+            deskService.delete(desk);
 
-        deskService.delete(desk);
-
-        return new ResponseEntity<>(mapper.toDeskDTO(desk), HttpStatus.OK);
+            return new ResponseEntity<>(mapper.toDeskDTO(desk), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping(value = "/")

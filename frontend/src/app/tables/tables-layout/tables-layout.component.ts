@@ -151,9 +151,12 @@ export class TablesLayoutComponent implements OnInit {
         console.log("Ello! Ovo je reakcija na resize-drag")
         var element = event.target;
         var table_rect = element.getBoundingClientRect();
+        const restaurant = document.getElementById("restaurant");
+        var rect = restaurant.getBoundingClientRect();
+
         service.resize(element.getAttribute("name"), {
-          height: table_rect.height,
-          width: table_rect.width
+          height: table_rect.height / rect.height,
+          width: table_rect.width / rect.width,
         }).subscribe((data: any) => {
             console.log("USPESNO RISAJZOVALI");
             console.log(data)

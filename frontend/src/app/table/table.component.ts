@@ -25,7 +25,7 @@ export class TableComponent {
     let y = this.tableItem.y * this.parentHeight;
     let width = this.tableItem.width * this.parentWidth;
     let height = this.tableItem.height * this.parentHeight;
-    console.log()
+
     return `top: ${y}px; left: ${x}px; width: ${width}px; height: ${height}px;`
   }
 
