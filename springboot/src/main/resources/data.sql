@@ -195,4 +195,10 @@ insert into drink_prices (drink_card_id, drink_price_id) values (2, 5);
 insert into drink_prices (drink_card_id, drink_price_id) values (2, 6);
 
 -- DESK
-insert into desk (desk_status, tip, x, y, height, width, reserved, capacity, restaurant_id) values (0, 0.0, 0, 0, 50, 50, false, 4, 1)
+insert into desk (desk_status, tip, x, y, height, width, reserved, capacity, restaurant_id) values (1, 0.0, 0, 0, 50, 50, false, 4, 1);
+
+-- ORDER
+insert into orders (deleted, desk_id) values (false, 1);
+
+-- ORDERED DRINK
+insert into ordered_drink (amount, status, user_id, drink_id, order_id) values (2, 0, null, 1, 1);

@@ -50,6 +50,7 @@ export class DeskOrderComponent implements OnInit {
 
     this.service.getOrder().subscribe((data: any) => {
       this.order = data;
+      console.log(this.order.id)
     });
   }
 

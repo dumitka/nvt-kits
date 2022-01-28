@@ -20,6 +20,8 @@ public class DeskContoller {
 	@Autowired
 	private DeskService deskService;
 	
+	private DeskToDeskDTO deskToDeskDTO;
+	
 	@PreAuthorize("hasRole('ROLE_WAITER')")
 	@GetMapping("/desk/{id}")
 	public ResponseEntity<DeskDTO> getDesk(@PathVariable Integer id) {
@@ -27,8 +29,7 @@ public class DeskContoller {
 		
 		Desk desk = deskService.findOne(id);
 		if (desk != null) {
-			DeskToDeskDTO deskToDTO = new DeskToDeskDTO();
-			deskDTO = deskToDTO.convert(desk);
+			deskDTO = deskToDeskDTO.convert(desk);
 		}
 		return new ResponseEntity<DeskDTO>(deskDTO, HttpStatus.OK);
 	}

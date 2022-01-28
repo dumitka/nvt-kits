@@ -25,6 +25,10 @@ public class OrderedMealToOrderedMealDTO implements Converter<OrderedMeal, Order
 	}
 
 	public Set<OrderedMealDTO> convertSet(Set<OrderedMeal> meals) {
-		return meals.stream().map(m -> convert(m)).collect(Collectors.toSet());
+		if (meals != null) {
+			return meals.stream().map(m -> convert(m)).collect(Collectors.toSet());
+		}
+		
+		return null;
 	}
 }

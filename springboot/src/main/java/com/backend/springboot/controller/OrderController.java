@@ -66,6 +66,8 @@ public class OrderController {
 	@Autowired
 	private MenuService menuService;
 	
+	private OrderToOrderDTO orderToOrderDTO;
+	
 	@PreAuthorize("hasRole('ROLE_WAITER')")
 	@GetMapping("/deskOrder/{deskId}")
 	public ResponseEntity<OrderDTO> getOrderForDesk(@PathVariable Integer deskId) {
@@ -73,8 +75,7 @@ public class OrderController {
 		
 		Order order = orderService.findOrderForDesk(deskId);
 		if (order != null) {
-			OrderToOrderDTO orderToDTO = new OrderToOrderDTO();
-			orderDTO = orderToDTO.convert(order);
+			orderDTO = orderToOrderDTO.convert(order);
 		}
 
 		return new ResponseEntity<OrderDTO>(orderDTO, HttpStatus.OK);
