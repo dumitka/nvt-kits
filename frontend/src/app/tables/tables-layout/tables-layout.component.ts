@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TablesService } from '../tables.service';
 import interact from 'interactjs';
 import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tables-layout',
@@ -14,7 +15,8 @@ export class TablesLayoutComponent implements OnInit {
   RESPONSE_ERROR : number = -1;
   verticalPosition: MatSnackBarVerticalPosition = "top";
 
-  constructor(public service: TablesService, private snackBar: MatSnackBar) { 
+  constructor(public service: TablesService,
+     private router: Router) { 
 
     interact('.dropzone').dropzone({
       accept: '#yes-drop',
@@ -39,7 +41,7 @@ export class TablesLayoutComponent implements OnInit {
         // remove the drop feedback style
         event.target.classList.remove('drop-target')
         event.relatedTarget.classList.remove('can-drop')
-        event.relatedTarget.textContent = 'Table removed!'
+        event.relatedTarget.textContent = 'Sto uklonjen!'
 
         service.delete(event.relatedTarget.getAttribute("name"))
         .subscribe((data:any) => {
@@ -51,7 +53,7 @@ export class TablesLayoutComponent implements OnInit {
 
       },
       ondrop: function (event) {
-        event.relatedTarget.textContent = 'Table added!' //ovde onend?
+        event.relatedTarget.textContent = 'Sto dodat!' //ovde onend?
         console.log("---------------------DROP---------------")
 
         console.log("UNUTRA DROP")
@@ -217,12 +219,15 @@ export class TablesLayoutComponent implements OnInit {
   }
 
 
-  openSnackBar(msg: string, responseCode: number) {
-    this.snackBar.open(msg, "x", {
-      duration: responseCode === this.RESPONSE_OK ? 3000 : 20000,
-      verticalPosition: this.verticalPosition,
-      panelClass: responseCode === this.RESPONSE_OK ? "back-green" : "back-red"
-    });
-  }
+  // openSnackBar(msg: string, responseCode: number) {
+  //   this.snackBar.open(msg, "x", {
+  //     duration: responseCode === this.RESPONSE_OK ? 3000 : 20000,
+  //     verticalPosition: this.verticalPosition,
+  //     panelClass: responseCode === this.RESPONSE_OK ? "back-green" : "back-red"
+  //   });
+  // }
 
+  goBack() {
+    this.router.navigate(['/AdminProfile']);
+  }
 }

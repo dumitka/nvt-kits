@@ -35,6 +35,9 @@ import { Main} from '../../main';
     logout() {
       this.access_token = null;
       this.token_data = null;
+      window.localStorage.setItem("userId", null);
+      window.localStorage.setItem("username", null);
+      window.localStorage.setItem("role", null);
       this.router.navigate(['/login']);
     }
   

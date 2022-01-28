@@ -8,7 +8,7 @@ import { TokenInterceptor } from './login/TokenInterceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { AdminProfileComponent } from './first-pages/pages/admin-profile/admin-profile.component';
+import { AdminProfileComponent } from './first-pages/pages/admin-profile/component/admin-profile.component';
 import { WaiterProfileComponent } from './first-pages/pages/waiter-profile/waiter-profile.component';
 import { CookProfileComponent } from './first-pages/pages/cook-profile/component/cook-profile.component';
 import { ManagerProfileComponent } from './first-pages/pages/manager-profile/manager-profile.component';
