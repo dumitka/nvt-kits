@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { Desk } from 'src/app/models/desk';
 import { Order } from 'src/app/models/order';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteOrderDialogComponent } from '../../components/delete-order-dialog/delete-order-dialog.component';
 import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { DeleteOrderDialogComponent } from '../../components/delete-order-dialog/delete-order-dialog.component';
 import { ChargeOrderDialogComponent } from '../../components/charge-order-dialog/charge-order-dialog.component';
 
 @Component({
@@ -118,10 +118,8 @@ export class DeskOrderComponent implements OnInit {
   }
 
   chargeOrder(): void {
-    console.log(this.order)
     this.service.chargeOrder(this.order.id).subscribe(
       response => {
-        console.log(response)
         let chargeOrderDialog = this.dialog.open(ChargeOrderDialogComponent, {
           height: '30%',
           width: '45%',
