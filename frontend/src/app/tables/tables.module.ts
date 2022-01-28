@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { TableComponent } from './table/table.component';
 import { ChairComponent } from './chair/chair.component';
 import { TablesLayoutComponent } from './tables-layout/tables-layout.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+
+import { AngularMaterialModule } from '../angular_material.module';
 
 
 
@@ -13,7 +16,9 @@ import { TablesLayoutComponent } from './tables-layout/tables-layout.component';
     TablesLayoutComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    AngularMaterialModule,
+    MatGridListModule,
   ]
 })
 export class TablesModule { }
