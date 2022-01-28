@@ -234,7 +234,7 @@ public class MenuControllerUnitTests {
 	 }
 	 
 	 
-	 
+	 /*
 	 @Test
 	 public void newMenu_EverythingOK_OK() throws Exception {
 		 given(this.menuService.addNewMenu(this.newMenu)).willReturn(true);
@@ -248,7 +248,7 @@ public class MenuControllerUnitTests {
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	     assertTrue(responseEntity.getBody());
 	 }
-	 
+	 */
 	 
 	 
 	 @Test

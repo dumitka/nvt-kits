@@ -35,7 +35,6 @@ import { ServerFirstPageComponent } from './first-pages/pages/server-first-page/
 import { AddDrinkComponent } from './drinks/pages/add-drink/add-drink.component';
 import { AllDrinksComponent } from './drinks/pages/all-drinks/all-drinks.component';
 import { DrinkPageComponent } from './drinks/pages/drink-page/drink-page.component';
-import { DrinksTableComponent } from './drinks/components/drinks-table/drinks-table.component';
 import { DrinkCardPageComponent } from './drink-cards/pages/drink-card-page/drink-card-page.component';
 import { MealProfileComponent } from './meal-category/pages/meal-profile/meal-profile.component';
 import { NewMealComponent } from './meal-category/pages/new-meal/new-meal.component';
@@ -50,9 +49,14 @@ import { CurrentMenuAddMealComponent } from './current-menu/pages/current-menu-a
 import { CurrentMenuMealProfileComponent } from './current-menu/pages/current-menu-meal-profile/current-menu-meal-profile.component';
 import { CurrentMenuMealsComponent } from './current-menu/pages/current-menu-meals/current-menu-meals.component';
 import { ChangeMealPriceDialogComponent } from './current-menu/component/change-meal-price-dialog/change-meal-price-dialog.component';
+import { DeleteDialogComponent } from './drink-cards/components/delete-dialog/delete-dialog.component';
+import { PriceDialogComponent } from './drink-cards/components/price-dialog/price-dialog.component';
+import { NewMenuCategoriesComponent } from './current-menu/pages/new-menu-categories/new-menu-categories.component';
+import { NewMenuMealsComponent } from './current-menu/pages/new-menu-meals/new-menu-meals.component';
+import { NewMenuReviewComponent } from './current-menu/pages/new-menu-review/new-menu-review.component';
+import { AreYouSureDialogComponent } from './current-menu/component/are-you-sure-dialog/are-you-sure-dialog.component';
+import { SaveMenuDialogComponent } from './current-menu/component/save-menu-dialog/save-menu-dialog.component';
 import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.component';
-
-
 
 @NgModule({
   declarations: [
@@ -72,7 +76,6 @@ import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.compone
     AddDrinkComponent,
     AllDrinksComponent,
     DrinkPageComponent,
-    DrinksTableComponent,
     DrinkCardPageComponent,
     MealProfileComponent,
     NewMealComponent,
@@ -87,14 +90,23 @@ import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.compone
     CurrentMenuMealProfileComponent,
     CurrentMenuMealsComponent,
     ChangeMealPriceDialogComponent,
+    DeleteDialogComponent,
+    PriceDialogComponent,
+    NewMenuCategoriesComponent,
+    NewMenuMealsComponent,
+    NewMenuReviewComponent,
+    AreYouSureDialogComponent,
+    SaveMenuDialogComponent,
     DeskOrderComponent,
-    
+
   ],
   entryComponents: [
     DeleteMealDialogComponent,
     ChangeMealPriceDialogComponent,
+    AreYouSureDialogComponent,
+    SaveMenuDialogComponent
   ],
-  
+
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -103,7 +115,7 @@ import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.compone
     ReactiveFormsModule,
     HttpClientModule,
     AngularMaterialModule,
-    
+
 
     RouterModule.forRoot([
       { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -194,11 +206,6 @@ import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.compone
         component: ChoosingDrinksComponent,
       },
       {
-        path: 'DrinksTable',
-        canActivate: [ServerRoutes],
-        component: DrinksTableComponent,
-      },
-      {
         path: 'DrinkCard',
         canActivate: [ServerRoutes],
         component: DrinkCardPageComponent,
@@ -239,11 +246,25 @@ import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.compone
         component: CurrentMenuMealsComponent,
       },
       {
+        path: 'NewMenuCategories',
+        canActivate: [ChefRoutes],
+        component: NewMenuCategoriesComponent,
+      },
+      {
+        path: 'NewMenuMeals',
+        canActivate: [ChefRoutes],
+        component: NewMenuMealsComponent,
+      },
+      {
+        path: 'NewMenuReview',
+        canActivate: [ChefRoutes],
+        component: NewMenuReviewComponent,
+      },
+      {
         path: 'DeskOrder',
         canActivate: [WaiterRoutes],
         component: DeskOrderComponent,
       },
-
 
     ]),
 
@@ -255,7 +276,7 @@ import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.compone
     multi: true,
   },
 
-  AuthService,],
+    AuthService,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

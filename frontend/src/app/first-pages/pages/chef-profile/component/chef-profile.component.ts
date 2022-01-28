@@ -41,7 +41,11 @@ export class ChefProfileComponent implements OnInit {
   }
 
   newMenu(){
-    console.log("Treba implementirati");
+    this.service.getAllMeals().subscribe((data:any) => {
+      let allMeals = data;
+      this.router.navigate(['/NewMenuCategories'], {state:{data:{"newMenuMeals":[], "allMeals":allMeals}}});
+    });
+    
   }
 
   logout(){

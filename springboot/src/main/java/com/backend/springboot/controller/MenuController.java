@@ -115,7 +115,7 @@ public class MenuController {
 	
 	@PutMapping(value = "/deleteMealInMenu", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ROLE_CHEF')")
-	public ResponseEntity<Boolean> deleteMealInMenu(@RequestBody MealWithPriceDTO mealPriceDTO)throws Exception {
+	public ResponseEntity<Boolean> deleteMealInMenu(@RequestBody MealWithPriceDTO mealPriceDTO) {
 		boolean found = mealPriceService.exists(mealPriceDTO.getId());
 		if(!found) {
 			return new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
@@ -126,12 +126,10 @@ public class MenuController {
 	
 	
 	
-	
-	
 	@PostMapping(value = "/newMenu")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
-	public ResponseEntity<Boolean> newMenu(@RequestBody Menu menu) {
-		menuService.addNewMenu(menu);
+	public ResponseEntity<Boolean> newMenu(@RequestBody List<MealWithPriceDTO>mealPrices) {
+		menuService.addNewMenu(mealPrices);
 		return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
 	}
 	
@@ -139,7 +137,7 @@ public class MenuController {
 	
 	@GetMapping(value = "/getMealPricesNotInMenu")
 	@PreAuthorize("hasRole('ROLE_CHEF')")
-	public ResponseEntity<List<MealDTO>> getMealPricesNotInMenu() throws Exception {
+	public ResponseEntity<List<MealDTO>> getMealPricesNotInMenu() {
 		Menu current = this.menuService.getCurrentMenu();
 		if(current != null) {
 			List<Meal> list = mealPriceService.getMealPricesThatAreNotInMenu(current.getId());
@@ -151,6 +149,7 @@ public class MenuController {
 		}
 	
 	}
+	
 	
 	
 }

@@ -1,0 +1,17 @@
+<body> 
+    <h1 mat-dialog-title>Unesite novu cenu artikla {{data}}:</h1>
+    <form class="form" [formGroup] = "cenaForma">
+        <mat-form-field appearance="legacy">
+            <mat-label for="price">CENA PIĆA</mat-label>
+            <input type="number" class="form-control" formControlName="price"  matInput>
+            <mat-error *ngIf = "requiredError('required') || mindError('min')">Potrebno je uneti cenu pića veću od 0!</mat-error>
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <mat-hint></mat-hint>
+        </mat-form-field>
+        <br/>
+        <div mat-dialog-actions>
+            <button mat-raised-button [disabled] = "cenaForma.invalid" (click)="sacuvaj()">OK</button>
+        </div>
+    </form>
+
+</body>

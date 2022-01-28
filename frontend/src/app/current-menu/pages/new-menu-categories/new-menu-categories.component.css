@@ -1,0 +1,145 @@
+
+  body {
+    background-color: #5d7c77;
+    height: 1000px;
+  }
+
+
+
+  h1 { 
+    text-align: center;
+    color: whitesmoke;
+    text-transform: uppercase;
+    padding: 1px;
+    font-family: 'Raleway', cursive;
+    font-weight: 100;
+    position: relative;
+    background: linear-gradient(to right, #6d918b, whitesmoke, #6d918b);
+  }
+  h1::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -50px;
+    width: 600px;
+    margin-left: -300px;
+    margin-top: -220px;
+    height: 600px;
+    background: radial-gradient(50% 50%, ellipse closest-side, #444, #6d918b);
+    z-index: -1;
+  }
+  h1 a {
+    background: #5d7c77;
+    display: block;
+    padding: 20px;
+    text-decoration: none;
+    letter-spacing: 30px;
+    color: whitesmoke;
+  }
+
+
+
+
+
+mat-card{
+    max-width: 300px;
+}
+
+
+.cold-appetizer-card{
+    margin-left: 140px;
+}
+
+.hot-appetizer-card{
+    margin-left: 570px;
+    margin-top: -331px;
+}
+
+.main-meal-card{
+    margin-left: 1000px;
+    margin-top: -331px;
+}
+
+.dessert-card{
+    margin-left: 140px;
+    margin-top: 30px;
+}
+
+.salate-card{
+    margin-left: 570px;
+    margin-top: -333px;
+}
+
+.appendices-card{
+    margin-left: 1000px;
+    margin-top: -333px;
+}
+
+
+
+
+mat-card-title{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif; 
+    font-size: 20px; 
+    font-weight: normal; 
+    line-height: 48px;
+}
+
+
+
+.sayings{
+    text-align: center;
+
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif; 
+    font-size: 15px; 
+    font-weight: normal; 
+    line-height: 48px;
+}
+
+
+.option_button{
+    background-color: #5d7c77; 
+    
+    width: 150px;
+    
+    text-align: center;
+    color: whitesmoke; 
+    font-family: 'Trocchi', serif;
+    font-size: 20px;
+  }
+
+  mat-card-actions{
+    margin-left: 70px;
+  }
+
+
+
+  .review_button{
+    background-color: whitesmoke; 
+    margin-left: 585px;
+    width: 300px;
+    
+    text-align: center;
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif;
+    font-size: 20px;
+  }
+
+
+  .profile_button{
+    background-color: whitesmoke; 
+    margin-left: 585px;
+
+    width: 300px;
+    
+    text-align: center;
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif;
+    font-size: 20px;
+  }
