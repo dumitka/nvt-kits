@@ -58,6 +58,7 @@ import { AreYouSureDialogComponent } from './current-menu/component/are-you-sure
 import { SaveMenuDialogComponent } from './current-menu/component/save-menu-dialog/save-menu-dialog.component';
 import { NewMealOrdersComponent } from './meal-order/pages/new-meal-orders/new-meal-orders.component';
 import { TakenMealOrdersComponent } from './meal-order/pages/taken-meal-orders/taken-meal-orders.component';
+import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,7 @@ import { TakenMealOrdersComponent } from './meal-order/pages/taken-meal-orders/t
     SaveMenuDialogComponent,
     NewMealOrdersComponent,
     TakenMealOrdersComponent,
-    
+    DeskOrderComponent,
   ],
   entryComponents: [
     DeleteMealDialogComponent,
@@ -108,7 +109,7 @@ import { TakenMealOrdersComponent } from './meal-order/pages/taken-meal-orders/t
     AreYouSureDialogComponent,
     SaveMenuDialogComponent
   ],
-  
+
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -117,7 +118,7 @@ import { TakenMealOrdersComponent } from './meal-order/pages/taken-meal-orders/t
     ReactiveFormsModule,
     HttpClientModule,
     AngularMaterialModule,
-    
+
 
     RouterModule.forRoot([
       { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -272,6 +273,11 @@ import { TakenMealOrdersComponent } from './meal-order/pages/taken-meal-orders/t
         canActivate: [ChefRoutes],
         component: TakenMealOrdersComponent,
       },
+      {
+        path: 'DeskOrder',
+        canActivate: [WaiterRoutes],
+        component: DeskOrderComponent,
+      },
 
     ]),
 
@@ -283,7 +289,7 @@ import { TakenMealOrdersComponent } from './meal-order/pages/taken-meal-orders/t
     multi: true,
   },
 
-  AuthService,],
+    AuthService,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

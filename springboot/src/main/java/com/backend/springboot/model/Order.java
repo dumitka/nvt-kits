@@ -24,7 +24,7 @@ public class Order {
 	private Set<OrderedDrink> orderedDrinks;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = false)
+	@JoinColumn(name = "user_id")
 	private User waiter;
 
 	@OneToMany(mappedBy = "order")
