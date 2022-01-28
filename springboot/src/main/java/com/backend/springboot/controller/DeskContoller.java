@@ -20,6 +20,7 @@ public class DeskContoller {
 	@Autowired
 	private DeskService deskService;
 	
+	@Autowired
 	private DeskToDeskDTO deskToDeskDTO;
 	
 	@PreAuthorize("hasRole('ROLE_WAITER')")
@@ -31,6 +32,7 @@ public class DeskContoller {
 		if (desk != null) {
 			deskDTO = deskToDeskDTO.convert(desk);
 		}
+		
 		return new ResponseEntity<DeskDTO>(deskDTO, HttpStatus.OK);
 	}
 }

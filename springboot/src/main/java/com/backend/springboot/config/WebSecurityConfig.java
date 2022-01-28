@@ -90,7 +90,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/meal/getSaladMeals").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/getAppendicesMeals").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/getAllMeals").hasAuthority("ROLE_CHEF")
-				.antMatchers("/api/**").permitAll()
+				.antMatchers("/api/orders/**").hasAuthority("ROLE_WAITER")
+				.antMatchers("/api/desks/**").hasAuthority("ROLE_WAITER")
 			.anyRequest().authenticated().and()
 			.cors().and()
 			.addFilterBefore(new TokenAuthenticationFilter(tokenUtils, customUserDetailsService), BasicAuthenticationFilter.class);

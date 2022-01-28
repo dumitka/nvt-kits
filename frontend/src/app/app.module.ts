@@ -57,6 +57,7 @@ import { NewMenuReviewComponent } from './current-menu/pages/new-menu-review/new
 import { AreYouSureDialogComponent } from './current-menu/component/are-you-sure-dialog/are-you-sure-dialog.component';
 import { SaveMenuDialogComponent } from './current-menu/component/save-menu-dialog/save-menu-dialog.component';
 import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.component';
+import { DeleteOrderDialogComponent } from './orders/components/delete-order-dialog/delete-order-dialog.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.compone
     AreYouSureDialogComponent,
     SaveMenuDialogComponent,
     DeskOrderComponent,
+    DeleteOrderDialogComponent,
 
   ],
   entryComponents: [

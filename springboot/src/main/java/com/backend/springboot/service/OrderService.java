@@ -11,11 +11,11 @@ public class OrderService {
 	private OrderRepository orderRepository;
 
 	public Order findOne(Integer id) {
-		return orderRepository.findOneById(id);
+		return orderRepository.findOneByIdAndIsDeletedFalse(id);
 	}
 	
 	public Order findOrderForDesk(Integer deskId) {
-		return orderRepository.findOneByDeskId(deskId);
+		return orderRepository.findOneByDeskIdAndIsDeletedFalse(deskId);
 	}
 
 	public Order save(Order order) {
