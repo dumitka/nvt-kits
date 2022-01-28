@@ -24,17 +24,14 @@ export class TablesLayoutComponent implements OnInit {
       overlap: 1,
 
       ondropactivate: function (event) {
-        // add active dropzone feedback
         event.target.classList.add('drop-active')
       },
       ondragenter: function (event) {
         var draggableElement = event.relatedTarget
         var dropzoneElement = event.target
     
-        // feedback the possibility of a drop
         dropzoneElement.classList.add('drop-target')
         draggableElement.classList.add('can-drop')
-        // draggableElement.textContent = 'Dragged in'
 
       },
       ondragleave: function (event) {
@@ -53,12 +50,9 @@ export class TablesLayoutComponent implements OnInit {
 
       },
       ondrop: function (event) {
-        event.relatedTarget.textContent = 'Sto dodat!' //ovde onend?
+        event.relatedTarget.textContent = 'Sto dodat!'
         console.log("---------------------DROP---------------")
-
-        console.log("UNUTRA DROP")
         
-        //ovde uzeti coords?
         const restaurant = document.getElementById("restaurant");
         var rect = restaurant.getBoundingClientRect();
         console.log(`------Restoran x y : ${rect.x}  ${rect.y}`)
@@ -76,7 +70,7 @@ export class TablesLayoutComponent implements OnInit {
 
         service.addNewOrUpdate({
           id: event.relatedTarget.getAttribute("name"),
-          deskStatus: "NOT_ORDERED", //enum
+          deskStatus: "NOT_ORDERED", 
           tip: 0,
           
           x: normalizedX,
@@ -92,27 +86,7 @@ export class TablesLayoutComponent implements OnInit {
           event.relatedTarget.classList.add('purple-class');
 
         })
-
-        // const parent = document.getElementById("screen");
-
-        // const newDiv = document.createElement("div");
-        // newDiv.setAttribute("name", "0");
-        // newDiv.setAttribute("id", "yes-drop");
-        // // newDiv.className = 'resize-drag'
-        // newDiv.classList.add('resize-drag');
-        // newDiv.classList.add('can-drop');
-        // newDiv.innerHTML = "Test";
-        // console.log(newDiv)
-        // newDiv.setAttribute('data-x', "50")
-        // newDiv.setAttribute('data-y', "400")
-        // parent.appendChild(newDiv);
-
-
-
-        // document.body.appendChild(newDiv);
         console.log("OPEN SNAC BARR")
-        // openSnackBar("Uspešno ste izmenili sto", this.RESPONSE_OK); //NE VALJA
-        
         
       },
       ondropdeactivate: function (event) {
@@ -162,19 +136,6 @@ export class TablesLayoutComponent implements OnInit {
             console.log(data)
           }
         )
-
-          // var textEl = event.target.querySelector('p')
-        
-        // let parent = event.target.parentElement;
-
-        //////gde ovo?
-        // const parent = document.getElementById("restaurant");
-        // let xPixel = event.target.getAttribute('data-x');
- 
-
-        // let elementId = event.target.id;
-
-        /////
       }
     },
     modifiers: [
@@ -194,7 +155,6 @@ export class TablesLayoutComponent implements OnInit {
       listeners: { 
         move: dragMoveListener,
         end : function(event) {
-          //SAMO AKO JE U RESTORANU
           console.log("Ello! ovo je reakcija na DRAGGABLE  hm treba ove piksele uhvatiti")
         }
       },
@@ -226,15 +186,6 @@ export class TablesLayoutComponent implements OnInit {
       console.log("All cleared!")
     })
   }
-
-
-  // openSnackBar(msg: string, responseCode: number) {
-  //   this.snackBar.open(msg, "x", {
-  //     duration: responseCode === this.RESPONSE_OK ? 3000 : 20000,
-  //     verticalPosition: this.verticalPosition,
-  //     panelClass: responseCode === this.RESPONSE_OK ? "back-green" : "back-red"
-  //   });
-  // }
 
   goBack() {
     this.router.navigate(['/AdminProfile']);

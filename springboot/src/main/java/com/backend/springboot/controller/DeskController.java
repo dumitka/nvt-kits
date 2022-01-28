@@ -34,16 +34,31 @@ public class DeskController {
         return new ResponseEntity<>(mapper.toDeskDTO(newDesk), HttpStatus.OK);
     }
 
+    @PutMapping(value= "/{id}/number/{tableNum}")
+    public ResponseEntity<DeskDTO> updateNumber(@PathVariable Integer id, @PathVariable Integer tableNum) {
+        Desk desk = deskService.findOne(id);
+        if(desk != null) {
+            desk.setTableNum(tableNum);
+            desk = deskService.save(desk);
+            return new ResponseEntity<>(mapper.toDeskDTO(desk), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
     @PutMapping(value = "/{id}")
     public ResponseEntity<DeskDTO> updateSize(@PathVariable Integer id, @RequestBody DeskSizeDTO size) {
 
         Desk desk = deskService.findOne(id);
-        desk.setWidth(size.getWidth());
-        desk.setHeight(size.getHeight());
+        if(desk != null) {
+            desk.setWidth(size.getWidth());
 
-        desk = deskService.save(desk);
+            desk.setHeight(size.getHeight());
 
-        return new ResponseEntity<>(mapper.toDeskDTO(desk), HttpStatus.OK);
+            desk = deskService.save(desk);
+
+            return new ResponseEntity<>(mapper.toDeskDTO(desk), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping(value = "/{id}")

@@ -16,4 +16,8 @@ export class WaiterProfileService {
     return this.http.get(this.URL);
   }
 
+  setTableNum(id, tableNum) {
+    return this.http.put(this.URL + id +"/number/" +tableNum, null)
+  }
+
 }

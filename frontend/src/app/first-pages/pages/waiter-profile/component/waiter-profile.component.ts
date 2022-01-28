@@ -8,6 +8,7 @@ import { ElementRef, Component,
   OnInit,
   QueryList } from '@angular/core';
   import { TableComponent } from 'src/app/table/table.component';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-waiter-profile',
@@ -31,27 +32,40 @@ export class WaiterProfileComponent implements OnInit {
       this.tables = data;
       console.log("OVO SMO PRIMILI KAO SVE STOLOVE")
       console.log(data)
+      if(this.tables[0].tableNum === 0){ //ili Nan
+        console.log("HEJ TREBA IZRACUNATI")
+        this.calculateAndUpdateTableNumbers();
+      }
     })
   }
 
+  calculateAndUpdateTableNumbers() {
+    const map1 = new Map();
 
+    for( let table of this.tables) {
+      let score = Math.sqrt(Math.pow(table.x, 2) + Math.pow(table.y, 2) );
+      map1.set(table.id, score);
+    } 
 
-
-
-
-
-
-
-  // ngAfterViewInit(): void {
-      
-  //   console.log("Hello", this.stolovi.toArray());
-  // }
-
+    const mapSort1 = new Map([...map1.entries()].sort((a, b) => a[1] - b[1]));
+    console.log(mapSort1);
+    
+    let i = 1;
+    let updatedTables : Table[] = [];
+    for (let [key, value] of mapSort1) {
+      this.service.setTableNum(key, i).subscribe((data:any) => {
+        console.log("Update uradjen");
+        console.log(data)
+        updatedTables.push(data);
+      })
+      i = i+1;
+    }
+    console.log(updatedTables)
+    this.tables = updatedTables;
+  }
 
   logout(){
     this.authService.logout();
   }
-
-
 
 }
