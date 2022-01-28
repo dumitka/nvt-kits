@@ -25,10 +25,26 @@ public class DeskController {
     @Autowired
     private DeskMapper mapper;
 
+
+    @PreAuthorize("hasRole('ROLE_WAITER')")
+    @GetMapping("/desk/{id}")
+    public ResponseEntity<DeskDTO> getDesk(@PathVariable Integer id) {
+        DeskDTO deskDTO = null;
+
+        Desk desk = deskService.findOne(id);
+        if (desk != null) {
+            deskDTO = mapper.toDeskDTO(desk);
+        }
+        return new ResponseEntity<DeskDTO>(deskDTO, HttpStatus.OK);
+    }
+
+
+
     //add desk
     @PostMapping(value = "/")
 //    @PreAuthorize("hasRole('ROLE_ADMIN')") //svi
     public ResponseEntity<DeskDTO> addOrUpdate(@RequestBody Desk desk) {
+        desk.setDeleted(false);
         Desk newDesk = deskService.save(desk);
 
         return new ResponseEntity<>(mapper.toDeskDTO(newDesk), HttpStatus.OK);

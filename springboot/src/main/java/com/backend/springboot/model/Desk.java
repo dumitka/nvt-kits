@@ -41,4 +41,6 @@ public class Desk {
 	@Column(name = "table_num")
 	private int tableNum;
 
+	@Column(name = "deleted")
+	private boolean deleted;
 }

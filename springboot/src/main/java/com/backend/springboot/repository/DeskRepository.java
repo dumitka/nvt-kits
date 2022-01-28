@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface DeskRepository extends JpaRepository<Desk, Integer>{
-	Desk findOneById(Integer id);
 
-	List<Desk> findAll();
+	Desk findOneByIdAndDeletedFalse(Integer id);
 
-	void delete(Desk desk);
+	List<Desk> findByDeletedFalse();
+
 }

@@ -22,5 +22,5 @@ public class DeskDTO {
 
     private boolean reserved;
     private int tableNum;
-
+    private boolean deleted;
 }
