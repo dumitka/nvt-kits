@@ -29,7 +29,9 @@ export class ChefProfileComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
+  orders(){
+    this.router.navigate(['/NewMealOrders']);
+  }
 
   meal(){
     this.router.navigate(['/MealCategories']);
@@ -41,7 +43,11 @@ export class ChefProfileComponent implements OnInit {
   }
 
   newMenu(){
-    console.log("Treba implementirati");
+    this.service.getAllMeals().subscribe((data:any) => {
+      let allMeals = data;
+      this.router.navigate(['/NewMenuCategories'], {state:{data:{"newMenuMeals":[], "allMeals":allMeals}}});
+    });
+    
   }
 
   logout(){

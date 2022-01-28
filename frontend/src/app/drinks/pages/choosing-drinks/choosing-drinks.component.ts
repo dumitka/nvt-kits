@@ -3,6 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/first-pages/services/user-service/user.service';
+import { DrinkCardDTO } from 'src/app/models/drinkCardDTO';
+import { DrinkDTO } from 'src/app/models/drinkDTO';
+import { DrinkPriceDTO } from 'src/app/models/drinkPriceDTO';
 import { DialogInputPriceComponent } from '../../components/dialog-input-price/dialog-input-price.component';
 import { DrinkService } from '../../services/drink-service/drink.service';
 
@@ -12,10 +15,10 @@ import { DrinkService } from '../../services/drink-service/drink.service';
   styleUrls: ['./choosing-drinks.component.css']
 })
 export class ChoosingDrinksComponent implements OnInit {
-  picaZaPrikaz: any;
+  picaZaPrikaz: DrinkDTO[];
   pretraga: string = '';
   kategorija: string = '';
-  kartaPica: any;
+  kartaPica: DrinkCardDTO;
   
   constructor(private drinkService: DrinkService, private ruter: Router, private service:UserService,
       private snackBar: MatSnackBar, public dialog: MatDialog,) {
@@ -29,17 +32,7 @@ export class ChoosingDrinksComponent implements OnInit {
       };
     }
     this.drinkService.svaPica().subscribe((response: any) => {
-      this.picaZaPrikaz = [];
-      for (let pice of response) {
-        let dodato = false;
-        for (let elem of this.kartaPica.drinkPriceDTOs) {
-          if (elem.drinkDTO.id == pice.id) {
-            dodato = true;
-            break;
-          }
-        }
-        if (!dodato) this.picaZaPrikaz.push(pice);
-      }
+      this.picaZaPrikaz = response;
       this.prikaziPica();
   });
 }
@@ -75,21 +68,38 @@ export class ChoosingDrinksComponent implements OnInit {
   pretrazi() {
     if (this.pretraga === '') {
       this.drinkService.svaPica().subscribe(response => {
-        this.picaZaPrikaz = response;
+        this.picaZaPrikaz = response as DrinkDTO[];
         if (this.kategorija != '') this.filterPoKategoriji();
         this.prikaziPica();
       });
     }
     else {
       this.drinkService.pretraziPica(this.pretraga).subscribe(response => {
-        this.picaZaPrikaz = response;
+        this.picaZaPrikaz = response as DrinkDTO[];
         if (this.kategorija != '') this.filterPoKategoriji();
         this.prikaziPica();
       });
     }
   }
 
+  izbaciVecIskoriscene() {
+    if (this.kartaPica.drinkPriceDTOs.length == 0) return;
+    let odabranaLista = [];
+    for (let pice of this.picaZaPrikaz) {
+      let dodato = false;
+      for (let elem of this.kartaPica.drinkPriceDTOs) {
+        if (elem.drinkDTO.id == pice.id) {
+          dodato = true;
+          break;
+        }
+      }
+      if (!dodato) odabranaLista.push(pice);
+    }
+    this.picaZaPrikaz = odabranaLista;
+  }
+
   prikaziPica() {
+    this.izbaciVecIskoriscene();
     let divZaPica = document.getElementById("divZaPica");
     // brisemo sve postojece
     while (divZaPica.firstChild) {
@@ -97,13 +107,12 @@ export class ChoosingDrinksComponent implements OnInit {
     }
     // dodajemo za svako pice koje odgovara
     divZaPica.setAttribute("style", "overflow-y: scroll;height:500px;");
-    let redniBr = 0;
     this.picaZaPrikaz.forEach(pice => {
       let div = document.createElement("div");
       div.className = "mat-card";
       div.setAttribute("style", "margin-left: 31px; margin-top: 15px;width:300px;float: left;");
       div.setAttribute("style", "margin-left: 31px; margin-top: 15px;width:300px;float: left;");
-      div.setAttribute("name", pice.id);
+      div.setAttribute("name", pice.id.toString());
 
       let div2 = document.createElement("div");
       div2.className = "mat-card-title-group";
@@ -114,7 +123,7 @@ export class ChoosingDrinksComponent implements OnInit {
       let slika = document.createElement("img");
       slika.setAttribute("class", "mat-card-lg-image");
       slika.setAttribute("src", "assets\\" + pice.image);
-      slika.setAttribute("name", pice.id);
+      slika.setAttribute("name", pice.id.toString());
       slika.ondblclick = (e: any) => {this.dupliKlikNaPice(e);};
       div2.appendChild(slika);
       div.appendChild(div2);
@@ -131,7 +140,7 @@ export class ChoosingDrinksComponent implements OnInit {
       div4.className = "mat-card-actions";
       let dugme = document.createElement("button");
       dugme.setAttribute("class", "mat-raised-button");
-      dugme.setAttribute("name", pice.id);
+      dugme.setAttribute("name", pice.id.toString());
       dugme.setAttribute("style", "background-color: #5d7c77;width: 100px;text-align: center;color: whitesmoke; " 
         + "font-family: 'Trocchi', serif;font-size: 20px; margin-left: 100px;");
       dugme.appendChild(document.createTextNode("DODAJ"));
@@ -140,7 +149,6 @@ export class ChoosingDrinksComponent implements OnInit {
       div.appendChild(div4);
 
       divZaPica.appendChild(div);
-      redniBr++;
     });
   }
 
@@ -156,7 +164,7 @@ export class ChoosingDrinksComponent implements OnInit {
   }
 
   dodaj(event) {
-    let odabranoPice;
+    let odabranoPice: DrinkDTO;
     for (let elem of this.picaZaPrikaz) {
       if (elem.id == event.srcElement.name) {
         odabranoPice = elem;
@@ -169,7 +177,7 @@ export class ChoosingDrinksComponent implements OnInit {
       data: odabranoPice.name,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: number) => {
       if (result) {
         this.ispisPoruke("Uspesno ste dodali " + odabranoPice.name + " u kartu pica");
         //izbrisi iz liste za prikaz
@@ -181,9 +189,11 @@ export class ChoosingDrinksComponent implements OnInit {
         this.picaZaPrikaz.splice(izbrisiPice, izbrisiPice);
         this.prikaziPica();
         //dodaj u drinkCard
-        let novaCena = {
+        let novaCena: DrinkPriceDTO = {
           drinkDTO: odabranoPice,
           price: result,
+          id: undefined,
+          lastDrinkCardId: undefined,
         }
         this.kartaPica.drinkPriceDTOs.push(novaCena);
       }

@@ -13,6 +13,10 @@ public class OrderService {
 	public Order findOne(Integer id) {
 		return orderRepository.findOneById(id);
 	}
+	
+	public Order findOrderForDesk(Integer deskId) {
+		return orderRepository.findOneByDeskId(deskId);
+	}
 
 	public Order save(Order order) {
 		return orderRepository.save(order);

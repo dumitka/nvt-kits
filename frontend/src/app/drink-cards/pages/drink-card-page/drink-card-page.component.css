@@ -42,3 +42,54 @@ h1 a {
     letter-spacing: 30px;
     color: whitesmoke;
 }
+
+.example-container {
+    height: 400px;
+    overflow: auto;
+    background:  whitesmoke;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Raleway', cursive;
+    background:  whitesmoke;
+    color: #5d7c77;
+}
+
+.dugme_tabele { 
+    background-color: #5d7c77; 
+    width: 100px;
+    text-align: center;
+    color: whitesmoke; 
+    font-family: 'Trocchi', serif;
+    font-size: 20px;
+}
+
+mat-form-field {
+    padding: 10px;
+    color: #5d7c77;
+    font-family: 'Raleway', cursive;
+    background-color: whitesmoke;
+}
+
+.dugme_dodaj, .dugme_sacuvaj { 
+    background-color: whitesmoke; 
+    width: 200px;
+    text-align: center;
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif;
+    font-size: 20px;
+}
+
+.dugme_dodaj { 
+    left: 10%;
+}
+
+.dugme_sacuvaj { 
+    left: 60%;
+}

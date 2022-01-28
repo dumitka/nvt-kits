@@ -29,7 +29,7 @@ public class OrderedMeal {
 	private Order order;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = false)
+	@JoinColumn(name = "user_id")
 	private User cook;
 
 	@Column(name = "status")

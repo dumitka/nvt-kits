@@ -25,6 +25,10 @@ public class OrderedDrinkToOrderedDrinkDTO implements Converter<OrderedDrink, Or
 	}
 
 	public Set<OrderedDrinkDTO> convertSet(Set<OrderedDrink> drinks) {
-		return drinks.stream().map(d -> convert(d)).collect(Collectors.toSet());
+		if (drinks != null) {
+			return drinks.stream().map(d -> convert(d)).collect(Collectors.toSet());
+		}
+		
+		return null;
 	}
 }

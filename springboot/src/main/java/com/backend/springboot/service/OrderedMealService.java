@@ -13,12 +13,16 @@ public class OrderedMealService {
 	@Autowired
 	private OrderedMealRepository orderedMealRepository;
 
+	public OrderedMeal findOne(Integer id) {
+		return orderedMealRepository.findOneById(id);
+	}
+	
 	public List<OrderedMeal> findByStatus(OrderedItemStatus status) {
 		return orderedMealRepository.findByStatus(status);
 	}
-
-	public OrderedMeal findOne(Integer id) {
-		return orderedMealRepository.findOneById(id);
+	
+	public List<OrderedMeal> findByCook(Integer userId) {
+		return orderedMealRepository.findByCookId(userId);
 	}
 
 	public OrderedMeal save(OrderedMeal orderedMeal) {

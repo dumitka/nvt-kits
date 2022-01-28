@@ -41,7 +41,7 @@ public class OrderedDrink {
 	private Order order;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = false)
+	@JoinColumn(name = "user_id")
 	private User bartender;
 
 	@Column(name = "status")

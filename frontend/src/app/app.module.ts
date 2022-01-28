@@ -35,7 +35,6 @@ import { ServerFirstPageComponent } from './first-pages/pages/server-first-page/
 import { AddDrinkComponent } from './drinks/pages/add-drink/add-drink.component';
 import { AllDrinksComponent } from './drinks/pages/all-drinks/all-drinks.component';
 import { DrinkPageComponent } from './drinks/pages/drink-page/drink-page.component';
-import { DrinksTableComponent } from './drinks/components/drinks-table/drinks-table.component';
 import { DrinkCardPageComponent } from './drink-cards/pages/drink-card-page/drink-card-page.component';
 import { MealProfileComponent } from './meal-category/pages/meal-profile/meal-profile.component';
 import { NewMealComponent } from './meal-category/pages/new-meal/new-meal.component';
@@ -50,13 +49,19 @@ import { CurrentMenuAddMealComponent } from './current-menu/pages/current-menu-a
 import { CurrentMenuMealProfileComponent } from './current-menu/pages/current-menu-meal-profile/current-menu-meal-profile.component';
 import { CurrentMenuMealsComponent } from './current-menu/pages/current-menu-meals/current-menu-meals.component';
 import { ChangeMealPriceDialogComponent } from './current-menu/component/change-meal-price-dialog/change-meal-price-dialog.component';
+import { DeleteDialogComponent } from './drink-cards/components/delete-dialog/delete-dialog.component';
+import { PriceDialogComponent } from './drink-cards/components/price-dialog/price-dialog.component';
+import { NewMenuCategoriesComponent } from './current-menu/pages/new-menu-categories/new-menu-categories.component';
+import { NewMenuMealsComponent } from './current-menu/pages/new-menu-meals/new-menu-meals.component';
+import { NewMenuReviewComponent } from './current-menu/pages/new-menu-review/new-menu-review.component';
+import { AreYouSureDialogComponent } from './current-menu/component/are-you-sure-dialog/are-you-sure-dialog.component';
+import { SaveMenuDialogComponent } from './current-menu/component/save-menu-dialog/save-menu-dialog.component';
+import { NewMealOrdersComponent } from './meal-order/pages/new-meal-orders/new-meal-orders.component';
+import { TakenMealOrdersComponent } from './meal-order/pages/taken-meal-orders/taken-meal-orders.component';
+import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.component';
 import { TablesModule } from './tables/tables.module';
 import { TablesLayoutComponent } from './tables/tables-layout/tables-layout.component';
 import { TableComponent } from './table/table.component';
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,7 +80,6 @@ import { TableComponent } from './table/table.component';
     AddDrinkComponent,
     AllDrinksComponent,
     DrinkPageComponent,
-    DrinksTableComponent,
     DrinkCardPageComponent,
     MealProfileComponent,
     NewMealComponent,
@@ -90,13 +94,25 @@ import { TableComponent } from './table/table.component';
     CurrentMenuMealProfileComponent,
     CurrentMenuMealsComponent,
     ChangeMealPriceDialogComponent,
+    DeleteDialogComponent,
+    PriceDialogComponent,
+    NewMenuCategoriesComponent,
+    NewMenuMealsComponent,
+    NewMenuReviewComponent,
+    AreYouSureDialogComponent,
+    SaveMenuDialogComponent,
+    NewMealOrdersComponent,
+    TakenMealOrdersComponent,
+    DeskOrderComponent,
     TableComponent
   ],
   entryComponents: [
     DeleteMealDialogComponent,
     ChangeMealPriceDialogComponent,
+    AreYouSureDialogComponent,
+    SaveMenuDialogComponent
   ],
-  
+
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -106,7 +122,7 @@ import { TableComponent } from './table/table.component';
     HttpClientModule,
     AngularMaterialModule,
     TablesModule,
-    
+
 
     RouterModule.forRoot([
       { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -197,11 +213,6 @@ import { TableComponent } from './table/table.component';
         component: ChoosingDrinksComponent,
       },
       {
-        path: 'DrinksTable',
-        canActivate: [ServerRoutes],
-        component: DrinksTableComponent,
-      },
-      {
         path: 'DrinkCard',
         canActivate: [ServerRoutes],
         component: DrinkCardPageComponent,
@@ -246,6 +257,36 @@ import { TableComponent } from './table/table.component';
         canActivate: [AdminRoutes],
         component: TablesLayoutComponent,
       },
+      {
+              path: 'NewMenuCategories',
+              canActivate: [ChefRoutes],
+              component: NewMenuCategoriesComponent,
+            },
+            {
+              path: 'NewMenuMeals',
+              canActivate: [ChefRoutes],
+              component: NewMenuMealsComponent,
+            },
+            {
+              path: 'NewMenuReview',
+              canActivate: [ChefRoutes],
+              component: NewMenuReviewComponent,
+            },
+            {
+              path: 'NewMealOrders',
+              canActivate: [ChefRoutes],
+              component: NewMealOrdersComponent,
+            },
+            {
+              path: 'TakenMealOrders',
+              canActivate: [ChefRoutes],
+              component: TakenMealOrdersComponent,
+            },
+            {
+              path: 'DeskOrder',
+              canActivate: [WaiterRoutes],
+              component: DeskOrderComponent,
+            },
 
     ]),
 
@@ -257,7 +298,7 @@ import { TableComponent } from './table/table.component';
     multi: true,
   },
 
-  AuthService,],
+    AuthService,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

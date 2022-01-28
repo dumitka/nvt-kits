@@ -10,4 +10,6 @@ public interface OrderedMealRepository extends JpaRepository<OrderedMeal, Intege
 	OrderedMeal findOneById(Integer id);
 
 	List<OrderedMeal> findByStatus(OrderedItemStatus status);
+	
+	List<OrderedMeal> findByCookId(Integer id);
 }

@@ -12,10 +12,9 @@ export class DialogInputPriceComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DialogInputPriceComponent>,@Inject(MAT_DIALOG_DATA) public data: string,
       private formBuilder: FormBuilder,) {
-        this.cenaForma = this.formBuilder.group({
-          id: [''],
-          price: ['', [Validators.required, Validators.min(1)]]
-        });
+    this.cenaForma = this.formBuilder.group({
+      price: ['', [Validators.required, Validators.min(1)]]
+    });
   }
 
   public requiredError = (errorName: string) =>{

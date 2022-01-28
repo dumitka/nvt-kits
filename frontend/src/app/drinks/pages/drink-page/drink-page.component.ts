@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog} from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { DrinkDTO } from 'src/app/models/drinkDTO';
 import { DialogDeleteComponent } from '../../components/dialog-delete/dialog-delete.component';
 import { DrinkService } from '../../services/drink-service/drink.service';
 
@@ -11,15 +12,15 @@ import { DrinkService } from '../../services/drink-service/drink.service';
   styleUrls: ['./drink-page.component.css']
 })
 export class DrinkPageComponent implements OnInit {
-  pice: any;
-  kategorija: any;
+  pice: DrinkDTO;
+  kategorija: string;
 
   constructor(private ruter: Router, public dialog: MatDialog, private drinkService: DrinkService, private snackBar: MatSnackBar) {
     this.pice = history.state.data.pice;
     if (this.pice.type === "CARBONATED_DRINK") this.kategorija = "Gazirana pića";
     else if (this.pice.type === "NOCARBONATED_DRINK") this.kategorija = "Negazirana pića";
     else if (this.pice.type === "ALCOHOL") this.kategorija = "Alkoholna pića";
-    else this.kategorija = "Topli napitci";
+    else this.kategorija = "Topli napici";
    }
 
   ngOnInit(): void {

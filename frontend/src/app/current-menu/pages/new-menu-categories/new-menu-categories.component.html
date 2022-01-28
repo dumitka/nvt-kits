@@ -1,0 +1,117 @@
+<body>
+
+    <h1><a href="#0">KATEGORIJE JELA</a></h1>
+
+    <br>
+    
+    <mat-card class="cold-appetizer-card">
+        <mat-card-title-group>
+          <mat-card-title>HLADNA PREDJELA</mat-card-title>
+          <img mat-card-lg-image src="assets\cold-appetizer.jpg" >
+        </mat-card-title-group>
+        <mat-card-content>
+            <i class="sayings">
+                "Kažu da dobro hladno predjelo sa svojim kvalitetom 
+            povećava apetit gosta..."
+            </i>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button class="option_button" id="cold_appetizer_button" (click) = "getColdAppetizers()" >KLIKNI ME</button>
+        </mat-card-actions>
+      </mat-card>
+
+
+
+      <mat-card class="hot-appetizer-card">
+        <mat-card-title-group>
+          <mat-card-title>TOPLA PREDJELA</mat-card-title>
+          <img mat-card-lg-image src="assets\hot-appetizer.jpg" >
+        </mat-card-title-group>
+        <mat-card-content>
+            <i class="sayings">
+                "Kažu da je zima odlično godišnje doba za topli obrok..."
+            </i>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button class="option_button" id="hot_appetizer_button" (click) = "getHotAppetizers()" >KLIKNI ME</button>
+        </mat-card-actions>
+      </mat-card>
+
+
+
+      <mat-card class="main-meal-card">
+        <mat-card-title-group>
+          <mat-card-title>GLAVNA JELA</mat-card-title>
+          <img mat-card-lg-image src="assets\main-meal.jpg" >
+        </mat-card-title-group>
+        <mat-card-content>
+            <i class="sayings">
+                "Kažu da ništa ne spaja ljude kao dobro glavno jelo..."
+            </i>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button class="option_button" id="main_meal_button" (click) = "getMainMeals()" >KLIKNI ME</button>
+        </mat-card-actions>
+      </mat-card>
+
+
+
+      <mat-card class="dessert-card">
+        <mat-card-title-group>
+          <mat-card-title>DESERTI</mat-card-title>
+          <img mat-card-lg-image src="assets\dessert.jpg" >
+        </mat-card-title-group>
+        <mat-card-content>
+            <i class="sayings">
+                "Kažu da je isklesano telo nešto što svi žele, ali da budemo iskreni
+                deserti su primamljiviji..."
+            </i>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button class="option_button" id="dessert_button" (click) = "getDesserts()" >KLIKNI ME</button>
+        </mat-card-actions>
+      </mat-card>
+
+
+
+      <mat-card class="salate-card">
+        <mat-card-title-group>
+          <mat-card-title>SALATE</mat-card-title>
+          <img mat-card-lg-image src="assets\salate.jpg" >
+        </mat-card-title-group>
+        <mat-card-content>
+            <i class="sayings">
+                "Kažu u zdravom telu, zdrav duh, zato dodajmo malo salate..."
+            </i>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button class="option_button" id="salate_button" (click) = "getSalats()" >KLIKNI ME</button>
+        </mat-card-actions>
+      </mat-card>
+
+
+
+      <mat-card class="appendices-card">
+        <mat-card-title-group>
+          <mat-card-title>DODACI</mat-card-title>
+          <img mat-card-lg-image src="assets\appendices.jpg" >
+        </mat-card-title-group>
+        <mat-card-content>
+            <i class="sayings">
+                "Kažu da život čine sitnice, zato upotpunimo naša jela sitnim dodacima..."
+            </i>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button class="option_button" id="appendices_button" (click) = "getAppendices()" >KLIKNI ME</button>
+        </mat-card-actions>
+      </mat-card>
+
+
+      <br>
+      <br>
+      <button mat-raised-button class="review_button" id="review_button" (click) = "review()">PREGLEDAJ MENI</button>
+      <br>
+      <br>
+      <button mat-raised-button class="profile_button" id="profile_button" (click) = "returnToProfile()">ODUSTANI</button>
+
+</body>
