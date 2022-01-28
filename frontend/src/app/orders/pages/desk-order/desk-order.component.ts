@@ -118,10 +118,8 @@ export class DeskOrderComponent implements OnInit {
   }
 
   chargeOrder(): void {
-    console.log(this.order)
     this.service.chargeOrder(this.order.id).subscribe(
       response => {
-        console.log(response)
         let chargeOrderDialog = this.dialog.open(ChargeOrderDialogComponent, {
           height: '30%',
           width: '45%',
