@@ -29,4 +29,8 @@ export class TablesService {
   resize(id, size) {
     return this.http.put(this.URL + id, size);
   }
+
+  deleteAll() {
+    return this.http.delete(this.URL);
+  }
 }

@@ -56,8 +56,10 @@ public class DeskController {
     }
 
     @DeleteMapping(value = "/")
-    public void deleteAll() {}
-    
+    public void deleteAll() {
+        deskService.deleteAll();
+    }
+
 
     @GetMapping(value = "/")
 //    @PreAuthorize("hasAnyRole('ROLE_WAITER','ROLE_ADMIN')") //svi

@@ -19,6 +19,17 @@
   margin-top: 40px;
 }
 
+.big-btn {
+  background-color: #29e;
+  color: white;
+  margin-top: 15px;
+  height: 10%;
+  width: 50%;
+  top: 10%;
+  left: 30%;
+  font-size: x-large;
+}
+
 .resize-drag {
   min-width: 50px;
   min-height: 50px;

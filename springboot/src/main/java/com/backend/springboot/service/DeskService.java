@@ -25,4 +25,8 @@ public class DeskService {
 	}
 
 	public void delete(Desk desk) { deskRepository.delete(desk);}
+
+	public void deleteAll() {
+		deskRepository.deleteAll();
+	}
 }

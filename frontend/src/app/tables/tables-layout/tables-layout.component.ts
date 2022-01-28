@@ -32,14 +32,14 @@ export class TablesLayoutComponent implements OnInit {
         // feedback the possibility of a drop
         dropzoneElement.classList.add('drop-target')
         draggableElement.classList.add('can-drop')
-        draggableElement.textContent = 'Dragged in'
+        // draggableElement.textContent = 'Dragged in'
 
       },
       ondragleave: function (event) {
         // remove the drop feedback style
         event.target.classList.remove('drop-target')
         event.relatedTarget.classList.remove('can-drop')
-        event.relatedTarget.textContent = 'Dragged out'
+        event.relatedTarget.textContent = 'Table removed!'
 
         service.delete(event.relatedTarget.getAttribute("name"))
         .subscribe((data:any) => {
@@ -51,7 +51,7 @@ export class TablesLayoutComponent implements OnInit {
 
       },
       ondrop: function (event) {
-        event.relatedTarget.textContent = 'Dropped' //ovde onend?
+        event.relatedTarget.textContent = 'Table added!' //ovde onend?
         console.log("---------------------DROP---------------")
 
         console.log("UNUTRA DROP")
@@ -211,6 +211,9 @@ export class TablesLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.service.deleteAll().subscribe((data:any) =>{
+      console.log("All cleared!")
+    })
   }
 
 

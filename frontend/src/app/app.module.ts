@@ -107,9 +107,7 @@ import { TablesLayoutComponent } from './tables/tables-layout/tables-layout.comp
     
 
     RouterModule.forRoot([
-      // { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: '', redirectTo: 'layout', pathMatch: 'full' },
-      { path: 'layout', component: TablesLayoutComponent},
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       {
         path: 'AdminProfile',
@@ -240,6 +238,11 @@ import { TablesLayoutComponent } from './tables/tables-layout/tables-layout.comp
         path: 'CurrentMenuMeals',
         canActivate: [ChefRoutes],
         component: CurrentMenuMealsComponent,
+      },
+
+      { path: 'ModifyLayout',
+        canActivate: [AdminRoutes],
+        component: TablesLayoutComponent,
       },
 
 
