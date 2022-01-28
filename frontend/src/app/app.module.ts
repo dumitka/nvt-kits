@@ -8,11 +8,11 @@ import { TokenInterceptor } from './login/TokenInterceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { AdminProfileComponent } from './first-pages/pages/admin-profile/admin-profile.component';
-import { WaiterProfileComponent } from './first-pages/pages/waiter-profile/waiter-profile.component';
+import { AdminProfileComponent } from './first-pages/pages/admin-profile/component/admin-profile.component';
+import { WaiterProfileComponent } from './first-pages/pages/waiter-profile/component/waiter-profile.component';
 import { CookProfileComponent } from './first-pages/pages/cook-profile/component/cook-profile.component';
 import { ManagerProfileComponent } from './first-pages/pages/manager-profile/manager-profile.component';
-import { BartenderProfileComponent } from './first-pages/pages/bartender-profile/bartender-profile.component';
+import { BartenderProfileComponent } from './first-pages/pages/bartender-profile/component/bartender-profile.component';
 import { ChefProfileComponent } from './first-pages/pages/chef-profile/component/chef-profile.component';
 import { DirectorProfileComponent } from './first-pages/pages/director-profile/director-profile.component';
 import { ServerProfileComponent } from './first-pages/pages/server-profile/server-profile.component';
@@ -59,7 +59,9 @@ import { SaveMenuDialogComponent } from './current-menu/component/save-menu-dial
 import { NewMealOrdersComponent } from './meal-order/pages/new-meal-orders/new-meal-orders.component';
 import { TakenMealOrdersComponent } from './meal-order/pages/taken-meal-orders/taken-meal-orders.component';
 import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.component';
-
+import { TablesModule } from './tables/tables.module';
+import { TablesLayoutComponent } from './tables/tables-layout/tables-layout.component';
+import { TableComponent } from './table/table.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -102,6 +104,7 @@ import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.compone
     NewMealOrdersComponent,
     TakenMealOrdersComponent,
     DeskOrderComponent,
+    TableComponent
   ],
   entryComponents: [
     DeleteMealDialogComponent,
@@ -118,6 +121,7 @@ import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.compone
     ReactiveFormsModule,
     HttpClientModule,
     AngularMaterialModule,
+    TablesModule,
 
 
     RouterModule.forRoot([
@@ -248,6 +252,11 @@ import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.compone
         canActivate: [ChefRoutes],
         component: CurrentMenuMealsComponent,
       },
+
+      { path: 'ModifyLayout',
+        canActivate: [AdminRoutes],
+        component: TablesLayoutComponent,
+      },
       {
         path: 'NewMenuCategories',
         canActivate: [ChefRoutes],
@@ -288,6 +297,7 @@ import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.compone
         canActivate: [CookRoutes],
         component: TakenMealOrdersComponent,
       },
+
 
     ]),
 

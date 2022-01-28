@@ -35,6 +35,9 @@ import { Main} from '../../main';
     logout() {
       this.access_token = null;
       this.token_data = null;
+      window.localStorage.setItem("userId", null);
+      window.localStorage.setItem("username", null);
+      window.localStorage.setItem("role", null);
       this.router.navigate(['/login']);
     }
   
@@ -49,6 +52,9 @@ import { Main} from '../../main';
   
     getTokenData() {
       if ( this.token_data != null) {
+        window.localStorage.setItem("userId", this.token_data.id);
+        window.localStorage.setItem("username", this.token_data.username);
+        window.localStorage.setItem("role", this.token_data.role);
         return this.token_data;
       } else {
         return {

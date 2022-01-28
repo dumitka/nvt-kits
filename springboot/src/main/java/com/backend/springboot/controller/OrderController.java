@@ -65,7 +65,8 @@ public class OrderController {
 	
 	@Autowired
 	private MenuService menuService;
-	
+
+	@Autowired
 	private OrderToOrderDTO orderToOrderDTO;
 	
 	@PreAuthorize("hasRole('ROLE_WAITER')")
