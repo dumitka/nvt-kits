@@ -5,10 +5,16 @@ import com.backend.springboot.repository.DeskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DeskService {
 	@Autowired
 	private DeskRepository deskRepository;
+
+	public List<Desk> findAll() {
+		return deskRepository.findAll();
+	}
 
 	public Desk findOne(Integer id) {
 		return deskRepository.findOneById(id);
