@@ -51,8 +51,8 @@
   padding: 1em;
   border: 1px solid #cc0000;
 
-  height: 650px;
-  width: 1200px;
+  width: 1350px;
+  height: 700px;
   
   background-color: #bfe4ff;
   border: dashed 4px transparent;
@@ -68,7 +68,7 @@
   height: 10%;
   width: 50%;
   top: 5%;
-  left: 35%;
+  left: 25%;
   font-size: x-large;
 }
 
