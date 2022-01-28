@@ -7,16 +7,33 @@
   transform: translate(0px, 0px);
 }
 
+.welcome-text {
+  position: absolute;
+  top: 100px;;
+  left:100px;
+  font-size: xxx-large;
+  color: #29e;
+}
+
+.welcome-text p{
+  margin-top: 40px;
+}
+
 .resize-drag {
   min-width: 50px;
   min-height: 50px;
 
   width: 120px;
+  height: 120px;
+
   border-radius: 8px;
   background-color: #29e;
   color: white;
   font-size: 20px;
   font-family: sans-serif;
+  position: absolute;
+  top: 500px;;
+  left:150px;
 
   touch-action: none;
 
@@ -49,7 +66,8 @@
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.1);
-  box-sizing: border-box
+  box-sizing: border-box;
+  position: relative;
 }
 
 .drag-drop.can-drop {
@@ -65,4 +83,8 @@
 
 .purple-class {
   background-color: rgb(180, 34, 238);
+}
+
+.gray-class {
+  background-color: rgb(82, 75, 85);
 }

@@ -40,6 +40,15 @@ export class TablesLayoutComponent implements OnInit {
         event.target.classList.remove('drop-target')
         event.relatedTarget.classList.remove('can-drop')
         event.relatedTarget.textContent = 'Dragged out'
+
+        service.delete(event.relatedTarget.getAttribute("name"))
+        .subscribe((data:any) => {
+          console.log("OBRISALI SMO " + data)
+          event.relatedTarget.classList.remove('purple-class')
+          event.relatedTarget.classList.add('gray-class');
+          
+        })
+
       },
       ondrop: function (event) {
         event.relatedTarget.textContent = 'Dropped' //ovde onend?
@@ -58,9 +67,8 @@ export class TablesLayoutComponent implements OnInit {
         console.log(`----------RELATIVNA POZICIJA KOJU CUVAMO x y :  ${table_rect.x - rect.x }  ${table_rect.y - rect.y}`)
 
         service.addNewOrUpdate({
-          // id: event.relatedTarget.id,
-          id: 2,
-          status: "ORDERED", //enum
+          id: event.relatedTarget.getAttribute("name"),
+          deskStatus: "NOT_ORDERED", //enum
           tip: 0,
           
           x: table_rect.x - rect.x,
@@ -71,13 +79,32 @@ export class TablesLayoutComponent implements OnInit {
           reserved: false,
         }).subscribe((data:any) => {
           console.log(data)
+          event.relatedTarget.setAttribute("name", data.id);
+          event.relatedTarget.classList.remove('gray-class');
           event.relatedTarget.classList.add('purple-class');
+
         })
 
+        // const parent = document.getElementById("screen");
 
+        // const newDiv = document.createElement("div");
+        // newDiv.setAttribute("name", "0");
+        // newDiv.setAttribute("id", "yes-drop");
+        // // newDiv.className = 'resize-drag'
+        // newDiv.classList.add('resize-drag');
+        // newDiv.classList.add('can-drop');
+        // newDiv.innerHTML = "Test";
+        // console.log(newDiv)
+        // newDiv.setAttribute('data-x', "50")
+        // newDiv.setAttribute('data-y', "400")
+        // parent.appendChild(newDiv);
+
+
+
+        // document.body.appendChild(newDiv);
         console.log("OPEN SNAC BARR")
         // openSnackBar("Uspešno ste izmenili sto", this.RESPONSE_OK); //NE VALJA
-
+        
         
       },
       ondropdeactivate: function (event) {
@@ -114,6 +141,17 @@ export class TablesLayoutComponent implements OnInit {
 
       end (event) {
         console.log("Ello! Ovo je reakcija na resize-drag")
+        var element = event.target;
+        var table_rect = element.getBoundingClientRect();
+        service.resize(element.getAttribute("name"), {
+          height: table_rect.height,
+          width: table_rect.width
+        }).subscribe((data: any) => {
+            console.log("USPESNO RISAJZOVALI");
+            console.log(data)
+          }
+        )
+
           // var textEl = event.target.querySelector('p')
         
         // let parent = event.target.parentElement;

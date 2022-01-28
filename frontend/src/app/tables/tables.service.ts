@@ -21,4 +21,12 @@ export class TablesService {
   addNewOrUpdate(table){
     return this.http.post(this.URL , table);
   }
+
+  delete(id) {
+    return this.http.delete(this.URL  + id);
+  }
+
+  resize(id, size) {
+    return this.http.put(this.URL + id, size);
+  }
 }

@@ -2,6 +2,7 @@ package com.backend.springboot.controller;
 
 
 import com.backend.springboot.dto.DeskDTO;
+import com.backend.springboot.dto.DeskSizeDTO;
 import com.backend.springboot.dtoTransformation.DeskMapper;
 import com.backend.springboot.model.Desk;
 import com.backend.springboot.service.DeskService;
@@ -33,6 +34,30 @@ public class DeskController {
         return new ResponseEntity<>(mapper.toDeskDTO(newDesk), HttpStatus.OK);
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<DeskDTO> updateSize(@PathVariable Integer id, @RequestBody DeskSizeDTO size) {
+
+        Desk desk = deskService.findOne(id);
+        desk.setWidth(size.getWidth());
+        desk.setHeight(size.getHeight());
+
+        desk = deskService.save(desk);
+
+        return new ResponseEntity<>(mapper.toDeskDTO(desk), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<DeskDTO> deleteDesk (@PathVariable Integer id) {
+        Desk desk = deskService.findOne(id);
+
+        deskService.delete(desk);
+
+        return new ResponseEntity<>(mapper.toDeskDTO(desk), HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/")
+    public void deleteAll() {}
+    
 
     @GetMapping(value = "/")
 //    @PreAuthorize("hasAnyRole('ROLE_WAITER','ROLE_ADMIN')") //svi

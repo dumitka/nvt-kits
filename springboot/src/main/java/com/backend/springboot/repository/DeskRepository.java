@@ -9,4 +9,6 @@ public interface DeskRepository extends JpaRepository<Desk, Integer>{
 	Desk findOneById(Integer id);
 
 	List<Desk> findAll();
+
+	void delete(Desk desk);
 }

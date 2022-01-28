@@ -23,4 +23,6 @@ public class DeskService {
 	public Desk save(Desk desk) {
 		return deskRepository.save(desk);
 	}
+
+	public void delete(Desk desk) { deskRepository.delete(desk);}
 }
