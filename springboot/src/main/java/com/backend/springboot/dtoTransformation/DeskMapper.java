@@ -15,7 +15,7 @@ public class DeskMapper {
                 .y(desk.getY())
                 .height(desk.getHeight())
                 .width(desk.getWidth())
-                .capacity(desk.getCapacity())
+                .reserved(desk.getReserved())
                 .build();
 
     }

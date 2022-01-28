@@ -2,7 +2,6 @@ export interface Table {
 
   id: Number;
   status: String; //enum
-  type: Float32Array;
   tip: Number;
   
   x: Number;
@@ -11,6 +10,4 @@ export interface Table {
   width: Number;
 
   reserved: boolean;
-  capacity: Number;
-  restaurant_id: Number;
 }

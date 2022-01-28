@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { TablesService } from '../tables.service';
 import interact from 'interactjs';
+import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-tables-layout',
@@ -8,16 +10,17 @@ import interact from 'interactjs';
 })
 export class TablesLayoutComponent implements OnInit {
 
-  constructor() { 
+  RESPONSE_OK : number = 0;
+  RESPONSE_ERROR : number = -1;
+  verticalPosition: MatSnackBarVerticalPosition = "top";
+
+  constructor(public service: TablesService, private snackBar: MatSnackBar) { 
 
     interact('.dropzone').dropzone({
-      // only accept elements matching this CSS selector
-      // accept: '#yes-drop',
-      // Require a 75% element overlap for a drop to be possible
+      accept: '#yes-drop',
+
       overlap: 1,
-    
-      // listen for drop related events:
-    
+
       ondropactivate: function (event) {
         // add active dropzone feedback
         event.target.classList.add('drop-active')
@@ -54,6 +57,28 @@ export class TablesLayoutComponent implements OnInit {
 
         console.log(`----------RELATIVNA POZICIJA KOJU CUVAMO x y :  ${table_rect.x - rect.x }  ${table_rect.y - rect.y}`)
 
+        service.addNewOrUpdate({
+          // id: event.relatedTarget.id,
+          id: 2,
+          status: "ORDERED", //enum
+          tip: 0,
+          
+          x: table_rect.x - rect.x,
+          y: table_rect.y - rect.y,
+          height: table_rect.height,
+          width: table_rect.width,
+
+          reserved: false,
+        }).subscribe((data:any) => {
+          console.log(data)
+          event.relatedTarget.classList.add('purple-class');
+        })
+
+
+        console.log("OPEN SNAC BARR")
+        // openSnackBar("Uspešno ste izmenili sto", this.RESPONSE_OK); //NE VALJA
+
+        
       },
       ondropdeactivate: function (event) {
         // remove active dropzone feedback
@@ -62,13 +87,8 @@ export class TablesLayoutComponent implements OnInit {
       }
     })
 
-
-
-
-    // target elements with the "draggable" class
     interact('.resize-drag')
     .resizable({
-    // resize from all edges and corners
     edges: { left: true, right: true, bottom: true, top: true },
 
     listeners: {
@@ -95,30 +115,15 @@ export class TablesLayoutComponent implements OnInit {
       end (event) {
         console.log("Ello! Ovo je reakcija na resize-drag")
           // var textEl = event.target.querySelector('p')
-
-          // textEl && (textEl.textContent =
-          //   'moved a distance of ' +
-          //   (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
-          //             Math.pow(event.pageY - event.y0, 2) | 0))
-          //     .toFixed(2) + 'px')
-
         
         // let parent = event.target.parentElement;
 
         //////gde ovo?
         // const parent = document.getElementById("restaurant");
-        // let width = parent.offsetWidth;
-        // let height = parent.offsetHeight;
-
         // let xPixel = event.target.getAttribute('data-x');
-        // let yPixel = event.target.getAttribute('data-y');
-        // let xNormalized = xPixel / width;
-        // let yNormalized = yPixel / height;
+ 
 
         // let elementId = event.target.id;
-        // console.log(`Element with ID ${elementId} has moved to pixel coordinates x=${xPixel}, y=${yPixel}`);
-        // console.log(`Normalized x=${xNormalized}, y=${yNormalized}`);
-        // console.log(`... which is, converted back into pixel coordinates: x=${xNormalized * width}, y=${yNormalized * height}`);
 
         /////
       }
@@ -142,26 +147,6 @@ export class TablesLayoutComponent implements OnInit {
         end : function(event) {
           //SAMO AKO JE U RESTORANU
           console.log("Ello! ovo je reakcija na DRAGGABLE  hm treba ove piksele uhvatiti")
-
-          
-
-          
-
-
-          ////////////ovo je za raniji primer
-          // let width = parent.offsetWidth;
-          // let height = parent.offsetHeight;
-  
-          // let xPixel = event.target.getAttribute('data-x');
-          // let yPixel = event.target.getAttribute('data-y');
-          // let xNormalized = xPixel / width;
-          // let yNormalized = yPixel / height;
-  
-          // let elementId = event.target.id;
-          // console.log(`Element with ID ${elementId} has moved to pixel coordinates x=${xPixel}, y=${yPixel}`);
-          // console.log(`Normalized x=${xNormalized}, y=${yNormalized}`);
-          // console.log(`... which is, converted back into pixel coordinates: x=${xNormalized * width}, y=${yNormalized * height}`);
-
         }
       },
       modifiers: [
@@ -171,49 +156,6 @@ export class TablesLayoutComponent implements OnInit {
         })
       ]
     })
-
-    // .draggable({
-    //   // enable inertial throwing
-    //   inertia: false,
-    //   // keep the element within the area of it's parent
-    //   modifiers: [
-    //     interact.modifiers.restrictRect({
-    //       restriction: 'parent',
-    //       endOnly: false
-    //     })
-    //   ],
-    //   // enable autoScroll
-    //   autoScroll: false,
-
-    //   listeners: {
-    //     // call this function on every dragmove event
-    //     move: dragMoveListener,
-
-    //     // call this function on every dragend event
-    //     end (event) {
-    //       // var textEl = event.target.querySelector('p')
-
-    //       // textEl && (textEl.textContent =
-    //       //   'moved a distance of ' +
-    //       //   (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
-    //       //             Math.pow(event.pageY - event.y0, 2) | 0))
-    //       //     .toFixed(2) + 'px')
-    //       let parent = event.target.parentElement;
-    //       let width = parent.offsetWidth;
-    //       let height = parent.offsetHeight;
-
-    //       let xPixel = event.target.getAttribute('data-x');
-    //       let yPixel = event.target.getAttribute('data-y');
-    //       let xNormalized = xPixel / width;
-    //       let yNormalized = yPixel / height;
-
-    //       let elementId = event.target.id;
-    //       console.log(`Element with ID ${elementId} has moved to pixel coordinates x=${xPixel}, y=${yPixel}`);
-    //       console.log(`Normalized x=${xNormalized}, y=${yNormalized}`);
-    //       console.log(`... which is, converted back into pixel coordinates: x=${xNormalized * width}, y=${yNormalized * height}`);
-    //     }
-    //   }
-    // })
 
     function dragMoveListener (event) {
       var target = event.target
@@ -231,6 +173,15 @@ export class TablesLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+
+  openSnackBar(msg: string, responseCode: number) {
+    this.snackBar.open(msg, "x", {
+      duration: responseCode === this.RESPONSE_OK ? 3000 : 20000,
+      verticalPosition: this.verticalPosition,
+      panelClass: responseCode === this.RESPONSE_OK ? "back-green" : "back-red"
+    });
   }
 
 }

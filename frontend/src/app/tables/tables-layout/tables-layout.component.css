@@ -8,6 +8,9 @@
 }
 
 .resize-drag {
+  min-width: 50px;
+  min-height: 50px;
+
   width: 120px;
   border-radius: 8px;
   background-color: #29e;
@@ -49,9 +52,17 @@
   box-sizing: border-box
 }
 
+.drag-drop.can-drop {
+  color: #000;
+  background-color: #4e4;
+}
 
 .drop-target {
   background-color: #29e;
   border-color: #fff;
   border-style: solid;
+}
+
+.purple-class {
+  background-color: rgb(180, 34, 238);
 }

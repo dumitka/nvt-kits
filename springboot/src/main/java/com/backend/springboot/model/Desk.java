@@ -40,8 +40,4 @@ public class Desk {
 
 	@Column(name = "capacity")
 	private Integer capacity;
-
-	@ManyToOne
-	@JoinColumn(name = "restaurant_id", nullable = false)
-	private Restaurant restaurant;
 }

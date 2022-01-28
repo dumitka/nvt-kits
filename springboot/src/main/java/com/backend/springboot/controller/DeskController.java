@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,10 +25,17 @@ public class DeskController {
     private DeskMapper mapper;
 
     //add desk
+    @PostMapping(value = "/")
+//    @PreAuthorize("hasRole('ROLE_ADMIN')") //svi
+    public ResponseEntity<DeskDTO> addOrUpdate(@RequestBody Desk desk) {
+        Desk newDesk = deskService.save(desk);
+
+        return new ResponseEntity<>(mapper.toDeskDTO(newDesk), HttpStatus.OK);
+    }
 
 
     @GetMapping(value = "/")
-//    @PreAuthorize("hasAnyRole('','','')") //svi
+//    @PreAuthorize("hasAnyRole('ROLE_WAITER','ROLE_ADMIN')") //svi
     public ResponseEntity<List<DeskDTO>> getDesks() {
 
         List<Desk> desks = deskService.findAll();
