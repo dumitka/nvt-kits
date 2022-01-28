@@ -12,4 +12,6 @@ public interface OrderedMealRepository extends JpaRepository<OrderedMeal, Intege
 	List<OrderedMeal> findByStatus(OrderedItemStatus status);
 	
 	List<OrderedMeal> findByCookId(Integer id);
+	
+	List<OrderedMeal> findByCookIdAndStatus(Integer id, OrderedItemStatus status);
 }

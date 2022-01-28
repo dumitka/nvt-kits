@@ -8,16 +8,15 @@ import { TokenInterceptor } from './login/TokenInterceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { AdminProfileComponent } from './first-pages/pages/admin-profile/admin-profile.component';
-import { WaiterProfileComponent } from './first-pages/pages/waiter-profile/waiter-profile.component';
+import { AdminProfileComponent } from './first-pages/pages/admin-profile/component/admin-profile.component';
+import { WaiterProfileComponent } from './first-pages/pages/waiter-profile/component/waiter-profile.component';
 import { CookProfileComponent } from './first-pages/pages/cook-profile/component/cook-profile.component';
 import { ManagerProfileComponent } from './first-pages/pages/manager-profile/manager-profile.component';
-import { BartenderProfileComponent } from './first-pages/pages/bartender-profile/bartender-profile.component';
+import { BartenderProfileComponent } from './first-pages/pages/bartender-profile/component/bartender-profile.component';
 import { ChefProfileComponent } from './first-pages/pages/chef-profile/component/chef-profile.component';
 import { DirectorProfileComponent } from './first-pages/pages/director-profile/director-profile.component';
 import { ServerProfileComponent } from './first-pages/pages/server-profile/server-profile.component';
 import { AuthService } from './login/auth.service';
-
 import { AdminRoutes } from './user-routes/AdminRoutes';
 import { BartenderRoutes } from './user-routes/BartenderRoutes';
 import { ChefRoutes } from './user-routes/ChefRoutes';
@@ -27,7 +26,6 @@ import { ManagerRoutes } from './user-routes/ManagerRoutes';
 import { WaiterRoutes } from './user-routes/WaiterRoutes';
 import { DirectorRoutes } from './user-routes/DirectorRoutes';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { AngularMaterialModule } from './angular_material.module';
 import { MealCategoriesComponent } from './meal-category/categories/component/meal-categories.component';
 import { MealsOfCategoryComponent } from './meal-category/meals-of-category/component/meals-of-category.component';
@@ -61,6 +59,9 @@ import { TakenMealOrdersComponent } from './meal-order/pages/taken-meal-orders/t
 import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.component';
 import { DeleteOrderDialogComponent } from './orders/components/delete-order-dialog/delete-order-dialog.component';
 import { ChargeOrderDialogComponent } from './orders/components/charge-order-dialog/charge-order-dialog.component';
+import { TablesModule } from './tables/tables.module';
+import { TablesLayoutComponent } from './tables/tables-layout/tables-layout.component';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { ChargeOrderDialogComponent } from './orders/components/charge-order-dia
     NewMealOrdersComponent,
     TakenMealOrdersComponent,
     DeskOrderComponent,
+    TableComponent,
     DeleteOrderDialogComponent,
     ChargeOrderDialogComponent,
   ],
@@ -122,6 +124,7 @@ import { ChargeOrderDialogComponent } from './orders/components/charge-order-dia
     ReactiveFormsModule,
     HttpClientModule,
     AngularMaterialModule,
+    TablesModule,
 
 
     RouterModule.forRoot([
@@ -252,6 +255,11 @@ import { ChargeOrderDialogComponent } from './orders/components/charge-order-dia
         canActivate: [ChefRoutes],
         component: CurrentMenuMealsComponent,
       },
+
+      { path: 'ModifyLayout',
+        canActivate: [AdminRoutes],
+        component: TablesLayoutComponent,
+      },
       {
         path: 'NewMenuCategories',
         canActivate: [ChefRoutes],
@@ -282,6 +290,17 @@ import { ChargeOrderDialogComponent } from './orders/components/charge-order-dia
         canActivate: [WaiterRoutes],
         component: DeskOrderComponent,
       },
+      {
+        path: 'NewMealOrdersCook',
+        canActivate: [CookRoutes],
+        component: NewMealOrdersComponent,
+      },
+      {
+        path: 'TakenMealOrdersCook',
+        canActivate: [CookRoutes],
+        component: TakenMealOrdersComponent,
+      },
+
 
     ]),
 

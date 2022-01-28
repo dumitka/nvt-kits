@@ -23,6 +23,7 @@ public class OrderedMealToOrderedMealDTO implements Converter<OrderedMeal, Order
 				.id(meal.getId())
 				.amount(meal.getAmount())
 				.mealId(meal.getMeal().getId())
+				.mealName(meal.getMeal().getName())
 				.orderId(meal.getOrder().getId())
 				.cookId(cookId)
 				.status(meal.getStatus())
