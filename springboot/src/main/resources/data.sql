@@ -201,4 +201,4 @@ insert into desk (desk_status, tip, x, y, height, width, reserved, capacity, res
 insert into orders (deleted, desk_id) values (false, 1);
 
 -- ORDERED DRINK
-insert into ordered_drink (amount, status, user_id, drink_id, order_id) values (2, 0, null, 1, 1);
+insert into ordered_drink (amount, status, user_id, drink_id, order_id) values (2, 2, null, 2, 1);

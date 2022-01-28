@@ -60,6 +60,7 @@ import { NewMealOrdersComponent } from './meal-order/pages/new-meal-orders/new-m
 import { TakenMealOrdersComponent } from './meal-order/pages/taken-meal-orders/taken-meal-orders.component';
 import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.component';
 import { DeleteOrderDialogComponent } from './orders/components/delete-order-dialog/delete-order-dialog.component';
+import { ChargeOrderDialogComponent } from './orders/components/charge-order-dialog/charge-order-dialog.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { DeleteOrderDialogComponent } from './orders/components/delete-order-dia
     TakenMealOrdersComponent,
     DeskOrderComponent,
     DeleteOrderDialogComponent,
+    ChargeOrderDialogComponent,
   ],
   entryComponents: [
     DeleteMealDialogComponent,

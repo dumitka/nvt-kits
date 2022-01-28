@@ -6,6 +6,7 @@ import { Order } from 'src/app/models/order';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteOrderDialogComponent } from '../../components/delete-order-dialog/delete-order-dialog.component';
 import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { ChargeOrderDialogComponent } from '../../components/charge-order-dialog/charge-order-dialog.component';
 
 @Component({
   selector: 'app-desk-order',
@@ -25,8 +26,8 @@ export class DeskOrderComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = "top";
 
   constructor(private service: DeskOrderService, private router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) {
-    this.service.getDesk().subscribe((data: Desk | null) => {
-      this.desk = data as Desk;
+    this.service.getDesk().subscribe((response: Desk | null) => {
+      this.desk = response as Desk;
 
       let deskStatus: string = this.desk.deskStatus.toString();
       if (deskStatus === 'NOT_ORDERED') {
@@ -55,8 +56,8 @@ export class DeskOrderComponent implements OnInit {
       }
     });
 
-    this.service.getOrder().subscribe((data: any) => {
-      this.order = data;
+    this.service.getOrder().subscribe((response: Order | null) => {
+      this.order = response as Order;
     });
   }
 
@@ -64,22 +65,21 @@ export class DeskOrderComponent implements OnInit {
 
   }
 
-  openSnackBar(msg: string, responseCode: number) {
-    this.snackBar.open(msg, "x", {
+  openSnackBar(message: string, responseCode: number) {
+    this.snackBar.open(message, 'x', {
       duration: responseCode === this.RESPONSE_OK ? 3000 : 20000,
-      verticalPosition: this.verticalPosition,
-      panelClass: responseCode === this.RESPONSE_OK ? "back-green" : "back-red"
+      verticalPosition: this.verticalPosition
     });
   }
 
   delete(): void {
-    let dialogReturnValue = this.dialog.open(DeleteOrderDialogComponent, {
+    let deleteOrderDialog = this.dialog.open(DeleteOrderDialogComponent, {
       height: '30%',
       width: '45%',
     });
 
-    dialogReturnValue.afterClosed().subscribe(returnValue => {
-      if (returnValue === "true") {
+    deleteOrderDialog.afterClosed().subscribe(returnValue => {
+      if (returnValue === 'true') {
         this.service.deleteOrder(this.order.id).subscribe(
           response => {
             this.openSnackBar(response, this.RESPONSE_OK);
@@ -87,10 +87,57 @@ export class DeskOrderComponent implements OnInit {
           error => {
             this.openSnackBar(error.error, this.RESPONSE_ERROR);
           }
-        )
+        );
         this.router.navigate(['/login']) // TODO: prozor sa stolovima
       }
     });
+  }
+
+  serveDrinks(): void {
+    this.service.serveDrinks(this.desk.id).subscribe(
+      response => {
+        this.openSnackBar(response, this.RESPONSE_OK);
+      },
+      error => {
+        this.openSnackBar(error.error, this.RESPONSE_ERROR);
+      }
+    );
+    this.router.navigate(['/login']) // TODO: prozor sa stolovima
+  }
+
+  serveMeals(): void {
+    this.service.serveMeals(this.desk.id).subscribe(
+      response => {
+        this.openSnackBar(response, this.RESPONSE_OK);
+      },
+      error => {
+        this.openSnackBar(error.error, this.RESPONSE_ERROR);
+      }
+    );
+    this.router.navigate(['/login']) // TODO: prozor sa stolovima
+  }
+
+  chargeOrder(): void {
+    console.log(this.order)
+    this.service.chargeOrder(this.order.id).subscribe(
+      response => {
+        console.log(response)
+        let chargeOrderDialog = this.dialog.open(ChargeOrderDialogComponent, {
+          height: '30%',
+          width: '45%',
+          data: { "chargeMessage": response },
+        });
+
+        chargeOrderDialog.afterClosed().subscribe(() => {
+          this.router.navigate(['/login']) // TODO: prozor sa stolovima
+          this.openSnackBar("Porudžbina uspešno završena!", this.RESPONSE_OK);
+        });
+      },
+      error => {
+        this.router.navigate(['/login']) // TODO: prozor sa stolovima
+        this.openSnackBar(error.error, this.RESPONSE_ERROR);
+      }
+    )
   }
 
   back(): void {

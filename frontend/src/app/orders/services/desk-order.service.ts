@@ -8,7 +8,8 @@ import { catchError, Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class DeskOrderService {
-  readonly URL: string = Main.PATH + 'api/';
+  private readonly DESKS_URL: string = Main.PATH + 'api/desks/';
+  private readonly ORDERS_URL: string = Main.PATH + 'api/orders/';
 
   constructor(private http: HttpClient) { }
 
@@ -17,21 +18,29 @@ export class DeskOrderService {
   }
 
   getDesk() {
-    return this.http.get(this.URL + 'desks/desk/1'); // TODO: id deska
+    return this.http.get(this.DESKS_URL + 'desk/' + 1); // TODO: dodati deskId
   }
 
   getOrder() {
-    return this.http.get(this.URL + 'orders/deskOrder/1'); // TODO: id deska
+    return this.http.get(this.ORDERS_URL + 'deskOrder/' + 1); // TODO: dodati deskId
   }
 
   // createOrder
   // updateOrder
 
   deleteOrder(orderId: number) {
-    return this.http.put(this.URL + 'orders/deleteOrder/' + orderId, null, { responseType: 'text' }).pipe(catchError(this.errorHandler))
+    return this.http.put(this.ORDERS_URL + 'deleteOrder/' + orderId, null, { responseType: 'text' }).pipe(catchError(this.errorHandler));
   }
 
-  // deliverDrinks
-  // deliverMeals
-  // charge
+  serveDrinks(deskId: number) {
+    return this.http.put(this.ORDERS_URL + 'serveDrinks/' + deskId, null, { responseType: 'text' }).pipe(catchError(this.errorHandler));
+  }
+  
+  serveMeals(deskId: number) {
+    return this.http.put(this.ORDERS_URL + 'serveMeals/' + deskId, null, { responseType: 'text' }).pipe(catchError(this.errorHandler));
+  }
+
+  chargeOrder(orderId: number) {
+    return this.http.get(this.ORDERS_URL + 'chargeOrder/' + orderId, { responseType: 'text' }).pipe(catchError(this.errorHandler));
+  }
 }
