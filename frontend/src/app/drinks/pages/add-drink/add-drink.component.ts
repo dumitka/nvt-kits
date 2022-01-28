@@ -48,6 +48,7 @@ export class AddDrinkComponent implements OnInit {
   }
 
   sacuvaj() {
+    this.piceForma.value.image = this.slika;
     if (this.piceForma.value.id === '') this.drinkService.dodajPice(this.piceForma.value).subscribe(
       response => {
         this.ispisPoruke("Uspešno ste dodali " + this.piceForma.value.name);
