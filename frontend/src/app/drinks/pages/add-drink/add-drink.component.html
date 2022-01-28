@@ -6,7 +6,7 @@
     
     <mat-card class="new-meal-card">
       <mat-card-title-group>
-          <img mat-card-lg-image class="picture" src="assets\pice.png" >
+          <img mat-card-lg-image class="picture" src="assets\{{slika}}" >
         </mat-card-title-group>
       
       <mat-card-content>
@@ -38,7 +38,7 @@
                   <mat-option value="CARBONATED_DRINK">Gazirano piće</mat-option>
                   <mat-option value="NOCARBONATED_DRINK">Negazirano piće</mat-option>
                   <mat-option value="ALCOHOL">Alkoholno piće</mat-option>
-                  <mat-option value="HOT_DRINK">Topli napitci</mat-option>
+                  <mat-option value="HOT_DRINK">Topli napici</mat-option>
               </mat-select>
               <mat-error *ngIf = "requiredError('type', 'required')">Potrebno je uneti kategoriju pićA!</mat-error>
           </mat-form-field>
@@ -63,8 +63,23 @@
               <mat-error *ngIf = "requiredError('amountUnit', 'required')">Potrebno je uneti mernu jedinicu!</mat-error>
           </mat-form-field>
           
+          <br/>
+          <mat-form-field appearance="fill">
+            <mat-label>SLIKA</mat-label>
+            <mat-select>
+              <mat-option (click) = "promenaSlike($event)">Univerzalna</mat-option>
+              <mat-option (click) = "promenaSlike($event)" value="caj.png">Kafa</mat-option>
+              <mat-option (click) = "promenaSlike($event)" value="caj.png">Čaj</mat-option>
+              <mat-option (click) = "promenaSlike($event)" value="sok.jpg">Sok</mat-option>
+              <mat-option (click) = "promenaSlike($event)" value="voda.jpg">Voda</mat-option>
+              <mat-option (click) = "promenaSlike($event)" value="vino.jpg">Vino</mat-option>
+              <mat-option (click) = "promenaSlike($event)" value="pivo.jpg">Pivo</mat-option>
+              <mat-option (click) = "promenaSlike($event)" value="zestina.jpg">Žestina</mat-option>
+              <mat-option (click) = "promenaSlike($event)" value="koktel.jpg">Kokteli</mat-option>
+            </mat-select>
+          </mat-form-field>
+        <br />
         </form>
-        <br/>
       </mat-card-content>
 
       <mat-card-actions>

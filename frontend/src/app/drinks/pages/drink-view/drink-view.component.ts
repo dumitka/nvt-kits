@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { DrinkDTO } from 'src/app/models/drinkDTO';
 
 @Component({
   selector: 'app-drink-view',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./drink-view.component.css']
 })
 export class DrinkViewComponent implements OnInit {
-  pice: any;
+  pice: DrinkDTO;
   kategorija: any;
 
   constructor(private ruter: Router, public dialog: MatDialog, private snackBar: MatSnackBar) {
