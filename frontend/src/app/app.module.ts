@@ -56,6 +56,8 @@ import { NewMenuMealsComponent } from './current-menu/pages/new-menu-meals/new-m
 import { NewMenuReviewComponent } from './current-menu/pages/new-menu-review/new-menu-review.component';
 import { AreYouSureDialogComponent } from './current-menu/component/are-you-sure-dialog/are-you-sure-dialog.component';
 import { SaveMenuDialogComponent } from './current-menu/component/save-menu-dialog/save-menu-dialog.component';
+import { NewMealOrdersComponent } from './meal-order/pages/new-meal-orders/new-meal-orders.component';
+import { TakenMealOrdersComponent } from './meal-order/pages/taken-meal-orders/taken-meal-orders.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +98,8 @@ import { SaveMenuDialogComponent } from './current-menu/component/save-menu-dial
     NewMenuReviewComponent,
     AreYouSureDialogComponent,
     SaveMenuDialogComponent,
+    NewMealOrdersComponent,
+    TakenMealOrdersComponent,
     
   ],
   entryComponents: [
@@ -257,6 +261,16 @@ import { SaveMenuDialogComponent } from './current-menu/component/save-menu-dial
         path: 'NewMenuReview',
         canActivate: [ChefRoutes],
         component: NewMenuReviewComponent,
+      },
+      {
+        path: 'NewMealOrders',
+        canActivate: [ChefRoutes],
+        component: NewMealOrdersComponent,
+      },
+      {
+        path: 'TakenMealOrders',
+        canActivate: [ChefRoutes],
+        component: TakenMealOrdersComponent,
       },
 
     ]),

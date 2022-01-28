@@ -29,7 +29,9 @@ export class ChefProfileComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
+  orders(){
+    this.router.navigate(['/NewMealOrders']);
+  }
 
   meal(){
     this.router.navigate(['/MealCategories']);
