@@ -9,10 +9,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AdminProfileComponent } from './first-pages/pages/admin-profile/component/admin-profile.component';
-import { WaiterProfileComponent } from './first-pages/pages/waiter-profile/waiter-profile.component';
+import { WaiterProfileComponent } from './first-pages/pages/waiter-profile/component/waiter-profile.component';
 import { CookProfileComponent } from './first-pages/pages/cook-profile/component/cook-profile.component';
 import { ManagerProfileComponent } from './first-pages/pages/manager-profile/manager-profile.component';
-import { BartenderProfileComponent } from './first-pages/pages/bartender-profile/bartender-profile.component';
+import { BartenderProfileComponent } from './first-pages/pages/bartender-profile/component/bartender-profile.component';
 import { ChefProfileComponent } from './first-pages/pages/chef-profile/component/chef-profile.component';
 import { DirectorProfileComponent } from './first-pages/pages/director-profile/director-profile.component';
 import { ServerProfileComponent } from './first-pages/pages/server-profile/server-profile.component';
@@ -52,6 +52,8 @@ import { CurrentMenuMealsComponent } from './current-menu/pages/current-menu-mea
 import { ChangeMealPriceDialogComponent } from './current-menu/component/change-meal-price-dialog/change-meal-price-dialog.component';
 import { TablesModule } from './tables/tables.module';
 import { TablesLayoutComponent } from './tables/tables-layout/tables-layout.component';
+import { TableComponent } from './table/table.component';
+
 
 
 
@@ -88,7 +90,7 @@ import { TablesLayoutComponent } from './tables/tables-layout/tables-layout.comp
     CurrentMenuMealProfileComponent,
     CurrentMenuMealsComponent,
     ChangeMealPriceDialogComponent,
-    
+    TableComponent
   ],
   entryComponents: [
     DeleteMealDialogComponent,
@@ -244,7 +246,6 @@ import { TablesLayoutComponent } from './tables/tables-layout/tables-layout.comp
         canActivate: [AdminRoutes],
         component: TablesLayoutComponent,
       },
-
 
     ]),
 

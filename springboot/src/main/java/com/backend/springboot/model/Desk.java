@@ -15,19 +15,19 @@ import javax.persistence.*;
 public class Desk {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private int id;
 
 	@Column(name = "desk_status")
 	private DeskStatus deskStatus;
 
 	@Column(name = "tip")
-	private Float tip;
+	private float tip;
 
 	@Column(name = "x")
-	private int x;
+	private float x;
 
 	@Column(name = "y")
-	private int y;
+	private float y;
 
 	@Column(name = "height")
 	private float height;
@@ -36,8 +36,6 @@ public class Desk {
 	private float width;
 
 	@Column(name = "reserved")
-	private Boolean reserved;
+	private boolean reserved;
 
-	@Column(name = "capacity")
-	private Integer capacity;
 }

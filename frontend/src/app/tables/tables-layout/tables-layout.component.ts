@@ -66,17 +66,23 @@ export class TablesLayoutComponent implements OnInit {
         var table_rect = event.relatedTarget.getBoundingClientRect();
         console.log(`------Sto x y : ${table_rect.x}  ${table_rect.y}`)
 
-        console.log(`----------RELATIVNA POZICIJA KOJU CUVAMO x y :  ${table_rect.x - rect.x }  ${table_rect.y - rect.y}`)
+        
+        let relativeX = table_rect.x - rect.x;
+        let normalizedX = relativeX / rect.width;
+        let relativeY = table_rect.y - rect.y;
+        let normalizedY = relativeY / rect.height;
+        console.log(`----------RELATIVNA POZICIJA KOJU CUVAMO x y :  ${relativeX}  ${relativeY}`)
+        console.log(`----------NORMALIZOVANA POZICIJA KOJU CUVAMO x y :  ${normalizedX}  ${normalizedY}`)
 
         service.addNewOrUpdate({
           id: event.relatedTarget.getAttribute("name"),
           deskStatus: "NOT_ORDERED", //enum
           tip: 0,
           
-          x: table_rect.x - rect.x,
-          y: table_rect.y - rect.y,
-          height: table_rect.height,
-          width: table_rect.width,
+          x: normalizedX,
+          y: normalizedY,
+          height: table_rect.height / rect.height,
+          width: table_rect.width / rect.width,
 
           reserved: false,
         }).subscribe((data:any) => {

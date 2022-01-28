@@ -1,13 +1,13 @@
 export interface Table {
 
-  id: Number;
+  id: number;
   status: String; //enum
-  tip: Number;
+  tip: number;
   
-  x: Number;
-  y: Number;
-  height: Number;
-  width: Number;
+  x: number;
+  y: number;
+  height: number;
+  width: number;
 
   reserved: boolean;
 }

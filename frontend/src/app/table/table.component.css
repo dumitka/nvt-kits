@@ -1,0 +1,31 @@
+.base-table{
+  position: absolute;
+  border-radius: 8px;
+  background-color: rgba(34, 153, 238, 0.7);
+  font-size: 20px;
+  font-family: sans-serif;
+  touch-action: none;
+}
+
+.base-table:hover {
+  background-color: rgba(34, 153, 238, 1);
+}
+
+.reserved{
+
+}
+
+.not-ordered{
+
+}
+
+.ordered{
+
+}
+.delivered{
+
+}
+
+.charged{
+
+}

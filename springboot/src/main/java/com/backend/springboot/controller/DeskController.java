@@ -62,7 +62,7 @@ public class DeskController {
 
 
     @GetMapping(value = "/")
-//    @PreAuthorize("hasAnyRole('ROLE_WAITER','ROLE_ADMIN')") //svi
+//    @PreAuthorize("hasAnyRole('ROLE_WAITER','ROLE_ADMIN')")
     public ResponseEntity<List<DeskDTO>> getDesks() {
 
         List<Desk> desks = deskService.findAll();
@@ -72,7 +72,5 @@ public class DeskController {
 
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
-
-    //update desk
 
 }

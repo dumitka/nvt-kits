@@ -12,14 +12,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class DeskDTO {
 
-    private Integer id;
+    private int id;
     private DeskStatus deskStatus;
 
-    private int x;
-    private int y;
+    private float x;
+    private float y;
     private float height;
     private float width;
 
-    private Boolean reserved;
+    private boolean reserved;
 
 }
