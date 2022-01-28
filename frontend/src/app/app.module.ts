@@ -56,6 +56,8 @@ import { NewMenuMealsComponent } from './current-menu/pages/new-menu-meals/new-m
 import { NewMenuReviewComponent } from './current-menu/pages/new-menu-review/new-menu-review.component';
 import { AreYouSureDialogComponent } from './current-menu/component/are-you-sure-dialog/are-you-sure-dialog.component';
 import { SaveMenuDialogComponent } from './current-menu/component/save-menu-dialog/save-menu-dialog.component';
+import { NewMealOrdersComponent } from './meal-order/pages/new-meal-orders/new-meal-orders.component';
+import { TakenMealOrdersComponent } from './meal-order/pages/taken-meal-orders/taken-meal-orders.component';
 import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.component';
 import { DeleteOrderDialogComponent } from './orders/components/delete-order-dialog/delete-order-dialog.component';
 
@@ -98,9 +100,10 @@ import { DeleteOrderDialogComponent } from './orders/components/delete-order-dia
     NewMenuReviewComponent,
     AreYouSureDialogComponent,
     SaveMenuDialogComponent,
+    NewMealOrdersComponent,
+    TakenMealOrdersComponent,
     DeskOrderComponent,
     DeleteOrderDialogComponent,
-
   ],
   entryComponents: [
     DeleteMealDialogComponent,
@@ -261,6 +264,16 @@ import { DeleteOrderDialogComponent } from './orders/components/delete-order-dia
         path: 'NewMenuReview',
         canActivate: [ChefRoutes],
         component: NewMenuReviewComponent,
+      },
+      {
+        path: 'NewMealOrders',
+        canActivate: [ChefRoutes],
+        component: NewMealOrdersComponent,
+      },
+      {
+        path: 'TakenMealOrders',
+        canActivate: [ChefRoutes],
+        component: TakenMealOrdersComponent,
       },
       {
         path: 'DeskOrder',

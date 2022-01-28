@@ -1,0 +1,42 @@
+<body>
+
+    <h1><a href="#0">PREUZETE PORUDŽBINE</a></h1>
+
+    <br>
+    <br>
+    <br>
+
+     <table mat-table [dataSource]="listOfOrders" class="mat-elevation-z8 demo-table">
+       
+        <ng-container matColumnDef="position">
+        <th mat-header-cell  class="position"  *matHeaderCellDef><b>No.</b></th>
+        <td mat-cell *matCellDef="let element; let i = index">{{i+1}}.</td>
+        </ng-container>
+    
+        <ng-container matColumnDef="name">
+        <th mat-header-cell  class="name"  *matHeaderCellDef><b>NAZIV JELA</b></th>
+        <td mat-cell *matCellDef="let element"><i></i></td>
+        </ng-container>
+        
+        <ng-container matColumnDef="numOfPortion">
+        <th mat-header-cell  class="numOfPortion" *matHeaderCellDef><b>BROJ PORCIJA</b></th>
+        <td mat-cell *matCellDef="let element"><i></i></td>
+        </ng-container>
+
+        <ng-container matColumnDef="button">
+        <th mat-header-cell  class="button" *matHeaderCellDef><b>ZAVRŠI</b></th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-raised-button class="end_button" id="end_button" (click) = "end(element)"><i>ZAVRŠENO</i></button>
+        </td>
+        </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        
+    </table>
+
+    <br>
+    <span><button mat-raised-button class="option_button1" id="back_button" (click) = "back()">NAZAD</button></span>
+
+   
+
+</body>
