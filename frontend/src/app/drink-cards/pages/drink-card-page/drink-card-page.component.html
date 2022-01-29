@@ -2,27 +2,27 @@
     <h1><a (click) = "nazadNaProfil()">VAŠ PROFIL</a></h1>
     <br/>
     <br/>
-    <button mat-raised-button class="dugme_dodaj" (click) = "dodaj()">DODAJ PIĆE</button>
+    <button mat-raised-button class="dugme_dodaj" id="dodajPica" (click) = "dodaj()">DODAJ PIĆE</button>
     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    <button mat-raised-button class="dugme_sacuvaj" [disabled] = "!izmenjeno" (click) = "sacuvaj()">SAČUVAJ</button>
+    <button mat-raised-button class="dugme_sacuvaj" [disabled] = "!izmenjeno" id="sacuvaj" (click) = "sacuvaj()">SAČUVAJ</button>
     <br/>
     <br/>
     <div class="example-container mat-elevation-z8">
-        <table mat-table [dataSource]="kartaPica.drinkPriceDTOs">
+        <table mat-table [dataSource]="kartaPica.drinkPriceDTOs" id="tabela">
         
             <ng-container matColumnDef="naziv">
-            <th mat-header-cell *matHeaderCellDef> NAZIV PIĆA </th>
-            <td mat-cell *matCellDef="let element"> {{element.drinkDTO.name}} </td>
+                <th mat-header-cell *matHeaderCellDef> NAZIV PIĆA </th>
+                <td mat-cell *matCellDef="let element" id="naziv{{element.drinkDTO.id}}"> {{element.drinkDTO.name}} </td>
             </ng-container>
         
             <ng-container matColumnDef="opis">
-            <th mat-header-cell *matHeaderCellDef> OPIS PIĆA </th>
-            <td mat-cell *matCellDef="let element"> {{element.drinkDTO.description}} </td>
+                <th mat-header-cell *matHeaderCellDef> OPIS PIĆA </th>
+                <td mat-cell *matCellDef="let element" id="opis{{element.drinkDTO.id}}"> {{element.drinkDTO.description}} </td>
             </ng-container>
         
             <ng-container matColumnDef="cena">
                 <th mat-header-cell *matHeaderCellDef> CENA </th>
-                <td mat-cell *matCellDef="let element"> {{element.price}} dinara </td>
+                <td mat-cell *matCellDef="let element" id="cena{{element.drinkDTO.id}}"> {{element.price}} dinara </td>
             </ng-container>
             
             <ng-container matColumnDef="dugmiciIzmena">
