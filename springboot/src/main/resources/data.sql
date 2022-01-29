@@ -227,4 +227,3 @@ insert into salary (user_id, amount, date_Of_Validation) values (6, 40000, '2020
 insert into salary (user_id, amount, date_Of_Validation) values (7, 10000, '2021-03-04');
 insert into salary (user_id, amount, date_Of_Validation) values (8, 30000, '2020-03-04');
 insert into salary (user_id, amount, date_Of_Validation) values (9, 18000, '2020-03-04');
-

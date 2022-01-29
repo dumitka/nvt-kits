@@ -33,7 +33,7 @@ public class SalaryService {
         return save(salary);
     }
 
-    public Salary getSalaryForUser(Integer userId) {//todo dates
+    public Salary getSalaryForUser(Integer userId) {//todo postoji negde vec
 
         return salaryRepository.findOneByUserId(userId);
     }

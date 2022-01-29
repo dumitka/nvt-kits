@@ -20,6 +20,7 @@ insert into users(username, password, name, last_name, fired, enabled   )-- sifr
 
 -- USER -> ROLES
 insert into user_role (user_id, role_id) values (1, 7);
+insert into user_role (user_id, role_id) values (2, 6);
 insert into user_role (user_id, role_id) values (3, 8);
 insert into user_role (user_id, role_id) values (4, 4);
 
@@ -79,7 +80,7 @@ insert into desk (desk_status, tip, x, y, height, width, reserved, deleted) valu
 insert into desk (desk_status, tip, x, y, height, width, reserved, deleted) values (1, 0.0, 0.5, 0.5, 0.15, 0.15, false, false);
 
 -- ORDER
-insert into orders (deleted, desk_id) values (false, 1);
+insert into orders (user_id, desk_id, deleted) values (3, 1, false);
 insert into orders (deleted, desk_id) values (false, 2);
 
 --ORDERED MEAL  --za sada nek bude na 3 user_id kao toma konobar, treba da prodje
@@ -93,3 +94,13 @@ insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (1,
 insert into notification (status, message) values (0, 'poruka 1 - poslata');
 insert into notification (status, message) values (1, 'poruka 2 - dostavljena');
 insert into notification (status, message) values (2, 'poruka 3 - vidjena');
+
+--ORDERED DRINKS
+insert into ordered_drink (amount, status, user_id, drink_id, order_id) values (2, 0, 2, 1, 1); --ordered
+insert into ordered_drink (amount, status, user_id, drink_id, order_id) values (1, 1, 2, 2, 1); --in progress
+
+-- SALARY
+insert into salary (user_id, amount, date_Of_Validation) values (1, 10000, '2020-03-04');
+insert into salary (user_id, amount, date_Of_Validation) values (1, 14000, '2021-03-04');
+insert into salary (user_id, amount, date_Of_Validation) values (2, 20000, '2020-05-04');
+insert into salary (user_id, amount, date_Of_Validation) values (3, 10000, '2020-03-04');
