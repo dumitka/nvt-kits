@@ -78,12 +78,12 @@ public class ServerTest {
         assertTrue(this.svaPica.proveraBroja(10));
         this.svaPica.proveraZajecarac();                // proveri da li je dodalo kako valja Zajecarca
         this.svaPica.pretraga();
-        Thread.sleep(10000);
+        Thread.sleep(2000);
         assertTrue(this.svaPica.proveraBroja(6));
         assertTrue(this.svaPica.proveraJabuka());       // pretraga J treba da nadje Jabuku
         assertTrue(this.svaPica.proveraJelen());        // pretraga J treba da nadje Jelen
         this.svaPica.izbrisiPice();                     // brisem Jabuku
-        Thread.sleep(10000);
+        Thread.sleep(2000);
         assertTrue(this.svaPica.proveraBroja(5));
         this.svaPica.vratiNaProfil();                       // provera i da bi pretraga bila cista
 
@@ -105,12 +105,12 @@ public class ServerTest {
         // allDrink
         assertTrue(this.svaPica.proveraStrane());
         this.svaPica.filer();
-        Thread.sleep(10000);
+        Thread.sleep(2000);
         assertTrue(this.svaPica.proveraBroja(4));
         assertTrue(this.svaPica.proveraVino());         // filter alkoholna pica nadje Vino
         assertTrue(this.svaPica.proveraJelen());        // filter alkoholna pica nadje Jelen
         this.svaPica.pretragaFilter();
-        Thread.sleep(10000);
+        Thread.sleep(2000);
         assertTrue(this.svaPica.proveraJelen());        // alkoholna pica sa slovom j nadje Jelen
         this.svaPica.dvoklikNaSliku();
 
@@ -143,7 +143,7 @@ public class ServerTest {
         // chooseDrinks
         assertTrue(this.odabirPica.proveraStrane());
         this.odabirPica.dodajPiceUKP();
-        Thread.sleep(10000);
+        Thread.sleep(2000);
         this.odabirPica.prelazakNaKP();
 
         // drinkCard

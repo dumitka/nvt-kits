@@ -15,11 +15,14 @@ insert into users(username, password, name, last_name, fired, enabled)
     values ('otpusteni', '$2a$10$INVaw70gvhwlo9eF2ctMpO8vDZx9q35o43GXsnVRhxklTKK5L6YV2', 'Marko', 'Markovic', true, true);
 insert into users(username, password, name, last_name, fired, enabled   )-- sifra pera
     values ('sef-sale', '$2a$10$hN88.iZa1VSk4Ncxjpt.M.xZ5swoN1EZwryN4oUY/8Uf6wUVEDtaO', 'Pera', 'Peric', false, true);
+insert into users(username, password, name, last_name, fired, enabled   )-- sifra pera
+    values ('kuvar', '$2a$10$hN88.iZa1VSk4Ncxjpt.M.xZ5swoN1EZwryN4oUY/8Uf6wUVEDtaO', 'Pesa', 'Desa', false, true);
 
 -- USER -> ROLES
 insert into user_role (user_id, role_id) values (1, 7);
 insert into user_role (user_id, role_id) values (2, 6);
 insert into user_role (user_id, role_id) values (3, 8);
+insert into user_role (user_id, role_id) values (4, 4);
 
 -- RESTAURANT
 insert into restaurant (id) values (1);
@@ -76,9 +79,21 @@ insert into menus_meal_prices (menu_id, meal_price_id) values (3, 2);
 insert into desk (desk_status, tip, x, y, height, width, reserved, deleted) values (1, 0.0, 0.1, 0.1, 0.2, 0.2, false, false);
 insert into desk (desk_status, tip, x, y, height, width, reserved, deleted) values (1, 0.0, 0.5, 0.5, 0.15, 0.15, false, false);
 
---ORDER
+-- ORDER
 insert into orders (user_id, desk_id, deleted) values (3, 1, false);
+insert into orders (deleted, desk_id) values (false, 2);
 
+--ORDERED MEAL  --za sada nek bude na 3 user_id kao toma konobar, treba da prodje
+insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (2, 0, 3, 3, 1);
+insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (1, 0, 3, 1, 1);
+insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (1, 0, 3, 1, 2);
+insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (1, 0, 3, 1, 2);
+insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (1, 0, 3, 2, 2);
+
+-- NOTIFICATION
+insert into notification (status, message) values (0, 'poruka 1 - poslata');
+insert into notification (status, message) values (1, 'poruka 2 - dostavljena');
+insert into notification (status, message) values (2, 'poruka 3 - vidjena');
 
 --ORDERED DRINKS
 insert into ordered_drink (amount, status, user_id, drink_id, order_id) values (2, 0, 2, 1, 1); --ordered
