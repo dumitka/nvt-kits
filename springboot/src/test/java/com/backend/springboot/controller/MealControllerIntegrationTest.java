@@ -1,5 +1,9 @@
 package com.backend.springboot.controller;
 
+import static com.backend.springboot.constants.MealConstants.EXISTING_MEAL;
+import static com.backend.springboot.constants.MealConstants.EXISTING_MEAL_ID;
+import static com.backend.springboot.constants.MealConstants.LIST_OF_MAIN_COURSE;
+import static com.backend.springboot.constants.MealConstants.LIST_OF_MEALS_FROM_DATABASE_SIZE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -167,7 +171,7 @@ public class MealControllerIntegrationTest {
 	     headers.add("Authorization", "Bearer " + this.accessToken);
 	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.deleteMeal, headers);
 	     ResponseEntity<Boolean> responseEntity =
-	                this.restTemplate.exchange(URL_PREFIX + "deleteMeal", HttpMethod.DELETE, httpEntity, Boolean.class);
+	                this.restTemplate.exchange(URL_PREFIX + "deleteMeal", HttpMethod.PUT, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	     assertTrue(responseEntity.getBody());
@@ -182,12 +186,55 @@ public class MealControllerIntegrationTest {
 	     headers.add("Authorization", "Bearer " + this.accessToken);
 	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.mealThatDoenNotExistsDTO, headers);
 	     ResponseEntity<Boolean> responseEntity =
-	                this.restTemplate.exchange(URL_PREFIX + "deleteMeal", HttpMethod.DELETE, httpEntity, Boolean.class);
+	                this.restTemplate.exchange(URL_PREFIX + "deleteMeal", HttpMethod.PUT, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
 	     assertFalse(responseEntity.getBody());
 	 }
 	 
+	 
+	 
+	 
+	 @Test
+	 public void getAllMeals_ListOfMealDTO() {
+		 HttpHeaders headers = new HttpHeaders();
+	     headers.add("Authorization", "Bearer " + this.accessToken);
+	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
+	     ResponseEntity<MealDTO[]> responseEntity =
+	                this.restTemplate.exchange(URL_PREFIX + "getAllMeals", HttpMethod.GET, httpEntity, MealDTO[].class);
+
+	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	     assertEquals(LIST_OF_MEALS_FROM_DATABASE_SIZE, responseEntity.getBody().length);
+	 }
+	 
+	 
+	 
+	 @Test
+	 public void getMainCourseMeals_ListOfMealDTO() {
+		 HttpHeaders headers = new HttpHeaders();
+	     headers.add("Authorization", "Bearer " + this.accessToken);
+	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
+	     ResponseEntity<MealDTO[]> responseEntity =
+	                this.restTemplate.exchange(URL_PREFIX + "getMainCourseMeals", HttpMethod.GET, httpEntity, MealDTO[].class);
+
+	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	     assertEquals(LIST_OF_MAIN_COURSE.size(), responseEntity.getBody().length);
+	 }
+	
+	 
+	 @Test
+	 public void getOne_GivingMealId_MealDTO() {
+		 HttpHeaders headers = new HttpHeaders();
+	        headers.add("Authorization", "Bearer " + this.accessToken);
+	        HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
+	        ResponseEntity<MealDTO> responseEntity =
+	                this.restTemplate.exchange(URL_PREFIX + "getOne/id=" + EXISTING_MEAL_ID,
+	                        HttpMethod.GET, httpEntity, MealDTO.class);
+	        
+	        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		    assertEquals(EXISTING_MEAL.getId(), responseEntity.getBody().getId());
+		    assertEquals(EXISTING_MEAL.getName(), responseEntity.getBody().getName());
+	 }
 	 
 	 
 }

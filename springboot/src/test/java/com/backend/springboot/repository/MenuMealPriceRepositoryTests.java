@@ -42,20 +42,6 @@ public class MenuMealPriceRepositoryTests {
 	
 	
 	@Test
-	public void findAllMealPricesByMenuId_CurrentMenuId_SetOfMealPricesOfCurrentMenu() {
-		Set<MealPrice> found = menuMealPriceRepository.findAllMealPricesByMenuId(CURRENT_MENU_ID);
-		assertEquals(SET_MEAL_PRICES_OF_CURRENT_MENU_SIZE, found.size());
-	}
-	
-	
-	@Test
-	public void findAllMealPricesByMenuId_NotCurrentMenuId_SetOfMealPricesOfNotCurrentMenu() {
-		Set<MealPrice> found = menuMealPriceRepository.findAllMealPricesByMenuId(NOT_CURRENT_MENU_ID);
-		assertEquals(SET_MEAL_PRICES_OF_NOT_CURRENT_MENU_SIZE, found.size());
-	}
-	
-	
-	@Test
 	public void findAllMealsPricesByMenuId_CurrentMenuId_ListOfMealPricesOfCurrentMenu() {
 		List<MealPrice> found = menuMealPriceRepository.findAllMealsPricesByMenuId(CURRENT_MENU_ID);
 		assertEquals(LIST_MEAL_PRICES_OF_CURRENT_MENU_SIZE, found.size());

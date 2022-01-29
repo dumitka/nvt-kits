@@ -65,6 +65,7 @@ public class MealConstants {
 	public static List<Meal> LIST_OF_MAIN_COURSE = List.of(MAIN_COURSE1, MAIN_COURSE2);
 	public static int LIST_OF_MAIN_COURSE_SIZE = 2;
 	
+	public static List<Meal> LIST_OF_MEALS = List.of(MAIN_COURSE1, MAIN_COURSE2);
 	
 	//S8
 	public static Meal NEW_MEAL = Meal.builder().name("Novo jelo").description("Novi opis")
@@ -97,5 +98,7 @@ public class MealConstants {
 	public static Meal DELETED_MEAL = Meal.builder().id(DELETED_MEAL_ID).name("Vocna salata").description("Osvjezavajuce")
 			.amountNumber(300).amountUnit("g").type(MealType.DESERT).deleted(true).image("nema")
 			.mealDifficulty(MealDifficulty.EASY).timePreparation(10).build(); //vocna salata from database
+	
+	public static int LIST_OF_MEALS_FROM_DATABASE_SIZE = 7;
 	
 }

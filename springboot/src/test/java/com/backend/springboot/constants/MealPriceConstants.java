@@ -8,13 +8,15 @@ import static com.backend.springboot.constants.MealConstants.MAIN_COURSE1;
 import static com.backend.springboot.constants.MealConstants.MAIN_COURSE2;
 import static com.backend.springboot.constants.MenuConstants.CURRENT_MENU;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.backend.springboot.enums.MealType;
 import com.backend.springboot.model.Meal;
 import com.backend.springboot.model.MealPrice;
-
+import com.backend.springboot.model.Menu;
 import com.backend.springboot.model.MenuMealPrice;
+import com.backend.springboot.model.Restaurant;
 
 
 public class MealPriceConstants {
@@ -32,9 +34,12 @@ public class MealPriceConstants {
 	
 	public static MealPrice NON_EXISTING_MEAL_PRICE = MealPrice.builder().id(100).meal(NON_EXISTING_MEAL).deleted(false).price(STARTING_PRICE + 100).build();
 	
-
+	public static Restaurant RESTAURANT = Restaurant.builder().id(1).build();
+	public static Menu CURRENT_MENU_MEAL_PRICE =  Menu.builder().id(1).current(true).dateOfValidation(LocalDateTime.now()).build();
 	public static MealPrice MAIN_COURSE1_MEAL_PRICE = MealPrice.builder().id(3).meal(MAIN_COURSE1).deleted(false).price(STARTING_PRICE + 480).build();
 	public static MealPrice MAIN_COURSE2_MEAL_PRICE = MealPrice.builder().id(4).meal(MAIN_COURSE2).deleted(false).price(STARTING_PRICE + 700).build();
+	public static MenuMealPrice MMP1 = MenuMealPrice.builder().menu(CURRENT_MENU_MEAL_PRICE).mealPrice(MAIN_COURSE1_MEAL_PRICE).deleted(false).build();
+	public static MenuMealPrice MM2 = MenuMealPrice.builder().menu(CURRENT_MENU_MEAL_PRICE).mealPrice(MAIN_COURSE2_MEAL_PRICE).deleted(false).build();
 	public static List<MealPrice> MAIN_COURSE_MEAL_PRICE_LIST = List.of(MAIN_COURSE1_MEAL_PRICE, MAIN_COURSE2_MEAL_PRICE);
 	public static int MAIN_COURSE_MEAL_PRICE_LIST_SIZE = 2;
 	
@@ -61,6 +66,6 @@ public class MealPriceConstants {
 	
 	public static List<MealPrice> LIST_OF_MEAL_PRICES_IN_CURRENT_MENU = List.of(MEAL_PRICE1, MEAL_PRICE3, MEAL_PRICE4);
 	public static List<Meal> LIST_OF_MEALS_THAT_IS_NOT_IN_CURRENT_MENU = List.of(MEAL5);
-	
+	public static int LIST_OF_MEALS_THAT_IS_NOT_IN_CURRENT_MENU_SIZE = 2;
 	
 }
