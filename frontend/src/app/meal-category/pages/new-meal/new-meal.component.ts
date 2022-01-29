@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class NewMealComponent implements OnInit {
 
   public newMealForm: FormGroup;
+  slika: string = "food-profile.jpg";
 
   RESPONSE_OK : number = 0;
   RESPONSE_ERROR : number = -1;
@@ -60,6 +61,7 @@ export class NewMealComponent implements OnInit {
 
   public addNewMeal(){
     console.log(this.newMealForm.value);
+    this.newMealForm.value.image = this.slika;
     
     this.service.addMeal(this.newMealForm.value).subscribe(
       response => {
@@ -104,7 +106,14 @@ export class NewMealComponent implements OnInit {
     });
   }
 
-
+  promenaSlike(kategorija: number) {
+    if (kategorija == 1) this.slika = "cold-appetizer.jpg";
+    else if (kategorija == 2) this.slika = "hot-appetizer.jpg";
+    else if (kategorija == 3) this.slika = "main-meal.jpg";
+    else if (kategorija == 4) this.slika = "dessert.jpg";
+    else if (kategorija == 5) this.slika = "salate.jpg";
+    else this.slika = "appendices.jpg";
+  }
 
 
 

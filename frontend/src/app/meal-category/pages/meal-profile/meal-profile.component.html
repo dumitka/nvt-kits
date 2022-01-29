@@ -8,7 +8,7 @@
   
       <div class="card_div">
         <mat-card class="meal_card">
-          <img mat-card-lg-image *ngIf="mealHasItsOwnPicture"  name="profile_picture" class="profile_picture" src=meal.image >
+          <img mat-card-lg-image *ngIf="mealHasItsOwnPicture"  name="profile_picture" class="profile_picture" src="assets\{{meal.image}}" >
           
           <img mat-card-lg-image *ngIf="mealDoesNotHaveItsOwnPicture" name="profile_picture" class="profile_picture" src="../../../../assets/food-profile.jpg" >
            

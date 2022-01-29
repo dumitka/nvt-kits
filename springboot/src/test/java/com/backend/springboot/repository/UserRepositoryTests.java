@@ -14,6 +14,7 @@ import static com.backend.springboot.constants.UserConstans.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @TestPropertySource("classpath:application-test.properties")
@@ -25,20 +26,15 @@ public class UserRepositoryTests {
     public void testFindByUsername() {
         User found = userRepository.findByUsername(DB_USER_USERNAME);
         assertEquals(DB_USER_USERNAME, found.getUsername());
-    	/*List<User> users = userRepository.findAll();
-    	System.out.print("TACA");
-    	for(User u: users) {
-    		System.out.println(u.getUsername());
-    	}*/
     }
 
     @Test
-    public void testFindByFired() {
+    public void testFindByFiredFalse() {
         List<User> firedEmployees = userRepository.findByFiredFalse();
         User user = firedEmployees.get(0);
-        assertEquals(firedEmployees.size(), 1);
-        assertEquals(DB_FIRED_USERNAME, user.getUsername());
-        assertEquals(true, user.getFired());
+        assertEquals(firedEmployees.size(), 2);
+        assertEquals(DB_NOT_FIRED_USERNAME, user.getUsername());
+        assertEquals(false, user.getFired());
     }
 
     @Test

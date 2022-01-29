@@ -1,14 +1,14 @@
 
-<body>
+<body id="dijalog_body">
 
     <h2 mat-dialog-title>NOVA CENA</h2>
 
     <br />
 
-    <div mat-dialog-content>
+    <div id="dijalog_div" mat-dialog-content>
         <mat-form-field appearance="fill">
           <mat-label>Unesite ovde novu cenu...</mat-label>
-          <input type="number" matInput [(ngModel)]="data.newPrice">
+          <input id="price_input" type="number" matInput [(ngModel)]="data.newPrice">
         </mat-form-field>
     </div>
     <br />

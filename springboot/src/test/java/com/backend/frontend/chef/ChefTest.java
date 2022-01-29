@@ -132,6 +132,6 @@ public class ChefTest {
 
     @After
     public void gasenjeSvega() throws Exception {
-        //this.drajver.quit();
+        this.drajver.quit();
     }
 }

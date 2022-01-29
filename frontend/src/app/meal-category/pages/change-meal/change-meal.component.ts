@@ -3,9 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MealServiceService } from '../../service/meal-service.service';
 import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-
 
 @Component({
   selector: 'app-change-meal',
@@ -15,6 +12,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 export class ChangeMealComponent implements OnInit {
 
   public changeMealForm: FormGroup;
+  slika: string = "food-profile.jpg";
 
   RESPONSE_OK : number = 0;
   RESPONSE_ERROR : number = -1;
@@ -31,6 +29,7 @@ export class ChangeMealComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router:Router) {
       this.meal = history.state.data.meal;
+      if (this.meal.image != "nema") this.slika = this.meal.image;
 
       this.changeMealForm = this.formBuilder.group({
       id:[this.meal.id],
@@ -77,6 +76,7 @@ export class ChangeMealComponent implements OnInit {
 
   public changeMeal(){
     console.log(this.changeMealForm.value);
+    this.changeMealForm.value.image = this.slika;
     
     this.service.changeMeal(this.changeMealForm.value).subscribe(
       response => {
@@ -119,6 +119,15 @@ export class ChangeMealComponent implements OnInit {
       verticalPosition: this.verticalPosition,
       panelClass: responseCode === this.RESPONSE_OK ? "back-green" : "back-red"
     });
+  }
+
+  promenaSlike(kategorija: number) {
+    if (kategorija == 1) this.slika = "cold-appetizer.jpg";
+    else if (kategorija == 2) this.slika = "hot-appetizer.jpg";
+    else if (kategorija == 3) this.slika = "main-meal.jpg";
+    else if (kategorija == 4) this.slika = "dessert.jpg";
+    else if (kategorija == 5) this.slika = "salate.jpg";
+    else this.slika = "appendices.jpg";
   }
 
 }
