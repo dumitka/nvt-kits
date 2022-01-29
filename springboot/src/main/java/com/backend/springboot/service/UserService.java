@@ -36,7 +36,7 @@ public class UserService {
 		return userRepository.findByFiredFalse();
 	}
 
-	public User registerUser(User user, String roleName) {
+	public User registerUser(User user) {
 		String password = user.getPassword();
 		user.setPassword(encoder().encode(password));
 

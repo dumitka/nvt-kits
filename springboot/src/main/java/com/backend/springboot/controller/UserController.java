@@ -47,7 +47,7 @@ public class UserController {
         }
         User user = userMapper.convertCreateUpdateUserDtoToUser(createUserDto);
 
-        user = userService.registerUser(user, createUserDto.getRoleName());
+        user = userService.registerUser(user);
 
         salaryService.createNewSalary(user, createUserDto.getSalary());
 
