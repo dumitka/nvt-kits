@@ -40,27 +40,27 @@ export class NewMenuMealsComponent implements OnInit {
 
     
     if(this.category == 1){
-      this.listOfMeals = this.allMeals.filter(meal => meal.type == "COLD_APPETIZER");
+      this.listOfMeals = this.allMeals.filter(meal => meal.type == "COLD_APPETIZER" && meal.deleted==false);
       this.title = "HLADNA PREDJELA";
       
     }else if(this.category == 2){
-      this.listOfMeals = this.allMeals.filter(meal => meal.type == "HOT_APPETIZER");
+      this.listOfMeals = this.allMeals.filter(meal => meal.type == "HOT_APPETIZER" && meal.deleted==false);
       this.title = "TOPLA PREDJELA";
 
     }else if(this.category == 3){
-      this.listOfMeals = this.allMeals.filter(meal => meal.type == "MAIN_COURSE");
+      this.listOfMeals = this.allMeals.filter(meal => meal.type == "MAIN_COURSE" && meal.deleted==false);
       this.title = "GLAVNA JELA";
 
     }else if(this.category == 4){
-      this.listOfMeals = this.allMeals.filter(meal => meal.type == "DESERT");
+      this.listOfMeals = this.allMeals.filter(meal => meal.type == "DESERT" && meal.deleted==false);
       this.title = "DESERTI";
 
     }else if(this.category == 5){
-      this.listOfMeals = this.allMeals.filter(meal => meal.type == "SALAD");
+      this.listOfMeals = this.allMeals.filter(meal => meal.type == "SALAD" && meal.deleted==false);
       this.title = "SALATE";
 
     }else{
-      this.listOfMeals = this.allMeals.filter(meal => meal.type == "APPENDICES");
+      this.listOfMeals = this.allMeals.filter(meal => meal.type == "APPENDICES" && meal.deleted==false);
       this.title = "DODACI";
     }
   }

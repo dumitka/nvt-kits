@@ -61,7 +61,7 @@ body {
   }
 
 
-.position{
+  .position{
     width: 100px;
 }
 
@@ -74,11 +74,11 @@ body {
 }
 
 .price{
-  width: 120px;
+  width: 150px;
 }
 
 .demo-table {
-    width: 820px;
+    width: 850px;
   }
   
   .mat-row .mat-cell {
@@ -119,4 +119,26 @@ body {
 
   .back_button{
     margin-left: 50px;
+  }
+
+
+  .position{
+    text-align: center;
+  }
+
+  .name{
+    text-align: center;
+  }
+
+  .description{
+    text-align: center;
+  }
+
+  .price{
+    text-align: center;
+  }
+
+
+  td{
+    text-align: center;
   }
