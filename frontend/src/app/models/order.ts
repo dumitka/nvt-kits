@@ -1,4 +1,4 @@
-import { OrderedItem } from "./ordered-items";
+import { OrderedItem } from "./ordered-item";
 
 export class Order {
     id: number;

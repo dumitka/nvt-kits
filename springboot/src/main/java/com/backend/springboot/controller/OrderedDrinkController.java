@@ -10,16 +10,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.springboot.dto.OrderedDrinkDTO;
 import com.backend.springboot.dtoTransformation.OrderedDrinkToOrderedDrinkDTO;
-import com.backend.springboot.enums.NotificationStatus;
 import com.backend.springboot.enums.OrderedItemStatus;
-import com.backend.springboot.model.Notification;
 import com.backend.springboot.model.Order;
 import com.backend.springboot.model.OrderedDrink;
 import com.backend.springboot.model.User;
+import com.backend.springboot.service.DrinkService;
 import com.backend.springboot.service.NotificationService;
 import com.backend.springboot.service.OrderService;
 import com.backend.springboot.service.OrderedDrinkService;
@@ -35,6 +40,9 @@ public class OrderedDrinkController {
 
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private DrinkService drinkService;
 
 	@Autowired
 	private SimpMessagingTemplate brokerMessagingTemplate;
@@ -107,5 +115,24 @@ public class OrderedDrinkController {
 
 
 		return new ResponseEntity<String>("Poručeno piće je uspešno završeno!", HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('WAITER')")
+	@PostMapping("/createOrderedDrink/{orderId}")
+	public ResponseEntity<String> createOrderedDrink(@PathVariable Integer orderId, @RequestBody OrderedDrinkDTO dto) {
+		Order order = orderService.findOne(orderId);
+		if (order == null) {
+			return new ResponseEntity<String>("Porudžbina ne postoji!", HttpStatus.BAD_REQUEST);
+		}
+		
+		OrderedDrink orderedDrink = OrderedDrink.builder()
+				.amount(dto.getAmount())
+				.drink(drinkService.findOne(dto.getDrinkId()))
+				.order(order)
+				.status(OrderedItemStatus.ORDERED)
+				.build();
+		orderedDrinkService.save(orderedDrink);
+
+		return new ResponseEntity<String>("Poručeno piće je uspešno kreirano!", HttpStatus.OK);
 	}
 }

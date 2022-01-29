@@ -7,4 +7,5 @@ export interface DrinkDTO {
     amountUnit: string;
     available: string;
     image: string;
+    isDrink: boolean;
 }

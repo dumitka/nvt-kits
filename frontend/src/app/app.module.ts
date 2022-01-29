@@ -65,6 +65,7 @@ import { TableComponent } from './table/table.component';
 import { CreateOrderComponent } from './orders/pages/order/create-order/create-order.component';
 import { NewDrinkOrdersComponent } from './drink-order/pages/new-drink-orders/new-drink-orders.component';
 import { TakenDrinkOrdersComponent } from './drink-order/pages/taken-drink-orders/taken-drink-orders.component';
+import { ViewOrderComponent } from './orders/pages/order/view-order/view-order/view-order.component';
 
 @NgModule({
   declarations: [
@@ -114,7 +115,8 @@ import { TakenDrinkOrdersComponent } from './drink-order/pages/taken-drink-order
     CreateOrderComponent,
     TableComponent,
     NewDrinkOrdersComponent,
-    TakenDrinkOrdersComponent
+    TakenDrinkOrdersComponent,
+    ViewOrderComponent
   ],
   entryComponents: [
     DeleteMealDialogComponent,
@@ -321,6 +323,11 @@ import { TakenDrinkOrdersComponent } from './drink-order/pages/taken-drink-order
         path: 'TakenDrinkOrders',
         canActivate: [BartenderRoutes],
         component: TakenDrinkOrdersComponent,
+      },
+      {
+        path: 'ViewOrder',
+        canActivate: [WaiterRoutes],
+        component: ViewOrderComponent,
       },
 
     ]),

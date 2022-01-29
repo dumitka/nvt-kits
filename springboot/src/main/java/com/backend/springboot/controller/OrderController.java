@@ -81,11 +81,31 @@ public class OrderController {
 
 		return new ResponseEntity<OrderDTO>(orderDTO, HttpStatus.OK);
 	}
-
+	
 	@PreAuthorize("hasRole('ROLE_WAITER')")
-	@PostMapping("/createOrder/{deskId}")
-	public ResponseEntity<String> createOrder(@PathVariable Integer deskId, @RequestBody OrderDTO orderDTO) {
+	@GetMapping("/createOrder/{deskId}")
+	public ResponseEntity<Integer> createOrder(@PathVariable Integer deskId) {
+		User waiter = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Desk desk = deskService.findOne(deskId);
+		desk.setDeskStatus(DeskStatus.ORDERED);
+		deskService.save(desk);
+		
+		Order order = Order.builder()
+				.waiter(waiter)
+				.desk(desk)
+				.isDeleted(false)
+				.build();
+		Order savedOrder = orderService.save(order);
+		
+		return new ResponseEntity<Integer>(savedOrder.getId(), HttpStatus.OK);
+	}
+
+	/*@PreAuthorize("hasRole('ROLE_WAITER')")
+	@PostMapping("/createOrder/{id}")
+	public ResponseEntity<String> createOrder(@PathVariable Integer id, @RequestBody OrderDTO orderDTO) {
+		Order order = orderService.findOne(id);
+		Desk desk = deskService.findOne(order.getDesk().getId());
+		
 		if (desk.getDeskStatus() != DeskStatus.NOT_ORDERED) {
 			return new ResponseEntity<String>("Za odabranim stolom je već poručeno!", HttpStatus.BAD_REQUEST);
 		}
@@ -108,8 +128,6 @@ public class OrderController {
 			orderedDrinks = orderDTO.getOrderedDrinks().stream().map(d -> orderedDrinkService.findOne(d.getId())).collect(Collectors.toSet());
 		}
 
-		User waiter = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
 		if (orderDTO.getNotificationIds() != null) {
 			notifications = orderDTO.getNotificationIds().stream().map(n -> notificationService.findOne(n)).collect(Collectors.toSet());
 		}
@@ -117,39 +135,31 @@ public class OrderController {
 		Notification notification = Notification.builder()
 				.status(NotificationStatus.SENT)
 				.message("Nova porudžbina!")
+				.order(order)
 				.build();
 		brokerMessagingTemplate.convertAndSend("/topic/hi", notification);
 		notifications.add(notification);
+		notificationService.save(notification);
 
 		desk.setDeskStatus(DeskStatus.ORDERED);
 		deskService.save(desk);
-
-		Order newOrder = Order.builder()
-				.waiter(waiter)
-				.desk(desk)
-				.isDeleted(false)
-				.build();
-		Order savedOrder = orderService.save(newOrder);
 		
 		if (!orderedDrinks.isEmpty()) {
 			orderedDrinks.forEach(d -> {
-				d.setOrder(savedOrder);
+				d.setOrder(order);
 				orderedDrinkService.save(d);
 			});
 		}
 		
 		if (!orderedMeals.isEmpty()) {
 			orderedMeals.forEach(m -> {
-				m.setOrder(savedOrder);
+				m.setOrder(order);
 				orderedMealService.save(m);
 			});
 		}
 		
-		notification.setOrder(savedOrder);
-		notificationService.save(notification);
-
 		return new ResponseEntity<String>("Porudžbina je uspešno kreirana!", HttpStatus.OK);
-	}
+	}*/
 
 	@PreAuthorize("hasRole('ROLE_WAITER')")
 	@PutMapping("/updateOrder/{deskId}")

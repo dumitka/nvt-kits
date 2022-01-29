@@ -1,0 +1,30 @@
+<body>
+    <br>
+    <br>
+    <br>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+        <ng-container matColumnDef="position">
+            <th mat-header-cell class="position" *matHeaderCellDef><b>No.</b></th>
+            <td mat-cell *matCellDef="let element; let i = index">{{i+1}}.</td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell class="name" *matHeaderCellDef><b>NAZIV</b></th>
+            <td mat-cell *matCellDef="let element"><i>{{element.name}}</i></td>
+        </ng-container>
+        <ng-container matColumnDef="amount">
+            <th mat-header-cell class="amount" *matHeaderCellDef><b>PORCIJE</b></th>
+            <td mat-cell *matCellDef="let element"><i>{{element.amount}}</i></td>
+        </ng-container>
+        <ng-container matColumnDef="remove">
+            <th mat-header-cell class="remove" *matHeaderCellDef><b>UKLONI</b></th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-raised-button class="remove-button" id="remove-button" (click)="remove(element.id)"><i>UKLONI</i></button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <br>
+    <span><button mat-raised-button class="create" (click) = "createOrder()">PORUČI</button></span>
+    <span><button mat-raised-button class="back" (click) = "back()">NAZAD</button></span>
+</body>

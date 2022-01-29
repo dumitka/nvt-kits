@@ -12,21 +12,19 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.springboot.dto.OrderedMealDTO;
-import com.backend.springboot.dtoTransformation.MealPriceToMealWithPriceDTO;
-import com.backend.springboot.dtoTransformation.MealToMealDTO;
 import com.backend.springboot.dtoTransformation.OrderedMealToOrderedMealDTO;
-import com.backend.springboot.enums.NotificationStatus;
 import com.backend.springboot.enums.OrderedItemStatus;
-import com.backend.springboot.model.Notification;
 import com.backend.springboot.model.Order;
 import com.backend.springboot.model.OrderedMeal;
 import com.backend.springboot.model.User;
+import com.backend.springboot.service.MealService;
 import com.backend.springboot.service.NotificationService;
 import com.backend.springboot.service.OrderService;
 import com.backend.springboot.service.OrderedMealService;
@@ -42,6 +40,9 @@ public class OrderedMealController {
 
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private MealService mealService;
 
 	@Autowired
 	private SimpMessagingTemplate brokerMessagingTemplate;
@@ -120,5 +121,24 @@ public class OrderedMealController {
 		brokerMessagingTemplate.convertAndSend("/topic/hi", notification);
 		*/
 		return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasRole('WAITER')")
+	@PostMapping("/createOrderedMeal/{orderId}")
+	public ResponseEntity<String> createOrderedDrink(@PathVariable Integer orderId, @RequestBody OrderedMealDTO dto) {
+		Order order = orderService.findOne(orderId);
+		if (order == null) {
+			return new ResponseEntity<String>("Porudžbina ne postoji!", HttpStatus.BAD_REQUEST);
+		}
+		
+		OrderedMeal orderedMeal = OrderedMeal.builder()
+				.amount(dto.getAmount())
+				.meal(mealService.findOne(dto.getMealId()))
+				.order(order)
+				.status(OrderedItemStatus.ORDERED)
+				.build();
+		orderedMealService.save(orderedMeal);
+
+		return new ResponseEntity<String>("Poručeno jelo je uspešno kreirano!", HttpStatus.OK);
 	}
 }

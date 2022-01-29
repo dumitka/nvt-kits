@@ -17,6 +17,8 @@ interface ItemCategory {
   styleUrls: ['./create-order.component.css']
 })
 export class CreateOrderComponent implements OnInit {
+  deskId: number = history.state.data.deskId;
+  selectedItems: DrinkDTO[] = history.state.data.selectedItems;
   options: string[] = ['Piće', 'Jelo'];
   chosenOption: string = 'Piće';
   drinks: boolean = true;
@@ -38,7 +40,6 @@ export class CreateOrderComponent implements OnInit {
     { value: 'SALAD', viewValue: 'Salate' },
     { value: 'APPENDICES', viewValue: 'Dodaci' }
   ];
-  selectedItems: DrinkDTO[] = [];
 
   constructor(private drinkService: DrinkService, private mealService: MealServiceService, private router: Router) {
     this.drinkService.svaPica().subscribe(response => {
@@ -164,15 +165,15 @@ export class CreateOrderComponent implements OnInit {
   addItem(e: any): void {
     for (let item of this.items) {
       if (item.id == e.srcElement.name) {
+        item.isDrink = this.drinks;
         this.selectedItems.push(item);
         break;
       }
     }
   }
 
-  viewOrder() : void {
-    console.log(this.selectedItems);
-    //this.router.navigate(['/']);
+  viewOrder(): void {
+    this.router.navigate(['/ViewOrder'], { state: { data: { 'deskId': this.deskId, 'selectedItems': this.selectedItems } } });
   }
 
   back(): void {

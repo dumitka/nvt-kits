@@ -1,0 +1,82 @@
+body {
+    background-color: #5d7c77;
+
+}
+
+table {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: whitesmoke;
+}
+
+b {
+    color: #5d7c77;
+    font-family: 'Trocchi', serif;
+    font-size: 20px;
+}
+
+td {
+    color: #5d7c77;
+    font-family: 'Trocchi', serif;
+    font-size: 15px;
+    text-align: center;
+}
+
+.position {
+    width: 100px;
+    text-align: center;
+}
+
+.name {
+    width: 250px;
+    text-align: center;
+}
+
+.amount {
+    width: 250px;
+    text-align: center;
+}
+
+.button {
+    width: 250px;
+    text-align: center;
+}
+
+.demo-table {
+    width: 750px;
+}
+
+.mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+    border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+    font-weight: bold;
+}
+
+.create {
+    margin-left: 480px;
+    background-color: whitesmoke;
+    width: 255px;
+    text-align: center;
+    color: #5d7c77;
+    font-family: 'Trocchi', serif;
+    font-size: 20px;
+}
+
+.back {
+    margin-left: 35px;
+    background-color: whitesmoke;
+    width: 250px;
+    text-align: center;
+    color: #5d7c77;
+    font-family: 'Trocchi', serif;
+    font-size: 20px;
+}

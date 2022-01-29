@@ -58,6 +58,6 @@ export class WaiterProfileComponent implements OnInit {
   }
 
   order(tw: TableWrapper): void {
-    this.router.navigate(['/DeskOrder'], { state: { data: { "id": tw.table.id, "number": tw.tableNum } } });
+    this.router.navigate(['/DeskOrder'], { state: { data: { "deskId": tw.table.id, "deskNumber": tw.tableNum } } });
   }
 }

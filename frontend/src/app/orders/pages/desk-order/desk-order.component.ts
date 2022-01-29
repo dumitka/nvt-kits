@@ -28,9 +28,9 @@ export class DeskOrderComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = "top";
 
   constructor(private service: DeskOrderService, private router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) {
-    this.deskId = history.state.data.id;
-    this.deskNumber = history.state.data.number;
-    
+    this.deskId = history.state.data.deskId;
+    this.deskNumber = history.state.data.deskNumber;
+
     this.service.getDesk(this.deskId).subscribe((response: Desk | null) => {
       this.desk = response;
       this.desk.deskNumber = this.deskNumber;
@@ -71,7 +71,7 @@ export class DeskOrderComponent implements OnInit {
 
   }
 
-  openSnackBar(message: string, responseCode: number) {
+  openSnackBar(message: string, responseCode: number): void {
     this.snackBar.open(message, 'x', {
       duration: responseCode === this.RESPONSE_OK ? 3000 : 20000,
       verticalPosition: this.verticalPosition
@@ -79,7 +79,7 @@ export class DeskOrderComponent implements OnInit {
   }
 
   createOrder(): void {
-    this.router.navigate(['/CreateOrder'])
+    this.router.navigate(['/CreateOrder'], { state: { data: { 'deskId': this.deskId, 'selectedItems': [] } } });
   }
 
   updateOrder(): void {
@@ -128,7 +128,7 @@ export class DeskOrderComponent implements OnInit {
         this.openSnackBar(error.error, this.RESPONSE_ERROR);
       }
     );
-    this.router.navigate(['/WaiterProfile']) 
+    this.router.navigate(['/WaiterProfile'])
   }
 
   chargeOrder(): void {
@@ -141,18 +141,18 @@ export class DeskOrderComponent implements OnInit {
         });
 
         chargeOrderDialog.afterClosed().subscribe(() => {
-          this.router.navigate(['/WaiterProfile']) 
+          this.router.navigate(['/WaiterProfile'])
           this.openSnackBar("Porudžbina uspešno završena!", this.RESPONSE_OK);
         });
       },
       error => {
-        this.router.navigate(['/WaiterProfile']) 
+        this.router.navigate(['/WaiterProfile'])
         this.openSnackBar(error.error, this.RESPONSE_ERROR);
       }
     )
   }
 
   back(): void {
-    this.router.navigate(['/WaiterProfile']) 
+    this.router.navigate(['/WaiterProfile'])
   }
 }
