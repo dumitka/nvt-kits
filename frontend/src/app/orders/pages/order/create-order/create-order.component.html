@@ -1,24 +1,19 @@
 <body>
     <mat-toolbar class="toolbar">
-        <mat-radio-group [(ngModel)]="chosenOption">
-            <mat-radio-button *ngFor="let option of options" [value]="option">
-                {{option}}
-            </mat-radio-button>
+        <mat-radio-group [value]="chosenOption" (change)="changeItems($event.value)">
+            <mat-radio-button *ngFor="let option of options" [value]="option">{{option}}</mat-radio-button>
         </mat-radio-group>
         <div class="filler"></div>
         <mat-form-field>
             <mat-label>Kategorija</mat-label>
-            <mat-select id="kategorija">
-                <mat-option (click)="promenaKategorije($event)" id="sve">Sve kategorije</mat-option>
-                <mat-option (click)="promenaKategorije($event)" id="gazirana">Gazirana pića</mat-option>
-                <mat-option (click)="promenaKategorije($event)" id="negazirana">Negazirana pića</mat-option>
-                <mat-option (click)="promenaKategorije($event)" id="alkoholna">Alkoholna pića</mat-option>
-                <mat-option (click)="promenaKategorije($event)" id="topla">Topli napici</mat-option>
+            <mat-select (selectionChange)="changeCategory($event.value)">
+                <mat-option *ngFor="let category of categories" [value]="category.value">{{category.viewValue}}</mat-option>
             </mat-select>
         </mat-form-field>
+        <button mat-button (click)="back()">ODUSTANI</button>
     </mat-toolbar>
-    
-    <!--<div>Your favorite season is: {{chosenOption}}</div>-->
-    
-    <section id='divZaPica'></section>
+    <section id='itemsSection'></section>
+    <br>
+    <br>
+    <button mat-button (click)="viewOrder()" class="view">PREGLEDAJ</button>
 </body>

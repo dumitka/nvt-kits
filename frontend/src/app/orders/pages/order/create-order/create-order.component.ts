@@ -2,10 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { DialogDeleteComponent } from 'src/app/drinks/components/dialog-delete/dialog-delete.component';
 import { DrinkService } from 'src/app/drinks/services/drink-service/drink.service';
-import { UserService } from 'src/app/first-pages/services/user-service/user.service';
+import { MealServiceService } from 'src/app/meal-category/service/meal-service.service';
 import { DrinkDTO } from 'src/app/models/drinkDTO';
+
+interface ItemCategory {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-create-order',
@@ -15,170 +19,163 @@ import { DrinkDTO } from 'src/app/models/drinkDTO';
 export class CreateOrderComponent implements OnInit {
   options: string[] = ['Piće', 'Jelo'];
   chosenOption: string = 'Piće';
-  picaZaPrikaz: DrinkDTO[];
-  pretraga: string = '';
-  kategorija: string = '';
+  drinks: boolean = true;
+  items: DrinkDTO[];
+  categories: ItemCategory[];
+  drinkCategories: ItemCategory[] = [
+    { value: '', viewValue: 'Sve kategorije' },
+    { value: 'CARBONATED_DRINK', viewValue: 'Gazirana pića' },
+    { value: 'NOCARBONATED_DRINK', viewValue: 'Negazirana pića' },
+    { value: 'ALCOHOL', viewValue: 'Alkoholna pića' },
+    { value: 'HOT_DRINK', viewValue: 'Topli napitci' }
+  ];
+  mealCategories: ItemCategory[] = [
+    { value: '', viewValue: 'Sve kategorije' },
+    { value: 'COLD_APPETIZER', viewValue: 'Hladna predjela' },
+    { value: 'HOT_APPETIZER', viewValue: 'Topla predjela' },
+    { value: 'MAIN_COURSE', viewValue: 'Glavna jela' },
+    { value: 'DESERT', viewValue: 'Deserti' },
+    { value: 'SALAD', viewValue: 'Salate' },
+    { value: 'APPENDICES', viewValue: 'Dodaci' }
+  ];
+  selectedItems: DrinkDTO[] = [];
 
-  constructor(private drinkService: DrinkService, private ruter: Router, private service:UserService,
-      private snackBar: MatSnackBar, public dialog: MatDialog,) {
+  constructor(private drinkService: DrinkService, private mealService: MealServiceService, private router: Router) {
     this.drinkService.svaPica().subscribe(response => {
-      this.picaZaPrikaz = response as DrinkDTO[];
-      this.prikaziPica();
+      this.items = response as DrinkDTO[];
+      this.categories = this.drinkCategories;
+      this.showItems();
     });
   }
 
   ngOnInit(): void {
+
   }
 
-  nazadNaProfil() {
-    this.ruter.navigate(['/ServerFirstPage']);
-  }
-  
-  promenaKategorije(e) {
-    let k = e.target.innerHTML;
-    if (k === "Sve kategorije") this.kategorija = "SVE";
-    else if (k === "Gazirana pića") this.kategorija = "CARBONATED_DRINK";
-    else if (k === "Negazirana pića") this.kategorija = "NOCARBONATED_DRINK";
-    else if (k === "Alkoholna pića") this.kategorija = "ALCOHOL";
-    else this.kategorija = "HOT_DRINK";
-    this.pretrazi();
+  changeItems(option: string): void {
+    if (option === 'Piće') {
+      this.getDrinks();
+      this.categories = this.drinkCategories;
+      this.drinks = true;
+    } else {
+      this.getMeals();
+      this.categories = this.mealCategories;
+      this.drinks = false;
+    }
   }
 
-  filterPoKategoriji() {
-    if (this.kategorija === "SVE") return;
-    let novaLista = new Array<DrinkDTO>();
-    this.picaZaPrikaz.forEach(pice => {
-      if (pice.type === this.kategorija) {
-        novaLista.push(pice);
+  getDrinks(): void {
+    this.drinkService.svaPica().subscribe(response => {
+      this.items = response as DrinkDTO[];
+      this.showItems();
+    });
+  }
+
+  getMeals(): void {
+    this.mealService.getAllMeals().subscribe(response => {
+      this.items = response as DrinkDTO[];
+      this.showItems();
+    });
+  }
+
+  changeCategory(category: string): void {
+    if (this.drinks) {
+      this.drinkService.svaPica().subscribe(response => {
+        this.items = response as DrinkDTO[];
+        if (category != '') {
+          this.filterItems(category);
+        }
+        this.showItems();
+      });
+    } else {
+      this.mealService.getAllMeals().subscribe(response => {
+        this.items = response as DrinkDTO[];
+        if (category != '') {
+          this.filterItems(category);
+        }
+        this.showItems();
+      });
+    }
+  }
+
+  filterItems(category: string): void {
+    let newList: DrinkDTO[] = [];
+    this.items.forEach(item => {
+      if (item.type === category) {
+        newList.push(item);
       }
     });
-    this.picaZaPrikaz = novaLista;
-  }
-  
-  pretrazi() {
-    if (this.pretraga === '') {
-      this.drinkService.svaPica().subscribe(response => {
-        this.picaZaPrikaz = response as DrinkDTO[];
-        if (this.kategorija != '') this.filterPoKategoriji();
-        this.prikaziPica();
-      });
-    }
-    else {
-      this.drinkService.pretraziPica(this.pretraga).subscribe(response => {
-        this.picaZaPrikaz = response as DrinkDTO[];
-        if (this.kategorija != '') this.filterPoKategoriji();
-        this.prikaziPica();
-      });
-    }
+    this.items = newList;
   }
 
-  prikaziPica() {
-    let divZaPica = document.getElementById("divZaPica");
-    // brisemo sve postojece
-    while (divZaPica.firstChild) {
-      divZaPica.removeChild(divZaPica.lastChild);
+  showItems(): void {
+    let itemsSection = document.getElementById("itemsSection");
+    while (itemsSection.firstChild) {
+      itemsSection.removeChild(itemsSection.lastChild);
     }
-    // dodajemo za svako pice koje odgovara
-    divZaPica.setAttribute("style", "overflow-y: scroll;height:500px;");
-    let redniBr = 0;
-    this.picaZaPrikaz.forEach(pice => {
-      let div = document.createElement("div");
-      div.className = "mat-card";
-      div.setAttribute("style", "margin-left: 31px; margin-top: 15px;width:300px;float: left;");
-      div.setAttribute("name", pice.id.toString());
-      div.setAttribute("id", "divPica" + pice.id);
+
+    itemsSection.setAttribute("style", "overflow-y: scroll; height: 600px;");
+    this.items.forEach(item => {
+      let div1 = document.createElement("div");
+      div1.className = "mat-card";
+      div1.setAttribute("style", "margin-left: 31px; margin-top: 15px; width:300px; float: left;");
+      div1.setAttribute("name", item.id.toString());
+      div1.setAttribute("id", "item-" + item.id);
 
       let div2 = document.createElement("div");
       div2.className = "mat-card-title-group";
-      let ime = document.createElement("div");
-      ime.className = "mat-card-title";
-      ime.appendChild(document.createTextNode(pice.name));
-      div2.appendChild(ime);
-      let slika = document.createElement("img");
-      slika.setAttribute("class", "mat-card-lg-image");
-      slika.setAttribute("src", "assets\\" + pice.image);
-      slika.setAttribute("name", pice.id.toString());
-      slika.setAttribute("id", "slikaPica" + pice.id);
-      slika.ondblclick = (e: any) => {this.dupliKlikNaPice(e);};
-      div2.appendChild(slika);
-      div.appendChild(div2);
-      // ----------
+      let name = document.createElement("div");
+      name.className = "mat-card-title";
+      name.appendChild(document.createTextNode(item.name));
+      div2.appendChild(name);
+      let image = document.createElement("img");
+      image.setAttribute("class", "mat-card-lg-image");
+      image.setAttribute("src", "assets\\" + item.image);
+      image.setAttribute("name", item.id.toString());
+      image.setAttribute("id", "image-item-" + item.id);
+      div2.appendChild(image);
+      div1.appendChild(div2);
+
       let div3 = document.createElement("div");
       div3.className = "mat-card-content";
       let i = document.createElement("i");
       i.setAttribute("class", "sayings");
-      i.appendChild(document.createTextNode(pice.description));
+      i.appendChild(document.createTextNode(item.description));
       div3.appendChild(i);
-      div.appendChild(div3);
-      // ----------
+      div1.appendChild(div3);
+
       let div4 = document.createElement("div");
       div4.className = "mat-card-actions";
-      let dugme = document.createElement("button");
-      dugme.setAttribute("class", "mat-raised-button");
-      dugme.setAttribute("name", pice.id.toString());
-      dugme.setAttribute("id", "digmePica" + pice.id);
-      dugme.setAttribute("style", "background-color: #5d7c77;width: 100px;text-align: center;color: whitesmoke; " 
-        + "font-family: 'Trocchi', serif;font-size: 20px; margin-left: 100px;");
-      dugme.appendChild(document.createTextNode("DODAJ"));
-      dugme.onclick = (e:any) => { this.izbrisi(e); };
-      div4.appendChild(dugme);
-      div.appendChild(div4);
+      let button = document.createElement("button");
+      button.setAttribute("class", "mat-raised-button");
+      button.setAttribute("name", item.id.toString());
+      button.setAttribute("id", "digmePica" + item.id);
+      button.setAttribute("style", "background-color: #5d7c77; width: 100px; text-align: center; color: whitesmoke; "
+        + "font-family: 'Trocchi', serif; font-size: 20px; margin-left: 100px;");
+      button.appendChild(document.createTextNode("DODAJ"));
+      button.onclick = (e: any) => { this.addItem(e); };
+      div4.appendChild(button);
+      div1.appendChild(div4);
 
-      divZaPica.appendChild(div);
-      redniBr++;
+      itemsSection.appendChild(div1);
     });
   }
 
-  izbrisi(e) {
-    let odabranoPice;
-    for (let elem of this.picaZaPrikaz) {
-      if (elem.id == e.srcElement.name) {
-        odabranoPice = elem;
+  addItem(e: any): void {
+    for (let item of this.items) {
+      if (item.id == e.srcElement.name) {
+        this.selectedItems.push(item);
         break;
       }
     }
-
-    const dialogRef = this.dialog.open(DialogDeleteComponent, {
-      width: '500px',
-      data: odabranoPice.name,
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.drinkService.izbrisiPice(odabranoPice).subscribe(
-          response => {
-            this.ispisPoruke("Uspešno ste izbrisali " + odabranoPice.name);
-            let lista: DrinkDTO[] = [];
-            for (let elem of this.picaZaPrikaz) {
-              if (elem.id != e.srcElement.name) lista.push(elem);
-            }
-            this.picaZaPrikaz = lista;
-            this.prikaziPica();
-          },
-          error => {
-            this.ispisPoruke("Niste uspešno izbrisali " + odabranoPice.name);
-          });
-      }
-    });
   }
 
-  dupliKlikNaPice(e) {
-    let odabranoPice;
-    for (let elem of this.picaZaPrikaz) {
-      if (elem.id == e.srcElement.name) {
-        odabranoPice = elem;
-        break;
-      }
-    }
-    this.ruter.navigate(["/Drink"], {state: {data: {'pice': odabranoPice}}});
+  viewOrder() : void {
+    console.log(this.selectedItems);
+    //this.router.navigate(['/']);
   }
 
-  ispisPoruke(poruka: string) {
-    this.snackBar.open(poruka, "x", {
-      duration: 2000,
-      verticalPosition: "top",
-      panelClass:"back-green"
-    });
+  back(): void {
+    this.router.navigate(['/WaiterProfile']);
   }
 }
-

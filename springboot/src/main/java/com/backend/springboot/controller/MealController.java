@@ -182,7 +182,7 @@ public class MealController {
 	
 	
 	@GetMapping(value = "getAllMeals")
-	@PreAuthorize("hasRole('ROLE_CHEF')")
+	//@PreAuthorize("hasAnyRole('ROLE_CHEF', 'ROLE_WAITER')")
 	public ResponseEntity<List<MealDTO>> getAllMeals(){
 		List<Meal> allMeals = this.mealService.getAllMeals();
 		List<MealDTO> dto = this.mealToMealDTO.convertList(allMeals);

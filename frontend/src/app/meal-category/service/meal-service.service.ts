@@ -12,6 +12,7 @@ export class MealServiceService {
   private readonly GET_MEAL_URL : string = Main.PATH + "meal/getOne";
   private readonly CHANGE_MEAL_URL : string = Main.PATH + "meal/changeMeal";
   private readonly DELETE_MEAL_URL : string = Main.PATH + "meal/deleteMeal";
+  private readonly GET_ALL_MEALS_URL : string = Main.PATH + "meal/getAllMeals";
 
   constructor(private http: HttpClient) { 
 
@@ -33,6 +34,11 @@ export class MealServiceService {
 
   public getMeal(id:any){
     return this.http.get(this.GET_MEAL_URL + "/id="+ id);
+  }
+
+
+  public getAllMeals(){
+    return this.http.get(this.GET_ALL_MEALS_URL);
   }
 
 

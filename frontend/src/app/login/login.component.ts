@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log(this.loginForm.getRawValue())
     this.authService.login(this.loginForm.getRawValue())
       .subscribe(
         data => {
