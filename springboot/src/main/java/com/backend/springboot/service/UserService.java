@@ -33,7 +33,7 @@ public class UserService {
 	}
 
 	public List<User> getAllEmployees() {
-		return userRepository.findByFired(false);
+		return userRepository.findByFiredFalse();
 	}
 
 	public User registerUser(User user, String roleName) {
@@ -52,11 +52,6 @@ public class UserService {
 	public User findById(Integer id) throws AccessDeniedException {
 		return userRepository.findById(id).orElseGet(null);
 	}
-
-	public List<User> findAll() throws AccessDeniedException {
-		return userRepository.findAll();
-	}
-
 
 	public User updateUser(User user, CreateUpdateUserDto dto) {
 

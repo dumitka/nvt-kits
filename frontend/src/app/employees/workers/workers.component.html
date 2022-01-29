@@ -25,12 +25,21 @@
         <td mat-cell *matCellDef="let element"><i>{{element.salary}}</i></td>
     </ng-container>
 
+    <ng-container matColumnDef="fire-button">
+      <th mat-header-cell  class="fire-button" *matHeaderCellDef><b>OTPUSTI</b></th>
+      <td mat-cell *matCellDef="let element">
+          <button mat-raised-button class="fire-button" id="fire_button" (click)="fire(element.id)"><i>X</i></button>
+      </td>
+      </ng-container>
+
       <ng-container matColumnDef="button">
       <th mat-header-cell  class="button" *matHeaderCellDef><b>DETALJNIJE</b></th>
       <td mat-cell *matCellDef="let element">
           <button mat-raised-button class="open_button" id="open_button" (click)="open(element)"><i>PROFIL</i></button>
       </td>
       </ng-container>
+
+      
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr

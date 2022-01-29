@@ -11,5 +11,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	User save(User user);
 
-	List<User> findByFired(boolean fired); //pageable?
+	List<User> findByFiredFalse(); //pageable?
 }

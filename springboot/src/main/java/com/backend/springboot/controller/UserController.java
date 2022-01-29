@@ -71,12 +71,12 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('DIRECTOR')")
-    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<Boolean> deleteUser(@PathVariable Integer id) {
         User deletedUser = userService.deleteEmployee(id);
         if (deletedUser == null) {
-            return new ResponseEntity<>("User not found!", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("User fired!", HttpStatus.OK);
+        return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
     }
 
     @GetMapping(value = "/info")
