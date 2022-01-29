@@ -22,9 +22,6 @@ public class Restaurant {
 	private Set<Menu> menus;
 
 	@OneToMany(mappedBy = "restaurant")
-	private Set<Desk> desks;
-
-	@OneToMany(mappedBy = "restaurant")
 	private Set<DrinkCard> drinkCards;
 
 }

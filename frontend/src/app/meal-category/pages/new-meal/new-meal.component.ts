@@ -16,6 +16,8 @@ export class NewMealComponent implements OnInit {
   RESPONSE_OK : number = 0;
   RESPONSE_ERROR : number = -1;
 
+  type;
+
   verticalPosition: MatSnackBarVerticalPosition = "top";
 
 
@@ -24,6 +26,9 @@ export class NewMealComponent implements OnInit {
                       private service:MealServiceService,
                       private snackBar: MatSnackBar,
                       private router:Router) {
+
+
+    this.type = history.state.data.type;
 
     this.newMealForm = this.formBuilder.group({
       name:['', Validators.required],
@@ -67,6 +72,23 @@ export class NewMealComponent implements OnInit {
     )
   }
 
+
+
+  back(){
+    if(this.type == 1){
+      this.router.navigate(['/MealsOfCategory'], {state:{data:{category:1}}});
+    }else if(this.type == 2){
+      this.router.navigate(['/MealsOfCategory'], {state:{data:{category:2}}});
+    }else if(this.type == 3){
+      this.router.navigate(['/MealsOfCategory'], {state:{data:{category:3}}});
+    }else if(this.type == 4){
+      this.router.navigate(['/MealsOfCategory'], {state:{data:{category:4}}});
+    }else if(this.type == 5){
+      this.router.navigate(['/MealsOfCategory'], {state:{data:{category:5}}});
+    }else{
+      this.router.navigate(['/MealsOfCategory'], {state:{data:{category:6}}});
+    }
+  }
 
 
   openSnackBar(msg: string, responseCode: number) {

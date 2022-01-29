@@ -78,16 +78,6 @@ public class DrinkController {
         return new ResponseEntity<>(konvertovanaLista, HttpStatus.OK);
     }
 
-    // uzima u obzir i search
-    @GetMapping("/filterDrinks/{search}/{drinkType}")
-    @PreAuthorize("hasRole('ROLE_SERVER')")
-    public ResponseEntity<List<DrinkDTO>> filteringDrinks(@PathVariable String search, @PathVariable DrinkType drinkType) {
-        List<Drink> pronadjenaPica = this.drinkService.findByName(search);
-        pronadjenaPica = pronadjenaPica.stream().filter(p -> p.getType().equals(drinkType)).toList();
-        List<DrinkDTO> konvertovanaLista = this.drinkToDrinkDTO.convertList(pronadjenaPica);
-        return new ResponseEntity<>(konvertovanaLista, HttpStatus.OK);
-    }
-
     @GetMapping("/")
     @PreAuthorize("hasRole('ROLE_SERVER')")
     public ResponseEntity<List<DrinkDTO>> gettingDrinks() {

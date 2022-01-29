@@ -13,10 +13,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.springboot.dto.OrderedMealDTO;
+import com.backend.springboot.dtoTransformation.MealPriceToMealWithPriceDTO;
+import com.backend.springboot.dtoTransformation.MealToMealDTO;
 import com.backend.springboot.dtoTransformation.OrderedMealToOrderedMealDTO;
 import com.backend.springboot.enums.NotificationStatus;
 import com.backend.springboot.enums.OrderedItemStatus;
@@ -45,6 +48,13 @@ public class OrderedMealController {
 	
 	@Autowired
 	private OrderedMealToOrderedMealDTO orderedMealToDTO;
+	
+	
+	//constructor
+	public OrderedMealController() {
+		this.orderedMealToDTO = new OrderedMealToOrderedMealDTO();
+	}
+		
 
 	@PreAuthorize("hasAnyRole('ROLE_COOK', 'ROLE_CHEF')")
 	@GetMapping("/notAccepted")
@@ -52,19 +62,24 @@ public class OrderedMealController {
 		List<OrderedMeal> listOrderedMeals = orderedMealService.findByStatus(OrderedItemStatus.ORDERED);
 		Set<OrderedMeal> setOrderedMeals = new HashSet<OrderedMeal>(listOrderedMeals);
         Set<OrderedMealDTO> dto = orderedMealToDTO.convertSet(setOrderedMeals);
-
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_COOK', 'ROLE_CHEF')")
-	@PutMapping("/acceptMeal/{id}")
-	public ResponseEntity<String> acceptOrderedMeal(@PathVariable Integer id) {
+	@PutMapping("/acceptMeal")
+	public ResponseEntity<Boolean> acceptOrderedMeal(@RequestBody Integer id) {
+		System.out.println("TACA");
+		System.out.println(id);
 		OrderedMeal meal = orderedMealService.findOne(id);
+		System.out.println(meal.getId());
 		User cook = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		System.out.println(cook.getId());
 		meal.setCook(cook);
 		meal.setStatus(OrderedItemStatus.IN_PROGRESS);
 		orderedMealService.save(meal);
 
+		//Ovo je uzrokovalo neku gresku, nemam pojma, pa sam ostavila za kasnije --> TACA :)
+		/*    
 		Order order = orderService.findOne(meal.getOrder().getId());
 		Notification notification = Notification.builder()
 				.status(NotificationStatus.SENT)
@@ -73,14 +88,14 @@ public class OrderedMealController {
 				.build();
 		notificationService.save(notification);
 		brokerMessagingTemplate.convertAndSend("/topic/hi", notification);
-
-		return new ResponseEntity<String>("Poručeno jelo je uspešno prihvaćeno!", HttpStatus.OK);
+		*/
+		return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasAnyRole('ROLE_COOK', 'ROLE_CHEF')")
 	@GetMapping("/accepted/{userId}")
 	public ResponseEntity<Set<OrderedMealDTO>> acceptedOrderedMeals(@PathVariable Integer userId) {
-		List<OrderedMeal> listOrderedMeals = orderedMealService.findByCook(userId);
+		List<OrderedMeal> listOrderedMeals = orderedMealService.findByCookIdAndStatus(userId, OrderedItemStatus.IN_PROGRESS);
 		Set<OrderedMeal> setOrderedMeals = new HashSet<OrderedMeal>(listOrderedMeals);
         Set<OrderedMealDTO> dto = orderedMealToDTO.convertSet(setOrderedMeals);
 
@@ -88,12 +103,13 @@ public class OrderedMealController {
 	}
 
 	@PreAuthorize("hasAnyRole('ROLE_COOK', 'ROLE_CHEF')")
-	@PutMapping("/finishMeal/{id}")
-	public ResponseEntity<String> finishOrderedMeal(@PathVariable Integer id) {
+	@PutMapping("/finishMeal")
+	public ResponseEntity<Boolean> finishOrderedMeal(@RequestBody Integer id) {
 		OrderedMeal meal = orderedMealService.findOne(id);
 		meal.setStatus(OrderedItemStatus.DONE);
 		orderedMealService.save(meal);
 
+		/*
 		Order order = orderService.findOne(meal.getOrder().getId());
 		Notification notification = Notification.builder()
 				.status(NotificationStatus.SENT)
@@ -102,7 +118,7 @@ public class OrderedMealController {
 				.build();
 		notificationService.save(notification);
 		brokerMessagingTemplate.convertAndSend("/topic/hi", notification);
-
-		return new ResponseEntity<String>("Poručeno jelo je uspešno završeno!", HttpStatus.OK);
+		*/
+		return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
 	}
 }

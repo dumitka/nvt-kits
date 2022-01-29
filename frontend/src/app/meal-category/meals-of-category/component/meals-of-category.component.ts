@@ -72,11 +72,11 @@ export class MealsOfCategoryComponent implements OnInit {
 
 
   add(){
-    this.router.navigate(['/NewMeal']);
+    this.router.navigate(['/NewMeal'], {state:{data:{"type":this.category}}});
   }
 
 
-  returnToProfile(){
-    this.router.navigate(['/ChefProfile']);
+  return(){
+    this.router.navigate(['/MealCategories']);
   }
 }

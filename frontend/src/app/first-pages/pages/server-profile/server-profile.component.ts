@@ -27,7 +27,7 @@ export class ServerProfileComponent implements OnInit {
   }
   
   redirektujKonobar(){
-    this.router.navigate(['/WaiterProfileServer']);
+    this.router.navigate(['/WaiterProfileServer']); ///WaiterProfile
   }
 
   odjava(){

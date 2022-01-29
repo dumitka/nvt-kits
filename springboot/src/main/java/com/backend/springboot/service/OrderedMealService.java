@@ -28,4 +28,9 @@ public class OrderedMealService {
 	public OrderedMeal save(OrderedMeal orderedMeal) {
 		return orderedMealRepository.save(orderedMeal);
 	}
+	
+	public List<OrderedMeal> findByCookIdAndStatus(Integer userId, OrderedItemStatus status){
+		return orderedMealRepository.findByCookIdAndStatus(userId, status);
+	}
+
 }
