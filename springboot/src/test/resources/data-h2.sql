@@ -70,3 +70,23 @@ insert into menus_meal_prices (menu_id, meal_price_id) values (2, 3);
 insert into menus_meal_prices (menu_id, meal_price_id) values (2, 4);
 insert into menus_meal_prices (menu_id, meal_price_id) values (3, 4);
 insert into menus_meal_prices (menu_id, meal_price_id) values (3, 2);
+
+-- DESK
+insert into desk (desk_status, tip, x, y, height, width, reserved, deleted) values (1, 0.0, 0.1, 0.1, 0.2, 0.2, false, false);
+insert into desk (desk_status, tip, x, y, height, width, reserved, deleted) values (1, 0.0, 0.5, 0.5, 0.15, 0.15, false, false);
+
+-- ORDER
+insert into orders (deleted, desk_id) values (false, 1);
+insert into orders (deleted, desk_id) values (false, 2);
+
+--ORDERED MEAL  --za sada nek bude na 3 user_id kao toma konobar, treba da prodje
+insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (2, 0, 3, 3, 1);
+insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (1, 0, 3, 1, 1);
+insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (1, 0, 3, 1, 2);
+insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (1, 0, 3, 1, 2);
+insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (1, 0, 3, 2, 2);
+
+-- NOTIFICATION
+insert into notification (status, message) values (0, 'poruka 1 - poslata');
+insert into notification (status, message) values (1, 'poruka 2 - dostavljena');
+insert into notification (status, message) values (2, 'poruka 3 - vidjena');
