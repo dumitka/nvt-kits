@@ -11,6 +11,7 @@ public class UserDto {
 
     private Integer id;
     private String name;
+    private String username;
     private String lastName;
     private String roleName;
     private float salary;

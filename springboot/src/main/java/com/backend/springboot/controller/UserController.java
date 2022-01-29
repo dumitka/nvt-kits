@@ -42,9 +42,12 @@ public class UserController {
     @PreAuthorize("hasRole('DIRECTOR')")
     public ResponseEntity<UserDto> createUser(@RequestBody CreateUpdateUserDto createUserDto) {
         //validacija, nullchecks
+        if(userService.findByUsername(createUserDto.getUsername()) != null) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
         User user = userMapper.convertCreateUpdateUserDtoToUser(createUserDto);
 
-        user = userService.registerUser(user);
+        user = userService.registerUser(user, createUserDto.getRoleName());
 
         salaryService.createNewSalary(user, createUserDto.getSalary());
 

@@ -1,6 +1,7 @@
 package com.backend.springboot.service;
 
 import com.backend.springboot.dto.CreateUpdateUserDto;
+import com.backend.springboot.model.Role;
 import com.backend.springboot.model.User;
 import com.backend.springboot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -34,12 +36,11 @@ public class UserService {
 		return userRepository.findByFired(false);
 	}
 
-	public User registerUser(User user) {
+	public User registerUser(User user, String roleName) {
 		String password = user.getPassword();
 		user.setPassword(encoder().encode(password));
 
 		User savedUser = userRepository.save(user);
-
 
 		return savedUser;
 	}

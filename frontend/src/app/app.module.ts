@@ -331,6 +331,11 @@ import { RegistrationComponent } from './registration/component/registration.com
       {
         path: 'EmployeeProfile',
         component: EmployeeProfileComponent
+      },
+      {
+        path: 'Registration',
+        canActivate: [DirectorRoutes],
+        component: RegistrationComponent
       }
 
 
