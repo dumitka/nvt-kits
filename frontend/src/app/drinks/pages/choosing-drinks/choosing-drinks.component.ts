@@ -113,6 +113,7 @@ export class ChoosingDrinksComponent implements OnInit {
       div.setAttribute("style", "margin-left: 31px; margin-top: 15px;width:300px;float: left;");
       div.setAttribute("style", "margin-left: 31px; margin-top: 15px;width:300px;float: left;");
       div.setAttribute("name", pice.id.toString());
+      div.setAttribute("id", "divPica" + pice.id);
 
       let div2 = document.createElement("div");
       div2.className = "mat-card-title-group";
@@ -124,6 +125,7 @@ export class ChoosingDrinksComponent implements OnInit {
       slika.setAttribute("class", "mat-card-lg-image");
       slika.setAttribute("src", "assets\\" + pice.image);
       slika.setAttribute("name", pice.id.toString());
+      slika.setAttribute("id", "slikaPica" + pice.id);
       slika.ondblclick = (e: any) => {this.dupliKlikNaPice(e);};
       div2.appendChild(slika);
       div.appendChild(div2);
@@ -141,10 +143,11 @@ export class ChoosingDrinksComponent implements OnInit {
       let dugme = document.createElement("button");
       dugme.setAttribute("class", "mat-raised-button");
       dugme.setAttribute("name", pice.id.toString());
+      dugme.setAttribute("id", "dugmePica" + pice.id);
       dugme.setAttribute("style", "background-color: #5d7c77;width: 100px;text-align: center;color: whitesmoke; " 
         + "font-family: 'Trocchi', serif;font-size: 20px; margin-left: 100px;");
       dugme.appendChild(document.createTextNode("DODAJ"));
-      dugme.onclick = (e:any) => {console.log(e.srcElement.name); this.dodaj(e);};
+      dugme.onclick = (e:any) => { this.dodaj(e);};
       div4.appendChild(dugme);
       div.appendChild(div4);
 
@@ -181,12 +184,11 @@ export class ChoosingDrinksComponent implements OnInit {
       if (result) {
         this.ispisPoruke("Uspesno ste dodali " + odabranoPice.name + " u kartu pica");
         //izbrisi iz liste za prikaz
-        let izbrisiPice = 0;
+        let izbrisiPice: DrinkDTO[] = [];
         for (let elem of this.picaZaPrikaz) {
-          if (elem.id == odabranoPice.id) break;
-          izbrisiPice++;
+          if (elem.id != odabranoPice.id) izbrisiPice.push(elem);
         }
-        this.picaZaPrikaz.splice(izbrisiPice, izbrisiPice);
+        this.picaZaPrikaz = izbrisiPice;
         this.prikaziPica();
         //dodaj u drinkCard
         let novaCena: DrinkPriceDTO = {

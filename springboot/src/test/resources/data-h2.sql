@@ -51,10 +51,10 @@ insert into meals(name, type, description, meal_difficulty, time_preparation, am
 
 
 --MEAL_PRICE
-insert into meal_prices(meal_id, price_amount, deleted) values (1, 300, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (2, 330, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (3, 480, false);
-insert into meal_prices(meal_id, price_amount, deleted) values (4, 700, false);
+insert into meal_prices(meal_id, price, deleted) values (1, 300, false);
+insert into meal_prices(meal_id, price, deleted) values (2, 330, false);
+insert into meal_prices(meal_id, price, deleted) values (3, 480, false);
+insert into meal_prices(meal_id, price, deleted) values (4, 700, false);
 
 
 --MENU

@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { Desk } from 'src/app/models/desk';
 import { Order } from 'src/app/models/order';
 import { MatDialog } from '@angular/material/dialog';
-import { DeleteOrderDialogComponent } from '../../components/delete-order-dialog/delete-order-dialog.component';
 import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { DeleteOrderDialogComponent } from '../../components/delete-order-dialog/delete-order-dialog.component';
 import { ChargeOrderDialogComponent } from '../../components/charge-order-dialog/charge-order-dialog.component';
 
 @Component({

@@ -204,7 +204,7 @@ insert into orders (deleted, desk_id) values (false, 1);
 insert into orders (deleted, desk_id) values (false, 2);
 
 -- ORDERED DRINK
-insert into ordered_drink (amount, status, user_id, drink_id, order_id) values (2, 0, null, 1, 1);
+insert into ordered_drink (amount, status, user_id, drink_id, order_id) values (2, 2, null, 2, 1);
 
 --ORDERED MEAL  --za sada nek bude na 3 user_id kao toma konobar, treba da prodje 
 insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (2, 0, 3, 3, 1);

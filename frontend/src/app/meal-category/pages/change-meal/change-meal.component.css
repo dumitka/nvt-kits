@@ -68,7 +68,21 @@ body {
   
   .option_button{
     background-color: #5d7c77;
+
+    margin-left: 265px;
+
+    text-align: center;
+    color: whitesmoke; 
+    font-family: 'Trocchi', serif;
+    font-size: 20px;
+  }
+
+
+  .back_button{
+    background-color: #5d7c77;
     
+    margin-left: 15px;
+
     text-align: center;
     color: whitesmoke; 
     font-family: 'Trocchi', serif;

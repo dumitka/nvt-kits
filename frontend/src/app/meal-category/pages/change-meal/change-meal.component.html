@@ -89,9 +89,8 @@
           
         </mat-card-content>
 
-        <mat-card-actions>
-            <button mat-raised-button type="submit" class="option_button" id="change_meal_button"  [disabled] = "changeMealForm.invalid" (click) = "changeMeal()">PROMENI</button>
-        </mat-card-actions>
+        <button mat-raised-button type="submit" class="option_button" id="change_meal_button"  [disabled] = "changeMealForm.invalid" (click) = "changeMeal()">PROMENI</button>
+        <button mat-raised-button class="back_button" id="change_meal_button"  (click) = "back()">NAZAD</button>
 
       </mat-card>
 

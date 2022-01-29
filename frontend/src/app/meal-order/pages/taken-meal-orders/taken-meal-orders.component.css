@@ -124,6 +124,25 @@ body {
   }
 
 
-  mat-header-cell{
+ 
+  .position{
     text-align: center;
   }
+
+  .name{
+    text-align: center;
+  }
+
+  .numOfPortion{
+    text-align: center;
+  }
+
+  .button{
+    text-align: center;
+  }
+
+  td{
+    text-align: center;
+  }
+
+

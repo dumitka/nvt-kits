@@ -4,6 +4,7 @@ import { MealServiceService } from '../../service/meal-service.service';
 import { MatSnackBar, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 @Component({
@@ -83,7 +84,20 @@ export class ChangeMealComponent implements OnInit {
 
           this.service.getMeal(this.meal.id).subscribe((data:any) => {
               this.changeMeal = data;
-              this.router.navigate(['/MealProfile'], {state:{data:{meal:this.changeMeal}}});
+              if(data.type == "COLD_APPETIZER"){
+                this.router.navigate(['/MealsOfCategory'], {state:{data:{category:1}}});
+              }else if(data.type == "HOT_APPETIZER"){
+                this.router.navigate(['/MealsOfCategory'], {state:{data:{category:2}}});
+              }else if(data.type == "MAIN_COURSE"){
+                this.router.navigate(['/MealsOfCategory'], {state:{data:{category:3}}});
+              }else if(data.type == "DESERT"){
+                this.router.navigate(['/MealsOfCategory'], {state:{data:{category:4}}});
+              }else if(data.type == "SALAD"){
+                this.router.navigate(['/MealsOfCategory'], {state:{data:{category:5}}});
+              }else{
+                this.router.navigate(['/MealsOfCategory'], {state:{data:{category:6}}});
+              }
+              
            });
       },
       error => {
@@ -92,6 +106,11 @@ export class ChangeMealComponent implements OnInit {
     )
   }
 
+
+
+  back(){
+    this.router.navigate(['/MealProfile'], {state:{data:{meal:this.meal}}});
+  }
 
 
   openSnackBar(msg: string, responseCode: number) {
