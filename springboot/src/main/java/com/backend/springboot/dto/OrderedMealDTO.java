@@ -12,6 +12,7 @@ public class OrderedMealDTO {
 	private Integer id;
 	private Integer amount;
 	private Integer mealId;
+	private String mealName;
 	private Integer orderId;
 	private Integer cookId;
 	private OrderedItemStatus status;

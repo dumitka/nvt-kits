@@ -1,23 +1,26 @@
 package com.backend.springboot.dto;
 
 import com.backend.springboot.enums.DeskStatus;
+import lombok.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import javax.persistence.*;
 
+@Builder
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 public class DeskDTO {
-	private Integer id;
-	private DeskStatus deskStatus;
+
+    private int id;
+    private DeskStatus deskStatus;
+
+    private float x;
+    private float y;
+    private float height;
+    private float width;
+
+    private boolean reserved;
+    private int tableNum;
+    private boolean deleted;
 }

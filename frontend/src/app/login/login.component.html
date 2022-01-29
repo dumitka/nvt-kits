@@ -30,7 +30,7 @@
 
                     <mat-form-field appearance="legacy">
                         <mat-label for="password">LOZINKA</mat-label>
-                        <input type="text" class="form-control" formControlName="password" id="password" matInput >
+                        <input type="password" class="form-control" formControlName="password"  id="password" matInput >
                         <mat-error *ngIf = "hasError('password', 'required')">Potrebno je uneti lozinku!</mat-error>
                         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
                         <mat-hint>Hint</mat-hint>

@@ -83,4 +83,6 @@ public class UserController {
         UserProfileDataDTO dto = new UserProfileDataDTO(loggedUser.getId(), loggedUser.getName(), loggedUser.getLastName());
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
+
 }
