@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.backend.springboot.model.Menu;
@@ -24,6 +25,7 @@ import static com.backend.springboot.constants.MenuConstants.ID_OF_CURRENT_MENU;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@TestPropertySource("classpath:application-test.properties")
 public class MenuServiceUnitTests {
 
 	@Autowired

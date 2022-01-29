@@ -51,12 +51,13 @@ public class MealPriceService {
 	}
 	
 	
+		
 	
 	public MealPrice getMealPrice(Integer id) {
 		Optional<MealPrice> found = mealPriceRepository.findById(id);
 		return found.get();
 	}
-	
+		
 	
 	
 	public List<MealPrice> getAllMealPricebyMealType(MealType type){
@@ -95,10 +96,10 @@ public class MealPriceService {
 		MenuMealPrice mmp = MenuMealPrice.builder().menu(newCurrent.get()).mealPrice(lastOne).deleted(false).build();
 		menuMealPriceRepository.save(mmp);
 		
-		
-		
 		return true;
 	}
+	
+	
 	
 	
 	
@@ -174,6 +175,8 @@ public class MealPriceService {
 	
 	
 	
+	
+	
 	public List<Meal> getMealPricesThatAreNotInMenu(Integer menuId){
 		List<Meal> allMeals = mealRepository.findAll();
 		List<MealPrice> allMealPricesInMenu = menuMealPriceRepository.findAllMealsPricesByMenuId(menuId);
@@ -193,6 +196,8 @@ public class MealPriceService {
 		}
 		return returnList;
 	}
+	
+	
 	
 	
 	

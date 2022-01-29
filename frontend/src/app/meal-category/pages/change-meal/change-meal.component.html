@@ -17,7 +17,7 @@
 
             <mat-form-field appearance="legacy">
               <mat-label for="description">OPIS JELA</mat-label>
-              <textarea matInput  type="text" class="form-control" formControlName="description"></textarea>
+              <textarea matInput  type="text" class="form-control" formControlName="description" id="opis"></textarea>
               <mat-error *ngIf = "requiredError('description', 'required')">Potrebno je uneti opis jela!</mat-error>
               <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
               <mat-hint>Hint</mat-hint>
@@ -90,7 +90,7 @@
         </mat-card-content>
 
         <button mat-raised-button type="submit" class="option_button" id="change_meal_button"  [disabled] = "changeMealForm.invalid" (click) = "changeMeal()">PROMENI</button>
-        <button mat-raised-button class="back_button" id="change_meal_button"  (click) = "back()">NAZAD</button>
+        <button mat-raised-button class="back_button" id="return_button"  (click) = "back()">NAZAD</button>
 
       </mat-card>
 
