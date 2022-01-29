@@ -11,6 +11,7 @@ import static com.backend.springboot.constants.MealPriceConstants.MAIN_COURSE_ME
 import static com.backend.springboot.constants.MealPriceConstants.NEW_MEAL_PRICE;
 import static com.backend.springboot.constants.MealPriceConstants.NON_EXISTING_MEAL_PRICE;
 import static com.backend.springboot.constants.MenuConstants.CURRENT_MENU;
+import static com.backend.springboot.constants.MealPriceConstants.LIST_OF_MEALS_THAT_IS_NOT_IN_CURRENT_MENU_SIZE;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -87,7 +88,7 @@ public class MealPriceServiceIntegrationTest {
 	@Test
 	public void getMealPricesThatAreNotInMenu_EverythingOK_List() {
 		List<Meal> returnList = mealPriceService.getMealPricesThatAreNotInMenu(CURRENT_MENU.getId());
-		assertEquals(LIST_OF_MEALS_THAT_IS_NOT_IN_CURRENT_MENU.size(), returnList.size());
+		assertEquals(LIST_OF_MEALS_THAT_IS_NOT_IN_CURRENT_MENU_SIZE, returnList.size());
 		assertEquals(LIST_OF_MEALS_THAT_IS_NOT_IN_CURRENT_MENU.get(0).getName(), returnList.get(0).getName());
 	}
 	

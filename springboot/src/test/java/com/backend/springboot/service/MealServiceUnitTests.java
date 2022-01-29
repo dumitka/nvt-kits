@@ -5,11 +5,15 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+//import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.backend.springboot.repository.MealPriceRepository;
 import com.backend.springboot.repository.MealRepository;
+import com.backend.springboot.repository.MenuMealPriceRepository;
+import com.backend.springboot.repository.MenuRepository;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -37,9 +41,14 @@ import static com.backend.springboot.constants.MealConstants.NON_EXISTING_MEAL;
 import static com.backend.springboot.constants.MealConstants.CHANGED_MEAL;
 import static com.backend.springboot.constants.MealConstants.DELETED_MEAL;
 import static com.backend.springboot.constants.MealConstants.DELETED_MEAL_ID;
+import static com.backend.springboot.constants.MenuConstants.CURRENT_MENU;
+import static com.backend.springboot.constants.MenuConstants.NEW_MENU;
+import static com.backend.springboot.constants.MenuConstants.MEAL_PRICES_FOR_CURRENT_MENU;
+
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource("classpath:application-test.properties")
 public class MealServiceUnitTests {
 
 	@Autowired
@@ -47,6 +56,15 @@ public class MealServiceUnitTests {
 	
 	@MockBean
 	private MealRepository mealRepository;
+	
+	@MockBean
+	private MenuRepository menuRepository;
+	
+	@MockBean
+	private MealPriceRepository mealPriceRepository;
+	
+	@MockBean
+	private MenuMealPriceRepository menuMealPriceRepository;
 	
 	
 	//S1
@@ -57,6 +75,8 @@ public class MealServiceUnitTests {
 		assertTrue(returnValue);
 		verify(mealRepository, times(1)).findById(EXISTING_MEAL_ID);
 	}
+	
+	
 	
 	
 	//S2
@@ -174,10 +194,20 @@ public class MealServiceUnitTests {
 	public void delete_MealIsNotDeleted_True() {
 		Mockito.when(mealRepository.findById(EXISTING_MEAL_ID)).thenReturn(Optional.of(EXISTING_MEAL));
 		Mockito.when(mealRepository.save(EXISTING_MEAL)).thenReturn(EXISTING_MEAL);
+		
+		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.of(CURRENT_MENU));
+		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.of(CURRENT_MENU));
+		Mockito.when(menuMealPriceRepository.findAllMealsPricesByMenuId(CURRENT_MENU.getId())).thenReturn(MEAL_PRICES_FOR_CURRENT_MENU);
+		Mockito.when(menuRepository.save(CURRENT_MENU)).thenReturn(CURRENT_MENU);
+		
+		Mockito.when(menuRepository.findByCurrent()).thenReturn(Optional.of(NEW_MENU));
+		
 		boolean returnValue = mealService.delete(EXISTING_MEAL_ID);
 		assertTrue(returnValue);
 		verify(mealRepository, times(1)).findById(EXISTING_MEAL_ID);
 		verify(mealRepository, times(1)).save(EXISTING_MEAL);
 	}
+	
+	
 	
 }

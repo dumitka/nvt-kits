@@ -1,14 +1,12 @@
 package com.backend.springboot.controller;
 
-import java.util.Collections;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +21,6 @@ import com.backend.springboot.dtoTransformation.MealPriceToMealWithPriceDTO;
 import com.backend.springboot.dtoTransformation.MealToMealDTO;
 import com.backend.springboot.enums.MealType;
 import com.backend.springboot.model.MealPrice;
-import com.backend.springboot.model.Menu;
-import com.backend.springboot.model.User;
 import com.backend.springboot.model.Meal;
 import com.backend.springboot.service.MealPriceService;
 import com.backend.springboot.service.MealService;

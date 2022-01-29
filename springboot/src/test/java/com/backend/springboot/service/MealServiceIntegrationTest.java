@@ -14,22 +14,32 @@ import static com.backend.springboot.constants.MealConstants.NON_EXISTING_MEAL;
 import static com.backend.springboot.constants.MealConstants.NON_EXISTING_MEAL_DESCRIPTION;
 import static com.backend.springboot.constants.MealConstants.NON_EXISTING_MEAL_ID;
 import static com.backend.springboot.constants.MealConstants.NON_EXISTING_MEAL_NAME;
+//import static com.backend.springboot.constants.MenuConstants.CURRENT_MENU;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+//import static org.mockito.Mockito.times;
+//import static org.mockito.Mockito.verify;
 
 import java.util.List;
+import java.util.Optional;
 
+//import com.backend.springboot.repository.MealPriceRepository;
 import com.backend.springboot.repository.MealRepository;
+//import com.backend.springboot.repository.MenuMealPriceRepository;
+import com.backend.springboot.repository.MenuRepository;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.backend.springboot.model.Meal;
+import com.backend.springboot.model.Menu;
 
 
 
@@ -43,6 +53,9 @@ public class MealServiceIntegrationTest {
 
 	@Autowired
 	private MealRepository mealRepository;
+	
+	@Autowired
+	private MenuRepository menuRepository;
 	
 	//S1
 	@Test
@@ -145,8 +158,18 @@ public class MealServiceIntegrationTest {
 	public void delete_MealIsNotDeleted_True() {
 		boolean returnValue = mealService.delete(EXISTING_MEAL_ID);
 		assertTrue(returnValue);
+		
+		//for keeping data-h2.sql same
 		Meal meal = this.mealRepository.findById(EXISTING_MEAL_ID).orElse(null);
 		meal.setDeleted(false);
 		this.mealRepository.save(meal);
+		
+		Optional<Menu> currentMenu = this.menuRepository.findByCurrent();
+		currentMenu.get().setCurrent(false);
+		this.menuRepository.save(currentMenu.get());
+		Optional<Menu> oldCurrent = this.menuRepository.findById(1);
+		oldCurrent.get().setCurrent(true);
+		this.menuRepository.save(oldCurrent.get());
+		
 	}
 }

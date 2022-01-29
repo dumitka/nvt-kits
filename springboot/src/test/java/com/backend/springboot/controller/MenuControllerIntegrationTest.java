@@ -1,8 +1,8 @@
 package com.backend.springboot.controller;
 
 import static com.backend.springboot.constants.MealConstants.EXISTING_MEAL;
-import static com.backend.springboot.constants.MealPriceConstants.LIST_OF_MEALS_THAT_IS_NOT_IN_CURRENT_MENU;
-import static com.backend.springboot.constants.MenuConstants.CURRENT_MENU;
+import static com.backend.springboot.constants.MenuConstants.MEAL_PRICES_DTO;
+import static com.backend.springboot.constants.MenuConstants.NOT_IN_MENU_MEALS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -80,48 +80,7 @@ public class MenuControllerIntegrationTest {
 	 }
 	 
 	 
-	 /*
-	 @Test
-	 public void getMenu_CurrentMenuNotFound_NotFound() {
-		 HttpHeaders headers = new HttpHeaders();
-	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
-	     ResponseEntity<MenuDTO> responseEntity =
-	                this.restTemplate.exchange(URL_PREFIX + "getMenu", HttpMethod.GET, httpEntity, MenuDTO.class);
-
-	     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-	     assertEquals(Integer.valueOf(0), responseEntity.getBody().getId());
-	     
-	 }
-	 */
 	 
-	 
-	 
-	 @Test
-	 public void getMenu_EverythingOK_OK(){
-		 HttpHeaders headers = new HttpHeaders();
-	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
-	     ResponseEntity<MenuDTO> responseEntity =
-	                this.restTemplate.exchange(URL_PREFIX + "getMenu", HttpMethod.GET, httpEntity, MenuDTO.class);
-
-	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-	     assertEquals(CURRENT_MENU.getId(), responseEntity.getBody().getId());
-	 }
-	 
-	 
-	 
-	 @Test
-	 public void addMealToMenu_MealPriceAlreadyExists_BadRequest() {
-		 HttpHeaders headers = new HttpHeaders();
-	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.existingMealPriceDTO, headers);
-	     ResponseEntity<Boolean> responseEntity =
-	                this.restTemplate.exchange(URL_PREFIX + "addMealToMenu", HttpMethod.POST, httpEntity, Boolean.class);
-
-	     assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-	     assertFalse(responseEntity.getBody());
-	 }
 	 
 	 
 	 
@@ -173,7 +132,7 @@ public class MenuControllerIntegrationTest {
 	     headers.add("Authorization", "Bearer " + this.accessToken);
 	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.nonexistingMealPriceDTO, headers);
 	     ResponseEntity<Boolean> responseEntity =
-	                this.restTemplate.exchange(URL_PREFIX + "deleteMealInMenu", HttpMethod.DELETE, httpEntity, Boolean.class);
+	                this.restTemplate.exchange(URL_PREFIX + "deleteMealInMenu", HttpMethod.PUT, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
 	     assertFalse(responseEntity.getBody());
@@ -187,7 +146,7 @@ public class MenuControllerIntegrationTest {
 	     headers.add("Authorization", "Bearer " + this.accessToken);
 	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.existingMealPriceDTO, headers);
 	     ResponseEntity<Boolean> responseEntity =
-	                this.restTemplate.exchange(URL_PREFIX + "deleteMealInMenu", HttpMethod.DELETE, httpEntity, Boolean.class);
+	                this.restTemplate.exchange(URL_PREFIX + "deleteMealInMenu", HttpMethod.PUT, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	     assertTrue(responseEntity.getBody());
@@ -199,7 +158,7 @@ public class MenuControllerIntegrationTest {
 	 public void newMenu_EverythingOK_OK() throws Exception { 
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.newMenuDTO, headers);
+	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(MEAL_PRICES_DTO, headers);
 	     ResponseEntity<Boolean> responseEntity =
 	                this.restTemplate.exchange(URL_PREFIX + "newMenu", HttpMethod.POST, httpEntity, Boolean.class);
 
@@ -218,10 +177,9 @@ public class MenuControllerIntegrationTest {
 	                this.restTemplate.exchange(URL_PREFIX + "getMealPricesNotInMenu", HttpMethod.GET, httpEntity, MealWithPriceDTO[].class);
 
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-	     //+1 for meal that is deleted in previous method Kajgana
-	     assertEquals(LIST_OF_MEALS_THAT_IS_NOT_IN_CURRENT_MENU.size() + 1, responseEntity.getBody().length);
-	     assertEquals(Integer.valueOf(1), responseEntity.getBody()[0].getId());
-	     assertEquals(Integer.valueOf(5), responseEntity.getBody()[1].getId());
+	     assertEquals(NOT_IN_MENU_MEALS, responseEntity.getBody().length);
+	     assertEquals(Integer.valueOf(3), responseEntity.getBody()[0].getId());
+	     assertEquals(Integer.valueOf(4), responseEntity.getBody()[1].getId());
 	 }
 	 
 }
