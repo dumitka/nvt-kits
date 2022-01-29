@@ -31,5 +31,16 @@ public class ChefConstants {
     // newMeal
     public static final String NOVO_JELO = "Slatki greh";
     public static final String JELO_TEK_DODATO = "Najbolje jelo ikad";
+    
+    
+    //categories
+    public static final String COLD_A = "COLD_A";
+    public static final String HOT_A = "HOT_A";
+    public static final String MAIN_M = "MAIN_M";
+    public static final String DESSERT = "DESSERT";
+    public static final String SALAD = "SALAD";
+    public static final String APP = "APP";
+    
+    public static final String NAME_OF_MEAL = "Piletina u čili sosu";
 
 }
