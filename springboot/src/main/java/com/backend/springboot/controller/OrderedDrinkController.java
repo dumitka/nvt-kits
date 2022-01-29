@@ -42,7 +42,8 @@ public class OrderedDrinkController {
 
 	@Autowired
 	private SimpMessagingTemplate brokerMessagingTemplate;
-	
+
+	@Autowired
 	private OrderedDrinkToOrderedDrinkDTO orderedDrinkToDTO;
 	
 	@PreAuthorize("hasAnyRole('ROLE_BARTENDER')")
