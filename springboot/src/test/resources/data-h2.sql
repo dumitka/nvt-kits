@@ -15,10 +15,13 @@ insert into users(username, password, name, last_name, fired, enabled)
     values ('otpusteni', '$2a$10$INVaw70gvhwlo9eF2ctMpO8vDZx9q35o43GXsnVRhxklTKK5L6YV2', 'Marko', 'Markovic', true, true);
 insert into users(username, password, name, last_name, fired, enabled   )-- sifra pera
     values ('sef-sale', '$2a$10$hN88.iZa1VSk4Ncxjpt.M.xZ5swoN1EZwryN4oUY/8Uf6wUVEDtaO', 'Pera', 'Peric', false, true);
+insert into users(username, password, name, last_name, fired, enabled   )-- sifra pera
+    values ('kuvar', '$2a$10$hN88.iZa1VSk4Ncxjpt.M.xZ5swoN1EZwryN4oUY/8Uf6wUVEDtaO', 'Pesa', 'Desa', false, true);
 
 -- USER -> ROLES
 insert into user_role (user_id, role_id) values (1, 7);
 insert into user_role (user_id, role_id) values (3, 8);
+insert into user_role (user_id, role_id) values (4, 4);
 
 -- RESTAURANT
 insert into restaurant (id) values (1);

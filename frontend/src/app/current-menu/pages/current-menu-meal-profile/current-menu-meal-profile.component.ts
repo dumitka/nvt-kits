@@ -29,7 +29,6 @@ export class CurrentMenuMealProfileComponent implements OnInit {
   constructor(private router:Router, private dialog:MatDialog, private service:CurrentMenuService, private snackBar: MatSnackBar) { 
     this.mealPrice = history.state.data.mealPrice;
 
-    console.log("***************"  + this.mealPrice.mealDTO.image);
     if(this.mealPrice.mealDTO.image != "nema") this.slika = this.mealPrice.mealDTO.image;
 
     if(this.mealPrice.mealDTO.mealDifficulty == "EASY"){
