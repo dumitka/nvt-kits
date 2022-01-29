@@ -1,0 +1,85 @@
+
+body{
+  background-color: #5d7c77;
+}
+
+h1 { 
+  text-align: center;
+  color: whitesmoke;
+  text-transform: uppercase;
+  padding: 1px;
+  font-family: 'Raleway', cursive;
+  font-weight: 100;
+  position: relative;
+  background: linear-gradient(to right, #6d918b, whitesmoke, #6d918b);
+}
+h1::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -50px;
+  width: 600px;
+  margin-left: -300px;
+  margin-top: -220px;
+  height: 600px;
+  background: radial-gradient(50% 50%, ellipse closest-side, #444, #6d918b);
+  z-index: -1;
+}
+h1 a {
+  background: #5d7c77;
+  display: block;
+  padding: 20px;
+  text-decoration: none;
+  letter-spacing: 30px;
+  color: whitesmoke;
+}
+
+.director_profile_card {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
+  
+}
+
+.profile_picture{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.user_data{
+  color: #5d7c77; 
+  font-family: 'Trocchi', serif; 
+  font-size: 30px; 
+  font-weight: normal; 
+  line-height: 48px;
+  
+  text-align: center;
+ 
+}
+
+
+mat-card-actions{
+  margin-left: 450px;
+  color: #5d7c77; 
+  font-family: 'Trocchi', serif; 
+}
+
+.option_button{
+  margin-top: 45px;
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  background-color: #5d7c77; 
+  
+  width: 250px;
+  
+  text-align: center;
+  color: whitesmoke; 
+  font-family: 'Trocchi', serif;
+  font-size: 20px;
+}

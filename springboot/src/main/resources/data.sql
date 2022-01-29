@@ -216,4 +216,15 @@ insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (1,
 insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (1, 0, 3, 18, 2);
 insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (1, 0, 3, 20, 2);
 
+-- SALARY
+insert into salary (user_id, amount, date_Of_Validation) values (1, 10000, '2020-03-04');
+insert into salary (user_id, amount, date_Of_Validation) values (1, 14000, '2021-03-04');
+insert into salary (user_id, amount, date_Of_Validation) values (2, 20000, '2020-05-04');
+insert into salary (user_id, amount, date_Of_Validation) values (3, 10000, '2020-06-04');
+insert into salary (user_id, amount, date_Of_Validation) values (4, 35000, '2020-03-05');
+insert into salary (user_id, amount, date_Of_Validation) values (5, 10000, '2020-03-05');
+insert into salary (user_id, amount, date_Of_Validation) values (6, 40000, '2020-03-04');
+insert into salary (user_id, amount, date_Of_Validation) values (7, 10000, '2021-03-04');
+insert into salary (user_id, amount, date_Of_Validation) values (8, 30000, '2020-03-04');
+insert into salary (user_id, amount, date_Of_Validation) values (8, 18000, '2020-03-04');
 

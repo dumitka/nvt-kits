@@ -42,7 +42,7 @@ public class UserMapper {
                 .id(user.getId())
                 .name(user.getName())
                 .lastName(user.getLastName())
-                .roleName(user.getRoles().get(0).getName())
+                .roleName(user.getRoles().get(0).getName().replace("ROLE_", ""))
                 .salary(extractCurrentSalary(user.getId()))
                 .build();
     }

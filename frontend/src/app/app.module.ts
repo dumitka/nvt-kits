@@ -14,7 +14,7 @@ import { CookProfileComponent } from './first-pages/pages/cook-profile/component
 import { ManagerProfileComponent } from './first-pages/pages/manager-profile/manager-profile.component';
 import { BartenderProfileComponent } from './first-pages/pages/bartender-profile/component/bartender-profile.component';
 import { ChefProfileComponent } from './first-pages/pages/chef-profile/component/chef-profile.component';
-import { DirectorProfileComponent } from './first-pages/pages/director-profile/director-profile.component';
+import { DirectorProfileComponent } from './first-pages/pages/director-profile/component/director-profile.component';
 import { ServerProfileComponent } from './first-pages/pages/server-profile/server-profile.component';
 import { AuthService } from './login/auth.service';
 
@@ -67,6 +67,9 @@ import { TablesLayoutComponent } from './tables/tables-layout/tables-layout.comp
 import { TableComponent } from './table/table.component';
 import { NewDrinkOrdersComponent } from './drink-order/pages/new-drink-orders/new-drink-orders.component';
 import { TakenDrinkOrdersComponent } from './drink-order/pages/taken-drink-orders/taken-drink-orders.component';
+import { WorkersComponent } from './employees/workers/workers.component';
+import { EmployeeProfileComponent } from './employee-profile/component/employee-profile.component';
+import { RegistrationComponent } from './registration/component/registration.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -113,7 +116,10 @@ import { TakenDrinkOrdersComponent } from './drink-order/pages/taken-drink-order
     ChargeOrderDialogComponent,
     TableComponent,
     NewDrinkOrdersComponent,
-    TakenDrinkOrdersComponent
+    TakenDrinkOrdersComponent,
+    WorkersComponent,
+    EmployeeProfileComponent,
+    RegistrationComponent
   ],
   entryComponents: [
     DeleteMealDialogComponent,
@@ -317,6 +323,16 @@ import { TakenDrinkOrdersComponent } from './drink-order/pages/taken-drink-order
         canActivate: [BartenderRoutes],
         component: TakenDrinkOrdersComponent,
       },
+      {
+        path: 'Workers',
+        canActivate: [DirectorRoutes],
+        component: WorkersComponent,
+      },
+      {
+        path: 'EmployeeProfile',
+        component: EmployeeProfileComponent
+      }
+
 
     ]),
 

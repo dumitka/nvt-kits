@@ -1,0 +1,31 @@
+<body>
+
+  <h1><a href="#0">VAŠ PROFIL</a></h1>
+
+    <br>
+    <br>
+    <br>
+
+  <div class="card_div">
+    <mat-card class="director_profile_card">
+      <img mat-card-lg-image name="profile_picture" class="profile_picture" src="assets\director_profile.jpg" >
+        
+        <mat-card-content>
+          <div class="director_data">
+            <span>{{loggedDirectorName}}</span>
+            <span>&nbsp;</span>
+            <span>{{loggedDirectorLastName}}</span>
+          </div>
+
+          <div class="options">
+            <button mat-raised-button class="option_button" id="workers" (click) = "workers()">ZAPOSLENI</button>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-button (click) = "logout()">ODJAVA</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+</body>

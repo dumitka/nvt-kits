@@ -33,7 +33,7 @@ public class UserController {
     public ResponseEntity<List<UserDto>> getAll() {
         List<UserDto> employees = userService.getAllEmployees().stream()
                 .map(user -> userMapper.convertUserToUserDto(user))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList() );
 
         return new ResponseEntity<>(employees, HttpStatus.OK);
     }
@@ -83,6 +83,4 @@ public class UserController {
         UserProfileDataDTO dto = new UserProfileDataDTO(loggedUser.getId(), loggedUser.getName(), loggedUser.getLastName());
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
-
-
 }

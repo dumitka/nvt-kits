@@ -34,6 +34,7 @@ public class SalaryService {
     }
 
     public Salary getSalaryForUser(Integer userId) {//todo dates
+
         return salaryRepository.findOneByUserId(userId);
     }
 }
