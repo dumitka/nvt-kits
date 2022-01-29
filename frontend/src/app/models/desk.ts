@@ -1,5 +1,6 @@
 export class Desk {
-    id: number = 0;
+    id: number;
+	deskNumber: number;
     deskStatus: DeskStatus;
 }
 

@@ -1,33 +1,26 @@
-.parent {
-  display: flex;
-  height: 50px;
+body {
+  background-color: #5d7c77;
 }
 
+.toolbar {
+  display: flex;
+  height: 50px;
+  padding: 0px 30px;
+}
 
 .filler {
   flex-grow: 1;
-  background: lightgreen;
 }
 
 .restaurant{
   position: relative;
-  top: 20px;
-  /* right: 18%; */
-  left: 50px;
+  margin: 50px auto;
   padding: 1em;
-  border: 1px solid #cc0000;
-
   width: 1200px;
   height: 600px;
-
   background-color: #bfe4ff;
   border: dashed 4px transparent;
   border-radius: 4px;
   transition: background-color 0.3s;
-  box-sizing: border-box
-}
-
-.screen {
-  height: 100%;
-  width: 100%;
+  box-sizing: border-box;
 }

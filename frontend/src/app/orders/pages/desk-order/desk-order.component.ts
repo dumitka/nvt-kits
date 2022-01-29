@@ -14,6 +14,8 @@ import { ChargeOrderDialogComponent } from '../../components/charge-order-dialog
   styleUrls: ['./desk-order.component.css']
 })
 export class DeskOrderComponent implements OnInit {
+  deskId: number;
+  deskNumber: number;
   desk: Desk = new Desk();
   order: Order = new Order();
   ordered: boolean = false;
@@ -26,8 +28,12 @@ export class DeskOrderComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = "top";
 
   constructor(private service: DeskOrderService, private router: Router, private dialog: MatDialog, private snackBar: MatSnackBar) {
-    this.service.getDesk().subscribe((response: Desk | null) => {
-      this.desk = response as Desk;
+    this.deskId = history.state.data.id;
+    this.deskNumber = history.state.data.number;
+    
+    this.service.getDesk(this.deskId).subscribe((response: Desk | null) => {
+      this.desk = response;
+      this.desk.deskNumber = this.deskNumber;
 
       let deskStatus: string = this.desk.deskStatus.toString();
       if (deskStatus === 'NOT_ORDERED') {
@@ -56,8 +62,8 @@ export class DeskOrderComponent implements OnInit {
       }
     });
 
-    this.service.getOrder().subscribe((response: Order | null) => {
-      this.order = response as Order;
+    this.service.getOrder(this.deskId).subscribe((response: Order | null) => {
+      this.order = response;
     });
   }
 
@@ -96,7 +102,7 @@ export class DeskOrderComponent implements OnInit {
             this.openSnackBar(error.error, this.RESPONSE_ERROR);
           }
         );
-        this.router.navigate(['/login']) // TODO: prozor sa stolovima
+        this.router.navigate(['/WaiterProfile'])
       }
     });
   }
@@ -110,7 +116,7 @@ export class DeskOrderComponent implements OnInit {
         this.openSnackBar(error.error, this.RESPONSE_ERROR);
       }
     );
-    this.router.navigate(['/login']) // TODO: prozor sa stolovima
+    this.router.navigate(['/WaiterProfile'])
   }
 
   serveMeals(): void {
@@ -122,7 +128,7 @@ export class DeskOrderComponent implements OnInit {
         this.openSnackBar(error.error, this.RESPONSE_ERROR);
       }
     );
-    this.router.navigate(['/login']) // TODO: prozor sa stolovima
+    this.router.navigate(['/WaiterProfile']) 
   }
 
   chargeOrder(): void {
@@ -135,18 +141,18 @@ export class DeskOrderComponent implements OnInit {
         });
 
         chargeOrderDialog.afterClosed().subscribe(() => {
-          this.router.navigate(['/login']) // TODO: prozor sa stolovima
+          this.router.navigate(['/WaiterProfile']) 
           this.openSnackBar("Porudžbina uspešno završena!", this.RESPONSE_OK);
         });
       },
       error => {
-        this.router.navigate(['/login']) // TODO: prozor sa stolovima
+        this.router.navigate(['/WaiterProfile']) 
         this.openSnackBar(error.error, this.RESPONSE_ERROR);
       }
     )
   }
 
   back(): void {
-    this.router.navigate(['/login']) // TODO: prozor sa stolovima
+    this.router.navigate(['/WaiterProfile']) 
   }
 }

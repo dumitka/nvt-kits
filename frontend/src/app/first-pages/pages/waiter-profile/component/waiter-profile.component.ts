@@ -1,16 +1,9 @@
-import { MatButton } from '@angular/material/button';
 import { AuthService } from 'src/app/login/auth.service';
 import { Table } from 'src/app/tables/table.model';
 import { WaiterProfileService } from '../service/waiter-profile.service';
-import { ElementRef, Component,
-  ViewChildren,
-  AfterViewInit,
-  OnInit,
-  QueryList, 
-  ViewChild} from '@angular/core';
-  import { TableComponent } from 'src/app/table/table.component';
-import { map } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { TableWrapper } from 'src/app/tables/table-wrapper.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-waiter-profile',
@@ -18,49 +11,53 @@ import { TableWrapper } from 'src/app/tables/table-wrapper.model';
   styleUrls: ['./waiter-profile.component.css']
 })
 export class WaiterProfileComponent implements OnInit {
+  currentWaiter: string = window.localStorage.getItem('username');
+  waiters: string[] = [];
+  tables: Table[] = [];
+  tableWrappers: TableWrapper[] = [];
 
-  name = "Screen"
-  foods : any[] = [{num:1, value: "Banana"}, {num:2, value: "ANanas"}]
+  constructor(private authService: AuthService, private service: WaiterProfileService, private router: Router) { 
+    this.service.getWaiters().subscribe((response: string[]) => {
+      this.waiters = response;
+    });
 
-  tables: Table[] = []
-  tableWrappers: TableWrapper[] = []
-
-  constructor(private authService: AuthService, private service: WaiterProfileService) { }
-
-  ngOnInit(): void {
-    this.service.getAllDesks().subscribe((data: any) => {
-      this.tables = data;
-      console.log("OVO SMO PRIMILI KAO SVE STOLOVE")
-      console.log(data)
-
+    this.service.getDesks().subscribe((response: Table[]) => {
+      this.tables = response;
       this.calculateAndUpdateTableNumbers();
-
     })
   }
 
-  calculateAndUpdateTableNumbers() {
-    const map1 = new Map();
+  ngOnInit(): void {
 
-    for( let table of this.tables) {
-      let score = Math.sqrt(Math.pow(table.x, 2) + Math.pow(table.y, 2) );
+  }
 
-      map1.set(table, score);
-    } 
-    const mapSort1 = new Map([...map1.entries()].sort((a, b) => a[1] - b[1]));
-    console.log(mapSort1);
+  calculateAndUpdateTableNumbers(): void {
+    const map = new Map();
+    for (let table of this.tables) {
+      let score = Math.sqrt(Math.pow(table.x, 2) + Math.pow(table.y, 2));
+      map.set(table, score);
+    }
+    const mapSort = new Map([...map.entries()].sort((a, b) => a[1] - b[1]));
+
     let i = 1;
-    for (let [key, value] of mapSort1) {
-
+    for (let [key, value] of mapSort) {
       this.tableWrappers.push({
         table: key,
         tableNum: i
       })
-      i = i+1;
+      i = i + 1;
     }
-    console.log(this.tableWrappers)
   }
 
-  logout(){
+  logout(): void {
     this.authService.logout();
+  }
+  
+  changeWaiter(username: string): void {
+    this.authService.logout(username);
+  }
+
+  order(tw: TableWrapper): void {
+    this.router.navigate(['/DeskOrder'], { state: { data: { "id": tw.table.id, "number": tw.tableNum } } });
   }
 }

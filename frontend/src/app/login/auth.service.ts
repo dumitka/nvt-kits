@@ -32,15 +32,14 @@ import { Main} from '../../main';
         }, catchError(this.errorHander)));
     }
   
-    logout() {
+    logout(username: string = '') {
       this.access_token = null;
       this.token_data = null;
-      window.localStorage.setItem("userId", null);
-      window.localStorage.setItem("username", null);
-      window.localStorage.setItem("role", null);
-      this.router.navigate(['/login']);
+      window.localStorage.setItem('userId', null);
+      window.localStorage.setItem('username', null);
+      window.localStorage.setItem('role', null);
+      this.router.navigate(['/login'], { state: { data: { 'username': username } } });
     }
-  
    
     tokenIsPresent() {
       return this.access_token != null;

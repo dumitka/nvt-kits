@@ -17,12 +17,12 @@ export class DeskOrderService {
     return throwError(error);
   }
 
-  getDesk() {
-    return this.http.get(this.DESKS_URL + 'desk/' + 3); // TODO: dodati deskId
+  getDesk(deskId: number) {
+    return this.http.get(this.DESKS_URL + 'desk/' + deskId); 
   }
 
-  getOrder() {
-    return this.http.get(this.ORDERS_URL + 'deskOrder/' + 3); // TODO: dodati deskId
+  getOrder(deskId: number) {
+    return this.http.get(this.ORDERS_URL + 'deskOrder/' + deskId);
   }
 
   // createOrder

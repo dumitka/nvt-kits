@@ -6,18 +6,16 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class WaiterProfileService {
+  readonly WAITERS_URL: string = Main.PATH + "api/users/waiters";
+  readonly DESKS_URL: string = Main.PATH + "api/desks/";
 
   constructor(private http: HttpClient) { }
-  
-  readonly URL : string = Main.PATH + "api/desks/";
-  
 
-  getAllDesks(){
-    return this.http.get(this.URL);
+  getWaiters() {
+    return this.http.get(this.WAITERS_URL);
   }
 
-  setTableNum(id, tableNum) {
-    return this.http.put(this.URL + id +"/number/" +tableNum, null)
+  getDesks() {
+    return this.http.get(this.DESKS_URL);
   }
-
 }

@@ -1,20 +1,18 @@
-<div class="screen">
-  <mat-toolbar class="parent">
+<body>
+  <mat-toolbar class="toolbar">
     <mat-form-field>
-      <mat-select>
-        <mat-option *ngFor="let food of foods" [value]="food.value">
-          {{food.viewValue}}
-        </mat-option>
+      <mat-select [value]="currentWaiter" (selectionChange)="changeWaiter($event.value)">
+        <mat-option *ngFor="let waiter of waiters" [value]="waiter">{{waiter}}</mat-option>
       </mat-select>
     </mat-form-field>
     <div class="filler"></div>
     <button mat-button (click)="logout()">ODJAVA</button>
-    <button mat-icon-button color="warn">
-      <mat-icon>where_to_vote</mat-icon>
+    <button mat-icon-button>
+      <mat-icon>notifications</mat-icon>
     </button>
   </mat-toolbar>
-
-  <div #restaurantcontainer id="restaurant" class="restaurant" >
-    <app-table *ngFor="let tableWrapper of tableWrappers" [tableWrapper]="tableWrapper"></app-table>
+  <div id="restaurant" class="restaurant">
+    <app-table *ngFor="let tableWrapper of tableWrappers" [tableWrapper]="tableWrapper" (click)="order(tableWrapper)">
+    </app-table>
   </div>
-</div>
+</body>
