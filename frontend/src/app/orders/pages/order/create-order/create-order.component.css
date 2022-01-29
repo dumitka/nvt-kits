@@ -1,86 +1,48 @@
-
 body {
-    background-color: #5d7c77; ;
-}
-  
-.server_profile_card {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 35%;
+    background-color: #5d7c77;
 }
 
-h1 { 
-    text-align: center;
-    color: whitesmoke;
-    text-transform: uppercase;
-    padding: 1px;
-    font-family: 'Raleway', cursive;
-    font-weight: 100;
-    position: relative;
-    background: linear-gradient(to right, #6d918b, whitesmoke, #6d918b);
+.toolbar {
+    display: flex;
+    height: 50px;
 }
 
-h1::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: -50px;
-    width: 600px;
-    margin-left: -300px;
-    margin-top: -220px;
-    height: 600px;
-    background: radial-gradient(50% 50%, ellipse closest-side, #444, #6d918b);
-    z-index: -1;
+.mat-radio-group {
+    padding-left: 0px;
 }
 
-h1 a {
-    background: #5d7c77;
-    display: block;
-    padding: 20px;
-    text-decoration: none;
-    letter-spacing: 30px;
-    color: whitesmoke;
+.mat-radio-button {
+    margin-left: 16px;
 }
 
-mat-form-field {
-    padding: 10px;
-    left: 4%;
-    color: #5d7c77;
-    font-family: 'Raleway', cursive;
-    background-color: whitesmoke;
+.filler {
+    flex-grow: 1;
 }
 
-.pretraga {
-    width: 47%;
-}
-
-.mat-card-title {
-    display: block;
-    color: #5d7c77; 
-    font-family: 'Trocchi', serif; 
-    font-size: 20px; 
-    font-weight: normal; 
-    line-height: 48px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.sayings {
-    text-align: center;
-    color: #5d7c77; 
-    font-family: 'Trocchi', serif; 
-    font-size: 15px; 
-    font-weight: normal; 
-    line-height: 48px;
+.mat-form-field {
+    padding-right: 80px;
 }
 
 .option_button {
-    background-color: #5d7c77; 
+    background-color: #5d7c77;
     width: 100px;
     text-align: center;
-    color: whitesmoke; 
+    color: whitesmoke;
     font-family: 'Trocchi', serif;
     font-size: 20px;
     margin-left: 50px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ffd740;
+    border-radius: 10px;
 }

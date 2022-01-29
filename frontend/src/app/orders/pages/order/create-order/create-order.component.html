@@ -1,13 +1,24 @@
 <body>
-    <mat-form-field appearance="fill">
-        <mat-label>Kategorija</mat-label>
-        <mat-select>
-            <mat-option value="sve">Sve kategorije</mat-option>
-            <mat-option value="gazirana">Gazirana pića</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    <br/>
-    <br/>
+    <mat-toolbar class="toolbar">
+        <mat-radio-group [(ngModel)]="chosenOption">
+            <mat-radio-button *ngFor="let option of options" [value]="option">
+                {{option}}
+            </mat-radio-button>
+        </mat-radio-group>
+        <div class="filler"></div>
+        <mat-form-field>
+            <mat-label>Kategorija</mat-label>
+            <mat-select id="kategorija">
+                <mat-option (click)="promenaKategorije($event)" id="sve">Sve kategorije</mat-option>
+                <mat-option (click)="promenaKategorije($event)" id="gazirana">Gazirana pića</mat-option>
+                <mat-option (click)="promenaKategorije($event)" id="negazirana">Negazirana pića</mat-option>
+                <mat-option (click)="promenaKategorije($event)" id="alkoholna">Alkoholna pića</mat-option>
+                <mat-option (click)="promenaKategorije($event)" id="topla">Topli napici</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-toolbar>
+    
+    <!--<div>Your favorite season is: {{chosenOption}}</div>-->
+    
     <section id='divZaPica'></section>
 </body>

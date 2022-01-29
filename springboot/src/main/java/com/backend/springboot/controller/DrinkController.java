@@ -79,7 +79,7 @@ public class DrinkController {
     }
 
     @GetMapping("/")
-    @PreAuthorize("hasRole('ROLE_SERVER')")
+    @PreAuthorize("hasAnyRole('ROLE_SERVER', 'ROLE_WAITER')")
     public ResponseEntity<List<DrinkDTO>> gettingDrinks() {
         List<Drink> pronadjenaPica = this.drinkService.findAllAvailable();
         List<DrinkDTO> konvertovanaLista = this.drinkToDrinkDTO.convertList(pronadjenaPica);
