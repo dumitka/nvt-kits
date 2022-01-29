@@ -10,11 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.backend.springboot.dto.OrderedDrinkDTO;
 import com.backend.springboot.dtoTransformation.OrderedDrinkToOrderedDrinkDTO;
@@ -57,14 +53,18 @@ public class OrderedDrinkController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_BARTENDER')")
-	@PutMapping("/acceptDrink/{id}")
-	public ResponseEntity<String> acceptOrderedDrink(@PathVariable Integer id) {
+	@PutMapping("/acceptDrink")
+	public ResponseEntity<String> acceptOrderedDrink(@RequestBody Integer id) {
+
 		OrderedDrink drink = orderedDrinkService.findOne(id);
+
 		User bartender = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
 		drink.setBartender(bartender); 
 		drink.setStatus(OrderedItemStatus.IN_PROGRESS);
 		orderedDrinkService.save(drink);
-		
+
+		/*
 		Order order = orderService.findOne(drink.getOrder().getId());
 		Notification notification = Notification.builder()
 				.status(NotificationStatus.SENT)
@@ -72,7 +72,7 @@ public class OrderedDrinkController {
 				.order(order)
 				.build();
 		notificationService.save(notification);
-		brokerMessagingTemplate.convertAndSend("/topic/hi", notification);
+		brokerMessagingTemplate.convertAndSend("/topic/hi", notification); */
 
 		return new ResponseEntity<String>("Poručeno piće je uspešno prihvaćeno!", HttpStatus.OK);
 	}
@@ -88,12 +88,13 @@ public class OrderedDrinkController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_BARTENDER')")
-	@PutMapping("/finishDrink/{id}")
-	public ResponseEntity<String> finishOrderedDrink(@PathVariable Integer id) {
+	@PutMapping("/finishDrink")
+	public ResponseEntity<String> finishOrderedDrink(@RequestBody Integer id) {
 		OrderedDrink drink = orderedDrinkService.findOne(id);
 		drink.setStatus(OrderedItemStatus.DONE);
 		orderedDrinkService.save(drink);
 
+		/*
 		Order order = orderService.findOne(drink.getOrder().getId());
 		Notification notification = Notification.builder()
 				.status(NotificationStatus.SENT)
@@ -102,6 +103,8 @@ public class OrderedDrinkController {
 				.build();
 		notificationService.save(notification);
 		brokerMessagingTemplate.convertAndSend("/topic/hi", notification);
+		*/
+
 
 		return new ResponseEntity<String>("Poručeno piće je uspešno završeno!", HttpStatus.OK);
 	}

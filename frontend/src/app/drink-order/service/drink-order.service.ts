@@ -9,10 +9,10 @@ import { throwError } from 'rxjs';
 })
 export class DrinkOrderService {
 
-  private readonly NOT_ACCEPTED_ORDERED_DRINKS_URL : string = Main.PATH + "api/orderedDrinks/notAccepted";
-  private readonly ACCEPTED_ORDERED_DRINK_URL : string = Main.PATH + "api/orderedDrinks/acceptMeal";
+  private readonly NOT_ACCEPTED_ORDERED_DRINKS_URL : string = Main.PATH + "api/orderedDrinks/notAccepted/";
+  private readonly ACCEPTED_ORDERED_DRINK_URL : string = Main.PATH + "api/orderedDrinks/acceptDrink/";
   private readonly ACCEPTED_ORDERED_DRINKS_URL : string = Main.PATH + "api/orderedDrinks/accepted/";
-  private readonly FINISH_ORDERED_DRINK_URL : string = Main.PATH + "api/orderedDrinks/finishDrink";
+  private readonly FINISH_ORDERED_DRINK_URL : string = Main.PATH + "api/orderedDrinks/finishDrink/";
 
   constructor(private http: HttpClient) { }
 
@@ -23,7 +23,7 @@ export class DrinkOrderService {
 
 
   public acceptOrderedDrink(id:number) {
-    return this.http.put<any>(this.ACCEPTED_ORDERED_DRINK_URL, id).pipe(catchError(this.errorHandler));
+    return this.http.put<any>(this.ACCEPTED_ORDERED_DRINK_URL + id, null).pipe(catchError(this.errorHandler));
   }
 
 

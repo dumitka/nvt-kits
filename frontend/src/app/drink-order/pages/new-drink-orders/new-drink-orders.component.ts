@@ -52,7 +52,7 @@ export class NewDrinkOrdersComponent implements OnInit {
   }
 
   goToTakenDrinks() {
-    this.router.navigate(['/TakenDrinkOrders']);
+    this.router.navigate(['/TakenDrinkOrders'],  {state:{data:{"userId":this.userId}}});
   }
 
   goBack() {
