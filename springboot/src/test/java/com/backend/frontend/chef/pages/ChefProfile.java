@@ -1,6 +1,8 @@
 package com.backend.frontend.chef.pages;
 
 import com.backend.frontend.constants.ChefConstants;
+import com.backend.frontend.cook.pages.Utilities;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -59,4 +61,9 @@ public class ChefProfile {
         else if (izabranaOpcija.equals(ChefConstants.NAZAD)) this.dugmeOdjava.click();
         else this.dugmeTrenMeni.click();
     }
+    
+    
+    public void clickLogOut() {
+		Utilities.clickableWait(drajver, this.dugmeOdjava, 10).click();
+	}
 }
