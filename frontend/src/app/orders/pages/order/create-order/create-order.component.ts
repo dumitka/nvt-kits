@@ -130,8 +130,10 @@ export class CreateOrderComponent implements OnInit {
       name.appendChild(document.createTextNode(item.name));
       div2.appendChild(name);
       let image = document.createElement("img");
+      let itemImage = "food-profile.jpg";
+      if (item.image != "nema") itemImage = item.image;
       image.setAttribute("class", "mat-card-lg-image");
-      image.setAttribute("src", "assets\\" + item.image);
+      image.setAttribute("src", "assets\\" + itemImage);
       image.setAttribute("name", item.id.toString());
       image.setAttribute("id", "image-item-" + item.id);
       div2.appendChild(image);

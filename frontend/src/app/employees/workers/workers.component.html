@@ -1,0 +1,57 @@
+<body>
+  <br>
+  <br>
+  <br>
+
+   <table mat-table [dataSource]="listOfWorkers" class="mat-elevation-z8 demo-table">
+     
+      <ng-container matColumnDef="position">
+      <th mat-header-cell  class="position"  *matHeaderCellDef><b>No.</b></th>
+      <td mat-cell *matCellDef="let element; let i = index">{{i+1}}.</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+      <th mat-header-cell  class="name"  *matHeaderCellDef><b>IME I PREZIME</b></th>
+      <td mat-cell *matCellDef="let element"><i>{{element.name}} &nbsp; {{element.lastName}}</i></td>
+      </ng-container>
+      
+      <ng-container matColumnDef="roleName">
+        <th mat-header-cell  class="role-name" *matHeaderCellDef><b>ULOGA</b></th>
+        <td mat-cell *matCellDef="let element"><i>{{element.roleName}}</i></td>
+    </ng-container>
+
+    <ng-container matColumnDef="salary">
+        <th mat-header-cell  class="salary" *matHeaderCellDef><b>PLATA</b></th>
+        <td mat-cell *matCellDef="let element"><i>{{element.salary}}</i></td>
+    </ng-container>
+
+    <ng-container matColumnDef="fire-button">
+      <th mat-header-cell  class="fire-button" *matHeaderCellDef><b>OTPUSTI</b></th>
+      <td mat-cell *matCellDef="let element">
+          <button mat-raised-button class="fire-button" id="fire_button" (click)="fire(element.id)"><i>X</i></button>
+      </td>
+      </ng-container>
+
+      <ng-container matColumnDef="button">
+      <th mat-header-cell  class="button" *matHeaderCellDef><b>DETALJNIJE</b></th>
+      <td mat-cell *matCellDef="let element">
+          <button mat-raised-button class="open_button" id="open_button" (click)="open(element)"><i>PROFIL</i></button>
+      </td>
+      </ng-container>
+
+      
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns;"
+      ></tr>
+  </table>
+
+  <br>
+  <span><button mat-raised-button class="option_button1" id="taken_button" (click) = "register()">REGISTRACIJA</button></span>
+  <span><button mat-raised-button class="option_button2" id="back_button" (click) = "goBack()">NAZAD</button></span>
+
+ 
+
+</body>

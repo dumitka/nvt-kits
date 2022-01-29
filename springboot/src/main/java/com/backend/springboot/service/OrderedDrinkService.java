@@ -29,4 +29,8 @@ public class OrderedDrinkService {
 	public OrderedDrink save(OrderedDrink orderedDrink) {
 		return orderedDrinkRepository.save(orderedDrink);
 	}
+
+	public List<OrderedDrink> findByBartenderIdAndStatus(Integer userId, OrderedItemStatus status) {
+		return orderedDrinkRepository.findByBartenderIdAndStatus(userId, status);
+	}
 }

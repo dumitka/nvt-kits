@@ -34,7 +34,7 @@ public class UserRepositoryTests {
 
     @Test
     public void testFindByFired() {
-        List<User> firedEmployees = userRepository.findByFired(true);
+        List<User> firedEmployees = userRepository.findByFiredFalse();
         User user = firedEmployees.get(0);
         assertEquals(firedEmployees.size(), 1);
         assertEquals(DB_FIRED_USERNAME, user.getUsername());

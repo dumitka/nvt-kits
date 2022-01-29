@@ -14,7 +14,7 @@ import { CookProfileComponent } from './first-pages/pages/cook-profile/component
 import { ManagerProfileComponent } from './first-pages/pages/manager-profile/manager-profile.component';
 import { BartenderProfileComponent } from './first-pages/pages/bartender-profile/component/bartender-profile.component';
 import { ChefProfileComponent } from './first-pages/pages/chef-profile/component/chef-profile.component';
-import { DirectorProfileComponent } from './first-pages/pages/director-profile/director-profile.component';
+import { DirectorProfileComponent } from './first-pages/pages/director-profile/component/director-profile.component';
 import { ServerProfileComponent } from './first-pages/pages/server-profile/server-profile.component';
 import { AuthService } from './login/auth.service';
 import { AdminRoutes } from './user-routes/AdminRoutes';
@@ -66,6 +66,9 @@ import { CreateOrderComponent } from './orders/pages/order/create-order/create-o
 import { NewDrinkOrdersComponent } from './drink-order/pages/new-drink-orders/new-drink-orders.component';
 import { TakenDrinkOrdersComponent } from './drink-order/pages/taken-drink-orders/taken-drink-orders.component';
 import { ViewOrderComponent } from './orders/pages/order/view-order/view-order/view-order.component';
+import { WorkersComponent } from './employees/workers/workers.component';
+import { EmployeeProfileComponent } from './employee-profile/component/employee-profile.component';
+import { RegistrationComponent } from './registration/component/registration.component';
 
 @NgModule({
   declarations: [
@@ -116,7 +119,10 @@ import { ViewOrderComponent } from './orders/pages/order/view-order/view-order/v
     TableComponent,
     NewDrinkOrdersComponent,
     TakenDrinkOrdersComponent,
-    ViewOrderComponent
+    ViewOrderComponent,
+    WorkersComponent,
+    EmployeeProfileComponent,
+    RegistrationComponent
   ],
   entryComponents: [
     DeleteMealDialogComponent,
@@ -329,6 +335,24 @@ import { ViewOrderComponent } from './orders/pages/order/view-order/view-order/v
         canActivate: [WaiterRoutes],
         component: ViewOrderComponent,
       },
+      {
+        path: 'Workers',
+        canActivate: [DirectorRoutes],
+        component: WorkersComponent,
+      },
+      {
+        path: 'EmployeeProfile',
+        canActivate: [DirectorRoutes],
+        //  BartenderRoutes, DirectorRoutes,
+        //    WaiterRoutes, AdminRoutes, CookRoutes, ChefRoutes, ManagerRoutes, ServerRoutes],
+        component: EmployeeProfileComponent
+      },
+      {
+        path: 'Registration',
+        canActivate: [DirectorRoutes],
+        component: RegistrationComponent
+      }
+
 
     ]),
 

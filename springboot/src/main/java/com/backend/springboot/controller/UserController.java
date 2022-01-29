@@ -42,7 +42,7 @@ public class UserController {
     public ResponseEntity<List<UserDto>> getAll() {
         List<UserDto> employees = userService.getAllEmployees().stream()
                 .map(user -> userMapper.convertUserToUserDto(user))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList() );
 
         return new ResponseEntity<>(employees, HttpStatus.OK);
     }
@@ -66,9 +66,12 @@ public class UserController {
     @PreAuthorize("hasRole('DIRECTOR')")
     public ResponseEntity<UserDto> createUser(@RequestBody CreateUpdateUserDto createUserDto) {
         //validacija, nullchecks
+        if(userService.findByUsername(createUserDto.getUsername()) != null) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
         User user = userMapper.convertCreateUpdateUserDtoToUser(createUserDto);
 
-        user = userService.registerUser(user);
+        user = userService.registerUser(user, createUserDto.getRoleName());
 
         salaryService.createNewSalary(user, createUserDto.getSalary());
 
@@ -92,12 +95,12 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('DIRECTOR')")
-    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
+    public ResponseEntity<Boolean> deleteUser(@PathVariable Integer id) {
         User deletedUser = userService.deleteEmployee(id);
         if (deletedUser == null) {
-            return new ResponseEntity<>("User not found!", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Boolean.FALSE, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("User fired!", HttpStatus.OK);
+        return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
     }
 
     @GetMapping(value = "/info")
@@ -107,6 +110,4 @@ public class UserController {
         UserProfileDataDTO dto = new UserProfileDataDTO(loggedUser.getId(), loggedUser.getName(), loggedUser.getLastName());
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
-
-
 }

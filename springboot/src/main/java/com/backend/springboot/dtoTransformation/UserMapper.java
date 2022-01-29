@@ -41,8 +41,9 @@ public class UserMapper {
         return UserDto.builder()
                 .id(user.getId())
                 .name(user.getName())
+                .username(user.getUsername())
                 .lastName(user.getLastName())
-                .roleName(user.getRoles().get(0).getName())
+                .roleName(user.getRoles().get(0).getName().replace("ROLE_", ""))
                 .salary(extractCurrentSalary(user.getId()))
                 .build();
     }

@@ -54,7 +54,7 @@ public class UserServiceUnitTest {
                 .enabled(true)
                 .fired(false)
                 .build());
-        User registered = userService.registerUser(user);
+        User registered = userService.registerUser(user, "ROLE_BARTENDER");
 
         verify(userRepository).save(user);
         assertEquals("Name", registered.getName());

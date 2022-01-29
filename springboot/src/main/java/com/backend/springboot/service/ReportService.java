@@ -65,7 +65,7 @@ public class ReportService {
 
         //salaryexp
         Float salaryExpense = userService.getAllEmployees().stream()
-                .map(user -> salaryService.getSalaryForUser(user.getId()))
+                .map(user -> salaryService.getSalaryForUser(user.getId()))//NE !! OVDE EKSTRAKTOVATI IMA METODA
                 .map(salary -> salary.getAmount())
                 .reduce((float) 0, (subtotal, element) -> subtotal + element);
 

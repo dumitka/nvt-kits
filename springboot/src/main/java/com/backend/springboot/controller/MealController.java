@@ -19,6 +19,7 @@ import com.backend.springboot.dto.MealWithPriceDTO;
 import com.backend.springboot.dtoTransformation.MealPriceToMealWithPriceDTO;
 import com.backend.springboot.dtoTransformation.MealToMealDTO;
 import com.backend.springboot.enums.MealType;
+import com.backend.springboot.model.MealPrice;
 import com.backend.springboot.model.Meal;
 import com.backend.springboot.model.MealPrice;
 import com.backend.springboot.service.MealPriceService;

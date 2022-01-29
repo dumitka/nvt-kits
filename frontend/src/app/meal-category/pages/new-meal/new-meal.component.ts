@@ -64,7 +64,12 @@ export class NewMealComponent implements OnInit {
     this.service.addMeal(this.newMealForm.value).subscribe(
       response => {
        this.openSnackBar("Uspešno ste dodali jelo", this.RESPONSE_OK);
-       this.router.navigate(['/MealsOfCategory'], {state:{data:{category:3}}});
+       if(this.newMealForm.value.type == "COLD_APPETIZER")this.router.navigate(['/MealsOfCategory'], {state:{data:{category:1}}});
+       else if(this.newMealForm.value.type == "HOT_APPETIZER") this.router.navigate(['/MealsOfCategory'], {state:{data:{category:2}}});
+       else if(this.newMealForm.value.type == "MAIN_COURSE") this.router.navigate(['/MealsOfCategory'], {state:{data:{category:3}}});
+       else if(this.newMealForm.value.type == "DESERT") this.router.navigate(['/MealsOfCategory'], {state:{data:{category:4}}});
+       else if(this.newMealForm.value.type == "SALAD") this.router.navigate(['/MealsOfCategory'], {state:{data:{category:5}}});
+       else this.router.navigate(['/MealsOfCategory'], {state:{data:{category:6}}});
       },
       error => {
         this.openSnackBar("Jelo sa datim imenom i opisom već postoji. Dodajte novo jelo. :)", this.RESPONSE_ERROR);
@@ -74,7 +79,7 @@ export class NewMealComponent implements OnInit {
 
 
 
-  back(){
+  back(){ 
     if(this.type == 1){
       this.router.navigate(['/MealsOfCategory'], {state:{data:{category:1}}});
     }else if(this.type == 2){

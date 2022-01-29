@@ -35,13 +35,15 @@ export class NewDrinkOrdersComponent implements OnInit {
     this.service.acceptOrderedDrink(order.id).subscribe(
       response => {
         this.openSnackBar("Poručeno piće je uspešno prihvaćeno!", this.RESPONSE_OK);
+        console.log("USPEH")
         this.service.notAcceptedOrderedDrinks().subscribe((data:any) => {
           this.listOfOrders = data;
         })
     
       },
       error => {
-      this.openSnackBar("Došlo je do nekakve greške, molim Vas pokušajte ponovo! :)", this.RESPONSE_ERROR);
+        console.log(error)
+        this.openSnackBar("Došlo je do nekakve greške, molim Vas pokušajte ponovo! :)", this.RESPONSE_ERROR);
       }
     )
   }

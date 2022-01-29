@@ -1,7 +1,9 @@
 package com.backend.springboot.service;
 
 import static com.backend.springboot.constants.MenuConstants.ID_OF_CURRENT_MENU;
+import static com.backend.springboot.constants.MenuConstants.MEAL_PRICES_DTO;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,5 +36,12 @@ public class MenuServiceIntegrationTest {
 	public void getCurrentMenu_CurrentMenuFound_Menu() throws Exception {
 		Menu returnValue = menuService.getCurrentMenu();
 		assertEquals(ID_OF_CURRENT_MENU, returnValue.getId());
+	}
+	
+	
+	@Test 
+	public void addNewMenu_MealPriceGiven_True() {
+		boolean returnValue = menuService.addNewMenu(MEAL_PRICES_DTO);
+		assertTrue(returnValue);
 	}
 }

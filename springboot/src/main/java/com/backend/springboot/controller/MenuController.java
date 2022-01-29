@@ -1,7 +1,6 @@
 package com.backend.springboot.controller;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -45,12 +43,10 @@ public class MenuController {
 	private MealPriceService mealPriceService;
 	
 	private MenuToMenuDTO menuDTO;
-	private MealPriceToMealWithPriceDTO mealPriceToMealWithPriceDTO;
 	private MealToMealDTO mealToMealDTO;
 	
 	
 	public MenuController() {
-		this.mealPriceToMealWithPriceDTO = new MealPriceToMealWithPriceDTO(new MealToMealDTO());
 		this.menuDTO = new MenuToMenuDTO(new MenuMealPriceToMenuMealPriceDTO(new MealPriceToMealWithPriceDTO(new MealToMealDTO())));
 		this.mealToMealDTO = new MealToMealDTO();
 	}

@@ -1,0 +1,63 @@
+<body>
+  <div class="card_div">
+    <mat-card class="profile_card">
+      <img mat-card-lg-image name="profile_picture" class="profile_picture" src="assets\bartender_profile.jpg" >
+        
+      <form class="reactiveForm employee_data" [formGroup]="userForm" >
+        <div>
+          <mat-form-field  appearance="fill">
+            <mat-label>Ime</mat-label>
+            <input matInput type="text" id="name" formControlName="name">
+          </mat-form-field>
+        </div>
+        
+        <div>
+          <mat-form-field  appearance="fill">
+            <mat-label>Prezime</mat-label>
+            <input matInput type="text" id="lastName" formControlName="lastName">
+          </mat-form-field>
+        </div>
+        
+        <div>
+          <mat-form-field  appearance="fill">
+            <mat-label>Korisničko ime</mat-label>
+            <input matInput type="text" id="username" formControlName="username">
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Šifra</mat-label>
+            <input matInput type="password" id="password" formControlName="password">
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Plata</mat-label>
+            <input matInput type="number" id="salary" formControlName="salary">
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Uloga</mat-label>
+            <input matInput type="text" readonly id="roleName" formControlName="roleName">
+          </mat-form-field>
+        </div>
+
+        <!-- <div>
+          <button mat-button type="submit" (click)="" [disabled]="userForm.invalid">Registruj</button>
+        </div> -->
+        <div class="form-element">
+          <button mat-raised-button class="button" (click)="izmena()">Izmena</button>
+          <button mat-raised-button class="button" (click)="gotovaIzmena()" [disabled]="!userForm.valid">Gotova izmena</button>
+          <button mat-raised-button class="button" (click)="goBack()">Nazad</button>
+        </div>
+
+      </form>
+      
+    </mat-card>
+</div>
+
+</body>

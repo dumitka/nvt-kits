@@ -41,6 +41,7 @@ import static com.backend.springboot.constants.MenuConstants.MMP1;
 import static com.backend.springboot.constants.MenuConstants.MMP2;
 import static com.backend.springboot.constants.MealConstants.EXISTING_MEAL;
 import static com.backend.springboot.constants.MealPriceConstants.LIST_OF_MEALS_THAT_IS_NOT_IN_CURRENT_MENU;
+import static com.backend.springboot.constants.MealPriceConstants.EXISTING_MEAL_PRICE;
 
 
 @RunWith(SpringRunner.class)
@@ -140,22 +141,6 @@ public class MenuControllerUnitTests {
 	 
 	 
 	 @Test
-	 public void addMealToMenu_MealPriceAlreadyExists_BadRequest() {
-		 given(mealPriceService.exists(this.existingMealPriceDTO.getId())).willReturn(true);
-		 
-		 HttpHeaders headers = new HttpHeaders();
-	     headers.add("Authorization", "Bearer " + this.accessToken);
-	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.existingMealPriceDTO, headers);
-	     ResponseEntity<Boolean> responseEntity =
-	                this.restTemplate.exchange(URL_PREFIX + "addMealToMenu", HttpMethod.POST, httpEntity, Boolean.class);
-
-	     assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
-	     assertFalse(responseEntity.getBody());
-	 }
-	 
-	 
-	 
-	 @Test
 	 public void addMealToMenu_EverythingOK_OK() {
 		 given(mealPriceService.exists(this.newMealPriceDTO.getId())).willReturn(false);
 		 
@@ -190,6 +175,8 @@ public class MenuControllerUnitTests {
 	 @Test
 	 public void changeMealPriceInMenu_EverythingOK_OK(){
 		 given(mealPriceService.exists(this.existingMealPriceDTO.getId())).willReturn(true);
+		 given(mealPriceService.getMealPrice(this.existingMealPriceDTO.getId())).willReturn(EXISTING_MEAL_PRICE);
+		 given(mealPriceService.changeMealPrice(EXISTING_MEAL_PRICE)).willReturn(true);
 		 
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
@@ -206,12 +193,13 @@ public class MenuControllerUnitTests {
 	 @Test
 	 public void deleteMealInMenu_MealPriceNotFound_BadRequest() throws Exception {
 		 given(mealPriceService.exists(this.nonexistingMealPriceDTO.getId())).willReturn(false);
+		 given(mealPriceService.deleteMealPriceFromMenu(this.nonexistingMealPriceDTO.getId())).willReturn(false);
 		 
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
 	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.nonexistingMealPriceDTO, headers);
 	     ResponseEntity<Boolean> responseEntity =
-	                this.restTemplate.exchange(URL_PREFIX + "deleteMealInMenu", HttpMethod.DELETE, httpEntity, Boolean.class);
+	                this.restTemplate.exchange(URL_PREFIX + "deleteMealInMenu", HttpMethod.PUT, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
 	     assertFalse(responseEntity.getBody());
@@ -222,12 +210,13 @@ public class MenuControllerUnitTests {
 	 @Test
 	 public void deleteMealInMenu_EverythingOK_OK() throws Exception {
 		 given(mealPriceService.exists(this.existingMealPriceDTO.getId())).willReturn(true);
+		 given(mealPriceService.deleteMealPriceFromMenu(this.existingMealPriceDTO.getId())).willReturn(true);
 		 
 		 HttpHeaders headers = new HttpHeaders();
 	     headers.add("Authorization", "Bearer " + this.accessToken);
 	     HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.existingMealPriceDTO, headers);
 	     ResponseEntity<Boolean> responseEntity =
-	                this.restTemplate.exchange(URL_PREFIX + "deleteMealInMenu", HttpMethod.DELETE, httpEntity, Boolean.class);
+	                this.restTemplate.exchange(URL_PREFIX + "deleteMealInMenu", HttpMethod.PUT, httpEntity, Boolean.class);
 
 	     assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	     assertTrue(responseEntity.getBody());
