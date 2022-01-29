@@ -12,6 +12,7 @@ public class OrderedDrinkDTO {
 	private Integer id;
 	private Integer amount;
 	private Integer drinkId;
+	private String drinkName;
 	private Integer orderId;
 	private Integer bartenderId;
 	private OrderedItemStatus status;

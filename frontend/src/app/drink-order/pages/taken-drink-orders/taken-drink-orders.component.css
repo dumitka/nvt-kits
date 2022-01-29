@@ -1,0 +1,129 @@
+body {
+  background-color: #5d7c77;
+
+}
+
+
+
+h1 { 
+  text-align: center;
+  color: whitesmoke;
+  text-transform: uppercase;
+  padding: 1px;
+  font-family: 'Raleway', cursive;
+  font-weight: 100;
+  position: relative;
+  background: linear-gradient(to right, #6d918b, whitesmoke, #6d918b);
+}
+h1::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -50px;
+  width: 600px;
+  margin-left: -300px;
+  margin-top: -220px;
+  height: 600px;
+  background: radial-gradient(50% 50%, ellipse closest-side, #444, #6d918b);
+  z-index: -1;
+}
+h1 a {
+  background: #5d7c77;
+  display: block;
+  padding: 20px;
+  text-decoration: none;
+  letter-spacing: 30px;
+  color: whitesmoke;
+}
+
+
+
+table{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  background-color: whitesmoke;
+}
+
+
+b{
+  color: #5d7c77; 
+  font-family: 'Trocchi', serif; 
+  font-size: 20px; 
+}
+
+
+td{
+  color: #5d7c77; 
+  font-family: 'Trocchi', serif; 
+  font-size: 15px; 
+}
+
+
+.position{
+  width: 100px;
+}
+
+.name{
+  width: 250px;
+}
+
+.numOfPortion{
+  width: 250px;
+}
+
+.button{
+width: 250px;
+}
+
+.demo-table {
+  width: 750px;
+}
+
+.mat-row .mat-cell {
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
+}
+
+
+.option_button1{
+  margin-left: 600px;
+  background-color: whitesmoke; 
+  width: 250px;
+
+  text-align: center;
+  color: #5d7c77; 
+  font-family: 'Trocchi', serif;
+  font-size: 20px;
+}
+
+
+
+.end_button{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 200px;
+  background-color: #5d7c77;
+  
+  text-align: center;
+  color: whitesmoke; 
+  font-family: 'Trocchi', serif;
+  font-size: 20px;
+}
+
+
+mat-header-cell{
+  text-align: center;
+}

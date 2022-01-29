@@ -13,7 +13,8 @@
       <mat-icon>where_to_vote</mat-icon>
     </button>
   </mat-toolbar>
-  <div id="restaurant" class="restaurant">
-    <app-table *ngFor="let table of tables" [tableItem]="table" [parentWidth]="1200" [parentHeight]="600"></app-table>
+
+  <div #restaurantcontainer id="restaurant" class="restaurant" >
+    <app-table *ngFor="let tableWrapper of tableWrappers" [tableWrapper]="tableWrapper"></app-table>
   </div>
 </div>

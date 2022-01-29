@@ -128,9 +128,23 @@ export class TablesLayoutComponent implements OnInit {
         const restaurant = document.getElementById("restaurant");
         var rect = restaurant.getBoundingClientRect();
 
-        service.resize(element.getAttribute("name"), {
-          height: table_rect.height / rect.height,
-          width: table_rect.width / rect.width,
+        let tableId = element.getAttribute("name");
+
+        let relativeX = table_rect.x - rect.x;
+        let normalizedX = relativeX / rect.width;
+
+        let relativeY = table_rect.y - rect.y;
+        let normalizedY = relativeY / rect.height;
+
+        let normHeight = table_rect.height / rect.height;
+        let normWidth = table_rect.width / rect.width;
+
+        console.log(`Updating size of table id ${tableId}: h_${normHeight}, w_${normWidth}`);
+        service.resize(tableId, {
+          x: normalizedX,
+          y: normalizedY,
+          height: normHeight,
+          width: normWidth,
         }).subscribe((data: any) => {
             console.log("USPESNO RISAJZOVALI");
             console.log(data)

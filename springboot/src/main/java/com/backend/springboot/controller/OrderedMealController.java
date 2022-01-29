@@ -45,7 +45,7 @@ public class OrderedMealController {
 
 	@Autowired
 	private SimpMessagingTemplate brokerMessagingTemplate;
-	
+
 	@Autowired
 	private OrderedMealToOrderedMealDTO orderedMealToDTO;
 	

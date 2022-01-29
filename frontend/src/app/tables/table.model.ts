@@ -9,6 +9,5 @@ export interface Table {
   height: number;
   width: number;
 
-  tableNum: number;
   reserved: boolean;
 }

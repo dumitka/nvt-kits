@@ -23,6 +23,7 @@ public class OrderedDrinkToOrderedDrinkDTO implements Converter<OrderedDrink, Or
 				.id(drink.getId())
 				.amount(drink.getAmount())
 				.drinkId(drink.getDrink().getId())
+				.drinkName(drink.getDrink().getName())
 				.orderId(drink.getOrder().getId())
 				.bartenderId(bartenderId)
 				.status(drink.getStatus())

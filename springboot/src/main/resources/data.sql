@@ -195,16 +195,19 @@ insert into drink_prices (drink_card_id, drink_price_id) values (2, 5);
 insert into drink_prices (drink_card_id, drink_price_id) values (2, 6);
 
 -- DESK
-insert into desk (desk_status, tip, x, y, height, width, reserved, table_num, deleted) values (1, 0.0, 0.1, 0.1, 0.2, 0.2, false, 0, false);
-insert into desk (desk_status, tip, x, y, height, width, reserved, table_num, deleted) values (1, 0.0, 0.5, 0.5, 0.15, 0.15, false, 0, false);
-
+insert into desk (desk_status, tip, x, y, height, width, reserved, deleted) values (1, 0.0, 0.1, 0.1, 0.2, 0.2, false, false);
+insert into desk (desk_status, tip, x, y, height, width, reserved, deleted) values (1, 0.0, 0.5, 0.5, 0.15, 0.15, false, false);
 
 -- ORDER
 insert into orders (deleted, desk_id) values (false, 1);
 insert into orders (deleted, desk_id) values (false, 2);
 
 -- ORDERED DRINK
-insert into ordered_drink (amount, status, user_id, drink_id, order_id) values (2, 2, null, 2, 1);
+insert into ordered_drink (amount, status, user_id, drink_id, order_id) values (2, 0, 7, 3, 1);
+insert into ordered_drink (amount, status, user_id, drink_id, order_id) values (1, 0, 7, 5, 1);
+insert into ordered_drink (amount, status, user_id, drink_id, order_id) values (3, 0, 7, 1, 2);
+insert into ordered_drink (amount, status, user_id, drink_id, order_id) values (3, 0, 7, 2, 2);
+
 
 --ORDERED MEAL  --za sada nek bude na 3 user_id kao toma konobar, treba da prodje 
 insert into ordered_meal (amount, status, user_id, meal_id, order_id) values (2, 0, 3, 3, 1);

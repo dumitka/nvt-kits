@@ -1,0 +1,30 @@
+<body>
+
+  <h1><a href="#0">VAŠ PROFIL</a></h1>
+
+  <br>
+  <br>
+  <br>
+  <div class="card_div">
+    <mat-card class="bartender_profile_card">
+      <img mat-card-lg-image name="profile_picture" class="profile_picture" src="assets\bartender_profile.jpg" >
+        
+        <mat-card-content>
+          <div class="bartender_data">
+            <span>{{loggedBartenderName}}</span>
+            <span>&nbsp;</span>
+            <span>{{loggedBartenderLastName}}</span>
+          </div>
+
+          <div class="options">
+            <button mat-raised-button class="option_button" id="orders" (click)="goToOrders()">Porudžbine</button>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions>
+          <button mat-button (click) = "logout()">ODJAVA</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+
+</body>

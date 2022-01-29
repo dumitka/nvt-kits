@@ -50,23 +50,29 @@ public class DeskController {
         return new ResponseEntity<>(mapper.toDeskDTO(newDesk), HttpStatus.OK);
     }
 
-    @PutMapping(value= "/{id}/number/{tableNum}")
-    public ResponseEntity<DeskDTO> updateNumber(@PathVariable Integer id, @PathVariable Integer tableNum) {
-        Desk desk = deskService.findOne(id);
-        if(desk != null) {
-            desk.setTableNum(tableNum);
-            desk = deskService.save(desk);
-            return new ResponseEntity<>(mapper.toDeskDTO(desk), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-    }
+//    @PutMapping(value= "/{id}/number/{tableNum}")
+//    public ResponseEntity<DeskDTO> updateNumber(@PathVariable Integer id, @PathVariable Integer tableNum) {
+//        Desk desk = deskService.findOne(id);
+//        if(desk != null) {
+//            desk.setTableNum(tableNum);
+//            desk = deskService.save(desk);
+//            return new ResponseEntity<>(mapper.toDeskDTO(desk), HttpStatus.OK);
+//        }
+//        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+//    }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<DeskDTO> updateSize(@PathVariable Integer id, @RequestBody DeskSizeDTO size) {
 
         Desk desk = deskService.findOne(id);
+        System.out.println("---------------------------EVO TI GA NA");
+        System.out.println(size.getHeight());
+        System.out.println(size.getWidth());
+
         if(desk != null) {
             desk.setWidth(size.getWidth());
+            desk.setX(size.getX());
+            desk.setY(size.getY());
 
             desk.setHeight(size.getHeight());
 
