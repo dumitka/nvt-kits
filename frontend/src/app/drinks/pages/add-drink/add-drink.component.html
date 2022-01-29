@@ -16,7 +16,7 @@
 
           <mat-form-field appearance="legacy">
             <mat-label for="name">NAZIV PIĆA</mat-label>
-            <input type="text" class="form-control" formControlName="name"  matInput>
+            <input type="text" class="form-control" formControlName="name" id="ime" matInput>
             <mat-error *ngIf = "requiredError('name', 'required')">Potrebno je uneti naziv pića!</mat-error>
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             <mat-hint></mat-hint>
@@ -25,7 +25,7 @@
           
           <mat-form-field appearance="legacy">
             <mat-label for="description">OPIS PIĆA</mat-label>
-            <textarea matInput  type="text" class="form-control" formControlName="description"></textarea>
+            <textarea matInput  type="text" class="form-control" formControlName="description" id="opis"></textarea>
             <mat-error *ngIf = "requiredError('description', 'required')">Potrebno je uneti opis pića!</mat-error>
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             <mat-hint></mat-hint>
@@ -34,11 +34,11 @@
 
           <mat-form-field appearance="legacy">
               <mat-label for="type">KATEGORIJA PIĆA</mat-label>
-              <mat-select class="form-control" formControlName="type">
-                  <mat-option value="CARBONATED_DRINK">Gazirano piće</mat-option>
-                  <mat-option value="NOCARBONATED_DRINK">Negazirano piće</mat-option>
-                  <mat-option value="ALCOHOL">Alkoholno piće</mat-option>
-                  <mat-option value="HOT_DRINK">Topli napici</mat-option>
+              <mat-select class="form-control" formControlName="type" id="kategorija">
+                  <mat-option value="CARBONATED_DRINK" id="gazirano">Gazirano piće</mat-option>
+                  <mat-option value="NOCARBONATED_DRINK" id="negazirano">Negazirano piće</mat-option>
+                  <mat-option value="ALCOHOL" id="alkoholno">Alkoholno piće</mat-option>
+                  <mat-option value="HOT_DRINK" id="toplo">Topli napici</mat-option>
               </mat-select>
               <mat-error *ngIf = "requiredError('type', 'required')">Potrebno je uneti kategoriju pićA!</mat-error>
           </mat-form-field>
@@ -46,7 +46,7 @@
 
           <mat-form-field appearance="legacy">
               <mat-label for="amountNumber">KOLIČINA</mat-label>
-              <input type="number" class="form-control" formControlName="amountNumber" matInput>
+              <input type="number" class="form-control" formControlName="amountNumber" id="kolicina" matInput>
               <mat-error *ngIf = "requiredError('amountNumber', 'required') || mindError('amountNumber', 'min')">Potrebno je uneti količinu pica veću od 0!</mat-error>
               <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
               <mat-hint></mat-hint>
@@ -55,10 +55,10 @@
 
           <mat-form-field appearance="legacy">
               <mat-label for="amountUnit">MERNA JEDINICA</mat-label>
-              <mat-select class="form-control" formControlName="amountUnit">
-                  <mat-option value="l">l</mat-option>
-                  <mat-option value="dl">dl</mat-option>
-                  <mat-option value="ml">ml</mat-option>
+              <mat-select class="form-control" formControlName="amountUnit" id="jedinica">
+                  <mat-option value="l" id="l">l</mat-option>
+                  <mat-option value="dl" id="dl">dl</mat-option>
+                  <mat-option value="ml" id="ml">ml</mat-option>
               </mat-select>
               <mat-error *ngIf = "requiredError('amountUnit', 'required')">Potrebno je uneti mernu jedinicu!</mat-error>
           </mat-form-field>
@@ -66,16 +66,16 @@
           <br/>
           <mat-form-field appearance="fill">
             <mat-label>SLIKA</mat-label>
-            <mat-select>
-              <mat-option (click) = "promenaSlike($event)">Univerzalna</mat-option>
-              <mat-option (click) = "promenaSlike($event)" value="caj.png">Kafa</mat-option>
-              <mat-option (click) = "promenaSlike($event)" value="caj.png">Čaj</mat-option>
-              <mat-option (click) = "promenaSlike($event)" value="sok.jpg">Sok</mat-option>
-              <mat-option (click) = "promenaSlike($event)" value="voda.jpg">Voda</mat-option>
-              <mat-option (click) = "promenaSlike($event)" value="vino.jpg">Vino</mat-option>
-              <mat-option (click) = "promenaSlike($event)" value="pivo.jpg">Pivo</mat-option>
-              <mat-option (click) = "promenaSlike($event)" value="zestina.jpg">Žestina</mat-option>
-              <mat-option (click) = "promenaSlike($event)" value="koktel.jpg">Kokteli</mat-option>
+            <mat-select id="slika">
+              <mat-option (click) = "promenaSlike($event)" id="uneverzalna">Univerzalna</mat-option>
+              <mat-option (click) = "promenaSlike($event)" id ="kafa">Kafa</mat-option>
+              <mat-option (click) = "promenaSlike($event)" id="caj">Čaj</mat-option>
+              <mat-option (click) = "promenaSlike($event)" id="sok">Sok</mat-option>
+              <mat-option (click) = "promenaSlike($event)" id="voda">Voda</mat-option>
+              <mat-option (click) = "promenaSlike($event)" id="vino">Vino</mat-option>
+              <mat-option (click) = "promenaSlike($event)" id="pivo">Pivo</mat-option>
+              <mat-option (click) = "promenaSlike($event)" id="zestina">Žestina</mat-option>
+              <mat-option (click) = "promenaSlike($event)" id="koktel">Kokteli</mat-option>
             </mat-select>
           </mat-form-field>
         <br />
@@ -83,7 +83,7 @@
       </mat-card-content>
 
       <mat-card-actions>
-          <button mat-raised-button type="submit" class="option_button" id="add_new_meal_button"  [disabled] = "piceForma.invalid" (click) = "sacuvaj()" >SAČUVAJ</button>
+          <button mat-raised-button type="submit" class="option_button" id="dugmeSacuvaj"  [disabled] = "piceForma.invalid" (click) = "sacuvaj()" >SAČUVAJ</button>
       </mat-card-actions>
 
     </mat-card>

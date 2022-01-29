@@ -90,14 +90,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/meal/getSaladMeals").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/getAppendicesMeals").hasAuthority("ROLE_CHEF")
 				.antMatchers("/meal/getAllMeals").hasAuthority("ROLE_CHEF")
-				
+				.antMatchers("/api/drinks/**").hasAuthority("ROLE_SERVER")
+				.antMatchers("/api/drinkCards/**").hasAuthority("ROLE_SERVER")
 				.antMatchers("api/orderedMeals/notAccepted").hasAnyRole("ROLE_CHEF", "ROLE_COOK")
 				.antMatchers("api/orderedMeals/acceptMeal").hasAnyRole("ROLE_CHEF", "ROLE_COOK")
 				.antMatchers("api/orderedMeals/accepted/{userId}").hasAnyRole("ROLE_CHEF", "ROLE_COOK")
 				.antMatchers("api/orderedMeals/finishMeal").hasAnyRole("ROLE_CHEF", "ROLE_COOK")
-				
-				
-				
 				.antMatchers("/api/**").permitAll()
 			.anyRequest().authenticated().and()
 			.cors().and()

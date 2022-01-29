@@ -5,11 +5,11 @@
     <mat-form-field appearance="fill">
       <mat-label>Kategorija</mat-label>
       <mat-select>
-        <mat-option (click) = "promenaKategorije($event)" value="sve">Sve kategorije</mat-option>
-        <mat-option (click) = "promenaKategorije($event)" value="gazirana">Gazirana pica</mat-option>
-        <mat-option (click) = "promenaKategorije($event)" value="negazirana">Negazirana pica</mat-option>
-        <mat-option (click) = "promenaKategorije($event)" value="alkoholna">Alkoholna pica</mat-option>
-        <mat-option (click) = "promenaKategorije($event)" value="topla">Topli napitci</mat-option>
+        <mat-option (click) = "promenaKategorije($event)" id="sve">Sve kategorije</mat-option>
+        <mat-option (click) = "promenaKategorije($event)" id="gazirana">Gazirana pica</mat-option>
+        <mat-option (click) = "promenaKategorije($event)" id="negazirana">Negazirana pica</mat-option>
+        <mat-option (click) = "promenaKategorije($event)" id="alkoholna">Alkoholna pica</mat-option>
+        <mat-option (click) = "promenaKategorije($event)" id="topla">Topli napitci</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -17,13 +17,13 @@
 
     <mat-form-field class="pretraga" appearance="legacy">
       <mat-label for="name">PRETRAGA</mat-label>
-      <input type="text" [(ngModel)]="pretraga" matInput>
-      <mat-icon matSuffix (click)="pretrazi()">search icon</mat-icon>
+      <input type="text" [(ngModel)]="pretraga" id="pretraga" matInput>
+      <mat-icon matSuffix (click)="pretrazi()" id="pretragaIkona">search icon</mat-icon>
     </mat-form-field>
       
     <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
-    <button mat-raised-button class="dugme_pregled" (click) = "redirektuj()">KARTA PICA</button>
+    <button mat-raised-button class="dugme_pregled" id="dugmeKP" (click) = "redirektuj()">KARTA PICA</button>
     <br/>
     <br/>
 
