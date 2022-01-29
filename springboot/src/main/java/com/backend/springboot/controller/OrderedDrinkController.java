@@ -80,7 +80,7 @@ public class OrderedDrinkController {
 	@PreAuthorize("hasAnyRole('ROLE_BARTENDER')")
 	@GetMapping("/accepted/{userId}")
 	public ResponseEntity<Set<OrderedDrinkDTO>> acceptedOrderedDrinks(@PathVariable Integer userId) {
-		List<OrderedDrink> listOrderedDrinks = orderedDrinkService.findByBartender(userId);
+		List<OrderedDrink> listOrderedDrinks = orderedDrinkService.findByBartenderIdAndStatus(userId, OrderedItemStatus.IN_PROGRESS );
 		Set<OrderedDrink> setOrderedDrinks = new HashSet<OrderedDrink>(listOrderedDrinks);
         Set<OrderedDrinkDTO> dto = orderedDrinkToDTO.convertSet(setOrderedDrinks);
 
@@ -89,7 +89,7 @@ public class OrderedDrinkController {
 
 	@PreAuthorize("hasRole('ROLE_BARTENDER')")
 	@PutMapping("/finishDrink")
-	public ResponseEntity<String> finishOrderedDrink(@RequestBody Integer id) {
+	public ResponseEntity<Boolean> finishOrderedDrink(@RequestBody Integer id) {
 		OrderedDrink drink = orderedDrinkService.findOne(id);
 		drink.setStatus(OrderedItemStatus.DONE);
 		orderedDrinkService.save(drink);
@@ -106,6 +106,6 @@ public class OrderedDrinkController {
 		*/
 
 
-		return new ResponseEntity<String>("Poručeno piće je uspešno završeno!", HttpStatus.OK);
+		return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
 	}
 }

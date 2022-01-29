@@ -12,4 +12,6 @@ public interface OrderedDrinkRepository extends JpaRepository<OrderedDrink, Inte
 	List<OrderedDrink> findByStatus(OrderedItemStatus status);
 	
 	List<OrderedDrink> findByBartenderId(Integer id);
+
+	List<OrderedDrink> findByBartenderIdAndStatus(Integer id, OrderedItemStatus status);
 }

@@ -12,7 +12,7 @@ export class DrinkOrderService {
   private readonly NOT_ACCEPTED_ORDERED_DRINKS_URL : string = Main.PATH + "api/orderedDrinks/notAccepted/";
   private readonly ACCEPTED_ORDERED_DRINK_URL : string = Main.PATH + "api/orderedDrinks/acceptDrink";
   private readonly ACCEPTED_ORDERED_DRINKS_URL : string = Main.PATH + "api/orderedDrinks/accepted/";
-  private readonly FINISH_ORDERED_DRINK_URL : string = Main.PATH + "api/orderedDrinks/finishDrink/";
+  private readonly FINISH_ORDERED_DRINK_URL : string = Main.PATH + "api/orderedDrinks/finishDrink";
 
   constructor(private http: HttpClient) { }
 

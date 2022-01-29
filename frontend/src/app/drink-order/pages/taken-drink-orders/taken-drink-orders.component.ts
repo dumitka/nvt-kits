@@ -24,6 +24,7 @@ export class TakenDrinkOrdersComponent implements OnInit {
     this.userId = history.state.data.userId;
 
     this.service.acceptedOrderedDrinks(this.userId).subscribe((data:any) => {
+      console.log("EVO FETCH")
       this.listOfOrders = data;
       console.log(this.listOfOrders);
     })
@@ -39,8 +40,11 @@ export class TakenDrinkOrdersComponent implements OnInit {
     this.service.finishOrderedDrink(order.id).subscribe(
       response => {
         this.openSnackBar("Poručeno piće je uspešno završeno!", this.RESPONSE_OK);
+        console.log("USPEH")
         this.service.acceptedOrderedDrinks(this.userId).subscribe((data:any) => {
+          console.log("EVO FETCH")
           this.listOfOrders = data;
+          console.log(this.listOfOrders);
         })
     
       },
@@ -51,7 +55,7 @@ export class TakenDrinkOrdersComponent implements OnInit {
   }
 
 
-  back(){
+  goBack(){
       this.router.navigate(['/NewDrinkOrders'], {state:{data:{"userId":this.userId}}});
 
   }
