@@ -54,7 +54,7 @@ public class OrderedDrinkController {
 
 	@PreAuthorize("hasRole('ROLE_BARTENDER')")
 	@PutMapping("/acceptDrink")
-	public ResponseEntity<String> acceptOrderedDrink(@RequestBody Integer id) {
+	public ResponseEntity<Boolean> acceptOrderedDrink(@RequestBody Integer id) {
 
 		OrderedDrink drink = orderedDrinkService.findOne(id);
 
@@ -74,7 +74,7 @@ public class OrderedDrinkController {
 		notificationService.save(notification);
 		brokerMessagingTemplate.convertAndSend("/topic/hi", notification); */
 
-		return new ResponseEntity<String>("Poručeno piće je uspešno prihvaćeno!", HttpStatus.OK);
+		return new ResponseEntity<Boolean>(Boolean.TRUE, HttpStatus.OK);
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_BARTENDER')")
