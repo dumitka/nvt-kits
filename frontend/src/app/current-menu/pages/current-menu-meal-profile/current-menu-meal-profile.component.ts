@@ -14,6 +14,7 @@ import { ChangeMealPriceDialogComponent } from '../../component/change-meal-pric
 export class CurrentMenuMealProfileComponent implements OnInit {
 
   mealPrice:any;
+  slika: string = "food-profile.jpg";
 
   mealHasItsOwnPicture : boolean = false;
   mealDoesNotHaveItsOwnPicture:boolean = false;
@@ -28,11 +29,8 @@ export class CurrentMenuMealProfileComponent implements OnInit {
   constructor(private router:Router, private dialog:MatDialog, private service:CurrentMenuService, private snackBar: MatSnackBar) { 
     this.mealPrice = history.state.data.mealPrice;
 
-    if(this.mealPrice.mealDTO.image != "nema" || this.mealPrice.mealDTO.image == null){
-      this.mealHasItsOwnPicture = true;
-    }else{
-      this.mealDoesNotHaveItsOwnPicture = true;
-    }
+    console.log("***************"  + this.mealPrice.mealDTO.image);
+    if(this.mealPrice.mealDTO.image != "nema") this.slika = this.mealPrice.mealDTO.image;
 
     if(this.mealPrice.mealDTO.mealDifficulty == "EASY"){
       this.prepDifficulty = "LAKO";

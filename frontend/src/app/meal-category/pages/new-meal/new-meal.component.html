@@ -1,12 +1,12 @@
 <body>
 
-    <h1><a href="#0">NOVO JELO</a></h1>
+    <h1><a>NOVO JELO</a></h1>
 
     <br>
 
     <mat-card class="new-meal-card">
         <mat-card-title-group>
-            <img mat-card-lg-image class="picture" src="../../../../assets/food-profile.jpg" >
+            <img mat-card-lg-image class="picture" src="../../../../assets/{{slika}}" >
           </mat-card-title-group>
         
         <mat-card-content>
@@ -38,12 +38,12 @@
             <mat-form-field appearance="legacy">
                 <mat-label for="type">TIP JELA</mat-label>
                 <mat-select class="form-control" formControlName="type" id ="type">
-                    <mat-option value="COLD_APPETIZER" id="cold">Hladno predjelo</mat-option>
-                    <mat-option value="HOT_APPETIZER" id="hot">Toplo predjelo</mat-option>
-                    <mat-option value="MAIN_COURSE" id="main">Glavno jelo</mat-option>
-                    <mat-option value="DESERT" id="deserts">Desert</mat-option>
-                    <mat-option value="SALAD" id="salad">Salata</mat-option>
-                    <mat-option value="APPENDICES" id="appendices">Dodaci</mat-option>
+                    <mat-option value="COLD_APPETIZER" id="cold" (click)="promenaSlike(1)">Hladno predjelo</mat-option>
+                    <mat-option value="HOT_APPETIZER" id="hot" (click)="promenaSlike(2)">Toplo predjelo</mat-option>
+                    <mat-option value="MAIN_COURSE" id="main" (click)="promenaSlike(3)">Glavno jelo</mat-option>
+                    <mat-option value="DESERT" id="deserts" (click)="promenaSlike(4)">Desert</mat-option>
+                    <mat-option value="SALAD" id="salad" (click)="promenaSlike(5)">Salata</mat-option>
+                    <mat-option value="APPENDICES" id="appendices" (click)="promenaSlike(6)">Dodaci</mat-option>
                 </mat-select>
                 <mat-error *ngIf = "requiredError('type', 'required')">Potrebno je uneti tip jela!</mat-error>
             </mat-form-field>
