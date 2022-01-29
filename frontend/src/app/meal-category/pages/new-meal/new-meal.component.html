@@ -16,7 +16,7 @@
 
             <mat-form-field appearance="legacy">
               <mat-label for="name">NAZIV JELA</mat-label>
-              <input type="text" class="form-control" formControlName="name" matInput >
+              <input type="text" class="form-control" formControlName="name" id="name" matInput >
               <mat-error *ngIf = "requiredError('name', 'required')">Potrebno je uneti naziv jela!</mat-error>
               <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
               <mat-hint>Hint</mat-hint>
@@ -26,7 +26,7 @@
 
             <mat-form-field appearance="legacy">
               <mat-label for="description">OPIS JELA</mat-label>
-              <textarea matInput  type="text" class="form-control" formControlName="description"></textarea>
+              <textarea matInput  type="text" class="form-control" formControlName="description" id="description"></textarea>
               <mat-error *ngIf = "requiredError('description', 'required')">Potrebno je uneti opis jela!</mat-error>
               <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
               <mat-hint>Hint</mat-hint>
@@ -37,13 +37,13 @@
 
             <mat-form-field appearance="legacy">
                 <mat-label for="type">TIP JELA</mat-label>
-                <mat-select class="form-control" formControlName="type">
-                    <mat-option value="COLD_APPETIZER">Hladno predjelo</mat-option>
-                    <mat-option value="HOT_APPETIZER">Toplo predjelo</mat-option>
-                    <mat-option value="MAIN_COURSE">Glavno jelo</mat-option>
-                    <mat-option value="DESERT">Desert</mat-option>
-                    <mat-option value="SALAD">Salata</mat-option>
-                    <mat-option value="APPENDICES">Dodaci</mat-option>
+                <mat-select class="form-control" formControlName="type" id ="type">
+                    <mat-option value="COLD_APPETIZER" id="cold">Hladno predjelo</mat-option>
+                    <mat-option value="HOT_APPETIZER" id="hot">Toplo predjelo</mat-option>
+                    <mat-option value="MAIN_COURSE" id="main">Glavno jelo</mat-option>
+                    <mat-option value="DESERT" id="deserts">Desert</mat-option>
+                    <mat-option value="SALAD" id="salad">Salata</mat-option>
+                    <mat-option value="APPENDICES" id="appendices">Dodaci</mat-option>
                 </mat-select>
                 <mat-error *ngIf = "requiredError('type', 'required')">Potrebno je uneti tip jela!</mat-error>
             </mat-form-field>
@@ -52,7 +52,7 @@
 
             <mat-form-field appearance="legacy">
                 <mat-label for="timePreparation">VREME PRIPREME</mat-label>
-                <input type="number" class="form-control" formControlName="timePreparation" matInput >
+                <input type="number" class="form-control" formControlName="timePreparation" id="time" matInput >
                 <mat-error *ngIf = "requiredError('timePreparation', 'required') || mindError('amountNumber', 'min')">Potrebno je uneti vreme pripreme jela  veću od 0!</mat-error>
                 <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
                 <mat-hint>Hint</mat-hint>
@@ -62,10 +62,10 @@
 
             <mat-form-field appearance="legacy">
                 <mat-label for="mealDifficulty">TEŽINA PRIPREME JELA</mat-label>
-                <mat-select class="form-control" formControlName="mealDifficulty">
-                    <mat-option value="EASY">Lako</mat-option>
-                    <mat-option value="MEDIUM">Srednje</mat-option>
-                    <mat-option value="HARD">Teško</mat-option>
+                <mat-select class="form-control" formControlName="mealDifficulty" id="heavy">
+                    <mat-option value="EASY" id="easy">Lako</mat-option>
+                    <mat-option value="MEDIUM" id="medium">Srednje</mat-option>
+                    <mat-option value="HARD" id="hard">Teško</mat-option>
                 </mat-select>
                 <mat-error *ngIf = "requiredError('mealDifficulty', 'required')">Potrebno je uneti težinu pripreme jela!</mat-error>
             </mat-form-field>
@@ -74,7 +74,7 @@
 
             <mat-form-field appearance="legacy">
                 <mat-label for="amountNumber">KOLIČINA SERVIRANJA</mat-label>
-                <input type="number" class="form-control" formControlName="amountNumber" matInput >
+                <input type="number" class="form-control" formControlName="amountNumber" id="amountNumber" matInput >
                 <mat-error *ngIf = "requiredError('amountNumber', 'required') || mindError('amountNumber', 'min')">Potrebno je uneti količinu serviranja jela veću od 0!</mat-error>
                 <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
                 <mat-hint>Hint</mat-hint>
@@ -84,11 +84,11 @@
 
             <mat-form-field appearance="legacy">
                 <mat-label for="amountUnit">JEDINICA KOLIČINE SERVIRANJA</mat-label>
-                <mat-select class="form-control" formControlName="amountUnit">
-                    <mat-option value="g">g</mat-option>
-                    <mat-option value="kg">kg</mat-option>
-                    <mat-option value="ml">ml</mat-option>
-                    <mat-option value="ml">l</mat-option>
+                <mat-select class="form-control" formControlName="amountUnit" id="amountUnit">
+                    <mat-option value="g" id="g">g</mat-option>
+                    <mat-option value="kg" id="kg">kg</mat-option>
+                    <mat-option value="ml" id="ml">ml</mat-option>
+                    <mat-option value="l" id="l">l</mat-option>
                 </mat-select>
                 <mat-error *ngIf = "requiredError('amountUnit', 'required')">Potrebno je uneti jedinicu količine serviranja!</mat-error>
             </mat-form-field>
@@ -99,7 +99,7 @@
         </mat-card-content>
 
         <button mat-raised-button type="submit" class="option_button" id="add_new_meal_button"  [disabled] = "newMealForm.invalid" (click) = "addNewMeal()" > DODAJ JELO</button>
-        <button mat-raised-button class="back_button" id="change_meal_button"  (click) = "back()">NAZAD</button>
+        <button mat-raised-button class="back_button" id="return_button"  (click) = "back()">NAZAD</button>
 
       </mat-card>
 
