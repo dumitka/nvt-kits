@@ -72,7 +72,15 @@ export class DeskOrderComponent implements OnInit {
     });
   }
 
-  delete(): void {
+  createOrder(): void {
+    this.router.navigate(['/CreateOrder'])
+  }
+
+  updateOrder(): void {
+
+  }
+
+  deleteOrder(): void {
     let deleteOrderDialog = this.dialog.open(DeleteOrderDialogComponent, {
       height: '30%',
       width: '45%',

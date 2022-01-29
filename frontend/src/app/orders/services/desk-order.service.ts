@@ -18,11 +18,11 @@ export class DeskOrderService {
   }
 
   getDesk() {
-    return this.http.get(this.DESKS_URL + 'desk/' + 1); // TODO: dodati deskId
+    return this.http.get(this.DESKS_URL + 'desk/' + 3); // TODO: dodati deskId
   }
 
   getOrder() {
-    return this.http.get(this.ORDERS_URL + 'deskOrder/' + 1); // TODO: dodati deskId
+    return this.http.get(this.ORDERS_URL + 'deskOrder/' + 3); // TODO: dodati deskId
   }
 
   // createOrder

@@ -1,0 +1,86 @@
+
+body {
+    background-color: #5d7c77; ;
+}
+  
+.server_profile_card {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+}
+
+h1 { 
+    text-align: center;
+    color: whitesmoke;
+    text-transform: uppercase;
+    padding: 1px;
+    font-family: 'Raleway', cursive;
+    font-weight: 100;
+    position: relative;
+    background: linear-gradient(to right, #6d918b, whitesmoke, #6d918b);
+}
+
+h1::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -50px;
+    width: 600px;
+    margin-left: -300px;
+    margin-top: -220px;
+    height: 600px;
+    background: radial-gradient(50% 50%, ellipse closest-side, #444, #6d918b);
+    z-index: -1;
+}
+
+h1 a {
+    background: #5d7c77;
+    display: block;
+    padding: 20px;
+    text-decoration: none;
+    letter-spacing: 30px;
+    color: whitesmoke;
+}
+
+mat-form-field {
+    padding: 10px;
+    left: 4%;
+    color: #5d7c77;
+    font-family: 'Raleway', cursive;
+    background-color: whitesmoke;
+}
+
+.pretraga {
+    width: 47%;
+}
+
+.mat-card-title {
+    display: block;
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif; 
+    font-size: 20px; 
+    font-weight: normal; 
+    line-height: 48px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sayings {
+    text-align: center;
+    color: #5d7c77; 
+    font-family: 'Trocchi', serif; 
+    font-size: 15px; 
+    font-weight: normal; 
+    line-height: 48px;
+}
+
+.option_button {
+    background-color: #5d7c77; 
+    width: 100px;
+    text-align: center;
+    color: whitesmoke; 
+    font-family: 'Trocchi', serif;
+    font-size: 20px;
+    margin-left: 50px;
+}

@@ -62,6 +62,7 @@ import { ChargeOrderDialogComponent } from './orders/components/charge-order-dia
 import { TablesModule } from './tables/tables.module';
 import { TablesLayoutComponent } from './tables/tables-layout/tables-layout.component';
 import { TableComponent } from './table/table.component';
+import { CreateOrderComponent } from './orders/pages/order/create-order/create-order.component';
 
 @NgModule({
   declarations: [
@@ -108,6 +109,7 @@ import { TableComponent } from './table/table.component';
     TableComponent,
     DeleteOrderDialogComponent,
     ChargeOrderDialogComponent,
+    CreateOrderComponent,
   ],
   entryComponents: [
     DeleteMealDialogComponent,
@@ -300,8 +302,11 @@ import { TableComponent } from './table/table.component';
         canActivate: [CookRoutes],
         component: TakenMealOrdersComponent,
       },
-
-
+      {
+        path: 'CreateOrder',
+        canActivate: [WaiterRoutes],
+        component: CreateOrderComponent,
+      },
     ]),
 
     BrowserAnimationsModule,

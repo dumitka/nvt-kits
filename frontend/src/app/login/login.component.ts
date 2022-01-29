@@ -51,8 +51,8 @@ export class LoginComponent implements OnInit {
           } else if (this.authService.getTokenData()?.role === "ROLE_DIRECTOR") {
             this.router.navigate(['/DirectorProfile']);
           } else if (this.authService.getTokenData()?.role === "ROLE_WAITER") {
-            this.router.navigate(['/WaiterProfile']);
-            // this.router.navigate(['/DeskOrder']);
+            this.router.navigate(['/WaiterProfile']); // TODO: vratiti
+            //this.router.navigate(['/DeskOrder']);
           } else if (this.authService.getTokenData()?.role === "ROLE_COOK") {
             this.router.navigate(['/CookProfile']);
           } else if (this.authService.getTokenData()?.role === "ROLE_MANAGER") {

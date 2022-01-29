@@ -67,5 +67,4 @@ export class WaiterProfileComponent implements OnInit {
   logout(){
     this.authService.logout();
   }
-
 }

@@ -22,8 +22,7 @@
                         <mat-label for="username">KORISNIČKO IME</mat-label>
                         <input type="text" class="form-control" formControlName="username" matInput >
                         <mat-error *ngIf = "hasError('username', 'required')">Potrebno je uneti korisničko ime!</mat-error>
-                        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                        <mat-hint>Hint</mat-hint>
+                        <mat-icon matSuffix>person_outline</mat-icon>
                     </mat-form-field>
                     <br />
                     <br />
@@ -32,8 +31,7 @@
                         <mat-label for="password">LOZINKA</mat-label>
                         <input type="password" class="form-control" formControlName="password" matInput >
                         <mat-error *ngIf = "hasError('password', 'required')">Potrebno je uneti lozinku!</mat-error>
-                        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-                        <mat-hint>Hint</mat-hint>
+                        <mat-icon matSuffix>lock_open</mat-icon>
                     </mat-form-field>
                     
                 </form>
