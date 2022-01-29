@@ -1,6 +1,6 @@
 
 body{
-  background-image: url('../static/background-bartender.webp');
+  background-color: #5d7c77;
 }
 
 
@@ -22,11 +22,12 @@ body{
 .employee_data{
   color: #5d7c77; 
   font-family: 'Trocchi', serif; 
-  font-size: 30px; 
+  font-size: 15px; 
   font-weight: normal; 
-  line-height: 48px;
+  line-height: 1px;
   
   text-align: center;
+ 
  
 }
 

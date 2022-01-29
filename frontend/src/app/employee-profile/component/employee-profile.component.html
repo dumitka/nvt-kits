@@ -1,164 +1,63 @@
-<!-- <body>
+<body>
   <div class="card_div">
     <mat-card class="profile_card">
       <img mat-card-lg-image name="profile_picture" class="profile_picture" src="assets\bartender_profile.jpg" >
         
-      <form class="reactiveForm" [formGroup]="userForm" (submit)="onSubmit()">
-        <div class="form-group row">
-          <label for="name" class="col-2 col-form-label">Name</label>
-          <div class="col-10">
-            <input
-              class="form-control"
-              type="text"
-              id="name"
-              placeholder="Name"
-              formControlName="name"
-            />
-            <small
-              class="text-danger"
-              *ngIf="
-                wineForm.controls.name.touched &&
-                wineForm.controls.name.errors?.required
-              "
-            >
-              Name is required</small
-            >
-            <small
-              class="text-danger"
-              *ngIf="
-                wineForm.controls.name.touched &&
-                wineForm.controls.name.errors?.minlength
-              "
-            >
-              Name should be at least two characters long</small
-            >
-          </div>
+      <form class="reactiveForm employee_data" [formGroup]="userForm" >
+        <div>
+          <mat-form-field  appearance="fill">
+            <mat-label>Ime</mat-label>
+            <input matInput type="text" id="name" formControlName="name">
+          </mat-form-field>
         </div>
-      
-        <div class="form-group row">
-          <label for="year" class="col-2 col-form-label">Year</label>
-          <div class="col-10">
-            <input
-              class="form-control"
-              type="number"
-              id="year"
-              placeholder="Year"
-              formControlName="year"
-            />
-            <small
-              class="text-danger"
-              *ngIf="
-                wineForm.controls.year.touched &&
-                wineForm.controls.year.errors?.required
-              "
-            >
-              Year is required</small
-            >
-          </div>
+        
+        <div>
+          <mat-form-field  appearance="fill">
+            <mat-label>Prezime</mat-label>
+            <input matInput type="text" id="lastName" formControlName="lastName">
+          </mat-form-field>
         </div>
-      
-        <div class="form-group row">
-          <label for="year" class="col-2 col-form-label">Grapes</label>
-          <div class="col-10">
-            <input
-              class="form-control"
-              type="text"
-              id="grapes"
-              placeholder="Grapes"
-              formControlName="grapes"
-            />
-            <small
-              class="text-danger"
-              *ngIf="
-                wineForm.controls.grapes.touched &&
-                wineForm.controls.grapes.errors?.required
-              "
-            >
-              Grapes is required</small
-            >
-          </div>
+        
+        <div>
+          <mat-form-field  appearance="fill">
+            <mat-label>Korisničko ime</mat-label>
+            <input matInput type="text" id="username" formControlName="username">
+          </mat-form-field>
         </div>
-      
-        <div class="form-group row">
-          <label for="country" class="col-2 col-form-label">Country</label>
-          <div class="col-10">
-            <input
-              class="form-control"
-              type="text"
-              id="country"
-              placeholder="Country"
-              formControlName="country"
-            />
-            <small
-              class="text-danger"
-              *ngIf="
-                wineForm.controls.country.touched &&
-                wineForm.controls.country.errors?.required
-              "
-            >
-              Country is required</small
-            >
-          </div>
+
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Šifra</mat-label>
+            <input matInput type="password" id="password" formControlName="password">
+          </mat-form-field>
         </div>
-      
-        <div class="form-group row">
-          <label for="region" class="col-2 col-form-label">Region</label>
-          <div class="col-10">
-            <input
-              class="form-control"
-              type="text"
-              id="region"
-              placeholder="Region"
-              formControlName="region"
-            />
-            <small
-              class="text-danger"
-              *ngIf="
-                wineForm.controls.region.touched &&
-                wineForm.controls.region.errors?.required
-              "
-            >
-              Region is required</small
-            >
-          </div>
+
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Plata</mat-label>
+            <input matInput type="number" id="salary" formControlName="salary">
+          </mat-form-field>
         </div>
-      
-        <div class="form-group row">
-          <label for="description" class="col-2 col-form-label">Description</label>
-          <div class="col-10">
-            <textarea
-              class="form-control"
-              rows="3"
-              id="description"
-              placeholder="Description"
-              formControlName="description"
-            ></textarea>
-            <small
-              class="text-danger"
-              *ngIf="
-                wineForm.controls.description.touched &&
-                wineForm.controls.description.errors?.required
-              "
-            >
-              Description is required</small
-            >
-          </div>
+
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Uloga</mat-label>
+            <input matInput type="text" readonly id="roleName" formControlName="roleName">
+          </mat-form-field>
         </div>
-      
-        <div class="form-group row float-right">
-          <div class="col-12">
-            <button
-              class="btn btn-primary"
-              type="submit"
-              [disabled]="wineForm.invalid"
-            >
-              Submit
-            </button>
-          </div>
+
+        <!-- <div>
+          <button mat-button type="submit" (click)="" [disabled]="userForm.invalid">Registruj</button>
+        </div> -->
+        <div class="form-element">
+          <button mat-raised-button class="button" (click)="izmena()">Izmena</button>
+          <button mat-raised-button class="button" (click)="gotovaIzmena()" [disabled]="!userForm.valid">Gotova izmena</button>
+          <button mat-raised-button class="button" (click)="goBack()">Nazad</button>
         </div>
+
       </form>
       
     </mat-card>
 </div>
 
-</body> -->
+</body>

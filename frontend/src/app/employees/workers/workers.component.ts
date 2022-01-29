@@ -34,6 +34,8 @@ export class WorkersComponent implements OnInit {
   }
 
   open(person : any) {
-    this.router.navigate(['/EmployeeProfile']);
+    console.log("EVO NAS KLINULOOOJSDKAN", person)
+    this.router.navigate(['/EmployeeProfile'], {state:{data:{ "person":person}}});
+    // {state:{data:{ "person":person}}}
   }
 }

@@ -330,6 +330,9 @@ import { RegistrationComponent } from './registration/component/registration.com
       },
       {
         path: 'EmployeeProfile',
+        canActivate: [DirectorRoutes],
+        //  BartenderRoutes, DirectorRoutes,
+        //    WaiterRoutes, AdminRoutes, CookRoutes, ChefRoutes, ManagerRoutes, ServerRoutes],
         component: EmployeeProfileComponent
       },
       {
