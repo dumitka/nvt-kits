@@ -98,9 +98,8 @@
           
         </mat-card-content>
 
-        <mat-card-actions>
-            <button mat-raised-button type="submit" class="option_button" id="add_new_meal_button"  [disabled] = "newMealForm.invalid" (click) = "addNewMeal()" > DODAJ JELO</button>
-        </mat-card-actions>
+        <button mat-raised-button type="submit" class="option_button" id="add_new_meal_button"  [disabled] = "newMealForm.invalid" (click) = "addNewMeal()" > DODAJ JELO</button>
+        <button mat-raised-button class="back_button" id="change_meal_button"  (click) = "back()">NAZAD</button>
 
       </mat-card>
 

@@ -60,7 +60,7 @@ public class OrderedDrinkController {
 
 		User bartender = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		drink.setBartender(bartender); 
+		drink.setBartender(bartender);
 		drink.setStatus(OrderedItemStatus.IN_PROGRESS);
 		orderedDrinkService.save(drink);
 

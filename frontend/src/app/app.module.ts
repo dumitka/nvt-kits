@@ -59,6 +59,9 @@ import { SaveMenuDialogComponent } from './current-menu/component/save-menu-dial
 import { NewMealOrdersComponent } from './meal-order/pages/new-meal-orders/new-meal-orders.component';
 import { TakenMealOrdersComponent } from './meal-order/pages/taken-meal-orders/taken-meal-orders.component';
 import { DeskOrderComponent } from './orders/pages/desk-order/desk-order.component';
+import { DeleteOrderDialogComponent } from './orders/components/delete-order-dialog/delete-order-dialog.component';
+import { ChargeOrderDialogComponent } from './orders/components/charge-order-dialog/charge-order-dialog.component';
+
 import { TablesModule } from './tables/tables.module';
 import { TablesLayoutComponent } from './tables/tables-layout/tables-layout.component';
 import { TableComponent } from './table/table.component';
@@ -106,6 +109,8 @@ import { TakenDrinkOrdersComponent } from './drink-order/pages/taken-drink-order
     NewMealOrdersComponent,
     TakenMealOrdersComponent,
     DeskOrderComponent,
+    DeleteOrderDialogComponent,
+    ChargeOrderDialogComponent,
     TableComponent,
     NewDrinkOrdersComponent,
     TakenDrinkOrdersComponent

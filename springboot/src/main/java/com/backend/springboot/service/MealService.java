@@ -1,5 +1,6 @@
 package com.backend.springboot.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,9 +9,16 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.backend.springboot.repository.MealPriceRepository;
 import com.backend.springboot.repository.MealRepository;
+import com.backend.springboot.repository.MenuMealPriceRepository;
+import com.backend.springboot.repository.MenuRepository;
 import com.backend.springboot.enums.MealType;
 import com.backend.springboot.model.Meal;
+import com.backend.springboot.model.MealPrice;
+import com.backend.springboot.model.Menu;
+import com.backend.springboot.model.MenuMealPrice;
+import com.backend.springboot.model.Restaurant;
 
 @Component
 @Primary
@@ -21,6 +29,14 @@ public class MealService {
 	@Autowired
 	private MealRepository mealRepository;
 	
+	@Autowired
+	private MenuRepository menuRepository;
+	
+	@Autowired
+	private MealPriceRepository mealPriceRepository;
+	
+	@Autowired
+	private MenuMealPriceRepository menuMealPriceRepository;
 	
 	
 	//methods
@@ -99,21 +115,42 @@ public class MealService {
 	
 	
 	
+	
 	public boolean delete(Integer id) {
-		System.out.println("TACA");
-		System.out.println(id);
-		
 		Optional<Meal> found  = mealRepository.findById(id);
 		
-		System.out.println(found.get().getName() + "  id --> " + found.get().getId() + "    deleted -->" + found.get().getDeleted());
-		;
 		if(found.get().getDeleted()) {
-			System.out.println("Uslo ovdje");
 			return false;
 		}
 		
 		found.get().setDeleted(true);
 		mealRepository.save(found.get());
+		
+		
+		//sad moras naci sve meal priceeve from current menu sa tim jelom ii menu mealpriceeve ii postaviti onda novi menu
+		Optional<Menu> oldCurrent = menuRepository.findByCurrent();
+		oldCurrent.get().setCurrent(false); //ne zaboraviti sacuvati!!!!
+		List<MealPrice> listOfMealPrices = menuMealPriceRepository.findAllMealsPricesByMenuId(oldCurrent.get().getId());
+		menuRepository.save(oldCurrent.get());
+		
+		
+		Restaurant restaurant = Restaurant.builder().id(1).build();
+		Menu newMenu = Menu.builder().restaurant(restaurant).current(true).dateOfValidation(LocalDateTime.now()).build();
+		menuRepository.save(newMenu);
+		
+		Optional<Menu> current = menuRepository.findByCurrent();
+		
+		//here will go mp that need to be added in new current menu 
+		for(MealPrice mp : listOfMealPrices) {
+			if(mp.getMeal().getId() != id) {
+				MenuMealPrice mmp = MenuMealPrice.builder().deleted(false).mealPrice(mp).menu(current.get()).build();
+				menuMealPriceRepository.save(mmp);
+			}else {
+				mp.setDeleted(true);
+				mealPriceRepository.save(mp);
+			}
+		}
+		
 		return true;
 	}
 	

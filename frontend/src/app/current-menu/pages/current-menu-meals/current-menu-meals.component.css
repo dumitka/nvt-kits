@@ -61,25 +61,26 @@ body {
   }
 
 
-.position{
-    width: 10%;
+  .position{
+    width: 100px;
 }
 
 .name{
-    width: 20%;
+    width: 250px;
 }
 
 .description{
-    width: 30%;
+    width: 350px;
 }
 
 .price{
-  width: 15%;
+  width: 150px;
 }
 
 .demo-table {
-    width: 60%;
+    width: 850px;
   }
+  
   
   .mat-row .mat-cell {
     border-bottom: 1px solid transparent;
@@ -121,4 +122,27 @@ body {
     color: #5d7c77; 
     font-family: 'Trocchi', serif;
     font-size: 20px;
+  }
+
+
+
+  .position{
+    text-align: center;
+  }
+
+  .name{
+    text-align: center;
+  }
+
+  .description{
+    text-align: center;
+  }
+
+  .price{
+    text-align: center;
+  }
+
+
+  td{
+    text-align: center;
   }

@@ -1,0 +1,24 @@
+body {
+    text-align: center;
+}
+
+h2 {
+    font-size: 30px;
+    color: #5d7c77;
+    font-family: 'Trocchi', serif;
+}
+
+mat-dialog-content {
+    height: 50px;
+    font-size: 25px;
+    color: #5d7c77;
+    font-family: 'Trocchi', serif;
+}
+
+.close_button {
+    margin: 0 auto;
+    font-size: 20px;
+    color: whitesmoke;
+    background-color: #5d7c77;
+    font-family: 'Trocchi', serif;
+}

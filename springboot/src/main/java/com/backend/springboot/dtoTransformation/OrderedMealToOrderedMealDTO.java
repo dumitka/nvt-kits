@@ -1,25 +1,31 @@
 package com.backend.springboot.dtoTransformation;
 
-import com.backend.springboot.dto.OrderedMealDTO;
-import com.backend.springboot.model.OrderedMeal;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
-import java.util.stream.Collectors;
+import com.backend.springboot.dto.OrderedMealDTO;
+import com.backend.springboot.model.OrderedMeal;
 
 @Component
 public class OrderedMealToOrderedMealDTO implements Converter<OrderedMeal, OrderedMealDTO> {
 
 	@Override
 	public OrderedMealDTO convert(OrderedMeal meal) {
+		Integer cookId = null;
+		if (meal.getCook() != null) {
+			cookId = meal.getCook().getId();
+		}
+		
 		OrderedMealDTO dto = OrderedMealDTO.builder()
 				.id(meal.getId())
 				.amount(meal.getAmount())
 				.mealId(meal.getMeal().getId())
 				.mealName(meal.getMeal().getName())
 				.orderId(meal.getOrder().getId())
-				.cookId(meal.getCook().getId())
+				.cookId(cookId)
 				.status(meal.getStatus())
 				.build();
 		return dto;

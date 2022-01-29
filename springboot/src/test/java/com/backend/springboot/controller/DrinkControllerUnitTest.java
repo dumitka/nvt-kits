@@ -140,7 +140,7 @@ public class DrinkControllerUnitTest {
         headers.add("Authorization", "Bearer " + this.accessToken);
         HttpEntity<Object> httpEntity = new HttpEntity<Object>(this.piceSveOkDTO, headers);
         ResponseEntity<DrinkDTO> responseEntity =
-                this.restTemplate.exchange(URL_PREFIX + "deleteDrink", HttpMethod.DELETE, httpEntity, DrinkDTO.class);
+                this.restTemplate.exchange(URL_PREFIX + "deleteDrink", HttpMethod.POST, httpEntity, DrinkDTO.class);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getBody());
@@ -176,21 +176,6 @@ public class DrinkControllerUnitTest {
         DrinkDTO[] niz = responseEntity.getBody();
         assertNotNull(niz);
         assertEquals(ZERO_DRINK,responseEntity.getBody().length);
-    }
-
-    @Test
-    public void filteringDrinks_EverythingOk_ReturnListDrinkDTO() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "Bearer " + this.accessToken);
-        HttpEntity<Object> httpEntity = new HttpEntity<Object>(headers);
-        ResponseEntity<DrinkDTO[]> responseEntity =
-                this.restTemplate.exchange(URL_PREFIX + "filterDrinks/" + DRINK_NAME + "/"
-                        + DRINK_DRINK_TYPE, HttpMethod.GET, httpEntity, DrinkDTO[].class);
-
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        DrinkDTO[] niz = responseEntity.getBody();
-        assertNotNull(niz);
-        assertEquals(ONE_DRINK,responseEntity.getBody().length);
     }
 
     @Test

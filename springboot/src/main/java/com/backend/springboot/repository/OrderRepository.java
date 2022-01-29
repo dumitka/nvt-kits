@@ -4,7 +4,7 @@ import com.backend.springboot.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrderRepository extends JpaRepository<Order, Integer>{
-	public Order findOneById(Integer id);
+	public Order findOneByIdAndIsDeletedFalse(Integer id);
 	
-	public Order findOneByDeskId(Integer deskId);
+	public Order findOneByDeskIdAndIsDeletedFalse(Integer deskId);
 }

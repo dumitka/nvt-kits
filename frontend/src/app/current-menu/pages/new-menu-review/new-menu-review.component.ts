@@ -47,8 +47,9 @@ export class NewMenuReviewComponent implements OnInit {
       if(returnValue == "true"){
         this.allMeals.push(meal.mealDTO);
         this.listOfMeals = this.newMenuMeals.filter(elem => elem.mealDTO.id != meal.mealDTO.id); 
+
         this.router.navigate(['/NewMenuReview'],  {state:{data:{"newMenuMeals":this.listOfMeals, "allMeals":this.allMeals}}});
-      }
+      }                                                         
     });
   }
 

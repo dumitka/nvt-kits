@@ -11,14 +11,14 @@
                 <div class="options">
                     <button mat-raised-button [disabled]="ordered" class="option_button" id="create">KREIRAJ PORUDŽBINU</button>
                     <button mat-raised-button [disabled]="!ordered" class="option_button" id="update">IZMENI PORUDŽBINU</button>
-                    <button mat-raised-button [disabled]="!ordered" class="option_button" id="delete">OBRIŠI PORUDŽBINU</button>
-                    <button mat-raised-button [disabled]="!ordered || deliveredDrinks" class="option_button" id="serve_drinks">POSLUŽI PIĆA</button>
-                    <button mat-raised-button [disabled]="!ordered || deliveredMeals" class="option_button" id="serve_meals">POSLUŽI JELA</button>
-                    <button mat-raised-button [disabled]="!delivered" class="option_button" id="charge">ZAVRŠI PORUDŽBINU</button>
+                    <button mat-raised-button [disabled]="!ordered" class="option_button" id="delete" (click)="delete()">OBRIŠI PORUDŽBINU</button>
+                    <button mat-raised-button [disabled]="!ordered || deliveredDrinks" class="option_button" id="serve_drinks" (click)="serveDrinks()">POSLUŽI PIĆA</button>
+                    <button mat-raised-button [disabled]="!ordered || deliveredMeals" class="option_button" id="serve_meals" (click)="serveMeals()">POSLUŽI JELA</button>
+                    <button mat-raised-button [disabled]="!delivered" class="option_button" id="charge" (click)="chargeOrder()">ZAVRŠI PORUDŽBINU</button>
                 </div>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-button (click) = "back()">NAZAD</button>
+                <button mat-button (click)="back()">NAZAD</button>
             </mat-card-actions>
         </mat-card>
     </div>

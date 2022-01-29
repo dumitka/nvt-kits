@@ -65,7 +65,7 @@ public class OrderController {
 	
 	@Autowired
 	private MenuService menuService;
-
+	
 	@Autowired
 	private OrderToOrderDTO orderToOrderDTO;
 	
@@ -236,18 +236,14 @@ public class OrderController {
 		
 		float charge = 0, price = 0, tip = 0;
 		
-		if (order.getOrderedDrinks() != null) {
-			for (OrderedDrink orderedDrink : order.getOrderedDrinks()) {
-				price = drinkCardService.getLatestForDrink(orderedDrink.getDrink().getId());
-				charge += orderedDrink.getAmount() * price;
-			}
+		for (OrderedDrink orderedDrink : order.getOrderedDrinks()) {
+			price = drinkCardService.getLatestForDrink(orderedDrink.getDrink().getId());
+			charge += orderedDrink.getAmount() * price;
 		}
-		
-		if (order.getOrderedMeals() != null) {
-			for (OrderedMeal orderedMeal : order.getOrderedMeals()) {
-				price = menuService.getLatestForMeal(orderedMeal.getMeal().getId());
-				charge += orderedMeal.getAmount() * price;
-			}
+	
+		for (OrderedMeal orderedMeal : order.getOrderedMeals()) {
+			price = menuService.getLatestForMeal(orderedMeal.getMeal().getId());
+			charge += orderedMeal.getAmount() * price;
 		}
 		
 		tip = charge * 0.15f; // Bakšiš je 15%
@@ -260,12 +256,12 @@ public class OrderController {
 		order.setDesk(null);
 		orderService.save(order);
 		
-		return new ResponseEntity<String>("Vaš račun je " + String.format("%.2f", charge) + " dinara.", HttpStatus.OK);
+		return new ResponseEntity<String>("Račun za sto broj " + desk.getId() + " je " + String.format("%.2f", charge) + " dinara", HttpStatus.OK);
 	}
 
 	@PreAuthorize("hasRole('ROLE_WAITER')")
-	@PutMapping("/deliverDrinks/{deskId}")
-	public ResponseEntity<String> deliverDrinks(@PathVariable Integer deskId) {
+	@PutMapping("/serveDrinks/{deskId}")
+	public ResponseEntity<String> serveDrinks(@PathVariable Integer deskId) {
 		Desk desk = deskService.findOne(deskId);
 		if (desk.getDeskStatus() == DeskStatus.NOT_ORDERED) {
 			return new ResponseEntity<String>("Za odabranim stolom još nije poručeno!", HttpStatus.BAD_REQUEST);
@@ -276,20 +272,22 @@ public class OrderController {
 		Order order = orderService.findOrderForDesk(deskId);
 		
 		Set<OrderedDrink> orderedDrinks = order.getOrderedDrinks();
-		if (orderedDrinks != null) {
+		if (!orderedDrinks.isEmpty()) {
 			for (OrderedDrink orderedDrink : orderedDrinks) {
 				if (orderedDrink.getStatus() != OrderedItemStatus.DONE) {
-					return new ResponseEntity<String>("Pića nisu završena!", HttpStatus.BAD_REQUEST);
+					return new ResponseEntity<String>("Pića još nisu završena!", HttpStatus.BAD_REQUEST);
 				}
 				orderedDrink.setStatus(OrderedItemStatus.DELIVERED);
 				orderedDrinkService.save(orderedDrink);
 			}
 			desk.setDeskStatus(DeskStatus.DELIVERED_DRINKS);
 		} else {
+			desk.setDeskStatus(DeskStatus.DELIVERED_DRINKS);
+			deskService.save(desk);
 			return new ResponseEntity<String>("Za odabranim stolom nisu poručena pića!", HttpStatus.BAD_REQUEST);
 		}
 
-		if (desk.getDeskStatus() == DeskStatus.DELIVERED_MEALS || order.getOrderedMeals() == null) {
+		if (desk.getDeskStatus() == DeskStatus.DELIVERED_MEALS || order.getOrderedMeals().isEmpty()) {
 			desk.setDeskStatus(DeskStatus.DELIVERED);
 		}
 
@@ -299,8 +297,8 @@ public class OrderController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_WAITER')")
-	@PutMapping("/deliverMeals/{deskId}")
-	public ResponseEntity<String> deliverMeals(@PathVariable Integer deskId) {
+	@PutMapping("/serveMeals/{deskId}")
+	public ResponseEntity<String> serveMeals(@PathVariable Integer deskId) {
 		Desk desk = deskService.findOne(deskId);
 		if (desk.getDeskStatus() == DeskStatus.NOT_ORDERED) {
 			return new ResponseEntity<String>("Za odabranim stolom još nije poručeno!", HttpStatus.BAD_REQUEST);
@@ -311,20 +309,22 @@ public class OrderController {
 		Order order = orderService.findOrderForDesk(deskId);
 		
 		Set<OrderedMeal> orderedMeals = order.getOrderedMeals();
-		if (orderedMeals != null) {
+		if (!orderedMeals.isEmpty()) {
 			for (OrderedMeal orderedMeal : orderedMeals) {
 				if (orderedMeal.getStatus() != OrderedItemStatus.DONE) {
-					return new ResponseEntity<String>("Jela nisu završena!", HttpStatus.BAD_REQUEST);
+					return new ResponseEntity<String>("Jela još nisu završena!", HttpStatus.BAD_REQUEST);
 				}
 				orderedMeal.setStatus(OrderedItemStatus.DELIVERED);
 				orderedMealService.save(orderedMeal);
 			}
 			desk.setDeskStatus(DeskStatus.DELIVERED_MEALS);
 		} else {
+			desk.setDeskStatus(DeskStatus.DELIVERED_MEALS);
+			deskService.save(desk);
 			return new ResponseEntity<String>("Za odabranim stolom nisu poručena jela!", HttpStatus.BAD_REQUEST);
 		}
 		
-		if (desk.getDeskStatus() == DeskStatus.DELIVERED_DRINKS || order.getOrderedDrinks() == null) {
+		if (desk.getDeskStatus() == DeskStatus.DELIVERED_DRINKS || order.getOrderedDrinks().isEmpty()) {
 			desk.setDeskStatus(DeskStatus.DELIVERED);
 		}
 
