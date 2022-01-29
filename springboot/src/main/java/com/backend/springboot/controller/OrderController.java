@@ -65,11 +65,7 @@ public class OrderController {
 	
 	@Autowired
 	private MenuService menuService;
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> bf5dbed07231a4baa62dba2a3ad3ce88f765a268
 	@Autowired
 	private OrderToOrderDTO orderToOrderDTO;
 	
