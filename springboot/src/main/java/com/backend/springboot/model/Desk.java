@@ -38,9 +38,6 @@ public class Desk {
 	@Column(name = "reserved")
 	private boolean reserved;
 
-	@Column(name = "table_num")
-	private int tableNum;
-
 	@Column(name = "deleted")
 	private boolean deleted;
 }

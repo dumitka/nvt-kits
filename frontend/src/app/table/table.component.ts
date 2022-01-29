@@ -3,6 +3,7 @@ import { Table } from '../tables/table.model';
 import { Input } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { Renderer2 } from '@angular/core';
+import { TableWrapper } from '../tables/table-wrapper.model';
 
 @Component({
   selector: 'app-table',
@@ -11,20 +12,22 @@ import { Renderer2 } from '@angular/core';
 })
 
 export class TableComponent {
-  @ViewChild("tableDiv") tableDiv: ElementRef;
-  @Input() tableItem: Table;
-  @Input() parentWidth: number;
-  @Input() parentHeight: number;
+  @Input() tableWrapper: TableWrapper;
 
-  constructor() {
-    
+  divElement: any;
+
+  constructor(public element: ElementRef) {
+    this.divElement = this.element.nativeElement;
   }
 
   getStyle() {
-    let x = this.tableItem.x * this.parentWidth;
-    let y = this.tableItem.y * this.parentHeight;
-    let width = this.tableItem.width * this.parentWidth;
-    let height = this.tableItem.height * this.parentHeight;
+    let parentWidth = this.divElement.parentNode.offsetWidth;
+    let parentHeight = this.divElement.parentNode.offsetHeight;
+
+    let x = this.tableWrapper.table.x * parentWidth;
+    let y = this.tableWrapper.table.y * parentHeight;
+    let width = this.tableWrapper.table.width * parentWidth;
+    let height = this.tableWrapper.table.height * parentHeight;
 
     return `top: ${y}px; left: ${x}px; width: ${width}px; height: ${height}px;`
   }

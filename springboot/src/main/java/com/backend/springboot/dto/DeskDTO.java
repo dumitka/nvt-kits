@@ -21,6 +21,5 @@ public class DeskDTO {
     private float width;
 
     private boolean reserved;
-    private int tableNum;
     private boolean deleted;
 }

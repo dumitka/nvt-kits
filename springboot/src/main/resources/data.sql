@@ -195,8 +195,8 @@ insert into drink_prices (drink_card_id, drink_price_id) values (2, 5);
 insert into drink_prices (drink_card_id, drink_price_id) values (2, 6);
 
 -- DESK
-insert into desk (desk_status, tip, x, y, height, width, reserved, table_num, deleted) values (1, 0.0, 0.1, 0.1, 0.2, 0.2, false, 0, false);
-insert into desk (desk_status, tip, x, y, height, width, reserved, table_num, deleted) values (1, 0.0, 0.5, 0.5, 0.15, 0.15, false, 0, false);
+insert into desk (desk_status, tip, x, y, height, width, reserved, deleted) values (1, 0.0, 0.1, 0.1, 0.2, 0.2, false, false);
+insert into desk (desk_status, tip, x, y, height, width, reserved, deleted) values (1, 0.0, 0.5, 0.5, 0.15, 0.15, false, false);
 
 -- ORDER
 insert into orders (deleted, desk_id) values (false, 1);

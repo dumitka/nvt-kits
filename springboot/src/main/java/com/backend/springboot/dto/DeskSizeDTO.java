@@ -10,6 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class DeskSizeDTO {
-    int height;
-    int width;
+    float height;
+    float width;
+    float x;
+    float y;
 }
